@@ -8,6 +8,7 @@
   <artifactId>wicketopia-jpa-archetype</artifactId>
   <packaging>maven-archetype</packaging>
   <name>Wicketopia JPA Archetype</name>
+    <description>An archetype that creates a fully functional Apache Wicket-based project which uses Spring and JPA (via Hibernate EntityManager).</description>
   <build>
     <extensions>
       <extension>

@@ -7,7 +7,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>wicketopia</artifactId>
-    <name>Wicketopia</name>
+    <name>Wicketopia Core Library</name>
     <description>A Collection of Useful Wicket Components</description>
 
     <properties>
