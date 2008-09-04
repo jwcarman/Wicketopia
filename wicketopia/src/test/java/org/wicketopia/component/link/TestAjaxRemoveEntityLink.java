@@ -7,11 +7,12 @@ import org.domdrides.repository.Repository;
 import org.jmock.Expectations;
 import static org.testng.Assert.*;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 
 /**
  * @author James Carman
  */
-public class TestRemoveEntityLink extends AbstractWicketTestCase
+public class TestAjaxRemoveEntityLink extends AbstractWicketTestCase
 {
     private boolean afterRemoveCalled = false;
 
@@ -24,12 +25,12 @@ public class TestRemoveEntityLink extends AbstractWicketTestCase
         mockery.checking(new Expectations() {{
            one(mockRepo).remove(person);
         }});
-        final RemoveEntityLink<Person,String> link = new RemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
+        final AjaxRemoveEntityLink<Person,String> link = new AjaxRemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
         {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void afterRemove( Person entity )
+            protected void afterRemove( Person entity, AjaxRequestTarget ajaxRequestTarget )
             {
                 afterRemoveCalled = true;
             }
@@ -37,6 +38,6 @@ public class TestRemoveEntityLink extends AbstractWicketTestCase
         RemovePersonPage page = new RemovePersonPage(link);
         tester.startPage(page);
         tester.clickLink("link");
-        assertTrue(afterRemoveCalled);        
+        assertTrue(afterRemoveCalled);
     }
 }

@@ -32,7 +32,7 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
             protected Form<Person> createPersonForm()
             {
-                return new CreateEntityForm<Person,String>("form", Person.class, mockRepo)
+                return new CreateEntityForm<Person,String>("form", mockRepo)
                 {
                     private static final long serialVersionUID = 1L;
 
@@ -41,6 +41,47 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
                         return prototype;
                     }
 
+                    @Override
+                    protected void afterCreate( Person entity )
+                    {
+                        afterCreateCalled = true;
+                    }
+                };
+            }
+        });
+        FormTester formTester = tester.newFormTester("form");
+        formTester.setValue("first", "FirstName");
+        formTester.setValue("last", "LastName");
+        formTester.submit();
+        assertEquals(prototype.getFirst(), "FirstName");
+        assertEquals(prototype.getLast(), "LastName");
+        assertTrue(afterCreateCalled);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testWithMissingTypeParameter()
+    {
+        final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
+        final Person prototype = new Person();
+        mockery.checking(new Expectations() {{
+           one(mockRepo).add(prototype); will(returnValue(prototype));
+        }});
+
+        tester.startPage(new PersonFormPage()
+        {
+            private static final long serialVersionUID = 1L;
+
+            protected Form<Person> createPersonForm()
+            {
+                return new CreateEntityForm<Person,String>("form", mockRepo)
+                {
+                    private static final long serialVersionUID = 1L;
+
+                    protected Person createPrototype()
+                    {
+                        return prototype;
+                    }
 
                     @Override
                     protected void afterCreate( Person entity )
@@ -74,7 +115,7 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
             protected Form<Person> createPersonForm()
             {
-                return new CreateEntityForm<Person,String>("form", Person.class, mockRepo)
+                return new CreateEntityForm<Person,String>("form", mockRepo)
                 {
                     private static final long serialVersionUID = 1L;
 
@@ -91,40 +132,5 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
         formTester.setValue("last", "LastName");
         formTester.submit();
         assertTrue(afterCreateCalled);
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testWithoutOverridingAfterCreate()
-    {
-        final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
-        final Person prototype = new Person();
-        mockery.checking(new Expectations() {{
-           one(mockRepo).add(prototype); will(returnValue(prototype));
-        }});
-
-        tester.startPage(new PersonFormPage()
-        {
-            private static final long serialVersionUID = 1L;
-
-            protected Form<Person> createPersonForm()
-            {
-                return new CreateEntityForm<Person,String>("form", Person.class, mockRepo)
-                {
-                    private static final long serialVersionUID = 1L;
-
-                    protected Person createPrototype()
-                    {
-                        return prototype;
-                    }
-                };
-            }
-        });
-        FormTester formTester = tester.newFormTester("form");
-        formTester.setValue("first", "FirstName");
-        formTester.setValue("last", "LastName");
-        formTester.submit();
-        assertEquals(prototype.getFirst(), "FirstName");
-        assertEquals(prototype.getLast(), "LastName");
     }
 }

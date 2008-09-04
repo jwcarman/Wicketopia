@@ -22,6 +22,9 @@ import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType extends Serializable>
         extends AbstractEntityForm<EntityType, IdType>
@@ -31,16 +34,21 @@ public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType
 //**********************************************************************************************************************
 
     private static final long serialVersionUID = 1L;
-    private final Class<EntityType> entityType;
+    private final Type entityType;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public CreateEntityForm( String id, Class<EntityType> entityType, Repository<EntityType, IdType> repository )
+    public CreateEntityForm( String id, Repository<EntityType, IdType> repository )
     {
         super(id, repository);
-        this.entityType = entityType;
+        Type superclass = getClass().getGenericSuperclass();
+        if( superclass instanceof Class )
+        {
+            throw new RuntimeException("Missing type parameter.");
+        }
+        this.entityType = ( ( ParameterizedType ) superclass ).getActualTypeArguments()[0];
         setModel(new CompoundPropertyModel<EntityType>(new PrototypeModel()));
     }
 
@@ -49,25 +57,12 @@ public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType
 //**********************************************************************************************************************
 
     /**
-     * Subclasses can override this method to provide a "clean" instance which the form populate and add to the
-     * repository.
-     * @return a "clean" instance which the form will populate and add to the repository
+     * Subclasses must override this to provide behavior after the entity has been created (like redirecting to another page,
+     * perhaps).
+     *
+     * @param entity the entity that was created (and added to the repository)
      */
-    protected EntityType createPrototype()
-    {
-        try
-        {
-            return entityType.newInstance();
-        }
-        catch( IllegalAccessException e )
-        {
-            throw new RuntimeException("Unable to construct " + entityType.getName() + " object.", e);
-        }
-        catch( InstantiationException e )
-        {
-            throw new RuntimeException("Unable to construct " + entityType.getName() + " object.", e);
-        }
-    }
+    protected abstract void afterCreate( EntityType entity );
 
 //**********************************************************************************************************************
 // Other Methods
@@ -82,13 +77,36 @@ public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType
     }
 
     /**
-     * Subclasses can override this to provide behavior after the entity has been created (like redirecting to another page,
-     * perhaps).
-     * @param entity the entity that was created (and saved to the database)
+     * Subclasses can override this method to provide a "clean" instance which the form populate and add to the
+     * repository.
+     *
+     * @return a "clean" instance which the form will populate and add to the repository
      */
-    protected void afterCreate( EntityType entity )
+    @SuppressWarnings( "unchecked" )
+    protected EntityType createPrototype()
     {
-        // Do nothing!
+        try
+        {
+            Class<?> rawType = entityType instanceof Class<?> ? ( Class<?> ) entityType :
+                    ( Class<?> ) ( ( ParameterizedType ) entityType ).getRawType();
+            return ( EntityType ) rawType.getConstructor().newInstance();
+        }
+        catch( IllegalAccessException e )
+        {
+            throw new RuntimeException("Unable to construct " + entityType + " object.", e);
+        }
+        catch( InstantiationException e )
+        {
+            throw new RuntimeException("Unable to construct " + entityType + " object.", e);
+        }
+        catch( InvocationTargetException e )
+        {
+            throw new RuntimeException("Unable to construct " + entityType + " object.", e);
+        }
+        catch( NoSuchMethodException e )
+        {
+            throw new RuntimeException("Unable to construct " + entityType + " object.", e);
+        }
     }
 
 //**********************************************************************************************************************

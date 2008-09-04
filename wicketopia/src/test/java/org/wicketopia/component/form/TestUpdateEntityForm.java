@@ -60,40 +60,6 @@ public class TestUpdateEntityForm extends AbstractWicketTestCase
         assertTrue(afterUpdateCalled);
     }
 
-
-    @Test
-    @SuppressWarnings( "unchecked" )
-    public void testWithoutOverridingAfterUpdate()
-    {
-        final Repository<Person, String> mockRepo = mockery.mock(Repository.class);
-        final Person person = new Person();
-        mockery.checking(new Expectations()
-        {
-            {
-                one(mockRepo).getById(person.getId());
-                will(returnValue(person));
-                one(mockRepo).update(person);
-                will(returnValue(person));
-            }
-        });
-
-        tester.startPage(new PersonFormPage()
-        {
-            private static final long serialVersionUID = 1L;
-
-            protected Form<Person> createPersonForm()
-            {
-                return new UpdateEntityForm<Person, String>("form", mockRepo, person);
-            }
-        });
-        FormTester formTester = tester.newFormTester("form");
-        formTester.setValue("first", "FirstName");
-        formTester.setValue("last", "LastName");
-        formTester.submit();
-        assertEquals(person.getFirst(), "FirstName");
-        assertEquals(person.getLast(), "LastName");
-    }
-
     @Test
     @SuppressWarnings( "unchecked" )
     public void testWithEntityId()

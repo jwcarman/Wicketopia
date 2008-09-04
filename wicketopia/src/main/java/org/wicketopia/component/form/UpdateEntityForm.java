@@ -23,7 +23,7 @@ import org.wicketopia.model.LoadableDetachableEntityModel;
 
 import java.io.Serializable;
 
-public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends Serializable>
+public abstract class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends Serializable>
         extends AbstractEntityForm<EntityType, IdType>
 {
 //**********************************************************************************************************************
@@ -49,6 +49,18 @@ public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends 
     }
 
 //**********************************************************************************************************************
+// Abstract Methods
+//**********************************************************************************************************************
+
+    /**
+     * Subclasses must override this to provide behavior after the entity is updated (like redirecting to another page,
+     * perhaps).  If you wish to remain on the same screen, just override with a no-op implementation.
+     *
+     * @param entity the entity that was updated
+     */
+    protected abstract void afterUpdate( EntityType entity );
+
+//**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************
 
@@ -58,16 +70,5 @@ public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends 
         final EntityType entity = getModelObject();
         repository.update(entity);
         afterUpdate(entity);
-    }
-
-    /**
-     * Subclasses can override this to provide behavior after the entity is updated (like redirecting to another page,
-     * perhaps).
-     *
-     * @param entity the entity that was updated
-     */
-    protected void afterUpdate( EntityType entity )
-    {
-        // Do nothing!
     }
 }
