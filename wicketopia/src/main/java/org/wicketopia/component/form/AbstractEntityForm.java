@@ -42,9 +42,9 @@ public abstract class AbstractEntityForm<EntityType extends Entity<IdType>,IdTyp
         this.repository = repository;
     }
 
-    protected AbstractEntityForm( String id, IModel<EntityType> entityTypeIModel, Repository<EntityType, IdType> repository )
+    protected AbstractEntityForm( String id, Repository<EntityType, IdType> repository,IModel<EntityType> entityModel )
     {
-        super(id, entityTypeIModel);
+        super(id, entityModel);
         this.repository = repository;
     }
 

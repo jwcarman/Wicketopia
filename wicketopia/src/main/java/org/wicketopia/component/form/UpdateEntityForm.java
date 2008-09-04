@@ -23,7 +23,8 @@ import org.wicketopia.model.LoadableDetachableEntityModel;
 
 import java.io.Serializable;
 
-public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends Serializable> extends AbstractEntityForm<EntityType,IdType>
+public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends Serializable>
+        extends AbstractEntityForm<EntityType, IdType>
 {
 //**********************************************************************************************************************
 // Fields
@@ -37,15 +38,13 @@ public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends 
 
     public UpdateEntityForm( String id, Repository<EntityType, IdType> repository, EntityType entity )
     {
-        super(id, repository);
-        setModel(new CompoundPropertyModel<EntityType>(
+        super(id, repository, new CompoundPropertyModel<EntityType>(
                 new LoadableDetachableEntityModel<EntityType, IdType>(repository, entity)));
     }
 
     public UpdateEntityForm( String id, Repository<EntityType, IdType> repository, IdType entityId )
     {
-        super(id, repository);
-        setModel(new CompoundPropertyModel<EntityType>(
+        super(id, repository, new CompoundPropertyModel<EntityType>(
                 new LoadableDetachableEntityModel<EntityType, IdType>(repository, entityId)));
     }
 
@@ -64,6 +63,7 @@ public class UpdateEntityForm<EntityType extends Entity<IdType>, IdType extends 
     /**
      * Subclasses can override this to provide behavior after the entity is updated (like redirecting to another page,
      * perhaps).
+     *
      * @param entity the entity that was updated
      */
     protected void afterUpdate( EntityType entity )
