@@ -16,6 +16,7 @@ public class TestRemoveEntityLink extends AbstractWicketTestCase
     private boolean afterRemoveCalled = false;
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testEntityRemovedWhenClicked()
     {
         final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
@@ -25,6 +26,8 @@ public class TestRemoveEntityLink extends AbstractWicketTestCase
         }});
         final RemoveEntityLink<Person,String> link = new RemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
         {
+            private static final long serialVersionUID = 1L;
+
             @Override
             protected void afterRemove( Person entity )
             {
@@ -38,6 +41,7 @@ public class TestRemoveEntityLink extends AbstractWicketTestCase
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testWithoutOverridingAfterRemoved()
     {
         final Repository<Person,String> mockRepo = mockery.mock(Repository.class);

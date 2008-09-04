@@ -28,10 +28,14 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
         tester.startPage(new PersonFormPage()
         {
+            private static final long serialVersionUID = 1L;
+
             protected Form<Person> createPersonForm()
             {
                 return new CreateEntityForm<Person,String>("form", mockRepo)
                 {
+                    private static final long serialVersionUID = 1L;
+
                     protected Person createPrototype()
                     {
                         return prototype;
@@ -67,10 +71,14 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
         tester.startPage(new PersonFormPage()
         {
+            private static final long serialVersionUID = 1L;
+
             protected Form<Person> createPersonForm()
             {
                 return new CreateEntityForm<Person,String>("form", mockRepo)
                 {
+                    private static final long serialVersionUID = 1L;
+
                     protected Person createPrototype()
                     {
                         return prototype;

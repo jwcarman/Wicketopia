@@ -1,9 +1,8 @@
 package org.wicketopia.component.form;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.Form;
-import org.domdrides.repository.Repository;
+import org.apache.wicket.markup.html.form.TextField;
 import org.wicketopia.util.Person;
 
 /**
@@ -11,6 +10,8 @@ import org.wicketopia.util.Person;
  */
 public abstract class PersonFormPage extends WebPage
 {
+    private static final long serialVersionUID = 1L;
+
     public PersonFormPage()
     {
         Form form = createPersonForm();

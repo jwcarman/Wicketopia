@@ -11,6 +11,7 @@ public class Person extends UuidEntity
 // Fields
 //**********************************************************************************************************************
 
+    private static final long serialVersionUID = 1L;
     private String first;
     private String last;
 

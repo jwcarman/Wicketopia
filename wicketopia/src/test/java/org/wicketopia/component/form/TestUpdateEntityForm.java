@@ -35,10 +35,14 @@ public class TestUpdateEntityForm extends AbstractWicketTestCase
 
         tester.startPage(new PersonFormPage()
         {
+            private static final long serialVersionUID = 1L;
+
             protected Form<Person> createPersonForm()
             {
                 return new UpdateEntityForm<Person, String>("form", mockRepo, person)
                 {
+                    private static final long serialVersionUID = 1L;
+
                     @Override
                     protected void afterUpdate( Person entity )
                     {
@@ -75,6 +79,8 @@ public class TestUpdateEntityForm extends AbstractWicketTestCase
 
         tester.startPage(new PersonFormPage()
         {
+            private static final long serialVersionUID = 1L;
+
             protected Form<Person> createPersonForm()
             {
                 return new UpdateEntityForm<Person, String>("form", mockRepo, person);
@@ -97,9 +103,9 @@ public class TestUpdateEntityForm extends AbstractWicketTestCase
         mockery.checking(new Expectations()
         {
             {
-                one(mockRepo).getById(person.getId());
+                one(mockRepo).getById(person.getId()); // During first rendering!
                 will(returnValue(person));
-                one(mockRepo).getById(person.getId());
+                one(mockRepo).getById(person.getId()); // During form posting!
                 will(returnValue(person));
                 one(mockRepo).update(person);
                 will(returnValue(person));
@@ -108,10 +114,14 @@ public class TestUpdateEntityForm extends AbstractWicketTestCase
 
         tester.startPage(new PersonFormPage()
         {
+            private static final long serialVersionUID = 1L;
+
             protected Form<Person> createPersonForm()
             {
                 return new UpdateEntityForm<Person, String>("form", mockRepo, person.getId())
                 {
+                    private static final long serialVersionUID = 1L;
+
                     @Override
                     protected void afterUpdate( Person entity )
                     {
