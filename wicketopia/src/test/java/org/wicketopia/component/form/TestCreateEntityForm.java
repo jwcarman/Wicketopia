@@ -32,7 +32,7 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
             protected Form<Person> createPersonForm()
             {
-                return new CreateEntityForm<Person,String>("form", mockRepo)
+                return new CreateEntityForm<Person,String>("form", Person.class, mockRepo)
                 {
                     private static final long serialVersionUID = 1L;
 
@@ -61,6 +61,40 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
     @Test
     @SuppressWarnings("unchecked")
+    public void testWithoutOverrideCreatePrototype()
+    {
+        final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
+        mockery.checking(new Expectations() {{
+           one(mockRepo).add(with(any(Person.class))); will(returnValue(null));
+        }});
+
+        tester.startPage(new PersonFormPage()
+        {
+            private static final long serialVersionUID = 1L;
+
+            protected Form<Person> createPersonForm()
+            {
+                return new CreateEntityForm<Person,String>("form", Person.class, mockRepo)
+                {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    protected void afterCreate( Person entity )
+                    {
+                        afterCreateCalled = true;
+                    }
+                };
+            }
+        });
+        FormTester formTester = tester.newFormTester("form");
+        formTester.setValue("first", "FirstName");
+        formTester.setValue("last", "LastName");
+        formTester.submit();
+        assertTrue(afterCreateCalled);
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
     public void testWithoutOverridingAfterCreate()
     {
         final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
@@ -75,7 +109,7 @@ public class TestCreateEntityForm extends AbstractWicketTestCase
 
             protected Form<Person> createPersonForm()
             {
-                return new CreateEntityForm<Person,String>("form", mockRepo)
+                return new CreateEntityForm<Person,String>("form", Person.class, mockRepo)
                 {
                     private static final long serialVersionUID = 1L;
 
