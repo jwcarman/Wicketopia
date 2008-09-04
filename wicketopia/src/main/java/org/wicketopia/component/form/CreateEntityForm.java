@@ -46,6 +46,11 @@ public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType
 // Abstract Methods
 //**********************************************************************************************************************
 
+    /**
+     * Subclasses must override this method to provide a "clean" instance which the form populate and add to the
+     * repository.
+     * @return a "clean" instance which the form will populate and add to the repository
+     */
     protected abstract EntityType createPrototype();
 
 //**********************************************************************************************************************
