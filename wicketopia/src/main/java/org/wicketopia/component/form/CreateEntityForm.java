@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.form;
+package org.wicketopia.component.form;
 
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.LoadableDetachableModel;

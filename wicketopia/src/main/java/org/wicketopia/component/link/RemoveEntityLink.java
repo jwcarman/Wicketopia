@@ -1,4 +1,4 @@
-package org.wicketopia.link;
+package org.wicketopia.component.link;
 
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;

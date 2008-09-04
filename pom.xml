@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>             
+    <modelVersion>4.0.0</modelVersion>
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-parent</artifactId>
     <packaging>pom</packaging>
@@ -11,8 +11,18 @@
     <modules>
         <module>wicketopia</module>
         <module>hibernate-archetype</module>
-        <module>jpa-archetype</module> 
+        <module>jpa-archetype</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.7</version>
+            <scope>test</scope>
+            <classifier>jdk15</classifier>
+        </dependency>
+    </dependencies>
 
     <developers>
         <developer>
@@ -29,7 +39,7 @@
             <email>james@carmanconsulting.com</email>
         </developer>
     </developers>
-    
+
     <reporting>
         <plugins>
             <!--
@@ -74,7 +84,7 @@
 
         </plugins>
     </reporting>
-    
+
     <distributionManagement>
         <site>
             <id>sourceforge.net</id>
@@ -92,10 +102,11 @@
             <url>scp://shell.sf.net/home/groups/w/wi/wicketopia/htdocs/m2repo/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-    
+
     <scm>
         <connection>scm:svn:http://wicketopia.svn.sourceforge.net/svnroot/wicketopia/trunk</connection>
-        <developerConnection>scm:svn:https://wicketopia.svn.sourceforge.net/svnroot/wicketopia/trunk</developerConnection>
+        <developerConnection>scm:svn:https://wicketopia.svn.sourceforge.net/svnroot/wicketopia/trunk
+        </developerConnection>
         <url>http://wicketopia.svn.sourceforge.net/viewvc/wicketopia/trunk</url>
     </scm>
 

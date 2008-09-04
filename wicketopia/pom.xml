@@ -20,14 +20,25 @@
             <version>${wicket.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.domdrides</groupId>
-            <artifactId>domdrides-wicket</artifactId>
+            <artifactId>domdrides-core</artifactId>
             <version>1.1</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <groupId>org.jmock</groupId>
+            <artifactId>jmock</artifactId>
+            <version>2.1.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jcl</artifactId>
+            <version>1.4.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -2,17 +2,17 @@ package org.wicketopia.model.repeater;
 
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.PageableRepository;
-import org.domdrides.wicket.model.LoadableDetachableEntityModel;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.model.IModel;
+import org.wicketopia.model.LoadableDetachableEntityModel;
 
 import java.io.Serializable;
 import java.util.Iterator;
 
 /**
  * A {@link org.domdrides.repository.PageableRepository}-based implementation of {@link org.apache.wicket.markup.repeater.data.IDataProvider}.  Each @{Entity} returned by this
- * data provider will be wrapped with a {@link org.domdrides.wicket.model.LoadableDetachableEntityModel}.
+ * data provider will be wrapped with a {@link LoadableDetachableEntityModel}.
  *
  * @since 1.1
  */
