@@ -1,0 +1,97 @@
+.feedbackPanelERROR {
+    color: red;
+}
+
+.feedbackPanelINFO {
+    color: green;
+}
+
+.feedbackPanelWARN {
+    color: yellow;
+}
+
+img {
+    border-width: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+table.dataview caption {
+    text-align: left;
+}
+
+table.dataview tr {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+table.dataview {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #0079d6;
+    font-size: 1em;
+    font-family: arial, serif;
+}
+
+table.dataview tr.even {
+    background-color: #ffebcd;
+}
+
+table.dataview tr.odd {
+    background-color: #fff;
+}
+
+table.dataview tr td {
+    padding-left: 8px;
+    padding-right: 30px;
+
+}
+
+table.dataview tr th {
+    color: black;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 30px;
+    background-color: #c1e4ff;
+    border-bottom: 1px solid #0079d6;
+    border-top: 1px solid #0079d6;
+    border-left: 1px solid #0079d6;
+    border-right: 1px solid #0079d6;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+table.dataview tr th {
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+table.dataview tr th.wicket_orderDown {
+    background-color: #87cbff;
+    background-image: url( 'images/arrow_down.png' );
+}
+
+table.dataview tr th.wicket_orderUp {
+    background-color: #87cbff;
+    background-image: url( 'images/arrow_up.png' );
+}
+
+table.dataview tr th.wicket_orderNone {
+    background-image: url( 'images/arrow_off.png' );
+}
+
+table.dataview tr th a {
+    font-weight: normal;
+}
+
+table.dataview #message {
+    padding-left: 3px;
+}
+
+table.dataview caption {
+    padding-bottom: 2px;
+}

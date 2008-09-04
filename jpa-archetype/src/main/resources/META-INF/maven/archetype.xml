@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><archetype>
+  <id>wicketopia-hibernate-archetype</id>
+  <sources>
+    <source>src/main/java/domain/entity/Widget.java</source>
+    <source>src/main/java/domain/repository/WidgetRepository.java</source>
+    <source>src/main/java/domain/repository/hibernate/HibernateWidgetRepository.java</source>
+    <source>src/main/java/web/page/HomePage.java</source>
+    <source>src/main/java/web/page/HomePage.html</source>
+    <source>src/main/java/web/application/WicketApplication.java</source>
+  </sources>
+  <testSources>
+    <source>src/test/java/web/util/Start.java</source>
+    <source>src/test/java/web/util/AbstractWicketTestCase.java</source>
+    <source>src/test/java/web/page/TestHomePage.java</source>
+  </testSources>
+  <resources>
+    <resource>src/main/webapp/WEB-INF/web.xml</resource>
+    <resource>src/main/conf/prod/hibernate.cfg.xml</resource>
+    <resource>src/main/conf/prod/application.properties</resource>
+    <resource>src/main/conf/prod/log4j.properties</resource>
+    <resource>src/main/conf/dev/hibernate.cfg.xml</resource>
+    <resource>src/main/conf/dev/application.properties</resource>
+    <resource>src/main/conf/dev/log4j.properties</resource>
+    <resource>src/main/conf/test/hibernate.cfg.xml</resource>
+    <resource>src/main/conf/test/application.properties</resource>
+    <resource>src/main/conf/test/log4j.properties</resource>
+    <resource>src/main/resources/META-INF/beans.xml</resource>
+  </resources>
+</archetype>

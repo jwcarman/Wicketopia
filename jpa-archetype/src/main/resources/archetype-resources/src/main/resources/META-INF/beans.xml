@@ -1,0 +1,84 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+
+    <!--
+    ====================================================================================================================
+    Annotation-Driven Transactions Support
+    ====================================================================================================================
+    -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--
+    ====================================================================================================================
+    JPA @PersistenceContext Annotation Support
+    ====================================================================================================================
+    -->
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+    
+    <!--
+    ====================================================================================================================
+    Wicket Application
+    ====================================================================================================================
+    -->
+    <bean id="wicketApplication" class="${package}.web.application.WicketApplication">
+        <property name="configurationType" value="${wicket.configuration}"/>
+    </bean>
+
+    <!--
+    ====================================================================================================================
+    Runtime Property Replacement Support
+    ====================================================================================================================
+    -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:application.properties"/>
+    </bean>
+
+    <!--
+    ====================================================================================================================
+    JPA Configuration
+    ====================================================================================================================
+    -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="${hibernate.platform}"/>
+                <property name="showSql" value="${hibernate.show_sql}"/>
+                <property name="generateDdl" value="${hibernate.generate_ddl}"/>
+            </bean>
+        </property>
+        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml"/>
+    </bean>
+
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <!--
+    ====================================================================================================================
+    Repositories
+    ====================================================================================================================
+    -->
+    <bean id="repositoryParent" class="org.domdrides.jpa.repository.JpaRepository"
+          abstract="true">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="widgetRepository" class="${package}.domain.repository.jpa.JpaWidgetRepository"
+          parent="repositoryParent"/>
+</beans>
