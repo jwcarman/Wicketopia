@@ -14,6 +14,7 @@ public class Person extends UuidEntity
     private static final long serialVersionUID = 1L;
     private String first;
     private String last;
+    private Gender gender;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
@@ -27,6 +28,16 @@ public class Person extends UuidEntity
     public void setFirst( String first )
     {
         this.first = first;
+    }
+
+    public Gender getGender()
+    {
+        return gender;
+    }
+
+    public void setGender( Gender gender )
+    {
+        this.gender = gender;
     }
 
     public String getLast()

@@ -1,0 +1,28 @@
+package org.wicketopia.component.label;
+
+import org.apache.wicket.markup.html.basic.Label;
+import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.model.label.PropertyLabelModel;
+
+/**
+ * A label which displays the appropriate label text for the property.
+ *
+ * @since 1.0
+ */
+public class PropertyLabel extends Label
+{
+//**********************************************************************************************************************
+// Fields
+//**********************************************************************************************************************
+
+    private static final long serialVersionUID = 1L;
+
+//**********************************************************************************************************************
+// Constructors
+//**********************************************************************************************************************
+
+    public PropertyLabel( String id, PropertyMetadata propertyMetadata )
+    {
+        super(id, new PropertyLabelModel(propertyMetadata));
+    }
+}
