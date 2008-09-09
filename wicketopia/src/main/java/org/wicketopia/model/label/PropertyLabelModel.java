@@ -4,7 +4,7 @@ import org.apache.wicket.model.ResourceModel;
 import org.wicketopia.metadata.PropertyMetadata;
 
 /**
- * @author James Carman
+ * @since 1.0
  */
 public class PropertyLabelModel extends ResourceModel
 {
