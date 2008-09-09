@@ -1,4 +1,6 @@
-package org.wicketopia.annotation;
+package org.wicketopia.annotation.metadata;
+
+import org.wicketopia.annotation.PropertyMetadataModifier;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,8 +11,9 @@ import java.lang.annotation.Target;
  * @since 1.0
  */
 @Retention( RetentionPolicy.RUNTIME )
-@Target( ElementType.ANNOTATION_TYPE )
-public @interface FacetAnnotation
+@Target( ElementType.METHOD )
+@PropertyMetadataModifier( OrderHandler.class )
+public @interface Order
 {
-    Class<? extends FacetAnnotationHandler> value();
+    int value();
 }

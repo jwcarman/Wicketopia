@@ -1,4 +1,4 @@
-package org.wicketopia.annotation.validator;
+package org.wicketopia.annotation.metadata;
 
 import org.wicketopia.annotation.PropertyMetadataModifier;
 
@@ -10,9 +10,10 @@ import java.lang.annotation.Target;
 /**
  * @since 1.0
  */
-@PropertyMetadataModifier( RequiredAnnotationHandler.class )
+@PropertyMetadataModifier( DisplayNameHandler.class )
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface Required
+public @interface DisplayName
 {
+    String value();
 }

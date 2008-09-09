@@ -1,26 +1,27 @@
 package org.wicketopia.metadata.decorator;
 
-import org.wicketopia.annotation.FacetAnnotation;
+import org.wicketopia.annotation.PropertyMetadataModifier;
 import org.wicketopia.metadata.PropertyMetadata;
 import org.wicketopia.metadata.PropertyMetadataDecorator;
 
 import java.lang.annotation.Annotation;
 
 /**
- * @since 1.0
+ * @author James Carman
  */
-public class FacetAnnotationDecorator implements PropertyMetadataDecorator
+public class PropertyMetadataModifierDecorator implements PropertyMetadataDecorator
 {
     public void decorate( PropertyMetadata propertyMetadata )
     {
         for( Annotation annotation : propertyMetadata.getPropertyDescriptor().getReadMethod().getAnnotations() )
         {
-            if( annotation.getClass().isAnnotationPresent(FacetAnnotation.class) )
+            if( annotation.annotationType().isAnnotationPresent(PropertyMetadataModifier.class) )
             {
-                FacetAnnotation facetAnnotation = annotation.getClass().getAnnotation(FacetAnnotation.class);
+                PropertyMetadataModifier modifierAnnotation =
+                        annotation.annotationType().getAnnotation(PropertyMetadataModifier.class);
                 try
                 {
-                    propertyMetadata.addFacet(facetAnnotation.value().newInstance().handle(annotation));
+                    modifierAnnotation.value().newInstance().apply(propertyMetadata, annotation);
                 }
                 catch( InstantiationException e )
                 {

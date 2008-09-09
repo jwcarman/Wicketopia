@@ -1,6 +1,6 @@
 package org.wicketopia.metadata;
 
-import org.wicketopia.metadata.decorator.FacetAnnotationDecorator;
+import org.wicketopia.metadata.decorator.PropertyMetadataModifierDecorator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class BeanMetadataFactory
 
     public BeanMetadataFactory()
     {
-        propertyMetadataDecorators.add(new FacetAnnotationDecorator());
+        propertyMetadataDecorators.add(new PropertyMetadataModifierDecorator());
     }
 
 //**********************************************************************************************************************
