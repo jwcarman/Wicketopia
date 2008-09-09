@@ -2,6 +2,7 @@ package org.wicketopia.example.domain.entity;
 
 import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
+import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
 
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ public class Widget extends UuidEntity
 //**********************************************************************************************************************
 
     @Order( 1 )
+    @EditorType( "long-string" )
     public String getDescription()
     {
         return description;
