@@ -4,6 +4,11 @@ import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.annotation.validator.CreditCard;
+import org.wicketopia.annotation.validator.DoubleRange;
+import org.wicketopia.annotation.validator.Email;
+import org.wicketopia.annotation.validator.Length;
+import org.wicketopia.annotation.validator.LongRange;
 import org.wicketopia.annotation.validator.Required;
 import org.wicketopia.example.domain.value.WidgetType;
 
@@ -24,6 +29,8 @@ public class Widget extends UuidEntity
     private WidgetType widgetType;
     private int sizeAsInt;
     private double sizeAsDouble;
+    private String contactEmail;
+    private String creditCardNumber;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
@@ -39,9 +46,32 @@ public class Widget extends UuidEntity
         this.anotherProperty = anotherProperty;
     }
 
+    @Email
+    public String getContactEmail()
+    {
+        return contactEmail;
+    }
+
+    public void setContactEmail( String contactEmail )
+    {
+        this.contactEmail = contactEmail;
+    }
+
+    @CreditCard
+    public String getCreditCardNumber()
+    {
+        return creditCardNumber;
+    }
+
+    public void setCreditCardNumber( String creditCardNumber )
+    {
+        this.creditCardNumber = creditCardNumber;
+    }
+
     @Order( 1 )
     @EditorType( "long-string" )
     @Required
+    @Length( min = 25 )
     public String getDescription()
     {
         return description;
@@ -55,6 +85,7 @@ public class Widget extends UuidEntity
     @DisplayName( "Widget Name" )
     @Order( 0 )
     @Required
+    @Length( min = 5, max = 25 )
     public String getName()
     {
         return name;
@@ -65,6 +96,7 @@ public class Widget extends UuidEntity
         this.name = name;
     }
 
+    @DoubleRange( max = 100.0 )
     public double getSizeAsDouble()
     {
         return sizeAsDouble;
@@ -75,6 +107,7 @@ public class Widget extends UuidEntity
         this.sizeAsDouble = sizeAsDouble;
     }
 
+    @LongRange( min = -25 )
     public int getSizeAsInt()
     {
         return sizeAsInt;

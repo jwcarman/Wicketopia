@@ -8,11 +8,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @since 1.0
+ * @author James Carman
  */
-@PropertyMetadataModifier( RequiredHandler.class )
+@PropertyMetadataModifier( DoubleRangeHandler.class )
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface Required
+public @interface DoubleRange
 {
+    double min() default Double.MIN_VALUE;
+
+    double max() default Double.MAX_VALUE;
 }

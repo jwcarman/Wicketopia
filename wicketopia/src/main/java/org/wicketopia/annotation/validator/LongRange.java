@@ -8,11 +8,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @since 1.0
+ * @author James Carman
  */
-@PropertyMetadataModifier( RequiredHandler.class )
+@PropertyMetadataModifier( LongRangeHandler.class )
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface Required
+public @interface LongRange
 {
+    long min() default Long.MIN_VALUE;
+
+    long max() default Long.MAX_VALUE;
 }

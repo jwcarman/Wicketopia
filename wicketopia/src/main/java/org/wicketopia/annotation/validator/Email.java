@@ -8,11 +8,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @since 1.0
+ * @author James Carman
  */
-@PropertyMetadataModifier( RequiredHandler.class )
+@PropertyMetadataModifier( EmailHandler.class )
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface Required
+public @interface Email
 {
 }

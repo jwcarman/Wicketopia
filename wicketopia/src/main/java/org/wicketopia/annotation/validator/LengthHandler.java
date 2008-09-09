@@ -2,18 +2,19 @@ package org.wicketopia.annotation.validator;
 
 import org.wicketopia.annotation.FacetAnnotationHandler;
 import org.wicketopia.editor.PropertyEditorFacet;
-import org.wicketopia.editor.facet.validator.RequiredFacet;
+import org.wicketopia.editor.facet.validator.LengthFacet;
 import org.wicketopia.metadata.PropertyMetadata;
 
 import java.lang.annotation.Annotation;
 
 /**
- * @since 1.0
+ * @author James Carman
  */
-public class RequiredAnnotationHandler extends FacetAnnotationHandler
+public class LengthHandler extends FacetAnnotationHandler
 {
     protected PropertyEditorFacet createFacet( PropertyMetadata propertyMetadata, Annotation annotation )
     {
-        return RequiredFacet.getInstance();
+        Length length = ( Length ) annotation;
+        return new LengthFacet(length.min(), length.max());
     }
 }
