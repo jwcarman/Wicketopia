@@ -4,6 +4,7 @@ import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.example.domain.value.WidgetType;
 
 import javax.persistence.Entity;
 
@@ -19,6 +20,7 @@ public class Widget extends UuidEntity
     private String name;
     private String description;
     private String anotherProperty;
+    private WidgetType widgetType;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
@@ -56,5 +58,15 @@ public class Widget extends UuidEntity
     public void setName( String name )
     {
         this.name = name;
+    }
+
+    public WidgetType getWidgetType()
+    {
+        return widgetType;
+    }
+
+    public void setWidgetType( WidgetType widgetType )
+    {
+        this.widgetType = widgetType;
     }
 }

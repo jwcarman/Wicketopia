@@ -9,6 +9,7 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.IValidator;
+import org.wicketopia.component.choice.EnumDropDownChoice;
 import org.wicketopia.editor.PropertyEditorBuilder;
 
 /**
@@ -38,6 +39,13 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditorBui
     {
         final TextArea formComponent = new TextArea("editor", propertyModel);
         return new FormComponentEditorPanel(id, "textAreaEditor", formComponent);
+    }
+
+    public static FormComponentEditorPanel createEnumChoicePanel( String id, Class<? extends Enum> enumType,
+                                                                  IModel<?> propertyModel )
+    {
+        final EnumDropDownChoice<?> choice = new EnumDropDownChoice("choice", propertyModel, enumType);
+        return new FormComponentEditorPanel(id, "enumDdcEditor", choice);
     }
 
 //**********************************************************************************************************************

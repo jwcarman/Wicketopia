@@ -7,6 +7,7 @@ import org.wicketopia.editor.PropertyEditorBuilder;
 import org.wicketopia.editor.PropertyEditorBuilderFactory;
 import org.wicketopia.editor.PropertyEditorFacet;
 import org.wicketopia.editor.PropertyEditorFactory;
+import org.wicketopia.editor.builder.factory.EnumChoiceEditorBuilderFactory;
 import org.wicketopia.editor.builder.factory.TextAreaEditorBuilderFactory;
 import org.wicketopia.editor.builder.factory.TextFieldEditorBuilderFactory;
 import org.wicketopia.metadata.PropertyMetadata;
@@ -31,6 +32,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
     {
         addBuilderFactoryOverride("string", new TextFieldEditorBuilderFactory());
         addBuilderFactoryOverride("long-string", new TextAreaEditorBuilderFactory());
+        addBuilderFactoryOverride("enum", new EnumChoiceEditorBuilderFactory());
     }
 
 //**********************************************************************************************************************
@@ -56,7 +58,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
             throw new IllegalArgumentException(
                     "No property editor builder defined for editor type \"" + editorType + ".\"");
         }
-        PropertyEditorBuilder builder = builderFactory.createBuilder(id, propertyModel);
+        PropertyEditorBuilder builder = builderFactory.createBuilder(id, propertyModel, propertyMetadata);
         for( PropertyEditorFacet facet : propertyMetadata.getFacets() )
         {
             facet.apply(builder);

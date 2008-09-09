@@ -51,6 +51,8 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
         addEditorTypeOverride(java.sql.Date.class, "sql_date");
         addEditorTypeOverride(Timestamp.class, "sql_timestamp");
 
+        addEditorTypeOverride(Enum.class, "enum");
+
     }
 
 //**********************************************************************************************************************

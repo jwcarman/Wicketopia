@@ -7,12 +7,14 @@ import org.wicketopia.editor.PropertyEditorBuilderFactory;
 import org.wicketopia.metadata.PropertyMetadata;
 
 /**
- * @since 1.0
+ * @author James Carman
  */
-public class TextAreaEditorBuilderFactory implements PropertyEditorBuilderFactory
+public class EnumChoiceEditorBuilderFactory implements PropertyEditorBuilderFactory
 {
+    @SuppressWarnings( "unchecked" )
     public PropertyEditorBuilder createBuilder( String id, IModel<?> propertyModel, PropertyMetadata propertyMetadata )
     {
-        return FormComponentEditorPanel.createTextAreaPanel(id, propertyModel);
+        return FormComponentEditorPanel
+                .createEnumChoicePanel(id, ( Class<Enum> ) propertyMetadata.getPropertyType(), propertyModel);
     }
 }
