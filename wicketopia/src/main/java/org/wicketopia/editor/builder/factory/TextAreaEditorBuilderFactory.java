@@ -13,6 +13,6 @@ public class TextAreaEditorBuilderFactory implements PropertyEditorBuilderFactor
 {
     public PropertyEditorBuilder createBuilder( String id, IModel<?> propertyModel, PropertyMetadata propertyMetadata )
     {
-        return FormComponentEditorPanel.createTextAreaPanel(id, propertyModel);
+        return FormComponentEditorPanel.createTextAreaPanel(id, propertyModel, propertyMetadata);
     }
 }

@@ -13,7 +13,6 @@ public class DisplayNameHandler implements PropertyMetadataModifierHandler
     public void apply( PropertyMetadata propertyMetadata, Annotation annotation )
     {
         final String displayName = ( ( DisplayName ) annotation ).value();
-        System.out.println("Changing default label text to " + displayName + "...");
         propertyMetadata.setDefaultLabelText(displayName);
     }
 }

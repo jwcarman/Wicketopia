@@ -30,7 +30,14 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 
     public DefaultPropertyEditorFactory()
     {
-        addBuilderFactoryOverride("string", new TextFieldEditorBuilderFactory());
+        final TextFieldEditorBuilderFactory textFieldBuilderFactory = new TextFieldEditorBuilderFactory();
+        addBuilderFactoryOverride("string", textFieldBuilderFactory);
+        addBuilderFactoryOverride("short", textFieldBuilderFactory);
+        addBuilderFactoryOverride("integer", textFieldBuilderFactory);
+        addBuilderFactoryOverride("double", textFieldBuilderFactory);
+        addBuilderFactoryOverride("long", textFieldBuilderFactory);
+        addBuilderFactoryOverride("float", textFieldBuilderFactory);
+
         addBuilderFactoryOverride("long-string", new TextAreaEditorBuilderFactory());
         addBuilderFactoryOverride("enum", new EnumChoiceEditorBuilderFactory());
     }

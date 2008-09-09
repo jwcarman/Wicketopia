@@ -11,6 +11,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.IValidator;
 import org.wicketopia.component.choice.EnumDropDownChoice;
 import org.wicketopia.editor.PropertyEditorBuilder;
+import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
  * @since 1.0
@@ -29,22 +31,32 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditorBui
 // Static Methods
 //**********************************************************************************************************************
 
-    public static FormComponentEditorPanel createTextFieldPanel( String id, IModel<?> propertyModel )
+    public static FormComponentEditorPanel createTextFieldPanel( String id, IModel<?> propertyModel,
+                                                                 PropertyMetadata propertyMetadata )
     {
-        final TextField formComponent = new TextField("editor", propertyModel);
+        final TextField formComponent = new TextField("editor", propertyModel, propertyMetadata.getPropertyType());
+        if( propertyMetadata.getPropertyType().isPrimitive() )
+        {
+            formComponent.setRequired(true);
+        }
+        formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
         return new FormComponentEditorPanel(id, "textFieldEditor", formComponent);
     }
 
-    public static FormComponentEditorPanel createTextAreaPanel( String id, IModel<?> propertyModel )
+    public static FormComponentEditorPanel createTextAreaPanel( String id, IModel<?> propertyModel,
+                                                                PropertyMetadata propertyMetadata )
     {
         final TextArea formComponent = new TextArea("editor", propertyModel);
+        formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
         return new FormComponentEditorPanel(id, "textAreaEditor", formComponent);
     }
 
-    public static FormComponentEditorPanel createEnumChoicePanel( String id, Class<? extends Enum> enumType,
-                                                                  IModel<?> propertyModel )
+    public static FormComponentEditorPanel createEnumChoicePanel( String id, IModel<?> propertyModel,
+                                                                  PropertyMetadata propertyMetadata )
     {
-        final EnumDropDownChoice<?> choice = new EnumDropDownChoice("choice", propertyModel, enumType);
+        final EnumDropDownChoice<?> choice =
+                new EnumDropDownChoice("choice", propertyModel, propertyMetadata.getPropertyType());
+        choice.setLabel(new PropertyLabelModel(propertyMetadata));
         return new FormComponentEditorPanel(id, "enumDdcEditor", choice);
     }
 

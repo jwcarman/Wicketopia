@@ -15,6 +15,6 @@ public class EnumChoiceEditorBuilderFactory implements PropertyEditorBuilderFact
     public PropertyEditorBuilder createBuilder( String id, IModel<?> propertyModel, PropertyMetadata propertyMetadata )
     {
         return FormComponentEditorPanel
-                .createEnumChoicePanel(id, ( Class<Enum> ) propertyMetadata.getPropertyType(), propertyModel);
+                .createEnumChoicePanel(id, propertyModel, propertyMetadata);
     }
 }

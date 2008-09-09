@@ -3,6 +3,7 @@ package org.wicketopia.example.web.page;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.component.form.rad.RadCreateEntityForm;
@@ -48,6 +49,7 @@ public class HomePage extends BasePage
                         setResponsePage(HomePage.class);
                     }
                 };
+        add(new FeedbackPanel("feedback"));
         add(form);
     }
 }

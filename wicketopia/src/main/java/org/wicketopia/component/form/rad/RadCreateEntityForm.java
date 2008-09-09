@@ -26,20 +26,23 @@ public abstract class RadCreateEntityForm<EntityType extends Entity<IdType>, IdT
                                 Repository<EntityType, IdType> repository )
     {
         super(id, repository);
-        add(new ListView<PropertyMetadata>("properties", BeanMetadataFactory.getInstance()
-                .getBeanMetadata(getEntityType()).getAllPropertyMetadata())
-        {
-            private static final long serialVersionUID = 1L;
+        final ListView<PropertyMetadata> listView =
+                new ListView<PropertyMetadata>("properties", BeanMetadataFactory.getInstance()
+                        .getBeanMetadata(getEntityType()).getAllPropertyMetadata())
+                {
+                    private static final long serialVersionUID = 1L;
 
-            protected void populateItem( ListItem<PropertyMetadata> item )
-            {
-                PropertyMetadata propertyMetadata = item.getModelObject();
-                item.add(new PropertyLabel("label", propertyMetadata));
-                item.add(new PropertyEditorPanel("editor", propertyMetadata, new PropertyModel(
-                        RadCreateEntityForm.this.getModel(), propertyMetadata.getPropertyName()),
-                                                                             propertyEditorFactory));
-            }
-        });
+                    protected void populateItem( ListItem<PropertyMetadata> item )
+                    {
+                        PropertyMetadata propertyMetadata = item.getModelObject();
+                        item.add(new PropertyLabel("label", propertyMetadata));
+                        item.add(new PropertyEditorPanel("editor", propertyMetadata, new PropertyModel(
+                                RadCreateEntityForm.this.getModel(), propertyMetadata.getPropertyName()),
+                                                         propertyEditorFactory));
+                    }
+                };
+        listView.setReuseItems(true);
+        add(listView);
     }
 
 }

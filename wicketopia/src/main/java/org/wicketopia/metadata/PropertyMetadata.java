@@ -25,7 +25,7 @@ public class PropertyMetadata implements Serializable, Comparable
     private final Class<?> propertyType;
     private String labelTextMessageKey;
     private String defaultLabelText;
-    private int order = 0;
+    private int order = Integer.MAX_VALUE;
     private String editorType;
     private Set<PropertyEditorFacet> facets = new HashSet<PropertyEditorFacet>();
 
