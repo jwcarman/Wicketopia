@@ -1,8 +1,12 @@
 <html>
 <body>
 <wicket:extend>
+    <h3>Existing Widgets</h3>
     <table class="dataview" wicket:id="table"/>
-    <br/>
+
+    <p/>
+
+    <h3>Create your own widget!</h3>
 
     <form wicket:id="form">
         <table border="1">
@@ -15,8 +19,13 @@
         </table>
         <input type="submit"/>
     </form>
-    <hr/>
+
+    <p/>
     <span wicket:id="feedback"/>
+
+    <wicket:fragment wicket:id="linksPanel">
+        <a wicket:id="removeLink">[delete]</a>
+    </wicket:fragment>
 </wicket:extend>
 </body>
 </html>

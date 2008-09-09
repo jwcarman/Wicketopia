@@ -85,6 +85,7 @@ public class Widget extends UuidEntity
         this.sizeAsInt = sizeAsInt;
     }
 
+    @Required
     public WidgetType getWidgetType()
     {
         return widgetType;
