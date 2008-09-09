@@ -150,9 +150,19 @@ public class PropertyMetadata implements Serializable, Comparable
 
     private String calculateDefaultLabelText( PropertyDescriptor propertyDescriptor )
     {
-        String[] splits = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
-        splits[0] = StringUtils.capitalize(splits[0]);
-        return StringUtils.join(splits);
+        String[] words = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
+        words[0] = StringUtils.capitalize(words[0]);
+        StringBuilder sb = new StringBuilder();
+        for( int i = 0; i < words.length; i++ )
+        {
+            String word = words[i];
+            sb.append(word);
+            if( i != words.length - 1 )
+            {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
     }
 
     public void addFacet( PropertyEditorFacet facet )

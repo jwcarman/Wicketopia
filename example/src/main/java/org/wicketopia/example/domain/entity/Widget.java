@@ -18,10 +18,21 @@ public class Widget extends UuidEntity
 
     private String name;
     private String description;
+    private String anotherProperty;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
+
+    public String getAnotherProperty()
+    {
+        return anotherProperty;
+    }
+
+    public void setAnotherProperty( String anotherProperty )
+    {
+        this.anotherProperty = anotherProperty;
+    }
 
     @Order( 1 )
     @EditorType( "long-string" )

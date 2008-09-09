@@ -15,10 +15,21 @@ public class Person extends UuidEntity
     private String first;
     private String last;
     private Gender gender;
+    private String multiWordProperty;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
+
+    public String getMultiWordProperty()
+    {
+        return multiWordProperty;
+    }
+
+    public void setMultiWordProperty( String multiWordProperty )
+    {
+        this.multiWordProperty = multiWordProperty;
+    }
 
     public String getFirst()
     {
