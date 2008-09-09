@@ -38,12 +38,25 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }
 
+    /**
+     * Creates a drop down choice which contains only the specified enum values.
+     * @param id the id of the component
+     * @param model the model
+     * @param choices the choices
+     */
     public EnumDropDownChoice( String id, IModel<T> model, List<? extends T> choices )
     {
         super(id, model, choices);
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }
 
+    /**
+     * Creates a drop down choice which contains <b>all</b> enum values (obtained via
+     * the {@link Class#getEnumConstants()} method).
+     * @param id the id of the component
+     * @param model the model
+     * @param enumClass the enum class
+     */
     public EnumDropDownChoice( String id, IModel<T> model, Class<T> enumClass )
     {
         super(id, model, new ArrayList<T>(Arrays.asList(enumClass.getEnumConstants())));
