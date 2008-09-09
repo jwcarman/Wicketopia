@@ -6,7 +6,7 @@ import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 
 /**
- * @author James Carman
+ * @since 1.0
  */
 public class PropertyMetadata implements Serializable, Comparable
 {

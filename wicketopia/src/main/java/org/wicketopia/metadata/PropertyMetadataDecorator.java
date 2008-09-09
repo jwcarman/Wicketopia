@@ -1,9 +1,9 @@
 package org.wicketopia.metadata;
 
 /**
- * @author James Carman
+ * @since 1.0
  */
 public interface PropertyMetadataDecorator
 {
-    public void decorate(PropertyMetadata propertyMetadata);
+    public void decorate( PropertyMetadata propertyMetadata );
 }

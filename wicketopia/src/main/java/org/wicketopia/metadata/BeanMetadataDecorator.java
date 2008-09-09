@@ -1,9 +1,9 @@
 package org.wicketopia.metadata;
 
 /**
- * @author James Carman
+ * @since 1.0
  */
 public interface BeanMetadataDecorator
 {
-    public void decorate(BeanMetadata<?> beanMetadata);
+    public void decorate( BeanMetadata<?> beanMetadata );
 }

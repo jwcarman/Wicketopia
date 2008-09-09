@@ -1,12 +1,12 @@
 package org.wicketopia.metadata;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @author James Carman
+ * @since 1.0
  */
 public class BeanMetadataFactory
 {
@@ -15,10 +15,10 @@ public class BeanMetadataFactory
 //**********************************************************************************************************************
 
     private static final BeanMetadataFactory instance = new BeanMetadataFactory();
-    
+
     private List<BeanMetadataDecorator> beanMetadataDecorators = new ArrayList<BeanMetadataDecorator>();
     private List<PropertyMetadataDecorator> propertyMetadataDecorators = new ArrayList<PropertyMetadataDecorator>();
-    private final Map<Class<?>,BeanMetadata<?>> beanMetadataMap = new HashMap<Class<?>,BeanMetadata<?>>();
+    private final Map<Class<?>, BeanMetadata<?>> beanMetadataMap = new HashMap<Class<?>, BeanMetadata<?>>();
 
 //**********************************************************************************************************************
 // Static Methods
@@ -39,18 +39,18 @@ public class BeanMetadataFactory
         this.propertyMetadataDecorators = propertyMetadataDecorators;
     }
 
-    @SuppressWarnings("unchecked")
-    public synchronized <T> BeanMetadata<T> getBeanMetadata(Class<T> beanClass)
+    @SuppressWarnings( "unchecked" )
+    public synchronized <T> BeanMetadata<T> getBeanMetadata( Class<T> beanClass )
     {
-        BeanMetadata<T> beanMetadata = (BeanMetadata<T>)beanMetadataMap.get(beanClass);
-        if(beanMetadata == null)
+        BeanMetadata<T> beanMetadata = ( BeanMetadata<T> ) beanMetadataMap.get(beanClass);
+        if( beanMetadata == null )
         {
             beanMetadata = new BeanMetadata<T>(beanClass);
             for( BeanMetadataDecorator decorator : beanMetadataDecorators )
             {
-                decorator.decorate(beanMetadata);   
+                decorator.decorate(beanMetadata);
             }
-            for( PropertyMetadata propertyMetadata: beanMetadata.getAllPropertyMetadata() )
+            for( PropertyMetadata propertyMetadata : beanMetadata.getAllPropertyMetadata() )
             {
                 for( PropertyMetadataDecorator decorator : propertyMetadataDecorators )
                 {
