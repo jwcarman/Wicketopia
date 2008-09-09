@@ -87,9 +87,8 @@ public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType
     {
         try
         {
-            Class<?> rawType = entityType instanceof Class<?> ? ( Class<?> ) entityType :
-                    ( Class<?> ) ( ( ParameterizedType ) entityType ).getRawType();
-            return ( EntityType ) rawType.getConstructor().newInstance();
+            Class<EntityType> rawType = getEntityType();
+            return rawType.getConstructor().newInstance();
         }
         catch( IllegalAccessException e )
         {
@@ -107,6 +106,13 @@ public abstract class CreateEntityForm<EntityType extends Entity<IdType>, IdType
         {
             throw new RuntimeException("Unable to construct " + entityType + " object.", e);
         }
+    }
+
+    @SuppressWarnings( "unchecked" )
+    protected Class<EntityType> getEntityType()
+    {
+        return entityType instanceof Class<?> ? ( Class<EntityType> ) entityType :
+                ( Class<EntityType> ) ( ( ParameterizedType ) entityType ).getRawType();
     }
 
 //**********************************************************************************************************************

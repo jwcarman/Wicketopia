@@ -13,6 +13,7 @@
         <module>wicketopia</module>
         <module>hibernate-archetype</module>
         <module>jpa-archetype</module>
+        <module>example</module>
     </modules>
 
     <dependencies>

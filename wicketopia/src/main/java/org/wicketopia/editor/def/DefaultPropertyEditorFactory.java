@@ -7,6 +7,8 @@ import org.wicketopia.editor.PropertyEditorBuilder;
 import org.wicketopia.editor.PropertyEditorBuilderFactory;
 import org.wicketopia.editor.PropertyEditorFacet;
 import org.wicketopia.editor.PropertyEditorFactory;
+import org.wicketopia.editor.builder.factory.TextAreaEditorBuilderFactory;
+import org.wicketopia.editor.builder.factory.TextFieldEditorBuilderFactory;
 import org.wicketopia.metadata.PropertyMetadata;
 
 import java.util.HashMap;
@@ -25,6 +27,12 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
     private Map<String, PropertyEditorBuilderFactory> builderFactoryMap =
             new HashMap<String, PropertyEditorBuilderFactory>();
 
+    public DefaultPropertyEditorFactory()
+    {
+        addBuilderFactoryOverride("string", new TextFieldEditorBuilderFactory());
+        addBuilderFactoryOverride("long-string", new TextAreaEditorBuilderFactory());
+    }
+
 //**********************************************************************************************************************
 // PropertyEditorFactory Implementation
 //**********************************************************************************************************************
@@ -34,12 +42,12 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
         String editorType = propertyMetadata.getEditorType();
         if( editorType == null )
         {
-            editorType = editorTypeMapping.getEditorType(propertyMetadata.getPropertyDescriptor().getPropertyType());
+            editorType = editorTypeMapping.getEditorType(propertyMetadata.getPropertyType());
         }
         if( editorType == null )
         {
             throw new IllegalArgumentException("Unable to determine editor type for property " +
-                    propertyMetadata.getPropertyDescriptor().getName() + " of class " +
+                    propertyMetadata.getPropertyName() + " of class " +
                     propertyMetadata.getBeanMetadata().getBeanClass().getName() + ".");
         }
         PropertyEditorBuilderFactory builderFactory = builderFactoryMap.get(editorType);

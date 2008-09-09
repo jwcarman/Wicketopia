@@ -9,9 +9,9 @@ import org.apache.wicket.validation.IValidator;
  */
 public interface PropertyEditorBuilder
 {
-    public PropertyEditorBuilder addBehavior( IBehavior behavior );
+    public void addBehavior( IBehavior behavior );
 
-    public PropertyEditorBuilder addValidator( IValidator validator );
+    public void addValidator( IValidator validator );
 
     public void setRequired( boolean required );
 

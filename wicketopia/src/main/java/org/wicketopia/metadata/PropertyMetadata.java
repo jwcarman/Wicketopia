@@ -3,6 +3,8 @@ package org.wicketopia.metadata;
 import org.apache.commons.lang.StringUtils;
 import org.wicketopia.editor.PropertyEditorFacet;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,8 +20,9 @@ public class PropertyMetadata implements Serializable, Comparable
 //**********************************************************************************************************************
 
     private static final long serialVersionUID = 1L;
-    private final PropertyDescriptor propertyDescriptor;
+    private final String propertyName;
     private final BeanMetadata beanMetadata;
+    private final Class<?> propertyType;
     private String labelTextMessageKey;
     private String defaultLabelText;
     private int order = 0;
@@ -33,7 +36,8 @@ public class PropertyMetadata implements Serializable, Comparable
     PropertyMetadata( BeanMetadata beanMetadata, PropertyDescriptor propertyDescriptor )
     {
         this.beanMetadata = beanMetadata;
-        this.propertyDescriptor = propertyDescriptor;
+        this.propertyName = propertyDescriptor.getName();
+        this.propertyType = propertyDescriptor.getPropertyType();
         this.labelTextMessageKey = beanMetadata.getBeanClass().getName() + "." + propertyDescriptor.getName();
         this.defaultLabelText = calculateDefaultLabelText(propertyDescriptor);
     }
@@ -41,6 +45,30 @@ public class PropertyMetadata implements Serializable, Comparable
 //**********************************************************************************************************************
 // Comparable Implementation
 //**********************************************************************************************************************
+
+
+    public PropertyDescriptor getPropertyDescriptor()
+    {
+        try
+        {
+            PropertyDescriptor[] propertyDescriptors =
+                    Introspector.getBeanInfo(beanMetadata.getBeanClass()).getPropertyDescriptors();
+            for( PropertyDescriptor propertyDescriptor : propertyDescriptors )
+            {
+                if( propertyName.equals(propertyDescriptor.getName()) )
+                {
+                    return propertyDescriptor;
+                }
+            }
+            return null;
+        }
+        catch( IntrospectionException e )
+        {
+            throw new RuntimeException("Unable to obtain property descriptor.", e);
+        }
+
+
+    }
 
     public int compareTo( Object o )
     {
@@ -106,9 +134,14 @@ public class PropertyMetadata implements Serializable, Comparable
         this.order = order;
     }
 
-    public PropertyDescriptor getPropertyDescriptor()
+    public String getPropertyName()
     {
-        return propertyDescriptor;
+        return propertyName;
+    }
+
+    public Class<?> getPropertyType()
+    {
+        return propertyType;
     }
 
 //**********************************************************************************************************************

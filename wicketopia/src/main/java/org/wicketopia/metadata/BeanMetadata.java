@@ -4,6 +4,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,14 +14,15 @@ import java.util.Map;
 /**
  * @since 1.0
  */
-public class BeanMetadata<T>
+public class BeanMetadata<T> implements Serializable
 {
 //**********************************************************************************************************************
 // Fields
 //**********************************************************************************************************************
 
+    private static final long serialVersionUID = 1L;
     private final Class<T> beanClass;
-    private final BeanInfo beanInfo;
+    //private final BeanInfo beanInfo;
     private final Map<String, PropertyMetadata> propertyMetadataMap = new HashMap<String, PropertyMetadata>();
 
 //**********************************************************************************************************************
@@ -32,11 +34,11 @@ public class BeanMetadata<T>
         this.beanClass = beanClass;
         try
         {
-            this.beanInfo = Introspector.getBeanInfo(beanClass);
+            BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
             for( PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors() )
             {
                 final String propertyName = propertyDescriptor.getName();
-                if( !"class".equals(propertyName) )
+                if( !"class".equals(propertyName) && !"id".equals(propertyName) )
                 {
                     propertyMetadataMap.put(propertyName, new PropertyMetadata(this, propertyDescriptor));
                 }
@@ -57,10 +59,11 @@ public class BeanMetadata<T>
         return beanClass;
     }
 
-    public BeanInfo getBeanInfo()
+    /*public BeanInfo getBeanInfo()
     {
         return beanInfo;
     }
+    */
 
 //**********************************************************************************************************************
 // Other Methods
