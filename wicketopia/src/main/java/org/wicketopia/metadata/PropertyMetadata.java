@@ -1,9 +1,12 @@
 package org.wicketopia.metadata;
 
 import org.apache.commons.lang.StringUtils;
+import org.wicketopia.editor.PropertyEditorFacet;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @since 1.0
@@ -16,11 +19,12 @@ public class PropertyMetadata implements Serializable, Comparable
 
     private static final long serialVersionUID = 1L;
     private final PropertyDescriptor propertyDescriptor;
-
+    private final BeanMetadata beanMetadata;
     private String labelTextMessageKey;
     private String defaultLabelText;
     private int order = 0;
-    private String editorType = "text";
+    private String editorType;
+    private Set<PropertyEditorFacet> facets = new HashSet<PropertyEditorFacet>();
 
 //**********************************************************************************************************************
 // Constructors
@@ -28,6 +32,7 @@ public class PropertyMetadata implements Serializable, Comparable
 
     PropertyMetadata( BeanMetadata beanMetadata, PropertyDescriptor propertyDescriptor )
     {
+        this.beanMetadata = beanMetadata;
         this.propertyDescriptor = propertyDescriptor;
         this.labelTextMessageKey = beanMetadata.getBeanClass().getName() + "." + propertyDescriptor.getName();
         this.defaultLabelText = calculateDefaultLabelText(propertyDescriptor);
@@ -51,6 +56,11 @@ public class PropertyMetadata implements Serializable, Comparable
 // Getter/Setter Methods
 //**********************************************************************************************************************
 
+    public BeanMetadata getBeanMetadata()
+    {
+        return beanMetadata;
+    }
+
     public String getDefaultLabelText()
     {
         return defaultLabelText;
@@ -69,6 +79,11 @@ public class PropertyMetadata implements Serializable, Comparable
     public void setEditorType( String editorType )
     {
         this.editorType = editorType;
+    }
+
+    public Set<PropertyEditorFacet> getFacets()
+    {
+        return facets;
     }
 
     public String getLabelTextMessageKey()
@@ -105,5 +120,10 @@ public class PropertyMetadata implements Serializable, Comparable
         String[] splits = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
         splits[0] = StringUtils.capitalize(splits[0]);
         return StringUtils.join(splits);
+    }
+
+    public void addFacet( PropertyEditorFacet facet )
+    {
+        facets.add(facet);
     }
 }

@@ -7,6 +7,7 @@ import org.wicketopia.model.label.PropertyLabelModel;
 /**
  * A label which displays the appropriate label text for the property.
  *
+ * @see org.wicketopia.model.label.PropertyLabelModel the model used by this component
  * @since 1.0
  */
 public class PropertyLabel extends Label

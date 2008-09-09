@@ -25,6 +25,22 @@
             <version>${wicket.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-datetime</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wicketrad</groupId>
+            <artifactId>wicket-rad-core</artifactId>
+            <version>0.4.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.domdrides</groupId>
             <artifactId>domdrides-core</artifactId>
             <version>1.1</version>
@@ -90,4 +106,17 @@
             </testResource>
         </testResources>
     </build>
+
+    <repositories>
+        <repository>
+            <id>wicketrad</id>
+            <url>http://wicket-rad.sourceforge.net/repo</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

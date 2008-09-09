@@ -1,7 +1,7 @@
-package org.wicketopia.service.def;
+package org.wicketopia.editor.def;
 
 import org.apache.commons.lang.ClassUtils;
-import org.wicketopia.service.EditorTypeMapping;
+import org.wicketopia.editor.EditorTypeMapping;
 
 import java.sql.Timestamp;
 import java.util.Date;

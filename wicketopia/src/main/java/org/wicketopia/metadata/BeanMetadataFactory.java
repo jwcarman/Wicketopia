@@ -1,5 +1,7 @@
 package org.wicketopia.metadata;
 
+import org.wicketopia.metadata.decorator.FacetAnnotationDecorator;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,19 @@ public class BeanMetadataFactory
         return instance;
     }
 
+//**********************************************************************************************************************
+// Constructors
+//**********************************************************************************************************************
+
+    public BeanMetadataFactory()
+    {
+        propertyMetadataDecorators.add(new FacetAnnotationDecorator());
+    }
+
+//**********************************************************************************************************************
+// Getter/Setter Methods
+//**********************************************************************************************************************
+
     public void setBeanMetadataDecorators( List<BeanMetadataDecorator> beanMetadataDecorators )
     {
         this.beanMetadataDecorators = beanMetadataDecorators;
@@ -38,6 +53,10 @@ public class BeanMetadataFactory
     {
         this.propertyMetadataDecorators = propertyMetadataDecorators;
     }
+
+//**********************************************************************************************************************
+// Other Methods
+//**********************************************************************************************************************
 
     @SuppressWarnings( "unchecked" )
     public synchronized <T> BeanMetadata<T> getBeanMetadata( Class<T> beanClass )

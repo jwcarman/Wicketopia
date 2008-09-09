@@ -1,4 +1,4 @@
-package org.wicketopia.service.def;
+package org.wicketopia.editor.def;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
