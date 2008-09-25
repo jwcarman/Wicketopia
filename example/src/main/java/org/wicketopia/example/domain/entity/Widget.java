@@ -1,5 +1,7 @@
 package org.wicketopia.example.domain.entity;
 
+import java.util.Date;
+
 import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
@@ -31,12 +33,21 @@ public class Widget extends UuidEntity
     private double sizeAsDouble;
     private String contactEmail;
     private String creditCardNumber;
+    private Date date;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
 
-    public String getAnotherProperty()
+    public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getAnotherProperty()
     {
         return anotherProperty;
     }
