@@ -18,19 +18,24 @@ public class TestEnumDropDownChoice extends AbstractWicketTestCase
     @Test
     public void testModelContents()
     {
-        final EnumDropDownChoice<Gender> genderChoice = new EnumDropDownChoice<Gender>("gender", Gender.class);
+        EnumDropDownChoice<Gender> genderChoice = new EnumDropDownChoice<Gender>("gender", Gender.class);
         List<? extends Gender> choices = genderChoice.getChoices();
         assertEquals(choices, Arrays.asList(Gender.class.getEnumConstants()));
+
+        genderChoice = new EnumDropDownChoice<Gender>("gender", Gender.Female, Gender.Male, Gender.Female);
+        choices = genderChoice.getChoices();
+        assertEquals(choices, Arrays.asList(Gender.Female, Gender.Male, Gender.Female));
     }
 
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings( "unchecked" )
     public void testRendering()
     {
         final EnumDropDownChoiceTestPage page = new EnumDropDownChoiceTestPage(new Person());
         tester.startPage(page);
         tester.assertRenderedPage(EnumDropDownChoiceTestPage.class);
-        EnumDropDownChoice<Gender> choice = ( EnumDropDownChoice<Gender>)tester.getComponentFromLastRenderedPage("form:gender");
+        EnumDropDownChoice<Gender> choice =
+                ( EnumDropDownChoice<Gender> ) tester.getComponentFromLastRenderedPage("form:gender");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Female), "Female");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Male), "Male");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Unknown), "It's Pat!");
@@ -45,6 +50,6 @@ public class TestEnumDropDownChoice extends AbstractWicketTestCase
         FormTester formTester = tester.newFormTester("form");
         formTester.select("gender", Gender.Female.ordinal());
         formTester.submit();
-        assertEquals( p.getGender(), Gender.Female );
+        assertEquals(p.getGender(), Gender.Female);
     }
 }
