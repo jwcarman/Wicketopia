@@ -10,24 +10,18 @@ import java.util.List;
 /**
  * @since 1.0
  */
-public class ProxyModelManager
+public class ProxyModelManager implements Serializable
 {
 //**********************************************************************************************************************
 // Fields
 //**********************************************************************************************************************
 
+    private static final long serialVersionUID = 1L;
     private final List<ProxyModel<?>> proxyModels = new LinkedList<ProxyModel<?>>();
 
 //**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************
-
-    public <T extends Serializable> IModel<T> proxy( IModel<T> actual )
-    {
-        final ProxyModel<T> model = new ProxyModel<T>(actual);
-        proxyModels.add(model);
-        return model;
-    }
 
     public void commit()
     {
@@ -35,6 +29,13 @@ public class ProxyModelManager
         {
             proxyModel.commit();
         }
+    }
+
+    public <T extends Serializable> IModel<T> proxy( IModel<T> actual )
+    {
+        final ProxyModel<T> model = new ProxyModel<T>(actual);
+        proxyModels.add(model);
+        return model;
     }
 
 //**********************************************************************************************************************
