@@ -16,7 +16,7 @@ import java.util.List;
 public class TestEnumDropDownChoice extends AbstractWicketTestCase
 {
     @Test
-    public void testModelContents()
+    public void testModelContentsWithEnumClassParameter()
     {
         EnumDropDownChoice<Gender> genderChoice = new EnumDropDownChoice<Gender>("gender", Gender.class);
         List<? extends Gender> choices = genderChoice.getChoices();
