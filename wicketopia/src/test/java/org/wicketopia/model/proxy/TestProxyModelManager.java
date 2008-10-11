@@ -20,7 +20,9 @@ public class TestProxyModelManager
         p.setLast("OldLast");
 
         IModel<String> proxyFirst = mgr.proxy(new PropertyModel<String>(p, "first"));
+        assertEquals(proxyFirst.getObject(), "OldFirst");
         IModel<String> proxyLast = mgr.proxy(new PropertyModel<String>(p, "last"));
+        assertEquals(proxyLast.getObject(), "OldLast");
         proxyFirst.setObject("NewFirst");
         proxyLast.setObject("NewLast");
         assertEquals(p.getFirst(), "OldFirst");

@@ -50,6 +50,7 @@ public class ProxyModelManager implements Serializable
         private ProxyModel( IModel<T> destination )
         {
             this.destination = destination;
+            setObject(destination.getObject());
         }
 
         public void commit()
