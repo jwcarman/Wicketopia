@@ -40,6 +40,18 @@
             <organizationUrl>http://www.carmanconsulting.com</organizationUrl>
             <email>james@carmanconsulting.com</email>
         </developer>
+        <developer>
+            <id>nmwael</id>
+            <name>Nino Martinez Wael</name>
+            <roles>
+                <role>developer</role>
+                <role>architect</role>
+            </roles>
+            <timezone>+1</timezone>
+            <organization>Jayway Denmark</organization>
+            <organizationUrl>http://www.jayway.dk</organizationUrl>
+            <email>nino.martinez.wael@gmail.com</email>
+        </developer>
     </developers>
 
     <reporting>
