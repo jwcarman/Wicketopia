@@ -1,13 +1,15 @@
 package org.wicketopia.editor.facet.validator;
 
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
-import org.wicketopia.editor.PropertyEditorBuilder;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.facet.AbstractValidatorFacet;
 
 /**
+ * @author James Carman
  * @since 1.0
  */
-public class LongRangeFacet implements PropertyEditorFacet
+public class LongRangeFacet extends AbstractValidatorFacet
 {
 //**********************************************************************************************************************
 // Fields
@@ -21,30 +23,30 @@ public class LongRangeFacet implements PropertyEditorFacet
 // Constructors
 //**********************************************************************************************************************
 
-    public LongRangeFacet( long min, long max )
+    public LongRangeFacet(long min, long max)
     {
         this.min = min;
         this.max = max;
     }
 
 //**********************************************************************************************************************
-// PropertyEditorFacet Implementation
+// Other Methods
 //**********************************************************************************************************************
 
-
-    public void apply( PropertyEditorBuilder builder )
+    @Override
+    protected IValidator createValidator(EditorContext context)
     {
-        if( max != Long.MAX_VALUE && min != Long.MIN_VALUE )
+        if (max != Long.MAX_VALUE && min != Long.MIN_VALUE)
         {
-            builder.addValidator(NumberValidator.range(min, max));
+            return NumberValidator.range(min, max);
         }
-        else if( max != Long.MAX_VALUE )
+        else if (max != Long.MAX_VALUE)
         {
-            builder.addValidator(NumberValidator.maximum(max));
+            return NumberValidator.maximum(max);
         }
         else
         {
-            builder.addValidator(NumberValidator.minimum(min));
+            return NumberValidator.minimum(min);
         }
     }
 }

@@ -1,19 +1,21 @@
 package org.wicketopia.editor.facet.validator;
 
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.CreditCardValidator;
-import org.wicketopia.editor.PropertyEditorBuilder;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.facet.AbstractValidatorFacet;
 
 /**
  * @author James Carman
  */
-public class CreditCardFacet implements PropertyEditorFacet
+public class CreditCardFacet extends AbstractValidatorFacet
 {
 //**********************************************************************************************************************
 // Fields
 //**********************************************************************************************************************
 
-    private static CreditCardFacet instance = new CreditCardFacet();
+    private static final CreditCardFacet instance = new CreditCardFacet();
+    
     private static final long serialVersionUID = 1L;
 
 //**********************************************************************************************************************
@@ -26,11 +28,12 @@ public class CreditCardFacet implements PropertyEditorFacet
     }
 
 //**********************************************************************************************************************
-// PropertyEditorFacet Implementation
+// Other Methods
 //**********************************************************************************************************************
 
-    public void apply( PropertyEditorBuilder builder )
+    @Override
+    protected IValidator createValidator(EditorContext context)
     {
-        builder.addValidator(new CreditCardValidator());
+        return new CreditCardValidator();
     }
 }

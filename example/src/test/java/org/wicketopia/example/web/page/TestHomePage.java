@@ -1,7 +1,10 @@
 package org.wicketopia.example.web.page;
 
+import org.hamcrest.Matcher;
 import org.jmock.Expectations;
+import org.jmock.syntax.MethodClause;
 import org.testng.annotations.Test;
+import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.editor.def.DefaultEditorTypeMapping;
 import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
 import org.wicketopia.example.domain.entity.Widget;
@@ -19,17 +22,12 @@ public class TestHomePage extends AbstractWicketTestCase
         mockery.checking(new Expectations()
         {
             {
-                one(widgetRepository).size();
+                atLeast(1).of(widgetRepository).size();
                 will(returnValue(0));
-                one(widgetRepository).list(0, 0, "name", true);
-                will(returnValue(Collections.<Widget>emptyList()));
             }
         });
         springContext.putBean("widgetRepository", widgetRepository);
-
-        final DefaultPropertyEditorFactory factory = new DefaultPropertyEditorFactory();
-        factory.setEditorTypeMapping(new DefaultEditorTypeMapping());
-        springContext.putBean("propertyEditorFactory", factory);
+        new WicketopiaPlugin().install(tester.getApplication());
         tester.startPage(HomePage.class);
         tester.assertRenderedPage(HomePage.class);
     }

@@ -11,6 +11,6 @@ public class TestBeanMetadataFactory
     @Test
     public void testWithNoDecorators()
     {
-        BeanMetadataFactory.getInstance().getBeanMetadata(Person.class);
+        
     }
 }

@@ -11,7 +11,7 @@
     <description>A Collection of Useful Wicket Components</description>
 
     <properties>
-        <wicket.version>1.4-m3</wicket.version>
+        <wicket.version>1.4.5</wicket.version>
     </properties>
     <dependencies>
         <dependency>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock</artifactId>
-            <version>2.1.0</version>
+            <version>2.5.0.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -55,6 +55,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

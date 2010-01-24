@@ -9,5 +9,5 @@ import org.wicketopia.metadata.PropertyMetadata;
  */
 public interface PropertyEditorFactory
 {
-    public Component createPropertyEditor( String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel );
+    public Component createPropertyEditor(String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel, EditorContext context);
 }

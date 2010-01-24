@@ -1,6 +1,7 @@
 package org.wicketopia.editor.facet.validator;
 
-import org.wicketopia.editor.PropertyEditorBuilder;
+import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.editor.EditorContext;
 import org.wicketopia.editor.PropertyEditorFacet;
 
 /**
@@ -35,8 +36,7 @@ public class RequiredFacet implements PropertyEditorFacet
 // PropertyEditorFacet Implementation
 //**********************************************************************************************************************
 
-
-    public void apply( PropertyEditorBuilder builder )
+    public void apply( PropertyEditor builder, EditorContext context )
     {
         builder.setRequired(true);
     }

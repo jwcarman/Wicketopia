@@ -1,16 +1,19 @@
 package org.wicketopia.example.web.page;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketopia.component.form.rad.RadCreateEntityForm;
 import org.wicketopia.component.link.RemoveEntityLink;
-import org.wicketopia.editor.PropertyEditorFactory;
+import org.wicketopia.editor.BeanEditorHelper;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.model.column.FragmentColumn;
@@ -29,16 +32,14 @@ public class HomePage extends BasePage
 
     @SpringBean
     private WidgetRepository widgetRepository;
-
-    @SpringBean
-    private PropertyEditorFactory propertyEditorFactory;
+    private final FeedbackPanel feedback;
 
     public HomePage()
     {
-        List<IColumn<?>> columns = new ArrayList<IColumn<?>>();
-        columns.add(new PropertyColumn<String>(new Model<String>("Name"), "name", "name"));
-        columns.add(new PropertyColumn<String>(new Model<String>("Description"), "description", "description"));
-        columns.add(new PropertyColumn<String>(new Model<String>("Type"), "widgetType"));
+        List<IColumn<Widget>> columns = new ArrayList<IColumn<Widget>>();
+        columns.add(new PropertyColumn<Widget>(new Model<String>("Name"), "name", "name"));
+        columns.add(new PropertyColumn<Widget>(new Model<String>("Description"), "description", "description"));
+        columns.add(new PropertyColumn<Widget>(new Model<String>("Type"), "widgetType"));
         columns.add(new FragmentColumn<Widget>(new Model<String>("Actions"))
         {
             private static final long serialVersionUID = 1L;
@@ -63,18 +64,23 @@ public class HomePage extends BasePage
                                                      new PageableRepositoryDataProvider<Widget, String>(
                                                              widgetRepository, "name"), 20));
 
-        final RadCreateEntityForm<Widget, String> form =
-                new RadCreateEntityForm<Widget, String>("form", propertyEditorFactory, widgetRepository)
-                {
-                    private static final long serialVersionUID = 1L;
-
-                    protected void afterCreate( Widget entity )
-                    {
-                        setRedirect(true);
-                        setResponsePage(HomePage.class);
-                    }
-                };
-        add(new FeedbackPanel("feedback"));
-        add(form);
+        final IModel<Widget> model = new Model<Widget>(new Widget());
+        final Form<Widget> widgetForm = new Form<Widget>("form", model);
+        final BeanEditorHelper helper = new BeanEditorHelper<Widget>(Widget.class, model);
+        widgetForm.add(helper.createEditorsView("editors", "id"));
+        widgetForm.add(new SubmitLink("submit")
+        {
+            @Override
+            public void onSubmit()
+            {
+                widgetRepository.add(model.getObject());
+                widgetForm.setModelObject(new Widget());
+            }
+        });
+        feedback = new FeedbackPanel("feedback");
+        feedback.setOutputMarkupId(true);
+        feedback.setOutputMarkupPlaceholderTag(true);
+        add(feedback);
+        add(widgetForm);
     }
 }

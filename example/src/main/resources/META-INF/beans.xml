@@ -84,13 +84,5 @@
             </map>
         </property>
     </bean>
-
-    <bean id="propertyEditorFactory" class="org.wicketopia.editor.def.DefaultPropertyEditorFactory">
-        <property name="editorTypeMapping" ref="editorTypeMapping"/>
-        <property name="builderFactoryOverrides">
-            <map>
-
-            </map>
-        </property>
-    </bean>
+    
 </beans>

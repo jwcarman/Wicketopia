@@ -1,5 +1,7 @@
 package org.wicketopia.editor;
 
+import org.wicketopia.metadata.PropertyMetadata;
+
 /**
  * Maintains a mapping between property types and their default editor types.
  *
@@ -10,8 +12,8 @@ public interface EditorTypeMapping
     /**
      * Returns the editor type for the property type
      *
-     * @param propertyType the property type
+     * @param propertyMetadata the property metadata
      * @return the editor type
      */
-    public String getEditorType( Class propertyType );
+    public String getEditorType(PropertyMetadata propertyMetadata);
 }

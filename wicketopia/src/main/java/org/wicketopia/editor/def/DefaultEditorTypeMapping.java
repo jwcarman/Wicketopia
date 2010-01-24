@@ -2,6 +2,7 @@ package org.wicketopia.editor.def;
 
 import org.apache.commons.lang.ClassUtils;
 import org.wicketopia.editor.EditorTypeMapping;
+import org.wicketopia.metadata.PropertyMetadata;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -52,16 +53,15 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
         addEditorTypeOverride(Timestamp.class, "sql_timestamp");
 
         addEditorTypeOverride(Enum.class, "enum");
-
     }
 
 //**********************************************************************************************************************
 // EditorTypeMapping Implementation
 //**********************************************************************************************************************
 
-    public String getEditorType( Class propertyType )
+    public String getEditorType( PropertyMetadata propertyMetadata )
     {
-        final Queue<Class> typeQueue = createTypeQueue(propertyType);
+        final Queue<Class> typeQueue = createTypeQueue(propertyMetadata.getPropertyType());
         while( !typeQueue.isEmpty() )
         {
             Class type = typeQueue.remove();

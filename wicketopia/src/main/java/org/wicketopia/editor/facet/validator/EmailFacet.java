@@ -1,13 +1,14 @@
 package org.wicketopia.editor.facet.validator;
 
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
-import org.wicketopia.editor.PropertyEditorBuilder;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.facet.AbstractValidatorFacet;
 
 /**
  * @author James Carman
  */
-public class EmailFacet implements PropertyEditorFacet
+public class EmailFacet extends AbstractValidatorFacet
 {
 //**********************************************************************************************************************
 // Fields
@@ -27,12 +28,12 @@ public class EmailFacet implements PropertyEditorFacet
     }
 
 //**********************************************************************************************************************
-// PropertyEditorFacet Implementation
+// Other Methods
 //**********************************************************************************************************************
 
-
-    public void apply( PropertyEditorBuilder builder )
+    @Override
+    protected IValidator createValidator(EditorContext context)
     {
-        builder.addValidator(EmailAddressValidator.getInstance());
+        return EmailAddressValidator.getInstance();
     }
 }

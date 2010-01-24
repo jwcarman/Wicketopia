@@ -1,13 +1,15 @@
 package org.wicketopia.editor.facet.validator;
 
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
-import org.wicketopia.editor.PropertyEditorBuilder;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.facet.AbstractValidatorFacet;
 
 /**
  * @author James Carman
+ * @version 1.0
  */
-public class DoubleRangeFacet implements PropertyEditorFacet
+public class DoubleRangeFacet extends AbstractValidatorFacet
 {
     private final double min;
     private final double max;
@@ -18,19 +20,20 @@ public class DoubleRangeFacet implements PropertyEditorFacet
         this.max = max;
     }
 
-    public void apply( PropertyEditorBuilder builder )
+    @Override
+    protected IValidator createValidator(EditorContext context)
     {
         if( max != Double.MAX_VALUE && min != Double.MIN_VALUE )
         {
-            builder.addValidator(NumberValidator.range(min, max));
+            return NumberValidator.range(min, max);
         }
         else if( max != Double.MAX_VALUE )
         {
-            builder.addValidator(NumberValidator.maximum(max));
+            return NumberValidator.maximum(max);
         }
         else
         {
-            builder.addValidator(NumberValidator.minimum(min));
+            return NumberValidator.minimum(min);
         }
     }
 }

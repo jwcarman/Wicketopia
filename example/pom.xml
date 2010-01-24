@@ -11,10 +11,10 @@
     <artifactId>wicketopia-example</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>wicketopia-example</name>
+    <name>Wicketopia Example Application</name>
 
     <properties>
-        <wicket.version>1.4-m3</wicket.version>
+        <wicket.version>1.4.5</wicket.version>
         <domdrides.version>1.2</domdrides.version>
         <hibernate.version>3.2.6.ga</hibernate.version>
         <hibernate.annotations.version>3.3.1.GA</hibernate.annotations.version>
@@ -24,7 +24,6 @@
         <spring.version>2.5.5</spring.version>
         <slf4j.version>1.4.2</slf4j.version>
         <log4j.version>1.2.14</log4j.version>
-
         <jetty.version>6.1.4</jetty.version>
         <testng.version>5.7</testng.version>
         <jmock.version>2.5.0.1</jmock.version>
@@ -111,6 +110,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
             <version>${hibernate.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.transaction</groupId>
+                    <artifactId>jta</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -124,12 +129,25 @@
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jta_1.1_spec</artifactId>
+            <version>1.1</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jta_1.1_spec</artifactId>
+            <version>1.1</version>
+        </dependency>
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>

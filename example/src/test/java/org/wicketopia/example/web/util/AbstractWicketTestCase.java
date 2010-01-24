@@ -1,6 +1,7 @@
 package org.wicketopia.example.web.util;
 
 import org.apache.wicket.spring.injection.annot.test.AnnotApplicationContextMock;
+import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
 import org.jmock.Mockery;
 import org.testng.annotations.AfterMethod;
@@ -9,7 +10,7 @@ import org.wicketopia.example.web.application.WicketApplication;
 
 public abstract class AbstractWicketTestCase
 {
-    protected AnnotApplicationContextMock springContext;
+    protected ApplicationContextMock springContext;
     protected WicketTester tester;
     protected Mockery mockery;
 
@@ -17,10 +18,11 @@ public abstract class AbstractWicketTestCase
     public void constructWicketTester()
     {
         mockery = new Mockery();
-        springContext = new AnnotApplicationContextMock();
         final WicketApplication application = new WicketApplication();
+        springContext = new ApplicationContextMock();
         application.setApplicationContext(springContext);
         tester = new WicketTester(application);
+
     }
 
     @AfterMethod

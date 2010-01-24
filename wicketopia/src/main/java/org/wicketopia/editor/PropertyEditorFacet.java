@@ -7,5 +7,5 @@ import java.io.Serializable;
  */
 public interface PropertyEditorFacet extends Serializable
 {
-    public void apply( PropertyEditorBuilder builder );
+    public void apply( PropertyEditor builder, EditorContext context);
 }

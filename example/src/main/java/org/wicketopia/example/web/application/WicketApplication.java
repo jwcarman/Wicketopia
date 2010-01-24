@@ -6,6 +6,7 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.example.web.page.HomePage;
 
 /**
@@ -75,6 +76,7 @@ public class WicketApplication extends WebApplication implements ISpringContextL
     protected void init()
     {
         super.init();
-        addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext()));
+        new WicketopiaPlugin().install(this);
+        addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
     }
 }

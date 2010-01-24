@@ -1,13 +1,14 @@
 package org.wicketopia.editor.facet.validator;
 
+import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.wicketopia.editor.PropertyEditorBuilder;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.facet.AbstractValidatorFacet;
 
 /**
  * @author James Carman
  */
-public class LengthFacet implements PropertyEditorFacet
+public class LengthFacet extends AbstractValidatorFacet
 {
 //**********************************************************************************************************************
 // Fields
@@ -21,7 +22,7 @@ public class LengthFacet implements PropertyEditorFacet
 // Constructors
 //**********************************************************************************************************************
 
-    public LengthFacet( int min, int max )
+    public LengthFacet(int min, int max)
     {
         this.min = min;
         this.max = max;
@@ -31,27 +32,27 @@ public class LengthFacet implements PropertyEditorFacet
 // PropertyEditorFacet Implementation
 //**********************************************************************************************************************
 
-
-    public void apply( PropertyEditorBuilder builder )
+    @Override
+    protected IValidator createValidator(EditorContext context)
     {
-        if( max != Integer.MAX_VALUE && min != Integer.MIN_VALUE )
+        if (max != Integer.MAX_VALUE && min != Integer.MIN_VALUE)
         {
-            if( max == min )
+            if (max == min)
             {
-                builder.addValidator(StringValidator.exactLength(min));
+                return StringValidator.exactLength(min);
             }
             else
             {
-                builder.addValidator(StringValidator.lengthBetween(min, max));
+                return StringValidator.lengthBetween(min, max);
             }
         }
-        else if( max != Integer.MAX_VALUE )
+        else if (max != Integer.MAX_VALUE)
         {
-            builder.addValidator(StringValidator.maximumLength(max));
+            return StringValidator.maximumLength(max);
         }
         else
         {
-            builder.addValidator(StringValidator.minimumLength(min));
+            return StringValidator.minimumLength(min);
         }
     }
 }

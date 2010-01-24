@@ -1,10 +1,10 @@
 package org.wicketopia.metadata;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.wicket.WicketRuntimeException;
+import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.editor.PropertyEditorFacet;
 
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,9 +20,8 @@ public class PropertyMetadata implements Serializable, Comparable
 //**********************************************************************************************************************
 
     private static final long serialVersionUID = 1L;
-    private final String propertyName;
     private final BeanMetadata beanMetadata;
-    private final Class<?> propertyType;
+    private final PropertyDescriptor propertyDescriptor;
     private String labelTextMessageKey;
     private String defaultLabelText;
     private int order = Integer.MAX_VALUE;
@@ -33,11 +32,10 @@ public class PropertyMetadata implements Serializable, Comparable
 // Constructors
 //**********************************************************************************************************************
 
-    PropertyMetadata( BeanMetadata beanMetadata, PropertyDescriptor propertyDescriptor )
+    PropertyMetadata(BeanMetadata beanMetadata, PropertyDescriptor propertyDescriptor)
     {
         this.beanMetadata = beanMetadata;
-        this.propertyName = propertyDescriptor.getName();
-        this.propertyType = propertyDescriptor.getPropertyType();
+        this.propertyDescriptor = propertyDescriptor;
         this.labelTextMessageKey = beanMetadata.getBeanClass().getName() + "." + propertyDescriptor.getName();
         this.defaultLabelText = calculateDefaultLabelText(propertyDescriptor);
     }
@@ -47,34 +45,11 @@ public class PropertyMetadata implements Serializable, Comparable
 //**********************************************************************************************************************
 
 
-    public PropertyDescriptor getPropertyDescriptor()
+    public int compareTo(Object o)
     {
-        try
+        if (o instanceof PropertyMetadata)
         {
-            PropertyDescriptor[] propertyDescriptors =
-                    Introspector.getBeanInfo(beanMetadata.getBeanClass()).getPropertyDescriptors();
-            for( PropertyDescriptor propertyDescriptor : propertyDescriptors )
-            {
-                if( propertyName.equals(propertyDescriptor.getName()) )
-                {
-                    return propertyDescriptor;
-                }
-            }
-            return null;
-        }
-        catch( IntrospectionException e )
-        {
-            throw new RuntimeException("Unable to obtain property descriptor.", e);
-        }
-
-
-    }
-
-    public int compareTo( Object o )
-    {
-        if( o instanceof PropertyMetadata )
-        {
-            PropertyMetadata other = ( PropertyMetadata ) o;
+            PropertyMetadata other = (PropertyMetadata) o;
             return new Integer(order).compareTo(other.order);
         }
         return 1;
@@ -94,7 +69,7 @@ public class PropertyMetadata implements Serializable, Comparable
         return defaultLabelText;
     }
 
-    public void setDefaultLabelText( String defaultLabelText )
+    public void setDefaultLabelText(String defaultLabelText)
     {
         this.defaultLabelText = defaultLabelText;
     }
@@ -104,7 +79,7 @@ public class PropertyMetadata implements Serializable, Comparable
         return editorType;
     }
 
-    public void setEditorType( String editorType )
+    public void setEditorType(String editorType)
     {
         this.editorType = editorType;
     }
@@ -119,7 +94,7 @@ public class PropertyMetadata implements Serializable, Comparable
         return labelTextMessageKey;
     }
 
-    public void setLabelTextMessageKey( String labelTextMessageKey )
+    public void setLabelTextMessageKey(String labelTextMessageKey)
     {
         this.labelTextMessageKey = labelTextMessageKey;
     }
@@ -129,35 +104,35 @@ public class PropertyMetadata implements Serializable, Comparable
         return order;
     }
 
-    public void setOrder( int order )
+    public void setOrder(int order)
     {
         this.order = order;
     }
 
     public String getPropertyName()
     {
-        return propertyName;
+        return propertyDescriptor.getName();
     }
 
     public Class<?> getPropertyType()
     {
-        return propertyType;
+        return propertyDescriptor.getPropertyType();
     }
 
 //**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************
 
-    private String calculateDefaultLabelText( PropertyDescriptor propertyDescriptor )
+    private String calculateDefaultLabelText(PropertyDescriptor propertyDescriptor)
     {
         String[] words = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
         words[0] = StringUtils.capitalize(words[0]);
         StringBuilder sb = new StringBuilder();
-        for( int i = 0; i < words.length; i++ )
+        for (int i = 0; i < words.length; i++)
         {
             String word = words[i];
             sb.append(word);
-            if( i != words.length - 1 )
+            if (i != words.length - 1)
             {
                 sb.append(" ");
             }
@@ -165,8 +140,48 @@ public class PropertyMetadata implements Serializable, Comparable
         return sb.toString();
     }
 
-    public void addFacet( PropertyEditorFacet facet )
+    public void addFacet(PropertyEditorFacet facet)
     {
         facets.add(facet);
+    }
+
+    public PropertyDescriptor getPropertyDescriptor()
+    {
+        return propertyDescriptor;
+    }
+
+    Object writeReplace()
+    {
+        return new SerializedForm(beanMetadata.getBeanClass().getName(), getPropertyName());
+    }
+
+//**********************************************************************************************************************
+// Inner Classes
+//**********************************************************************************************************************
+
+    private static class SerializedForm implements Serializable
+    {
+        private final String className;
+        private final String propertyName;
+
+        private SerializedForm(String className, String propertyName)
+        {
+            this.className = className;
+            this.propertyName = propertyName;
+        }
+
+        Object readResolve()
+        {
+            try
+            {
+                Class beanClass = Class.forName(className);
+                BeanMetadata beanMetadata = WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetadata(beanClass);
+                return beanMetadata.getPropertyMetadata(propertyName);
+            }
+            catch (ClassNotFoundException e)
+            {
+                throw new WicketRuntimeException("Unable to find bean class " + className + ".", e);
+            }
+        }
     }
 }

@@ -1,7 +1,8 @@
 package org.wicketopia.editor.facet;
 
 import org.apache.wicket.validation.IValidator;
-import org.wicketopia.editor.PropertyEditorBuilder;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorFacet;
 
 /**
@@ -13,15 +14,19 @@ public abstract class AbstractValidatorFacet implements PropertyEditorFacet
 // Abstract Methods
 //**********************************************************************************************************************
 
-    protected abstract IValidator createValidator();
+    protected abstract IValidator createValidator(EditorContext context);
 
 //**********************************************************************************************************************
 // PropertyEditorFacet Implementation
 //**********************************************************************************************************************
 
 
-    public void apply( PropertyEditorBuilder builder )
+    public final void apply(PropertyEditor builder, EditorContext context)
     {
-        builder.addValidator(createValidator());
+        final IValidator validator = createValidator(context);
+        if (validator != null)
+        {
+            builder.addValidator(validator);
+        }
     }
 }

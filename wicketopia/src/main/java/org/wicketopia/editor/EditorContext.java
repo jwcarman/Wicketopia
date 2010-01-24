@@ -1,27 +1,32 @@
-package org.wicketopia.editor.facet;
+package org.wicketopia.editor;
 
-import org.apache.wicket.behavior.IBehavior;
-import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorFacet;
+import java.io.Serializable;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
- * @since 1.0
+ *
  */
-public abstract class AbstractBehaviorFacet implements PropertyEditorFacet
+public class EditorContext implements Serializable
 {
 //**********************************************************************************************************************
-// Abstract Methods
+// Fields
 //**********************************************************************************************************************
 
-    protected abstract IBehavior createBehavior();
+    private final Map<String,Object> attributes = new TreeMap<String,Object>();
 
 //**********************************************************************************************************************
-// PropertyEditorFacet Implementation
+// Other Methods
 //**********************************************************************************************************************
 
-
-    public void apply( PropertyEditor builder )
+    @SuppressWarnings("unchecked")
+    public <T> T getAttribute(String name)
     {
-        builder.addBehavior(createBehavior());
+        return (T)attributes.get(name);
+    }
+
+    public <T> void setAttribute(String name, T value)
+    {
+        attributes.put(name, value);
     }
 }

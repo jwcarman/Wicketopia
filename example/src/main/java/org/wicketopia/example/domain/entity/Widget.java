@@ -6,12 +6,7 @@ import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
-import org.wicketopia.annotation.validator.CreditCard;
-import org.wicketopia.annotation.validator.DoubleRange;
-import org.wicketopia.annotation.validator.Email;
-import org.wicketopia.annotation.validator.Length;
-import org.wicketopia.annotation.validator.LongRange;
-import org.wicketopia.annotation.validator.Required;
+import org.wicketopia.annotation.validator.*;
 import org.wicketopia.example.domain.value.WidgetType;
 
 import javax.persistence.Entity;
@@ -34,10 +29,24 @@ public class Widget extends UuidEntity
     private String contactEmail;
     private String creditCardNumber;
     private Date date;
+    private String patternField;
 
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
+
+
+    @DisplayName("My Weird Field")
+    @Pattern("\\d+")
+    public String getPatternField()
+    {
+        return patternField;
+    }
+
+    public void setPatternField(String patternField)
+    {
+        this.patternField = patternField;
+    }
 
     public Date getDate() {
 		return date;
@@ -62,6 +71,7 @@ public class Widget extends UuidEntity
     {
         return contactEmail;
     }
+
 
     public void setContactEmail( String contactEmail )
     {

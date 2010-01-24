@@ -10,14 +10,14 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.IValidator;
 import org.wicketopia.component.choice.EnumDropDownChoice;
-import org.wicketopia.editor.PropertyEditorBuilder;
+import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.metadata.PropertyMetadata;
 import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
  * @since 1.0
  */
-public class FormComponentEditorPanel extends Panel implements PropertyEditorBuilder
+public class FormComponentEditorPanel extends Panel implements PropertyEditor
 {
 //**********************************************************************************************************************
 // Fields
@@ -31,28 +31,7 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditorBui
 // Static Methods
 //**********************************************************************************************************************
 
-    public static FormComponentEditorPanel createTextFieldPanel( String id, IModel<?> propertyModel,
-                                                                 PropertyMetadata propertyMetadata )
-    {
-        final TextField formComponent = new TextField("editor", propertyModel, propertyMetadata.getPropertyType());
-        if( propertyMetadata.getPropertyType().isPrimitive() )
-        {
-            formComponent.setRequired(true);
-        }
-        formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
-        return new FormComponentEditorPanel(id, "textFieldEditor", formComponent);
-    }
-
-    public static FormComponentEditorPanel createTextAreaPanel( String id, IModel<?> propertyModel,
-                                                                PropertyMetadata propertyMetadata )
-    {
-        final TextArea formComponent = new TextArea("editor", propertyModel);
-        formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
-        return new FormComponentEditorPanel(id, "textAreaEditor", formComponent);
-    }
-
-    public static FormComponentEditorPanel createEnumChoicePanel( String id, IModel<?> propertyModel,
-                                                                  PropertyMetadata propertyMetadata )
+    public static FormComponentEditorPanel createEnumChoicePanel(String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel)
     {
         final EnumDropDownChoice<?> choice =
                 new EnumDropDownChoice("choice", propertyModel, propertyMetadata.getPropertyType());
@@ -60,40 +39,61 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditorBui
         return new FormComponentEditorPanel(id, "enumDdcEditor", choice);
     }
 
+    public static FormComponentEditorPanel createTextAreaPanel(String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel)
+    {
+        final TextArea formComponent = new TextArea("editor", propertyModel);
+        formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
+        return new FormComponentEditorPanel(id, "textAreaEditor", formComponent);
+    }
+
+    public static FormComponentEditorPanel createTextFieldPanel(String id,
+            PropertyMetadata propertyMetadata,
+            IModel<?> propertyModel)
+    {
+        final TextField formComponent = new TextField("editor", propertyModel, propertyMetadata.getPropertyType());
+        if (propertyMetadata.getPropertyType().isPrimitive())
+        {
+            formComponent.setRequired(true);
+        }
+        formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
+        return new FormComponentEditorPanel(id, "textFieldEditor", formComponent);
+    }
+
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    private FormComponentEditorPanel( String id, String fragmentId, FormComponent formComponent )
+    private FormComponentEditorPanel(String id, String fragmentId, FormComponent formComponent)
     {
         super(id);
         this.formComponent = formComponent;
         final Fragment fragment = new Fragment("fragment", fragmentId, this);
         fragment.add(formComponent);
+        fragment.setRenderBodyOnly(true);
         add(fragment);
+        setRenderBodyOnly(true);
     }
 
 //**********************************************************************************************************************
-// PropertyEditorBuilder Implementation
+// PropertyEditor Implementation
 //**********************************************************************************************************************
 
-
-    public void addBehavior( IBehavior behavior )
+    public void addBehavior(IBehavior behavior)
     {
         formComponent.add(behavior);
     }
 
-    public void addValidator( IValidator validator )
+    public void addValidator(IValidator validator)
     {
         formComponent.add(validator);
     }
 
-    public Component buildPropertyEditor()
+    public Component getEditorComponent()
     {
         return this;
     }
 
-    public void setRequired( boolean required )
+    public void setRequired(boolean required)
     {
         formComponent.setRequired(true);
     }
