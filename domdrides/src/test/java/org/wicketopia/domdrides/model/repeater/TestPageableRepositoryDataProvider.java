@@ -1,4 +1,4 @@
-package org.wicketopia.model.repeater;
+package org.wicketopia.domdrides.model.repeater;
 
 import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
@@ -9,8 +9,8 @@ import org.jmock.Expectations;
 import org.domdrides.repository.PageableRepository;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.model.IModel;
-import org.wicketopia.util.Person;
-import org.wicketopia.model.LoadableDetachableEntityModel;
+import org.wicketopia.domdrides.model.LoadableDetachableEntityModel;
+import org.wicketopia.domdrides.util.Person;
 
 import java.util.Collections;
 

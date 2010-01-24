@@ -1,4 +1,4 @@
-package org.wicketopia.component.link;
+package org.wicketopia.domdrides.component.link;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.AbstractLink;

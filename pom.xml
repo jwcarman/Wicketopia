@@ -11,20 +11,20 @@
     <url>http://www.wicketopia.org</url>
     <modules>
         <module>wicketopia</module>
+        <module>domdrides</module>
         <module>hibernate-archetype</module>
         <module>jpa-archetype</module>
-        <module>example</module>
+        <module>example</module>        
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>5.7</version>
-            <scope>test</scope>
-            <classifier>jdk15</classifier>
-        </dependency>
-    </dependencies>
+    <properties>
+        <wicket.version>1.4.5</wicket.version>
+        <slf4j.version>1.4.2</slf4j.version>
+        <log4j.version>1.2.14</log4j.version>
+        <jetty.version>6.1.4</jetty.version>
+        <testng.version>5.7</testng.version>
+        <jmock.version>2.5.0.1</jmock.version>
+    </properties>  
 
     <developers>
         <developer>
@@ -102,17 +102,17 @@
     <distributionManagement>
         <site>
             <id>sourceforge.net</id>
-            <name>SourceForge Site</name>
+            <name>Wicketopia Site</name>
             <url>scp://shell.sourceforge.net/home/groups/w/wi/wicketopia/htdocs</url>
         </site>
         <repository>
             <id>sourceforge.net</id>
-            <name>Domdrides Release</name>
+            <name>Wicketopia Release</name>
             <url>scp://shell.sf.net/home/groups/w/wi/wicketopia/htdocs/m2repo/releases</url>
         </repository>
         <snapshotRepository>
             <id>sourceforge.net</id>
-            <name>Domdrides Snapshot</name>
+            <name>Wicketopia Snapshot</name>
             <url>scp://shell.sf.net/home/groups/w/wi/wicketopia/htdocs/m2repo/snapshots</url>
         </snapshotRepository>
     </distributionManagement>

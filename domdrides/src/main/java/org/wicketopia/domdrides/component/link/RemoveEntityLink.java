@@ -1,18 +1,16 @@
-package org.wicketopia.component.link;
+package org.wicketopia.domdrides.component.link;
 
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.model.IModel;
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.IModel;
 
 import java.io.Serializable;
 
 /**
- * An ajax-enabled link that removes an entity.
- * @since 1.0
+ * @author James Carman
  */
-public abstract class AjaxRemoveEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends AjaxLink<EntityType>
+public abstract class RemoveEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends Link<EntityType>
 {
 //**********************************************************************************************************************
 // Fields
@@ -25,7 +23,7 @@ public abstract class AjaxRemoveEntityLink<EntityType extends Entity<IdType>,IdT
 // Constructors
 //**********************************************************************************************************************
 
-    public AjaxRemoveEntityLink( String id, Repository<EntityType, IdType> repository, IModel<EntityType> model )
+    public RemoveEntityLink( String id, Repository<EntityType, IdType> repository, IModel<EntityType> model )
     {
         super(id, model);
         this.repository = repository;
@@ -37,22 +35,20 @@ public abstract class AjaxRemoveEntityLink<EntityType extends Entity<IdType>,IdT
 
     /**
      * Subclasses must override this to provide behavior after the entity has been removed (like redirecting to another page,
-     * perhaps).  Typically this would be used to update whatever component(s) displayed this link in the first place
-     * (such as a table or list).
+     * perhaps).  If you wish to remain on the same screen, just override with a no-op implementation.
      *
      * @param entity the entity that was removed
-     * @param ajaxRequestTarget the ajax request target
      */
-    protected abstract void afterRemove(EntityType entity, AjaxRequestTarget ajaxRequestTarget);
+    protected abstract void afterRemove(EntityType entity);
 
 //**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************
 
-    public final void onClick( AjaxRequestTarget ajaxRequestTarget )
+    public final void onClick()
     {
         final EntityType entity = getModelObject();
         repository.remove(entity);
-        afterRemove(entity, ajaxRequestTarget);
+        afterRemove(entity);
     }
 }

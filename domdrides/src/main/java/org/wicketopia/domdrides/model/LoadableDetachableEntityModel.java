@@ -1,8 +1,8 @@
-package org.wicketopia.model;
+package org.wicketopia.domdrides.model;
 
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;
-import org.apache.wicket.model.LoadableDetachableModel;
 
 import java.io.Serializable;
 

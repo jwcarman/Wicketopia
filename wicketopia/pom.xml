@@ -10,9 +10,6 @@
     <name>Wicketopia Core Library</name>
     <description>A Collection of Useful Wicket Components</description>
 
-    <properties>
-        <wicket.version>1.4.5</wicket.version>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -30,14 +27,16 @@
             <version>${wicket.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.domdrides</groupId>
-            <artifactId>domdrides-core</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+            <classifier>jdk15</classifier>
         </dependency>
         <dependency>
             <groupId>org.jmock</groupId>

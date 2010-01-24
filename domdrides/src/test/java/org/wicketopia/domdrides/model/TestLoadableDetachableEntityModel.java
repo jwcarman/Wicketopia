@@ -1,10 +1,11 @@
-package org.wicketopia.model;
+package org.wicketopia.domdrides.model;
 
-import org.wicketopia.util.Person;
 import org.jmock.Mockery;
 import org.jmock.Expectations;
 import org.testng.annotations.Test;
 import org.domdrides.repository.Repository;
+import org.wicketopia.domdrides.util.Person;
+
 import static org.testng.Assert.*;
 
 /**

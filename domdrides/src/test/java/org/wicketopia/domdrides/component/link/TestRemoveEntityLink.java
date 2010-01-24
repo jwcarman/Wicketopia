@@ -1,0 +1,51 @@
+package org.wicketopia.domdrides.component.link;
+
+import org.wicketopia.domdrides.util.AbstractWicketTestCase;
+import org.wicketopia.domdrides.util.Person;
+
+import org.testng.annotations.Test;
+import org.domdrides.repository.Repository;
+import org.jmock.Expectations;
+import static org.testng.Assert.*;
+import org.apache.wicket.model.Model;
+
+/**
+ * @author James Carman
+ */
+public class TestRemoveEntityLink extends AbstractWicketTestCase
+{
+//**********************************************************************************************************************
+// Fields
+//**********************************************************************************************************************
+
+    private boolean afterRemoveCalled = false;
+
+//**********************************************************************************************************************
+// Other Methods
+//**********************************************************************************************************************
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testEntityRemovedWhenClicked()
+    {
+        final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
+        final Person person = new Person();
+        mockery.checking(new Expectations() {{
+           one(mockRepo).remove(person);
+        }});
+        final RemoveEntityLink<Person,String> link = new RemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
+        {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void afterRemove( Person entity )
+            {
+                afterRemoveCalled = true;
+            }
+        };
+        RemovePersonPage page = new RemovePersonPage(link);
+        tester.startPage(page);
+        tester.clickLink("link");
+        assertTrue(afterRemoveCalled);        
+    }
+}

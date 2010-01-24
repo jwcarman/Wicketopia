@@ -1,9 +1,11 @@
-package org.wicketopia.util;
+package org.wicketopia.domdrides.util;
+
+import org.domdrides.entity.UuidEntity;
 
 /**
- * @author James Carman
+ * @version 1.0
  */
-public class Person
+public class Person extends UuidEntity
 {
 //**********************************************************************************************************************
 // Fields

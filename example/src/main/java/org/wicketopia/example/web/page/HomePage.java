@@ -1,7 +1,5 @@
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -12,12 +10,12 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketopia.component.link.RemoveEntityLink;
+import org.wicketopia.domdrides.component.link.RemoveEntityLink;
+import org.wicketopia.domdrides.model.repeater.PageableRepositoryDataProvider;
 import org.wicketopia.editor.BeanEditorHelper;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.model.column.FragmentColumn;
-import org.wicketopia.model.repeater.PageableRepositoryDataProvider;
 
 import java.util.ArrayList;
 import java.util.List;
