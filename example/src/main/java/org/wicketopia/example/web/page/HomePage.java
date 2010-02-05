@@ -1,21 +1,23 @@
 package org.wicketopia.example.web.page;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketopia.domdrides.DomdridesPersistenceService;
 import org.wicketopia.domdrides.component.link.RemoveEntityLink;
 import org.wicketopia.domdrides.model.repeater.PageableRepositoryDataProvider;
 import org.wicketopia.editor.BeanEditorHelper;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.model.column.FragmentColumn;
+import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +44,14 @@ public class HomePage extends BasePage
         {
             private static final long serialVersionUID = 1L;
 
-            protected Fragment createFragment( String componentId, IModel<Widget> model )
+            protected Fragment createFragment(String componentId, IModel<Widget> model)
             {
                 Fragment f = new Fragment(componentId, "linksPanel", HomePage.this);
                 f.add(new RemoveEntityLink<Widget, String>("removeLink", widgetRepository, model)
                 {
                     private static final long serialVersionUID = 1L;
 
-                    protected void afterRemove( Widget entity )
+                    protected void afterRemove(Widget entity)
                     {
                         setRedirect(true);
                         setResponsePage(HomePage.class);
@@ -58,26 +60,28 @@ public class HomePage extends BasePage
                 return f;
             }
         });
-        add(new AjaxFallbackDefaultDataTable<Widget>("table", columns,
-                                                     new PageableRepositoryDataProvider<Widget, String>(
-                                                             widgetRepository, "name"), 20));
-
-        final IModel<Widget> model = new Model<Widget>(new Widget());
-        final Form<Widget> widgetForm = new Form<Widget>("form", model);
-        final BeanEditorHelper helper = new BeanEditorHelper<Widget>(Widget.class, model);
-        widgetForm.add(helper.createEditorsView("editors", "id"));
-        widgetForm.add(new SubmitLink("submit")
-        {
-            @Override
-            public void onSubmit()
-            {
-                widgetRepository.add(model.getObject());
-                widgetForm.setModelObject(new Widget());
-            }
-        });
+        final AjaxFallbackDefaultDataTable<Widget> table = new AjaxFallbackDefaultDataTable<Widget>("table", columns,
+                new PageableRepositoryDataProvider<Widget, String>(
+                        widgetRepository, "name"), 20);
+        add(table);
         feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         feedback.setOutputMarkupPlaceholderTag(true);
+        final IModel<Widget> model = new Model<Widget>(new Widget());
+        final Form<Widget> widgetForm = new Form<Widget>("form", model);
+        final BeanEditorHelper helper = new BeanEditorHelper<Widget>(Widget.class, model);
+        widgetForm.add(new AjaxCreateLink<Widget>("submit", widgetForm, new DomdridesPersistenceService<Widget, String>(widgetRepository))
+        {
+            @Override
+            protected void afterUpdate(Widget object, AjaxRequestTarget target)
+            {
+                target.addComponent(table);
+                target.addComponent(widgetForm);
+                target.addComponent(feedback);
+                info("Widget created successfully!");
+            }
+        });
+        widgetForm.add(helper.createEditorsView("editors", "id"));
         add(feedback);
         add(widgetForm);
     }

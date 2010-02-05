@@ -27,7 +27,6 @@ public class Widget extends UuidEntity
     private int sizeAsInt;
     private double sizeAsDouble;
     private String contactEmail;
-    private String creditCardNumber;
     private Date date;
     private String patternField;
 
@@ -76,17 +75,6 @@ public class Widget extends UuidEntity
     public void setContactEmail( String contactEmail )
     {
         this.contactEmail = contactEmail;
-    }
-
-    @CreditCard
-    public String getCreditCardNumber()
-    {
-        return creditCardNumber;
-    }
-
-    public void setCreditCardNumber( String creditCardNumber )
-    {
-        this.creditCardNumber = creditCardNumber;
     }
 
     @Order( 1 )

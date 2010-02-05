@@ -14,7 +14,8 @@
         <module>domdrides</module>
         <module>hibernate-archetype</module>
         <module>jpa-archetype</module>
-        <module>example</module>        
+        <module>example</module>
+        <module>hibernate</module>
     </modules>
 
     <properties>
