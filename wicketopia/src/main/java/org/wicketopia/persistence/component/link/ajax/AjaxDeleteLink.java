@@ -3,7 +3,7 @@ package org.wicketopia.persistence.component.link.ajax;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.IModel;
-import org.wicketopia.persistence.PersistenceService;
+import org.wicketopia.persistence.PersistenceProvider;
 
 public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 {
@@ -11,16 +11,16 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 // Fields
 //**********************************************************************************************************************
 
-    private final PersistenceService persistenceService;
+    private final PersistenceProvider persistenceProvider;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public AjaxDeleteLink(String id, IModel<T> model, PersistenceService persistenceService)
+    public AjaxDeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
     {
         super(id, model);
-        this.persistenceService = persistenceService;
+        this.persistenceProvider = persistenceProvider;
     }
 
 //**********************************************************************************************************************
@@ -37,7 +37,7 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
     public final void onClick(AjaxRequestTarget target)
     {
         final T object = getModelObject();
-        persistenceService.delete(object);
+        persistenceProvider.delete(object);
         afterDelete(object, target);
     }
 }

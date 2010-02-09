@@ -10,7 +10,15 @@
     <name>Wicketopia Core Library</name>
     <description>A Collection of Useful Wicket Components</description>
 
+    <properties>
+        <wicket.version>1.4.5</wicket.version>
+    </properties>
     <dependencies>
+        <dependency>
+			<groupId>net.sf.scannotation</groupId>
+			<artifactId>scannotation</artifactId>
+            <version>1.0.2</version>
+		</dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket</artifactId>

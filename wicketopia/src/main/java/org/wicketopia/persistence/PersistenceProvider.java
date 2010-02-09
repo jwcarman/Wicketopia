@@ -1,6 +1,6 @@
 package org.wicketopia.persistence;
 
-public interface PersistenceService
+public interface PersistenceProvider
 {
     public <T> T create(T object);
 

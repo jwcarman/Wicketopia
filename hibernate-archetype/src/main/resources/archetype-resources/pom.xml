@@ -8,7 +8,7 @@
     <name>${artifactId}</name>
 
     <properties>
-        <wicket.version>1.4-m3</wicket.version>
+        <wicket.version>1.4.0</wicket.version>
         <domdrides.version>1.2</domdrides.version>
         <hibernate.version>3.2.6.ga</hibernate.version>
         <hibernate.annotations.version>3.3.1.GA</hibernate.annotations.version>

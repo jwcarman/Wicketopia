@@ -12,7 +12,6 @@ import org.apache.wicket.validation.IValidator;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.component.choice.EnumDropDownChoice;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
@@ -40,7 +39,7 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditor
         return new FormComponentEditorPanel(id, "enumDdcEditor", choice);
     }
 
-    public static FormComponentEditorPanel createTextAreaPanel(String id, WicketopiaPropertyMetaData propertyMetadata, IModel<?> propertyModel)
+    public static FormComponentEditorPanel createTextAreaPanel(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
     {
         final TextArea formComponent = new TextArea("editor", propertyModel);
         formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
@@ -48,11 +47,11 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditor
     }
 
     public static FormComponentEditorPanel createTextFieldPanel(String id,
-            WicketopiaPropertyMetaData propertyMetadata,
+            PropertyMetaData propertyMetadata,
             IModel<?> propertyModel)
     {
-        final TextField formComponent = new TextField("editor", propertyModel, propertyMetadata.getPropertyType());
-        if (propertyMetadata.getPropertyType().isPrimitive())
+        final TextField formComponent = new TextField("editor", propertyModel, propertyMetadata.getPropertyDescriptor().getPropertyType());
+        if (propertyMetadata.getPropertyDescriptor().getPropertyType().isPrimitive())
         {
             formComponent.setRequired(true);
         }

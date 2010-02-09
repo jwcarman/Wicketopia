@@ -1,8 +1,8 @@
 package org.wicketopia.editor.def;
 
 import org.apache.commons.lang.ClassUtils;
+import org.metastopheles.PropertyMetaData;
 import org.wicketopia.editor.EditorTypeMapping;
-import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -59,9 +59,9 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
 // EditorTypeMapping Implementation
 //**********************************************************************************************************************
 
-    public String getEditorType( WicketopiaPropertyMetaData propertyMetadata )
+    public String getEditorType( PropertyMetaData propertyMetadata )
     {
-        final Queue<Class> typeQueue = createTypeQueue(propertyMetadata.getPropertyType());
+        final Queue<Class> typeQueue = createTypeQueue(propertyMetadata.getPropertyDescriptor().getPropertyType());
         while( !typeQueue.isEmpty() )
         {
             Class type = typeQueue.remove();

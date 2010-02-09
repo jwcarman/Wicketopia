@@ -2,7 +2,12 @@ package org.wicketopia.editor.def;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
-import org.wicketopia.editor.*;
+import org.metastopheles.PropertyMetaData;
+import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.PropertyEditorFactory;
+import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.provider.EnumChoicePropertyEditorProvider;
 import org.wicketopia.editor.provider.TextAreaPropertyEditorProvider;
 import org.wicketopia.editor.provider.TextFieldPropertyEditorProvider;
@@ -46,14 +51,15 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 // PropertyEditorFactory Implementation
 //**********************************************************************************************************************
 
-    public Component createPropertyEditor(String id, WicketopiaPropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context)
+    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context)
     {
-        String editorType = propertyMetadata.getEditorType();
+        WicketopiaPropertyMetaData wicketopiaPropertyMetaData = WicketopiaPropertyMetaData.get(propertyMetadata);
+        String editorType = wicketopiaPropertyMetaData.getEditorType();
         if (editorType == null)
         {
             throw new IllegalArgumentException("No editor type defined for property " +
-                    propertyMetadata.getPropertyName() + " of class " +
-                    propertyMetadata.getBeanMetadata().getBeanClass().getName() + ".");
+                    propertyMetadata.getPropertyDescriptor().getName() + " of class " +
+                    propertyMetadata.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + ".");
         }
         PropertyEditorProvider provider = providerMap.get(editorType);
         if (provider == null)
@@ -62,7 +68,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
                     "No property editor builder defined for editor type \"" + editorType + ".\"");
         }
         PropertyEditor builder = provider.createPropertyEditor(id, propertyMetadata, propertyModel);
-        for (PropertyEditorFacet facet : propertyMetadata.getFacets())
+        for (PropertyEditorFacet facet : wicketopiaPropertyMetaData.getFacets())
         {
             facet.apply(builder, context);
         }

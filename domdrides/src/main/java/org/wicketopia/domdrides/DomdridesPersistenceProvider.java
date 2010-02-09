@@ -1,41 +1,45 @@
-package org.wicketopia.persistence.component.link;
+package org.wicketopia.domdrides;
 
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.IModel;
+import org.domdrides.entity.Entity;
+import org.domdrides.repository.Repository;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public class DeleteLink<T> extends Link<T>
+import java.io.Serializable;
+
+public class DomdridesPersistenceProvider<EntityType extends Entity<IdType>, IdType extends Serializable> implements PersistenceProvider<EntityType>, Serializable
 {
 //**********************************************************************************************************************
 // Fields
 //**********************************************************************************************************************
 
-    private PersistenceProvider persistenceProvider;
+    private final Repository<EntityType,IdType> repository;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public DeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
+    public DomdridesPersistenceProvider(Repository<EntityType, IdType> repository)
     {
-        super(id, model);
-        this.persistenceProvider = persistenceProvider;
+        this.repository = repository;
     }
 
 //**********************************************************************************************************************
-// Other Methods
+// PersistenceProvider Implementation
 //**********************************************************************************************************************
 
-    @Override
-    public final void onClick()
+
+    public EntityType create(EntityType object)
     {
-        final T object = getModelObject();
-        persistenceProvider.delete(object);
-        afterDelete(object);
+        return repository.add(object);
     }
 
-    protected void afterDelete(T object)
+    public void delete(EntityType object)
     {
+        repository.remove(object);
+    }
 
+    public EntityType update(EntityType object)
+    {
+        return repository.update(object);
     }
 }

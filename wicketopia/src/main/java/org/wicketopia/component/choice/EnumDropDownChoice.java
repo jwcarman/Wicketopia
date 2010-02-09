@@ -12,6 +12,7 @@ import java.util.List;
  * A useful {@link DropDownChoice} implementation for enum classes.  The values displayed for the enums can be
  * internationalized.  For enum value Bar from enum class com.myco.Foo, it will look for message key com.myco.Foo.Bar.
  *
+ * @see org.wicketopia.renderer.EnumChoiceRenderer
  * @since 1.0
  */
 public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
@@ -20,7 +21,7 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
 // Fields
 //**********************************************************************************************************************
 
-    private static final long serialVersionUID = 6199988612173580363L;
+    private static final long serialVersionUID = 1L;
 
 //**********************************************************************************************************************
 // Constructors

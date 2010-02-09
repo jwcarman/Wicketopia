@@ -3,7 +3,7 @@ package org.wicketopia.persistence.component.link.ajax;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
-import org.wicketopia.persistence.PersistenceService;
+import org.wicketopia.persistence.PersistenceProvider;
 
 public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 {
@@ -11,16 +11,16 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 // Fields
 //**********************************************************************************************************************
 
-    private final PersistenceService persistenceService;
+    private final PersistenceProvider persistenceProvider;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    protected AjaxUpdateLink(String id, Form<T> form, PersistenceService persistenceService)
+    protected AjaxUpdateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
     {
         super(id, form);
-        this.persistenceService = persistenceService;
+        this.persistenceProvider = persistenceProvider;
     }
 
 //**********************************************************************************************************************
@@ -38,7 +38,7 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
     protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
         T object = (T)form.getModelObject();
-        object = persistenceService.update(object);
+        object = persistenceProvider.update(object);
         afterUpdate(object, target);
     }
 }

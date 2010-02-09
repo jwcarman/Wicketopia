@@ -5,6 +5,9 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.StringResourceModel;
 
 /**
+ * A choice renderer for enum values which allows internationalization of the display values.  For enum value Bar from
+ * enum class com.myco.Foo, it will look for message key com.myco.Foo.Bar.
+ *
  * @since 1.0
  */
 public class EnumChoiceRenderer<T extends Enum> implements IChoiceRenderer<T>
@@ -20,7 +23,7 @@ public class EnumChoiceRenderer<T extends Enum> implements IChoiceRenderer<T>
 // Static Methods
 //**********************************************************************************************************************
 
-    private static <T extends Enum> String getEnumDisplayValue( T enumValue, DropDownChoice<T> dropDownChoice )
+    private static <T extends Enum> String getEnumDisplayValue(T enumValue, DropDownChoice<T> dropDownChoice)
     {
         return new StringResourceModel(enumValue.getClass().getName() + "." + enumValue.name(), dropDownChoice, null, enumValue.toString()).getString();
     }
@@ -29,7 +32,7 @@ public class EnumChoiceRenderer<T extends Enum> implements IChoiceRenderer<T>
 // Constructors
 //**********************************************************************************************************************
 
-    public EnumChoiceRenderer( DropDownChoice<T> dropDownChoice )
+    public EnumChoiceRenderer(DropDownChoice<T> dropDownChoice)
     {
         this.dropDownChoice = dropDownChoice;
     }
@@ -39,12 +42,12 @@ public class EnumChoiceRenderer<T extends Enum> implements IChoiceRenderer<T>
 //**********************************************************************************************************************
 
 
-    public Object getDisplayValue( T enumValue )
+    public Object getDisplayValue(T enumValue)
     {
         return getEnumDisplayValue(enumValue, dropDownChoice);
     }
 
-    public String getIdValue( T enumValue, int index )
+    public String getIdValue(T enumValue, int index)
     {
         return String.valueOf(enumValue.ordinal());
     }

@@ -8,7 +8,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.component.label.PropertyLabel;
-import org.wicketopia.metadata.BeanMetadata;
 import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 import java.io.Serializable;
@@ -73,7 +72,7 @@ public class BeanEditorHelper<T> implements Serializable
         return beanMetadata.getPropertyMetadata(propertyName);
     }
 
-    private BeanMetadata<T> getBeanMetadata()
+    private BeanMetaData<T> getBeanMetadata()
     {
         return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetadata(beanClass);
     }
