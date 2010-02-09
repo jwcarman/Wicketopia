@@ -1,6 +1,6 @@
 package org.wicketopia.metadata.decorator;
 
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 import org.wicketopia.metadata.PropertyMetadataDecorator;
 
 /**
@@ -12,7 +12,7 @@ import org.wicketopia.metadata.PropertyMetadataDecorator;
  */
 public class EditorTypeDecorator implements PropertyMetadataDecorator
 {
-    public void decorate(PropertyMetadata propertyMetadata)
+    public void decorate(WicketopiaPropertyMetaData propertyMetadata)
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }

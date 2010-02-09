@@ -9,7 +9,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.component.label.PropertyLabel;
 import org.wicketopia.metadata.BeanMetadata;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,16 +58,16 @@ public class BeanEditorHelper<T> implements Serializable
 
     public List<String> getPropertyNames(String... skippedProperties)
     {
-        List<PropertyMetadata> metas = getBeanMetadata().getAllPropertyMetadata(skippedProperties);
+        List<WicketopiaPropertyMetaData> metas = getBeanMetadata().getAllPropertyMetadata(skippedProperties);
         List<String> names = new ArrayList<String>(metas.size());
-        for (PropertyMetadata meta : metas)
+        for (WicketopiaPropertyMetaData meta : metas)
         {
             names.add(meta.getPropertyName());
         }
         return names;
     }
 
-    private PropertyMetadata getPropertyMetadata(String propertyName)
+    private WicketopiaPropertyMetaData getPropertyMetadata(String propertyName)
     {
         BeanMetadata<T> beanMetadata = getBeanMetadata();
         return beanMetadata.getPropertyMetadata(propertyName);
@@ -80,7 +80,7 @@ public class BeanEditorHelper<T> implements Serializable
 
     public Component createPropertyEditor(String componentId, String propertyName)
     {
-        PropertyMetadata propertyMetadata = getPropertyMetadata(propertyName);
+        WicketopiaPropertyMetaData propertyMetadata = getPropertyMetadata(propertyName);
         return WicketopiaPlugin.get().getPropertyEditorFactory().createPropertyEditor(componentId, propertyMetadata, new PropertyModel(beanModel, propertyName), editorContext);
     }
 

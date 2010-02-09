@@ -10,13 +10,13 @@ public abstract class UpdateLink<T> extends SubmitLink
 // Fields
 //**********************************************************************************************************************
 
-    private final PersistenceService<T> persistenceService;
+    private final PersistenceService persistenceService;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public UpdateLink(String id, IModel<T> model, PersistenceService<T> persistenceService)
+    public UpdateLink(String id, IModel<T> model, PersistenceService persistenceService)
     {
         super(id, model);
         this.persistenceService = persistenceService;

@@ -21,7 +21,7 @@ public class BeanMetadata<T> implements Serializable
     private static final long serialVersionUID = 1L;
     private final Class<T> beanClass;
     private final BeanInfo beanInfo;
-    private final Map<String, PropertyMetadata> propertyMetadataMap = new HashMap<String, PropertyMetadata>();
+    private final Map<String, WicketopiaPropertyMetaData> propertyMetadataMap = new HashMap<String, WicketopiaPropertyMetaData>();
 
 //**********************************************************************************************************************
 // Constructors
@@ -38,7 +38,7 @@ public class BeanMetadata<T> implements Serializable
                 final String propertyName = propertyDescriptor.getName();
                 if (!"class".equals(propertyName))
                 {
-                    propertyMetadataMap.put(propertyName, new PropertyMetadata(this, propertyDescriptor));
+                    propertyMetadataMap.put(propertyName, new WicketopiaPropertyMetaData(this, propertyDescriptor));
                 }
             }
         }
@@ -66,9 +66,9 @@ public class BeanMetadata<T> implements Serializable
 // Other Methods
 //**********************************************************************************************************************
 
-    public List<PropertyMetadata> getAllPropertyMetadata(String... skippedProperties)
+    public List<WicketopiaPropertyMetaData> getAllPropertyMetadata(String... skippedProperties)
     {
-        final List<PropertyMetadata> propertyMetadatas = new ArrayList<PropertyMetadata>(propertyMetadataMap.size() - skippedProperties.length);
+        final List<WicketopiaPropertyMetaData> propertyMetadatas = new ArrayList<WicketopiaPropertyMetaData>(propertyMetadataMap.size() - skippedProperties.length);
 
         final Set<String> skipped = new TreeSet<String>();
         skipped.addAll(Arrays.asList(skippedProperties));
@@ -83,9 +83,9 @@ public class BeanMetadata<T> implements Serializable
         return propertyMetadatas;
     }
 
-    public PropertyMetadata getPropertyMetadata(String propertyName)
+    public WicketopiaPropertyMetaData getPropertyMetadata(String propertyName)
     {
-        final PropertyMetadata propertyMetadata = propertyMetadataMap.get(propertyName);
+        final WicketopiaPropertyMetaData propertyMetadata = propertyMetadataMap.get(propertyName);
         if(propertyMetadata == null)
         {
             throw new WicketRuntimeException("Property " + propertyName + " not found on bean class " + beanClass.getName());

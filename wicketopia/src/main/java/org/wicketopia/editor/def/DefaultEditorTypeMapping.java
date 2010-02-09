@@ -2,7 +2,7 @@ package org.wicketopia.editor.def;
 
 import org.apache.commons.lang.ClassUtils;
 import org.wicketopia.editor.EditorTypeMapping;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -59,7 +59,7 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
 // EditorTypeMapping Implementation
 //**********************************************************************************************************************
 
-    public String getEditorType( PropertyMetadata propertyMetadata )
+    public String getEditorType( WicketopiaPropertyMetaData propertyMetadata )
     {
         final Queue<Class> typeQueue = createTypeQueue(propertyMetadata.getPropertyType());
         while( !typeQueue.isEmpty() )

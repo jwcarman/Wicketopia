@@ -45,7 +45,7 @@ public class DefaultBeanMetadataFactory implements BeanMetadataFactory
             {
                 decorator.decorate(beanMetadata);
             }
-            for (PropertyMetadata propertyMetadata : beanMetadata.getAllPropertyMetadata())
+            for (WicketopiaPropertyMetaData propertyMetadata : beanMetadata.getAllPropertyMetadata())
             {
                 for (PropertyMetadataDecorator decorator : propertyMetadataDecorators)
                 {

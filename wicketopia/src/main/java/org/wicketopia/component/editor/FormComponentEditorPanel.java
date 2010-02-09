@@ -9,9 +9,10 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.validation.IValidator;
+import org.metastopheles.PropertyMetaData;
 import org.wicketopia.component.choice.EnumDropDownChoice;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
@@ -31,15 +32,15 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditor
 // Static Methods
 //**********************************************************************************************************************
 
-    public static FormComponentEditorPanel createEnumChoicePanel(String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel)
+    public static FormComponentEditorPanel createEnumChoicePanel(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
     {
         final EnumDropDownChoice<?> choice =
-                new EnumDropDownChoice("choice", propertyModel, propertyMetadata.getPropertyType());
+                new EnumDropDownChoice("choice", propertyModel, propertyMetadata.getPropertyDescriptor().getPropertyType());
         choice.setLabel(new PropertyLabelModel(propertyMetadata));
         return new FormComponentEditorPanel(id, "enumDdcEditor", choice);
     }
 
-    public static FormComponentEditorPanel createTextAreaPanel(String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel)
+    public static FormComponentEditorPanel createTextAreaPanel(String id, WicketopiaPropertyMetaData propertyMetadata, IModel<?> propertyModel)
     {
         final TextArea formComponent = new TextArea("editor", propertyModel);
         formComponent.setLabel(new PropertyLabelModel(propertyMetadata));
@@ -47,7 +48,7 @@ public class FormComponentEditorPanel extends Panel implements PropertyEditor
     }
 
     public static FormComponentEditorPanel createTextFieldPanel(String id,
-            PropertyMetadata propertyMetadata,
+            WicketopiaPropertyMetaData propertyMetadata,
             IModel<?> propertyModel)
     {
         final TextField formComponent = new TextField("editor", propertyModel, propertyMetadata.getPropertyType());

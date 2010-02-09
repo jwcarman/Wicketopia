@@ -1,16 +1,13 @@
 package org.wicketopia.component.label;
 
-import org.testng.annotations.Test;
-import org.wicketopia.metadata.BeanMetadata;
 import org.wicketopia.util.AbstractWicketTestCase;
-import org.wicketopia.util.Person;
 
 /**
  * @author James Carman
  */
 public class TestPropertyLabel extends AbstractWicketTestCase
 {
-    @Test
+    /*@Test
     public void testWithMessageKey()
     {
         final BeanMetadata<Person> beanMetadata = new BeanMetadata<Person>(Person.class);
@@ -37,5 +34,5 @@ public class TestPropertyLabel extends AbstractWicketTestCase
                 new PropertyLabelTestPage(beanMetadata.getPropertyMetadata("multiWordProperty"));
         tester.startPage(page);
         tester.assertLabel("label", "Multi Word Property");
-    }
+    }*/
 }

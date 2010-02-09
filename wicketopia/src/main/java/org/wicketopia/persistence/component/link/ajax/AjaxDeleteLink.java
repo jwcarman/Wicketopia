@@ -11,13 +11,13 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 // Fields
 //**********************************************************************************************************************
 
-    private final PersistenceService<T> persistenceService;
+    private final PersistenceService persistenceService;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public AjaxDeleteLink(String id, IModel<T> model, PersistenceService<T> persistenceService)
+    public AjaxDeleteLink(String id, IModel<T> model, PersistenceService persistenceService)
     {
         super(id, model);
         this.persistenceService = persistenceService;

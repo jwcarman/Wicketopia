@@ -11,13 +11,13 @@ public abstract class CreateLink<T> extends SubmitLink
 // Fields
 //**********************************************************************************************************************
 
-    private final PersistenceService<T> persistenceService;
+    private final PersistenceService persistenceService;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public CreateLink(String id, IModel<T> model, PersistenceService<T> persistenceService)
+    public CreateLink(String id, IModel<T> model, PersistenceService persistenceService)
     {
         super(id, model);
         this.persistenceService = persistenceService;

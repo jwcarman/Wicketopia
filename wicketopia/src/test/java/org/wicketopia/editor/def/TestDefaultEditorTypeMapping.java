@@ -3,12 +3,8 @@ package org.wicketopia.editor.def;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 import org.testng.annotations.Test;
-import org.wicketopia.metadata.PropertyMetadata;
-import org.wicketopia.util.Person;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 

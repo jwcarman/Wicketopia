@@ -5,5 +5,5 @@ package org.wicketopia.metadata;
  */
 public interface PropertyMetadataDecorator
 {
-    public void decorate( PropertyMetadata propertyMetadata );
+    public void decorate( WicketopiaPropertyMetaData propertyMetadata );
 }

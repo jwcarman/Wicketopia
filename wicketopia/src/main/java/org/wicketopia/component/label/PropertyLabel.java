@@ -1,7 +1,8 @@
 package org.wicketopia.component.label;
 
 import org.apache.wicket.markup.html.basic.Label;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.metastopheles.PropertyMetaData;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
@@ -22,8 +23,8 @@ public class PropertyLabel extends Label
 // Constructors
 //**********************************************************************************************************************
 
-    public PropertyLabel( String id, PropertyMetadata propertyMetadata )
+    public PropertyLabel( String id, PropertyMetaData propertyMetadata )
     {
-        super(id, new PropertyLabelModel(propertyMetadata));
+        super(id, new PropertyLabelModel(WicketopiaPropertyMetaData.get(propertyMetadata)));
     }
 }

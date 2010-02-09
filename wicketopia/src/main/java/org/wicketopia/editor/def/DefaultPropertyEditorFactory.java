@@ -6,7 +6,7 @@ import org.wicketopia.editor.*;
 import org.wicketopia.editor.provider.EnumChoicePropertyEditorProvider;
 import org.wicketopia.editor.provider.TextAreaPropertyEditorProvider;
 import org.wicketopia.editor.provider.TextFieldPropertyEditorProvider;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 // PropertyEditorFactory Implementation
 //**********************************************************************************************************************
 
-    public Component createPropertyEditor(String id, PropertyMetadata propertyMetadata, IModel<?> propertyModel, EditorContext context)
+    public Component createPropertyEditor(String id, WicketopiaPropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context)
     {
         String editorType = propertyMetadata.getEditorType();
         if (editorType == null)

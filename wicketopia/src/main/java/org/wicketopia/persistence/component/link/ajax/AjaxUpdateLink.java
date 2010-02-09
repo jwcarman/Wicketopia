@@ -11,13 +11,13 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 // Fields
 //**********************************************************************************************************************
 
-    private final PersistenceService<T> persistenceService;
+    private final PersistenceService persistenceService;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    protected AjaxUpdateLink(String id, Form<T> form, PersistenceService<T> persistenceService)
+    protected AjaxUpdateLink(String id, Form<T> form, PersistenceService persistenceService)
     {
         super(id, form);
         this.persistenceService = persistenceService;

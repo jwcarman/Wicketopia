@@ -1,7 +1,7 @@
 package org.wicketopia.model.label;
 
 import org.apache.wicket.model.ResourceModel;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 /**
  * @since 1.0
@@ -18,7 +18,7 @@ public class PropertyLabelModel extends ResourceModel
 // Constructors
 //**********************************************************************************************************************
 
-    public PropertyLabelModel( PropertyMetadata propertyMetadata )
+    public PropertyLabelModel( WicketopiaPropertyMetaData propertyMetadata )
     {
         super(propertyMetadata.getLabelTextMessageKey(), propertyMetadata.getDefaultLabelText());
     }

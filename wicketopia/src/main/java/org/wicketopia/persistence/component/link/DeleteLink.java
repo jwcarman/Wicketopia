@@ -10,13 +10,13 @@ public class DeleteLink<T> extends Link<T>
 // Fields
 //**********************************************************************************************************************
 
-    private PersistenceService<T> persistenceService;
+    private PersistenceService persistenceService;
 
 //**********************************************************************************************************************
 // Constructors
 //**********************************************************************************************************************
 
-    public DeleteLink(String id, IModel<T> model, PersistenceService<T> persistenceService)
+    public DeleteLink(String id, IModel<T> model, PersistenceService persistenceService)
     {
         super(id, model);
         this.persistenceService = persistenceService;

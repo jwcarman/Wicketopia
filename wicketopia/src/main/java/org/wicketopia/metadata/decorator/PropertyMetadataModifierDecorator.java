@@ -1,7 +1,7 @@
 package org.wicketopia.metadata.decorator;
 
 import org.wicketopia.annotation.PropertyMetadataModifier;
-import org.wicketopia.metadata.PropertyMetadata;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 import org.wicketopia.metadata.PropertyMetadataDecorator;
 
 import java.lang.annotation.Annotation;
@@ -11,7 +11,7 @@ import java.lang.annotation.Annotation;
  */
 public class PropertyMetadataModifierDecorator implements PropertyMetadataDecorator
 {
-    public void decorate( PropertyMetadata propertyMetadata )
+    public void decorate( WicketopiaPropertyMetaData propertyMetadata )
     {
         for( Annotation annotation : propertyMetadata.getPropertyDescriptor().getReadMethod().getAnnotations() )
         {

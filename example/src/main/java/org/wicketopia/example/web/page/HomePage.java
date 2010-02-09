@@ -1,6 +1,5 @@
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
@@ -10,14 +9,12 @@ import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketopia.domdrides.DomdridesPersistenceService;
 import org.wicketopia.domdrides.component.link.RemoveEntityLink;
 import org.wicketopia.domdrides.model.repeater.PageableRepositoryDataProvider;
 import org.wicketopia.editor.BeanEditorHelper;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.model.column.FragmentColumn;
-import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +67,7 @@ public class HomePage extends BasePage
         final IModel<Widget> model = new Model<Widget>(new Widget());
         final Form<Widget> widgetForm = new Form<Widget>("form", model);
         final BeanEditorHelper helper = new BeanEditorHelper<Widget>(Widget.class, model);
-        widgetForm.add(new AjaxCreateLink<Widget>("submit", widgetForm, new DomdridesPersistenceService<Widget, String>(widgetRepository))
+        /*widgetForm.add(new AjaxCreateLink<Widget>("submit", widgetForm, new DomdridesPersistenceService<Widget, String>(widgetRepository))
         {
             @Override
             protected void afterUpdate(Widget object, AjaxRequestTarget target)
@@ -80,7 +77,7 @@ public class HomePage extends BasePage
                 target.addComponent(feedback);
                 info("Widget created successfully!");
             }
-        });
+        });*/
         widgetForm.add(helper.createEditorsView("editors", "id"));
         add(feedback);
         add(widgetForm);
