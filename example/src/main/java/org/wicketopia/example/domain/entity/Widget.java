@@ -1,7 +1,5 @@
 package org.wicketopia.example.domain.entity;
 
-import java.util.Date;
-
 import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
@@ -10,6 +8,8 @@ import org.wicketopia.annotation.validator.*;
 import org.wicketopia.example.domain.value.WidgetType;
 
 import javax.persistence.Entity;
+import javax.persistence.Version;
+import java.util.Date;
 
 @Entity
 public class Widget extends UuidEntity
@@ -30,10 +30,22 @@ public class Widget extends UuidEntity
     private Date date;
     private String patternField;
 
+    private Integer version;
+
 //**********************************************************************************************************************
 // Getter/Setter Methods
 //**********************************************************************************************************************
 
+    @Version
+    public Integer getVersion()
+    {
+        return version;
+    }
+
+    public void setVersion(Integer version)
+    {
+        this.version = version;
+    }
 
     @DisplayName("My Weird Field")
     @Pattern("\\d+")

@@ -11,7 +11,6 @@ import org.wicketopia.editor.PropertyEditorFacet;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -111,10 +110,6 @@ public class WicketopiaPropertyMetaData implements Comparable
         this.order = order;
     }
 
-    public static List<WicketopiaPropertyMetaData> getAllPropertyMetaData(BeanMetaData beanMetaData, String... skippedProperties)
-    {
-        Set<WicketopiaPropertyMetaData> set = new HashSet<WicketopiaPropertyMetaData>();
-    }
 //**********************************************************************************************************************
 // Other Methods
 //**********************************************************************************************************************

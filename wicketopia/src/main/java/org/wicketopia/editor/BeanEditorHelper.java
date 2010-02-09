@@ -6,13 +6,14 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
+import org.metastopheles.BeanMetaData;
+import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.component.label.PropertyLabel;
 import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BeanEditorHelper<T> implements Serializable
 {
@@ -55,37 +56,57 @@ public class BeanEditorHelper<T> implements Serializable
 
     }
 
+    public List<PropertyMetaData> getPropertyMetaData(String... skippedProperties)
+    {
+        final BeanMetaData beanMetaData = getBeanMetaData();
+        Set<String> propertyNames = beanMetaData.getPropertyNames();
+        propertyNames.removeAll(Arrays.asList(skippedProperties));
+        final List<PropertyMetaData> propertyMetaDatas = new ArrayList<PropertyMetaData>(propertyNames.size());
+        for (String propertyName : propertyNames)
+        {
+            propertyMetaDatas.add(beanMetaData.getPropertyMetaData(propertyName));
+        }
+        Collections.sort(propertyMetaDatas, new Comparator<PropertyMetaData>()
+        {
+            public int compare(PropertyMetaData o1, PropertyMetaData o2)
+            {
+                return WicketopiaPropertyMetaData.get(o1).compareTo(WicketopiaPropertyMetaData.get(o2));
+            }
+        });
+        return propertyMetaDatas;
+    }
+
     public List<String> getPropertyNames(String... skippedProperties)
     {
-        List<WicketopiaPropertyMetaData> metas = getBeanMetadata().getAllPropertyMetadata(skippedProperties);
-        List<String> names = new ArrayList<String>(metas.size());
-        for (WicketopiaPropertyMetaData meta : metas)
+        final List<PropertyMetaData> propertyMetaDatas = getPropertyMetaData(skippedProperties);
+        List<String> propertyNames = new ArrayList<String>(propertyMetaDatas.size());
+        for (PropertyMetaData propertyMetaData : propertyMetaDatas)
         {
-            names.add(meta.getPropertyName());
+            propertyNames.add(propertyMetaData.getPropertyDescriptor().getName());
         }
-        return names;
+        return propertyNames;
     }
 
-    private WicketopiaPropertyMetaData getPropertyMetadata(String propertyName)
+    private PropertyMetaData getPropertyMetaData(String propertyName)
     {
-        BeanMetadata<T> beanMetadata = getBeanMetadata();
-        return beanMetadata.getPropertyMetadata(propertyName);
+        BeanMetaData beanMetaData = getBeanMetaData();
+        return beanMetaData.getPropertyMetaData(propertyName);
     }
 
-    private BeanMetaData<T> getBeanMetadata()
+    private BeanMetaData getBeanMetaData()
     {
-        return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetadata(beanClass);
+        return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
     }
 
     public Component createPropertyEditor(String componentId, String propertyName)
     {
-        WicketopiaPropertyMetaData propertyMetadata = getPropertyMetadata(propertyName);
-        return WicketopiaPlugin.get().getPropertyEditorFactory().createPropertyEditor(componentId, propertyMetadata, new PropertyModel(beanModel, propertyName), editorContext);
+        PropertyMetaData propertyMetaData = getPropertyMetaData(propertyName);
+        return WicketopiaPlugin.get().getPropertyEditorFactory().createPropertyEditor(componentId, propertyMetaData, new PropertyModel(beanModel, propertyName), editorContext);
     }
 
     public Label createPropertyLabel(String componentId, String propertyName)
     {
-        return new PropertyLabel(componentId, getPropertyMetadata(propertyName));
+        return new PropertyLabel(componentId, getPropertyMetaData(propertyName));
     }
 
     private class EditorListView extends ListView<String>

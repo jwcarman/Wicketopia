@@ -3,9 +3,14 @@ package org.wicketopia;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.metastopheles.BeanMetaDataFactory;
+import org.metastopheles.MetaDataDecorator;
+import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.ClasspathScanner;
+import org.wicketopia.editor.EditorTypeMapping;
 import org.wicketopia.editor.PropertyEditorFactory;
+import org.wicketopia.editor.def.DefaultEditorTypeMapping;
 import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
+import org.wicketopia.metadata.WicketopiaPropertyMetaData;
 
 public class WicketopiaPlugin
 {
@@ -17,6 +22,7 @@ public class WicketopiaPlugin
 
     private BeanMetaDataFactory beanMetadataFactory = new BeanMetaDataFactory();
     private PropertyEditorFactory propertyEditorFactory = new DefaultPropertyEditorFactory();
+    private EditorTypeMapping editorTypeMapping = new DefaultEditorTypeMapping();
 
 //**********************************************************************************************************************
 // Static Methods
@@ -41,6 +47,16 @@ public class WicketopiaPlugin
         this.beanMetadataFactory = beanMetadataFactory;
     }
 
+    public EditorTypeMapping getEditorTypeMapping()
+    {
+        return editorTypeMapping;
+    }
+
+    public void setEditorTypeMapping(EditorTypeMapping editorTypeMapping)
+    {
+        this.editorTypeMapping = editorTypeMapping;
+    }
+
     public PropertyEditorFactory getPropertyEditorFactory()
     {
         return propertyEditorFactory;
@@ -57,7 +73,15 @@ public class WicketopiaPlugin
 
     public void install(WebApplication webApplication)
     {
+        beanMetadataFactory.getPropertyMetaDataDecorators().add(new MetaDataDecorator<PropertyMetaData>()
+        {
+            public void decorate(PropertyMetaData propertyMetaData)
+            {
+                WicketopiaPropertyMetaData.get(propertyMetaData).setEditorType(editorTypeMapping.getEditorType(propertyMetaData));
+            }
+        });
         new ClasspathScanner().appendTo(beanMetadataFactory);
+
         webApplication.setMetaData(META_KEY, this);
     }
 

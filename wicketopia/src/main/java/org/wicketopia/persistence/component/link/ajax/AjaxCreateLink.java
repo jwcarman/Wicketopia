@@ -27,7 +27,7 @@ public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
 // Abstract Methods
 //**********************************************************************************************************************
 
-    protected abstract void afterUpdate(T object, AjaxRequestTarget target);
+    protected abstract void afterCreate(T object, AjaxRequestTarget target);
 
 //**********************************************************************************************************************
 // Other Methods
@@ -37,7 +37,7 @@ public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
     protected void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
         T object = (T)form.getModelObject();
-        object = persistenceProvider.update(object);
-        afterUpdate(object, target);
+        object = persistenceProvider.create(object);
+        afterCreate(object, target);
     }
 }

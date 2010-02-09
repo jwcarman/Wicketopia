@@ -84,5 +84,9 @@
             </map>
         </property>
     </bean>
+
+    <bean id="persistenceProvider" class="org.wicketopia.hibernate.HibernatePersistenceProvider" autowire="autodetect">
+        
+    </bean>
     
 </beans>
