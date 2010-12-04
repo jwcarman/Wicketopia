@@ -20,14 +20,17 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.ISpringContextLocator;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.example.web.page.HomePage;
 
 /**
  * Application object for your web application. If you want to run this application without deploying, run the Start class.
  */
+@Component("wicketApplication")
 public class WicketApplication extends WebApplication implements ISpringContextLocator, ApplicationContextAware
 {
 //**********************************************************************************************************************
@@ -74,6 +77,7 @@ public class WicketApplication extends WebApplication implements ISpringContextL
         return configurationType;
     }
 
+    @Value("${wicket.configuration}")
     public void setConfigurationType( String configurationType )
     {
         this.configurationType = configurationType;

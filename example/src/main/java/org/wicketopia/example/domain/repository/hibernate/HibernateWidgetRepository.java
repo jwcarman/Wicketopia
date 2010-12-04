@@ -17,10 +17,12 @@
 package org.wicketopia.example.domain.repository.hibernate;
 
 import org.domdrides.hibernate.repository.HibernateRepository;
+import org.springframework.stereotype.Repository;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 
-public class HibernateWidgetRepository extends HibernateRepository<Widget, String> implements WidgetRepository
+@Repository("widgetRepository")
+public class HibernateWidgetRepository extends BaseHibernateRepository<Widget, String> implements WidgetRepository
 {
     public HibernateWidgetRepository()
     {
