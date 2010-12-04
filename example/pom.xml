@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010 the original author or authors.
+  ~ Copyright (c) 2010 Carman Consulting, Inc.
+  ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -29,18 +30,13 @@
     <name>Wicketopia Example Application</name>
 
     <properties>
-        <wicket.version>1.4.5</wicket.version>
+        <wicket.version>1.4.14</wicket.version>
         <domdrides.version>1.2</domdrides.version>
-        <hibernate.version>3.2.6.ga</hibernate.version>
-        <hibernate.annotations.version>3.3.1.GA</hibernate.annotations.version>
         <dbcp.version>1.2.2</dbcp.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
         <jpa.version>1.0</jpa.version>
-        <spring.version>2.5.5</spring.version>
-        <slf4j.version>1.4.2</slf4j.version>
         <log4j.version>1.2.14</log4j.version>
         <jetty.version>6.1.4</jetty.version>
-        <testng.version>5.7</testng.version>
         <jmock.version>2.5.0.1</jmock.version>
         <configuration>dev</configuration>
     </properties>
@@ -112,7 +108,7 @@
 
         <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
+            <artifactId>slf4j-jcl</artifactId>
             <version>${slf4j.version}</version>
         </dependency>
 
@@ -132,11 +128,17 @@
             <groupId>org.domdrides</groupId>
             <artifactId>domdrides-hibernate</artifactId>
             <version>${domdrides.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
+            <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
             <exclusions>
                 <exclusion>

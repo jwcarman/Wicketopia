@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010 the original author or authors.
+ * Copyright (c) 2010 Carman Consulting, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -58,7 +59,7 @@ public class HomePage extends BasePage
         List<IColumn<Widget>> columns = new ArrayList<IColumn<Widget>>();
         columns.add(new PropertyColumn<Widget>(new Model<String>("Name"), "name", "name"));
         columns.add(new PropertyColumn<Widget>(new Model<String>("Description"), "description", "description"));
-        columns.add(new PropertyColumn<Widget>(new Model<String>("Type"), "widgetType"));
+        columns.add(new PropertyColumn<Widget>(new Model<String>("Type"), "widgetType", "widgetType"));
         columns.add(new FragmentColumn<Widget>(new Model<String>("Actions"))
         {
             private static final long serialVersionUID = 1L;

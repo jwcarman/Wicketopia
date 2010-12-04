@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2010 the original author or authors.
+  ~ Copyright (c) 2010 Carman Consulting, Inc.
+  ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,11 +35,14 @@
     </modules>
 
     <properties>
-        <wicket.version>1.4.5</wicket.version>
-        <slf4j.version>1.4.2</slf4j.version>
+        <wicket.version>1.4.14</wicket.version>
+        <slf4j.version>1.6.1</slf4j.version>
+        <hibernate.version>3.3.2.GA</hibernate.version>
+        <hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
+        <spring.version>3.0.5.RELEASE</spring.version>
         <log4j.version>1.2.14</log4j.version>
         <jetty.version>6.1.4</jetty.version>
-        <testng.version>5.7</testng.version>
+        <testng.version>5.9</testng.version>
         <jmock.version>2.5.0.1</jmock.version>
     </properties>  
 

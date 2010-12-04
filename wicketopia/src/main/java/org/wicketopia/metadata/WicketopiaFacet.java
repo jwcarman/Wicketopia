@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010 the original author or authors.
+ * Copyright (c) 2010 Carman Consulting, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,8 +18,8 @@ package org.wicketopia.metadata;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.WicketRuntimeException;
-import org.metastopheles.AttributeKey;
 import org.metastopheles.BeanMetaData;
+import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.editor.PropertyEditorFacet;
@@ -31,11 +32,13 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public class WicketopiaPropertyMetaData implements Comparable
+public class WicketopiaFacet implements Comparable
 {
 //**********************************************************************************************************************
 // Fields
 //**********************************************************************************************************************
+
+    private static final FacetKey<WicketopiaFacet> FACET_KEY  = new FacetKey<WicketopiaFacet>() {};
 
     private String labelTextMessageKey;
     private String defaultLabelText;
@@ -49,7 +52,7 @@ public class WicketopiaPropertyMetaData implements Comparable
 // Constructors
 //**********************************************************************************************************************
 
-    WicketopiaPropertyMetaData(PropertyMetaData propertyMetaData)
+    WicketopiaFacet(PropertyMetaData propertyMetaData)
     {
         this.propertyMetaData = propertyMetaData;
         this.labelTextMessageKey = propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
@@ -62,9 +65,9 @@ public class WicketopiaPropertyMetaData implements Comparable
 
     public int compareTo(Object o)
     {
-        if (o instanceof WicketopiaPropertyMetaData)
+        if (o instanceof WicketopiaFacet)
         {
-            WicketopiaPropertyMetaData other = (WicketopiaPropertyMetaData) o;
+            WicketopiaFacet other = (WicketopiaFacet) o;
             return new Integer(order).compareTo(other.order);
         }
         return 1;
@@ -160,19 +163,16 @@ public class WicketopiaPropertyMetaData implements Comparable
 // Inner Classes
 //**********************************************************************************************************************
 
-    private static AttributeKey<WicketopiaPropertyMetaData> ATTRIBUTE_KEY = new AttributeKey<WicketopiaPropertyMetaData>()
-    {
-    };
 
-    public static WicketopiaPropertyMetaData get(PropertyMetaData propertyMetaData)
+    public static WicketopiaFacet get(PropertyMetaData propertyMetaData)
     {
         synchronized (propertyMetaData)
         {
-            WicketopiaPropertyMetaData meta = propertyMetaData.getAttribute(ATTRIBUTE_KEY);
+            WicketopiaFacet meta = propertyMetaData.getFacet(FACET_KEY);
             if (meta == null)
             {
-                meta = new WicketopiaPropertyMetaData(propertyMetaData);
-                propertyMetaData.setAttribute(ATTRIBUTE_KEY, meta);
+                meta = new WicketopiaFacet(propertyMetaData);
+                propertyMetaData.setFacet(FACET_KEY, meta);
             }
             return meta;
         }
@@ -196,7 +196,7 @@ public class WicketopiaPropertyMetaData implements Comparable
                 Class beanClass = Class.forName(className);
                 BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
                 PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
-                return WicketopiaPropertyMetaData.get(propertyMetaData);
+                return WicketopiaFacet.get(propertyMetaData);
             }
             catch (ClassNotFoundException e)
             {

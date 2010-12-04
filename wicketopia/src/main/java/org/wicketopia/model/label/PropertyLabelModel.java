@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010 the original author or authors.
+ * Copyright (c) 2010 Carman Consulting, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,7 +18,7 @@ package org.wicketopia.model.label;
 
 import org.apache.wicket.model.ResourceModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.metadata.WicketopiaPropertyMetaData;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
  * @since 1.0
@@ -36,6 +37,6 @@ public class PropertyLabelModel extends ResourceModel
 
     public PropertyLabelModel( PropertyMetaData propertyMetadata )
     {
-        super(WicketopiaPropertyMetaData.get(propertyMetadata).getLabelTextMessageKey(), WicketopiaPropertyMetaData.get(propertyMetadata).getDefaultLabelText());
+        super(WicketopiaFacet.get(propertyMetadata).getLabelTextMessageKey(), WicketopiaFacet.get(propertyMetadata).getDefaultLabelText());
     }
 }

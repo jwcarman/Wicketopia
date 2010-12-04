@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010 the original author or authors.
+ * Copyright (c) 2010 Carman Consulting, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,7 +27,7 @@ import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.provider.EnumChoicePropertyEditorProvider;
 import org.wicketopia.editor.provider.TextAreaPropertyEditorProvider;
 import org.wicketopia.editor.provider.TextFieldPropertyEditorProvider;
-import org.wicketopia.metadata.WicketopiaPropertyMetaData;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,8 +69,8 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context)
     {
-        WicketopiaPropertyMetaData wicketopiaPropertyMetaData = WicketopiaPropertyMetaData.get(propertyMetadata);
-        String editorType = wicketopiaPropertyMetaData.getEditorType();
+        WicketopiaFacet wicketopiaFacet = WicketopiaFacet.get(propertyMetadata);
+        String editorType = wicketopiaFacet.getEditorType();
         if (editorType == null)
         {
             throw new IllegalArgumentException("No editor type defined for property " +
@@ -83,7 +84,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
                     "No property editor builder defined for editor type \"" + editorType + ".\"");
         }
         PropertyEditor builder = provider.createPropertyEditor(id, propertyMetadata, propertyModel);
-        for (PropertyEditorFacet facet : wicketopiaPropertyMetaData.getFacets())
+        for (PropertyEditorFacet facet : wicketopiaFacet.getFacets())
         {
             facet.apply(builder, context);
         }

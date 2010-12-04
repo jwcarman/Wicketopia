@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 2010 the original author or authors.
+ * Copyright (c) 2010 Carman Consulting, Inc.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,12 +21,12 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
-import org.metastopheles.annotation.ClasspathScanner;
+import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.wicketopia.editor.EditorTypeMapping;
 import org.wicketopia.editor.PropertyEditorFactory;
 import org.wicketopia.editor.def.DefaultEditorTypeMapping;
 import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
-import org.wicketopia.metadata.WicketopiaPropertyMetaData;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 public class WicketopiaPlugin
 {
@@ -35,7 +36,7 @@ public class WicketopiaPlugin
 
     private static MetaDataKey<WicketopiaPlugin> META_KEY = new WicketopiaPluginKey();
 
-    private BeanMetaDataFactory beanMetadataFactory = new BeanMetaDataFactory();
+    private BeanMetaDataFactory beanMetadataFactory = new AnnotationBeanMetaDataFactory();
     private PropertyEditorFactory propertyEditorFactory = new DefaultPropertyEditorFactory();
     private EditorTypeMapping editorTypeMapping = new DefaultEditorTypeMapping();
 
@@ -92,11 +93,9 @@ public class WicketopiaPlugin
         {
             public void decorate(PropertyMetaData propertyMetaData)
             {
-                WicketopiaPropertyMetaData.get(propertyMetaData).setEditorType(editorTypeMapping.getEditorType(propertyMetaData));
+                WicketopiaFacet.get(propertyMetaData).setEditorType(editorTypeMapping.getEditorType(propertyMetaData));
             }
         });
-        new ClasspathScanner().appendTo(beanMetadataFactory);
-
         webApplication.setMetaData(META_KEY, this);
     }
 

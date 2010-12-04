@@ -1,10 +1,11 @@
 <!--
-  ~ Copyright (c) 2010 the original author or authors.
+  ~ Copyright (c) 2010 Carman Consulting, Inc.
+  ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~ http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -25,9 +26,6 @@
     <name>Wicketopia Core Library</name>
     <description>A Collection of Useful Wicket Components</description>
 
-    <properties>
-        <wicket.version>1.4.5</wicket.version>
-    </properties>
     <dependencies>
         <dependency>
 			<groupId>net.sf.scannotation</groupId>
@@ -48,6 +46,11 @@
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-datetime</artifactId>
             <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.metastopheles</groupId>
@@ -75,7 +78,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jcl</artifactId>
-            <version>1.4.3</version>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
