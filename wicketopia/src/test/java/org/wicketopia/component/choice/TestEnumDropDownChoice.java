@@ -31,6 +31,22 @@ import java.util.List;
  */
 public class TestEnumDropDownChoice extends AbstractWicketTestCase
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testModelBinding()
+    {
+        final Person p = new Person();
+        final EnumDropDownChoiceTestPage page = new EnumDropDownChoiceTestPage(p);
+        tester.startPage(page);
+        FormTester formTester = tester.newFormTester("form");
+        formTester.select("gender", Gender.Female.ordinal());
+        formTester.submit();
+        assertEquals(p.getGender(), Gender.Female);
+    }
+
     @Test
     public void testModelContentsWithEnumClassParameter()
     {
@@ -55,17 +71,5 @@ public class TestEnumDropDownChoice extends AbstractWicketTestCase
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Female), "Female");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Male), "Male");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Unknown), "It's Pat!");
-    }
-
-    @Test
-    public void testModelBinding()
-    {
-        final Person p = new Person();
-        final EnumDropDownChoiceTestPage page = new EnumDropDownChoiceTestPage(p);
-        tester.startPage(page);
-        FormTester formTester = tester.newFormTester("form");
-        formTester.select("gender", Gender.Female.ordinal());
-        formTester.submit();
-        assertEquals(p.getGender(), Gender.Female);
     }
 }

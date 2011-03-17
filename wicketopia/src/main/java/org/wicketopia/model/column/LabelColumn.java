@@ -27,7 +27,15 @@ import org.apache.wicket.model.IModel;
  */
 public abstract class LabelColumn<T> extends AbstractColumn<T>
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
     private static final long serialVersionUID = 1L;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
 
     protected LabelColumn( IModel<String> displayModel )
     {
@@ -39,10 +47,19 @@ public abstract class LabelColumn<T> extends AbstractColumn<T>
         super(displayModel, sortProperty);
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+// Abstract Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    protected abstract IModel<?> createLabelModel( IModel<T> rowModel );
+
+//----------------------------------------------------------------------------------------------------------------------
+// ICellPopulator Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+
     public void populateItem( Item<ICellPopulator<T>> iCellPopulatorItem, String componentId, IModel<T> rowModel )
     {
         new Label(componentId, createLabelModel(rowModel));
     }
-
-    protected abstract IModel<?> createLabelModel( IModel<T> rowModel );
 }

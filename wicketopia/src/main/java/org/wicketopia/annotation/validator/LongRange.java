@@ -28,7 +28,10 @@ import java.lang.annotation.Target;
 @Target( ElementType.METHOD )
 public @interface LongRange
 {
-    long min() default Long.MIN_VALUE;
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     long max() default Long.MAX_VALUE;
+    long min() default Long.MIN_VALUE;
 }

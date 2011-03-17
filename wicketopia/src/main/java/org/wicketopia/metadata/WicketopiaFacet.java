@@ -22,7 +22,7 @@ import org.metastopheles.BeanMetaData;
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.PropertyEditorDecorator;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -34,9 +34,9 @@ import java.util.Set;
  */
 public class WicketopiaFacet implements Comparable
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private static final FacetKey<WicketopiaFacet> FACET_KEY  = new FacetKey<WicketopiaFacet>() {};
 
@@ -44,13 +44,31 @@ public class WicketopiaFacet implements Comparable
     private String defaultLabelText;
     private int order = Integer.MAX_VALUE;
     private String editorType;
-    private Set<PropertyEditorFacet> facets = new HashSet<PropertyEditorFacet>();
+    private Set<PropertyEditorDecorator> decorators = new HashSet<PropertyEditorDecorator>();
 
     private final PropertyMetaData propertyMetaData;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public static WicketopiaFacet get(PropertyMetaData propertyMetaData)
+    {
+        synchronized (propertyMetaData)
+        {
+            WicketopiaFacet meta = propertyMetaData.getFacet(FACET_KEY);
+            if (meta == null)
+            {
+                meta = new WicketopiaFacet(propertyMetaData);
+                propertyMetaData.setFacet(FACET_KEY, meta);
+            }
+            return meta;
+        }
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     WicketopiaFacet(PropertyMetaData propertyMetaData)
     {
@@ -59,9 +77,26 @@ public class WicketopiaFacet implements Comparable
         this.defaultLabelText = calculateDefaultLabelText(propertyMetaData.getPropertyDescriptor());
     }
 
-//**********************************************************************************************************************
+    private String calculateDefaultLabelText(PropertyDescriptor propertyDescriptor)
+    {
+        String[] words = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
+        words[0] = StringUtils.capitalize(words[0]);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < words.length; i++)
+        {
+            String word = words[i];
+            sb.append(word);
+            if (i != words.length - 1)
+            {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
 // Comparable Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public int compareTo(Object o)
     {
@@ -73,14 +108,13 @@ public class WicketopiaFacet implements Comparable
         return 1;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
-
-    public PropertyMetaData getPropertyMetaData()
+    public Set<PropertyEditorDecorator> getDecorators()
     {
-        return propertyMetaData;
+        return decorators;
     }
 
     public String getDefaultLabelText()
@@ -103,11 +137,6 @@ public class WicketopiaFacet implements Comparable
         this.editorType = editorType;
     }
 
-    public Set<PropertyEditorFacet> getFacets()
-    {
-        return facets;
-    }
-
     public String getLabelTextMessageKey()
     {
         return labelTextMessageKey;
@@ -128,30 +157,18 @@ public class WicketopiaFacet implements Comparable
         this.order = order;
     }
 
-//**********************************************************************************************************************
-// Other Methods
-//**********************************************************************************************************************
-
-    private String calculateDefaultLabelText(PropertyDescriptor propertyDescriptor)
+    public PropertyMetaData getPropertyMetaData()
     {
-        String[] words = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
-        words[0] = StringUtils.capitalize(words[0]);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < words.length; i++)
-        {
-            String word = words[i];
-            sb.append(word);
-            if (i != words.length - 1)
-            {
-                sb.append(" ");
-            }
-        }
-        return sb.toString();
+        return propertyMetaData;
     }
 
-    public void addFacet(PropertyEditorFacet facet)
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public void addFacet(PropertyEditorDecorator decorator)
     {
-        facets.add(facet);
+        decorators.add(decorator);
     }
 
     Object writeReplace()
@@ -159,24 +176,9 @@ public class WicketopiaFacet implements Comparable
         return new SerializedForm(getPropertyMetaData().getBeanMetaData().getBeanDescriptor().getBeanClass().getName(), getPropertyMetaData().getPropertyDescriptor().getName());
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
-//**********************************************************************************************************************
-
-
-    public static WicketopiaFacet get(PropertyMetaData propertyMetaData)
-    {
-        synchronized (propertyMetaData)
-        {
-            WicketopiaFacet meta = propertyMetaData.getFacet(FACET_KEY);
-            if (meta == null)
-            {
-                meta = new WicketopiaFacet(propertyMetaData);
-                propertyMetaData.setFacet(FACET_KEY, meta);
-            }
-            return meta;
-        }
-    }
+//----------------------------------------------------------------------------------------------------------------------
 
     private static class SerializedForm implements Serializable
     {

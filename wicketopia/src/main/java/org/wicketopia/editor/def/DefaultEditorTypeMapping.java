@@ -32,15 +32,15 @@ import java.util.Queue;
  */
 public class DefaultEditorTypeMapping implements EditorTypeMapping
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private Map<String, String> editorTypeMap = new HashMap<String, String>();
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public DefaultEditorTypeMapping()
     {
@@ -71,9 +71,9 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
         addEditorTypeOverride(Enum.class, "enum");
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // EditorTypeMapping Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public String getEditorType( PropertyMetaData propertyMetadata )
     {
@@ -90,9 +90,14 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
         return null;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+
+    public void addEditorTypeOverride( Class propertyType, String editorType )
+    {
+        editorTypeMap.put(propertyType.getName(), editorType);
+    }
 
     @SuppressWarnings( "unchecked" )
     private Queue<Class> createTypeQueue( final Class originalType )
@@ -107,11 +112,6 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
         while( currentType != null );
         queue.addAll(ClassUtils.getAllInterfaces(originalType));
         return queue;
-    }
-
-    public void addEditorTypeOverride( Class propertyType, String editorType )
-    {
-        editorTypeMap.put(propertyType.getName(), editorType);
     }
 
     public void setEditorTypeOverrides( Map<Class, String> editorTypeOverrides )

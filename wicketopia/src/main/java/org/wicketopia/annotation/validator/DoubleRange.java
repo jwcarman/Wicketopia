@@ -28,7 +28,10 @@ import java.lang.annotation.Target;
 @Target( ElementType.METHOD )
 public @interface DoubleRange
 {
-    double min() default Double.MIN_VALUE;
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     double max() default Double.MAX_VALUE;
+    double min() default Double.MIN_VALUE;
 }

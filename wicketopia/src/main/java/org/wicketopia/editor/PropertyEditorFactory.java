@@ -25,5 +25,9 @@ import org.metastopheles.PropertyMetaData;
  */
 public interface PropertyEditorFactory
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context);
 }

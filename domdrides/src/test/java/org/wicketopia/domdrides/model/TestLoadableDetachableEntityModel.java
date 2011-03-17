@@ -29,6 +29,23 @@ import static org.testng.Assert.*;
  */
 public class TestLoadableDetachableEntityModel
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Test
+    @SuppressWarnings("unchecked")
+    public void testGetObjectWithEntity()
+    {
+        final Mockery context = new Mockery();
+        final Repository<Person,String> repo = context.mock(Repository.class);
+        final Person expected = new Person();
+        LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, expected);
+        Person actual = model.getObject();
+        assertSame(actual, expected);
+        context.assertIsSatisfied();
+    }
+
     @Test
     @SuppressWarnings("unchecked")
     public void testGetObjectWithId()
@@ -40,19 +57,6 @@ public class TestLoadableDetachableEntityModel
             one(repo).getById("1"); will(returnValue(expected) );
         }});
         LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, "1");
-        Person actual = model.getObject();
-        assertSame(actual, expected);
-        context.assertIsSatisfied();
-    }
-
-    @Test
-    @SuppressWarnings("unchecked")
-    public void testGetObjectWithEntity()
-    {
-        final Mockery context = new Mockery();
-        final Repository<Person,String> repo = context.mock(Repository.class);
-        final Person expected = new Person();
-        LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, expected);
         Person actual = model.getObject();
         assertSame(actual, expected);
         context.assertIsSatisfied();

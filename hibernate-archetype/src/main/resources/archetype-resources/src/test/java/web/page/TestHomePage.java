@@ -26,6 +26,10 @@ import java.util.Collections;
 
 public class TestHomePage extends AbstractWicketTestCase
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     @Test
     public void testRenderMyPage()
 	{

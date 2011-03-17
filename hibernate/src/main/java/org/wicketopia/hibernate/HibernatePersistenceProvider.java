@@ -25,6 +25,10 @@ import org.wicketopia.persistence.PersistenceProvider;
  */
 public class HibernatePersistenceProvider extends HibernateDaoSupport implements PersistenceProvider
 {
+//----------------------------------------------------------------------------------------------------------------------
+// PersistenceProvider Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
     @Override
     @Transactional
     public <T> T create(T object)

@@ -14,32 +14,31 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.facet;
+package org.wicketopia.editor.decorator;
 
 import org.apache.wicket.validation.IValidator;
 import org.wicketopia.editor.EditorContext;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.PropertyEditorDecorator;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractValidatorFacet implements PropertyEditorFacet
+public abstract class AbstractValidatorDecorator implements PropertyEditorDecorator
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract IValidator createValidator(EditorContext context);
+    protected abstract IValidator<?> createValidator(EditorContext context);
 
-//**********************************************************************************************************************
-// PropertyEditorFacet Implementation
-//**********************************************************************************************************************
-
+//----------------------------------------------------------------------------------------------------------------------
+// PropertyEditorDecorator Implementation
+//----------------------------------------------------------------------------------------------------------------------
 
     public final void apply(PropertyEditor builder, EditorContext context)
     {
-        final IValidator validator = createValidator(context);
+        final IValidator<?> validator = createValidator(context);
         if (validator != null)
         {
             builder.addValidator(validator);

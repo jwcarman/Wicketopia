@@ -22,6 +22,10 @@ import org.domdrides.hibernate.repository.HibernateRepository;
 
 public class HibernateWidgetRepository extends HibernateRepository<Widget,String> implements WidgetRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
     public HibernateWidgetRepository()
     {
         super(Widget.class);

@@ -29,6 +29,17 @@ import java.util.Map;
  */
 public class TestDefaultEditorTypeMapping
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Test
+    public void testAddOverride()
+    {
+        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        impl.addEditorTypeOverride(Integer.class, "integer_override");
+        //assertEquals("integer_override", impl.getEditorType(Integer.class));
+    }
 
     @Test
     public void testDefaultMappings()
@@ -57,11 +68,18 @@ public class TestDefaultEditorTypeMapping
     }
 
     @Test
-    public void testAddOverride()
+    public void testInterfaceMatch()
     {
         DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
-        impl.addEditorTypeOverride(Integer.class, "integer_override");
-        //assertEquals("integer_override", impl.getEditorType(Integer.class));
+        impl.addEditorTypeOverride(Serializable.class, "serial");
+        //assertEquals("serial", impl.getEditorType(Person.class));
+    }
+
+    @Test
+    public void testNoMatch()
+    {
+        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        //assertNull(impl.getEditorType(Connection.class));
     }
 
     @Test
@@ -82,20 +100,6 @@ public class TestDefaultEditorTypeMapping
         //assertEquals("exception", impl.getEditorType(IllegalArgumentException.class));
     }
 
-    @Test
-    public void testInterfaceMatch()
-    {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
-        impl.addEditorTypeOverride(Serializable.class, "serial");
-        //assertEquals("serial", impl.getEditorType(Person.class));
-    }
-
-    @Test
-    public void testNoMatch()
-    {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
-        //assertNull(impl.getEditorType(Connection.class));
-    }
     /*
     @Test
     public void testSettingMap()

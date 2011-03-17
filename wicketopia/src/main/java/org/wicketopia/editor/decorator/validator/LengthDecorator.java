@@ -14,42 +14,42 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.facet.validator;
+package org.wicketopia.editor.decorator.validator;
 
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.wicketopia.editor.EditorContext;
-import org.wicketopia.editor.facet.AbstractValidatorFacet;
+import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
 
 /**
  * @author James Carman
  */
-public class LengthFacet extends AbstractValidatorFacet
+public class LengthDecorator extends AbstractValidatorDecorator
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
     private final int min;
     private final int max;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
-    public LengthFacet(int min, int max)
+    public LengthDecorator(int min, int max)
     {
         this.min = min;
         this.max = max;
     }
 
-//**********************************************************************************************************************
-// PropertyEditorFacet Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator createValidator(EditorContext context)
+    protected IValidator<?> createValidator(EditorContext context)
     {
         if (max != Integer.MAX_VALUE && min != Integer.MIN_VALUE)
         {

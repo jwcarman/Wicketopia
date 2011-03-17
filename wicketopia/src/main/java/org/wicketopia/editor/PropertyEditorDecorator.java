@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.provider;
+package org.wicketopia.editor;
 
-import org.apache.wicket.model.IModel;
-import org.metastopheles.PropertyMetaData;
-import org.wicketopia.component.editor.FormComponentEditorPanel;
-import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorProvider;
+import java.io.Serializable;
 
 /**
  * @since 1.0
  */
-public class TextFieldPropertyEditorProvider implements PropertyEditorProvider
+public interface PropertyEditorDecorator extends Serializable
 {
-    public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
-    {
-        return FormComponentEditorPanel.createTextFieldPanel(componentId, propertyMetadata, propertyModel);
-    }
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public void apply( PropertyEditor builder, EditorContext context);
 }

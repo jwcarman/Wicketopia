@@ -25,11 +25,15 @@ import org.apache.wicket.validation.IValidator;
  */
 public interface PropertyEditor
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     public void addBehavior( IBehavior behavior );
 
-    public void addValidator( IValidator validator );
-
-    public void setRequired( boolean required );
+    public void addValidator( IValidator<?> validator );
 
     public Component getEditorComponent();
+
+    public void setRequired( boolean required );
 }

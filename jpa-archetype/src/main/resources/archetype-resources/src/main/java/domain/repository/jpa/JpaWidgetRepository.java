@@ -22,6 +22,10 @@ import org.domdrides.jpa.repository.JpaRepository;
 
 public class JpaWidgetRepository extends JpaRepository<Widget,String> implements WidgetRepository
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
     public JpaWidgetRepository()
     {
         super(Widget.class);

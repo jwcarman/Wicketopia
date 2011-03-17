@@ -19,7 +19,7 @@
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-extensions:1.4.14" level="project" />
     <orderEntry type="library" name="Maven: org.apache.wicket:wicket-datetime:1.4.14" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6.2" level="project" />
-    <orderEntry type="library" name="Maven: org.metastopheles:metastopheles:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.metastopheles:metastopheles:1.0" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.domdrides:domdrides-core:1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.testng:testng:jdk15:5.9" level="project" />
@@ -29,6 +29,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jmock:jmock:2.5.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-library:1.1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.4" level="project" />
   </component>
 </module>
 

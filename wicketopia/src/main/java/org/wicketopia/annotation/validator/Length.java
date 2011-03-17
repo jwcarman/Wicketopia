@@ -28,7 +28,10 @@ import java.lang.annotation.Target;
 @Target( ElementType.METHOD )
 public @interface Length
 {
-    int min() default Integer.MIN_VALUE;
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     int max() default Integer.MAX_VALUE;
+    int min() default Integer.MIN_VALUE;
 }

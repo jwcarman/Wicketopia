@@ -25,6 +25,10 @@ import org.metastopheles.PropertyMetaData;
  */
 public interface EditorTypeMapping
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     /**
      * Returns the editor type for the property type
      *

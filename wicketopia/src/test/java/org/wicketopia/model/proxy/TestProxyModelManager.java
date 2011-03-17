@@ -27,6 +27,10 @@ import org.wicketopia.util.Person;
  */
 public class TestProxyModelManager
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     @Test
     public void testCommit()
     {
@@ -47,6 +51,5 @@ public class TestProxyModelManager
         mgr.commit();
         assertEquals(p.getFirst(), "NewFirst");
         assertEquals(p.getLast(), "NewLast");
-
     }
 }

@@ -19,14 +19,14 @@ package org.wicketopia.editor.def;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.component.editor.EnumDropDownChoicePropertyEditor;
+import org.wicketopia.component.editor.TextAreaPropertyEditor;
+import org.wicketopia.component.editor.TextFieldPropertyEditor;
 import org.wicketopia.editor.EditorContext;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.PropertyEditorDecorator;
 import org.wicketopia.editor.PropertyEditorFactory;
 import org.wicketopia.editor.PropertyEditorProvider;
-import org.wicketopia.editor.provider.EnumChoicePropertyEditorProvider;
-import org.wicketopia.editor.provider.TextAreaPropertyEditorProvider;
-import org.wicketopia.editor.provider.TextFieldPropertyEditorProvider;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 import java.util.HashMap;
@@ -37,35 +37,34 @@ import java.util.Map;
  */
 public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private Map<String, PropertyEditorProvider> providerMap =
             new HashMap<String, PropertyEditorProvider>();
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public DefaultPropertyEditorFactory()
     {
-        final TextFieldPropertyEditorProvider textFieldProviderProperty = new TextFieldPropertyEditorProvider();
-        setEditorProviderOverride("string", textFieldProviderProperty);
-        setEditorProviderOverride("short", textFieldProviderProperty);
-        setEditorProviderOverride("integer", textFieldProviderProperty);
-        setEditorProviderOverride("double", textFieldProviderProperty);
-        setEditorProviderOverride("long", textFieldProviderProperty);
-        setEditorProviderOverride("float", textFieldProviderProperty);
-        setEditorProviderOverride("date", textFieldProviderProperty);
+        setEditorProviderOverride("string", TextFieldPropertyEditor.getProvider());
+        setEditorProviderOverride("short", TextFieldPropertyEditor.getProvider());
+        setEditorProviderOverride("integer", TextFieldPropertyEditor.getProvider());
+        setEditorProviderOverride("double", TextFieldPropertyEditor.getProvider());
+        setEditorProviderOverride("long", TextFieldPropertyEditor.getProvider());
+        setEditorProviderOverride("float", TextFieldPropertyEditor.getProvider());
+        setEditorProviderOverride("date", TextFieldPropertyEditor.getProvider());
         
-        setEditorProviderOverride("long-string", new TextAreaPropertyEditorProvider());
-        setEditorProviderOverride("enum", new EnumChoicePropertyEditorProvider());
+        setEditorProviderOverride("long-string", TextAreaPropertyEditor.getProvider());
+        setEditorProviderOverride("enum", EnumDropDownChoicePropertyEditor.getProvider());
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // PropertyEditorFactory Implementation
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context)
     {
@@ -84,16 +83,16 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
                     "No property editor builder defined for editor type \"" + editorType + ".\"");
         }
         PropertyEditor builder = provider.createPropertyEditor(id, propertyMetadata, propertyModel);
-        for (PropertyEditorFacet facet : wicketopiaFacet.getFacets())
+        for (PropertyEditorDecorator decorator : wicketopiaFacet.getDecorators())
         {
-            facet.apply(builder, context);
+            decorator.apply(builder, context);
         }
         return builder.getEditorComponent();
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public void setEditorProviderOverride(String editorType, PropertyEditorProvider provider)
     {

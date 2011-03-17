@@ -35,6 +35,10 @@ import java.util.Collections;
  */
 public class TestPageableRepositoryDataProvider
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     @Test
     @SuppressWarnings( "unchecked" )
     public void testIterator()
@@ -60,6 +64,21 @@ public class TestPageableRepositoryDataProvider
 
     @Test
     @SuppressWarnings( "unchecked" )
+    public void testModel()
+    {
+        final Mockery context = new Mockery();
+        final PageableRepository<Person, String> repo = context.mock(PageableRepository.class);
+        PageableRepositoryDataProvider<Person, String> provider =
+                new PageableRepositoryDataProvider<Person, String>(repo, "first", true);
+        final Person p = new Person();
+        IModel<Person> model = provider.model(p);
+        assertSame(model.getObject(), p);
+        assertTrue(model instanceof LoadableDetachableEntityModel);
+        context.assertIsSatisfied();
+    }
+
+    @Test
+    @SuppressWarnings( "unchecked" )
     public void testSize()
     {
         final Mockery context = new Mockery();
@@ -78,20 +97,4 @@ public class TestPageableRepositoryDataProvider
         assertEquals(actual, expected);
         context.assertIsSatisfied();
     }
-
-    @Test
-    @SuppressWarnings( "unchecked" )
-    public void testModel()
-    {
-        final Mockery context = new Mockery();
-        final PageableRepository<Person, String> repo = context.mock(PageableRepository.class);
-        PageableRepositoryDataProvider<Person, String> provider =
-                new PageableRepositoryDataProvider<Person, String>(repo, "first", true);
-        final Person p = new Person();
-        IModel<Person> model = provider.model(p);
-        assertSame(model.getObject(), p);
-        assertTrue(model instanceof LoadableDetachableEntityModel);
-        context.assertIsSatisfied();
-    }
-
 }

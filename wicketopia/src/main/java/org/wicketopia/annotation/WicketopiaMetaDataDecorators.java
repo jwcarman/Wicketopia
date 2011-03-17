@@ -22,7 +22,7 @@ import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
 import org.wicketopia.annotation.validator.*;
-import org.wicketopia.editor.facet.validator.*;
+import org.wicketopia.editor.decorator.validator.*;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -30,46 +30,14 @@ import org.wicketopia.metadata.WicketopiaFacet;
  */
 public class WicketopiaMetaDataDecorators
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     @PropertyDecorator
     public static void onCreditCard(PropertyMetaData propertyMetaData, CreditCard creditCard)
     {
-        WicketopiaFacet.get(propertyMetaData).addFacet(new CreditCardFacet());
-    }
-
-    @PropertyDecorator
-    public static void onDoubleRange(PropertyMetaData propertyMetaData, DoubleRange doubleRange)
-    {
-        WicketopiaFacet.get(propertyMetaData).addFacet(new DoubleRangeFacet(doubleRange.min(), doubleRange.max()));
-    }
-
-    @PropertyDecorator
-    public static void onEmail(PropertyMetaData propertyMetaData, Email email)
-    {
-        WicketopiaFacet.get(propertyMetaData).addFacet(new EmailFacet());
-    }
-
-    @PropertyDecorator
-    public static void onLength(PropertyMetaData propertyMetaData, Length length)
-    {
-        WicketopiaFacet.get(propertyMetaData).addFacet(new LengthFacet(length.min(), length.max()));
-    }
-
-    @PropertyDecorator
-    public static void onLongRange(PropertyMetaData propertyMetaData, LongRange longRange)
-    {
-        WicketopiaFacet.get(propertyMetaData).addFacet(new LongRangeFacet(longRange.min(), longRange.max()));
-    }
-
-    @PropertyDecorator
-    public static void onPattern(PropertyMetaData propertyMetaData, Pattern pattern)
-    {
-        WicketopiaFacet.get(propertyMetaData).addFacet(new PatternFacet(pattern.value()));
-    }
-
-    @PropertyDecorator
-    public static void onRequired(PropertyMetaData propertyMetaData, Required required)
-    {
-        WicketopiaFacet.get(propertyMetaData).addFacet(RequiredFacet.getInstance());
+        WicketopiaFacet.get(propertyMetaData).addFacet(CreditCardDecorator.getInstance());
     }
 
     @PropertyDecorator
@@ -79,14 +47,50 @@ public class WicketopiaMetaDataDecorators
     }
 
     @PropertyDecorator
+    public static void onDoubleRange(PropertyMetaData propertyMetaData, DoubleRange doubleRange)
+    {
+        WicketopiaFacet.get(propertyMetaData).addFacet(new DoubleRangeDecorator(doubleRange.min(), doubleRange.max()));
+    }
+
+    @PropertyDecorator
     public static void onEditorType(PropertyMetaData propertyMetaData, EditorType editorType)
     {
         WicketopiaFacet.get(propertyMetaData).setEditorType(editorType.value());
     }
 
     @PropertyDecorator
+    public static void onEmail(PropertyMetaData propertyMetaData, Email email)
+    {
+        WicketopiaFacet.get(propertyMetaData).addFacet(EmailDecorator.getInstance());
+    }
+
+    @PropertyDecorator
+    public static void onLength(PropertyMetaData propertyMetaData, Length length)
+    {
+        WicketopiaFacet.get(propertyMetaData).addFacet(new LengthDecorator(length.min(), length.max()));
+    }
+
+    @PropertyDecorator
+    public static void onLongRange(PropertyMetaData propertyMetaData, LongRange longRange)
+    {
+        WicketopiaFacet.get(propertyMetaData).addFacet(new LongRangeDecorator(longRange.min(), longRange.max()));
+    }
+
+    @PropertyDecorator
     public static void onOrder(PropertyMetaData propertyMetaData, Order order)
     {
         WicketopiaFacet.get(propertyMetaData).setOrder(order.value());
+    }
+
+    @PropertyDecorator
+    public static void onPattern(PropertyMetaData propertyMetaData, Pattern pattern)
+    {
+        WicketopiaFacet.get(propertyMetaData).addFacet(new PatternDecorator(pattern.value()));
+    }
+
+    @PropertyDecorator
+    public static void onRequired(PropertyMetaData propertyMetaData, Required required)
+    {
+        WicketopiaFacet.get(propertyMetaData).addFacet(RequiredDecorator.getInstance());
     }
 }

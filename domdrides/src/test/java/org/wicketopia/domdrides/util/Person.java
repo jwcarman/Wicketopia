@@ -23,9 +23,9 @@ import org.domdrides.entity.UuidEntity;
  */
 public class Person extends UuidEntity
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
     private String first;
@@ -33,19 +33,9 @@ public class Person extends UuidEntity
     private Gender gender;
     private String multiWordProperty;
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
-//**********************************************************************************************************************
-
-    public String getMultiWordProperty()
-    {
-        return multiWordProperty;
-    }
-
-    public void setMultiWordProperty( String multiWordProperty )
-    {
-        this.multiWordProperty = multiWordProperty;
-    }
+//----------------------------------------------------------------------------------------------------------------------
 
     public String getFirst()
     {
@@ -75,5 +65,15 @@ public class Person extends UuidEntity
     public void setLast( String last )
     {
         this.last = last;
+    }
+
+    public String getMultiWordProperty()
+    {
+        return multiWordProperty;
+    }
+
+    public void setMultiWordProperty( String multiWordProperty )
+    {
+        this.multiWordProperty = multiWordProperty;
     }
 }

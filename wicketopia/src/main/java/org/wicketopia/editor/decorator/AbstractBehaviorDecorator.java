@@ -14,27 +14,26 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.facet;
+package org.wicketopia.editor.decorator;
 
 import org.apache.wicket.behavior.IBehavior;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorFacet;
+import org.wicketopia.editor.PropertyEditorDecorator;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractBehaviorFacet implements PropertyEditorFacet
+public abstract class AbstractBehaviorDecorator implements PropertyEditorDecorator
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     protected abstract IBehavior createBehavior();
 
-//**********************************************************************************************************************
-// PropertyEditorFacet Implementation
-//**********************************************************************************************************************
-
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     public void apply( PropertyEditor builder )
     {

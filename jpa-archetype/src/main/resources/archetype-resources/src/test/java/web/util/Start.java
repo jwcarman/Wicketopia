@@ -22,6 +22,9 @@ import org.mortbay.jetty.bio.SocketConnector;
 import org.mortbay.jetty.webapp.WebAppContext;
 
 public class Start {
+//----------------------------------------------------------------------------------------------------------------------
+// main() method
+//----------------------------------------------------------------------------------------------------------------------
 
 	public static void main(String[] args) throws Exception {
 		Server server = new Server();

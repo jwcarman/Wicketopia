@@ -25,9 +25,23 @@ import org.testng.annotations.BeforeMethod;
 
 public abstract class AbstractWicketTestCase
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
     protected AnnotApplicationContextMock springContext;
     protected WicketTester tester;
     protected Mockery mockery;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @AfterMethod
+    public void assertMockeryIsSatisfied()
+    {
+        mockery.assertIsSatisfied();
+    }
 
     @BeforeMethod
     public void constructWicketTester()
@@ -37,11 +51,5 @@ public abstract class AbstractWicketTestCase
         final WicketApplication application = new WicketApplication();
         application.setApplicationContext(springContext);
         tester = new WicketTester(application);
-    }
-
-    @AfterMethod
-    public void assertMockeryIsSatisfied()
-    {
-        mockery.assertIsSatisfied();
     }
 }

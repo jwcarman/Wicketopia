@@ -33,17 +33,17 @@ import java.util.*;
 
 public class BeanEditorHelper<T> implements Serializable
 {
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Fields
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     private final Class<T> beanClass;
     private final IModel<T> beanModel;
     private final EditorContext editorContext = new EditorContext();
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Constructors
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public BeanEditorHelper(Class<T> beanClass, IModel<T> beanModel)
     {
@@ -51,25 +51,41 @@ public class BeanEditorHelper<T> implements Serializable
         this.beanModel = beanModel;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public EditorContext getEditorContext()
     {
         return editorContext;
     }
 
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 // Other Methods
-//**********************************************************************************************************************
+//----------------------------------------------------------------------------------------------------------------------
 
     public ListView<String> createEditorsView(String componentId, String... skippedProperties)
     {
         final ListView<String> listView = new EditorListView(componentId, skippedProperties);
         listView.setReuseItems(true);
         return listView;
+    }
 
+    public Component createPropertyEditor(String componentId, String propertyName)
+    {
+        PropertyMetaData propertyMetaData = getPropertyMetaData(propertyName);
+        return WicketopiaPlugin.get().getPropertyEditorFactory().createPropertyEditor(componentId, propertyMetaData, new PropertyModel(beanModel, propertyName), editorContext);
+    }
+
+    private PropertyMetaData getPropertyMetaData(String propertyName)
+    {
+        BeanMetaData beanMetaData = getBeanMetaData();
+        return beanMetaData.getPropertyMetaData(propertyName);
+    }
+
+    public Label createPropertyLabel(String componentId, String propertyName)
+    {
+        return new PropertyLabel(componentId, getPropertyMetaData(propertyName));
     }
 
     public List<PropertyMetaData> getPropertyMetaData(String... skippedProperties)
@@ -92,6 +108,11 @@ public class BeanEditorHelper<T> implements Serializable
         return propertyMetaDatas;
     }
 
+    private BeanMetaData getBeanMetaData()
+    {
+        return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
+    }
+
     public List<String> getPropertyNames(String... skippedProperties)
     {
         final List<PropertyMetaData> propertyMetaDatas = getPropertyMetaData(skippedProperties);
@@ -103,27 +124,9 @@ public class BeanEditorHelper<T> implements Serializable
         return propertyNames;
     }
 
-    private PropertyMetaData getPropertyMetaData(String propertyName)
-    {
-        BeanMetaData beanMetaData = getBeanMetaData();
-        return beanMetaData.getPropertyMetaData(propertyName);
-    }
-
-    private BeanMetaData getBeanMetaData()
-    {
-        return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
-    }
-
-    public Component createPropertyEditor(String componentId, String propertyName)
-    {
-        PropertyMetaData propertyMetaData = getPropertyMetaData(propertyName);
-        return WicketopiaPlugin.get().getPropertyEditorFactory().createPropertyEditor(componentId, propertyMetaData, new PropertyModel(beanModel, propertyName), editorContext);
-    }
-
-    public Label createPropertyLabel(String componentId, String propertyName)
-    {
-        return new PropertyLabel(componentId, getPropertyMetaData(propertyName));
-    }
+//----------------------------------------------------------------------------------------------------------------------
+// Inner Classes
+//----------------------------------------------------------------------------------------------------------------------
 
     private class EditorListView extends ListView<String>
     {
