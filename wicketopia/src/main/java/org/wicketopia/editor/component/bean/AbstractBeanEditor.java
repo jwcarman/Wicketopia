@@ -63,7 +63,7 @@ public class AbstractBeanEditor<T> extends Panel
     protected List<PropertyMetaData> getPropertyMetaDataList()
     {
         List<PropertyMetaData> propertyMetaDataList = new LinkedList<PropertyMetaData>();
-        final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanType);
+        final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
         Set<String> propertyNames = beanMetaData.getPropertyNames();
         propertyNames.removeAll(skippedProperties );
         for (String propertyName : propertyNames)
@@ -117,7 +117,7 @@ public class AbstractBeanEditor<T> extends Panel
 
     protected PropertyMetaData getPropertyMetaData(String propertyName)
     {
-        final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanType);
+        final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
         return beanMetaData.getPropertyMetaData(propertyName);
     }
 }

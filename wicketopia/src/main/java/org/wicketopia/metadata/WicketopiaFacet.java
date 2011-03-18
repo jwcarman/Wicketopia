@@ -37,7 +37,9 @@ public class WicketopiaFacet implements Comparable
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final FacetKey<WicketopiaFacet> FACET_KEY  = new FacetKey<WicketopiaFacet>() {};
+    private static final FacetKey<WicketopiaFacet> FACET_KEY = new FacetKey<WicketopiaFacet>()
+    {
+    };
 
     private String labelTextMessageKey;
     private String defaultLabelText;
@@ -195,7 +197,7 @@ public class WicketopiaFacet implements Comparable
             try
             {
                 Class beanClass = Class.forName(className);
-                BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
+                BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanClass);
                 PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
                 return WicketopiaFacet.get(propertyMetaData);
             }

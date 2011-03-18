@@ -18,6 +18,7 @@ package org.wicketopia;
 
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.metastopheles.BeanMetaData;
 import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
@@ -53,10 +54,19 @@ public class WicketopiaPlugin
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanMetaDataFactory getBeanMetadataFactory()
+    public BeanMetaData getBeanMetaData(Class<?> beanClass)
+    {
+        if(WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
+        {
+            beanMetadataFactory.clear();
+        }
+        return beanMetadataFactory.getBeanMetaData(beanClass);
+    }
+
+    /*public BeanMetaDataFactory getBeanMetadataFactory()
     {
         return beanMetadataFactory;
-    }
+    }*/
 
     public void setBeanMetadataFactory(BeanMetaDataFactory beanMetadataFactory)
     {
