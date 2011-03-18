@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.annotation.validator;
+package org.wicketopia.editor.annotation.validator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

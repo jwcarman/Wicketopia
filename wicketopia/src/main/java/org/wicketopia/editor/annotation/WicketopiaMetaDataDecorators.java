@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package org.wicketopia.annotation;
+package org.wicketopia.editor.annotation;
 
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.annotation.metadata.DisplayName;
-import org.wicketopia.annotation.metadata.EditorType;
-import org.wicketopia.annotation.metadata.Order;
-import org.wicketopia.annotation.visible.Hidden;
-import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.decorator.VisibleDecorator;
+import org.wicketopia.editor.annotation.metadata.DisplayName;
+import org.wicketopia.editor.annotation.metadata.EditorType;
+import org.wicketopia.editor.annotation.metadata.Order;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**

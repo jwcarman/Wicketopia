@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.annotation.metadata;
+package org.wicketopia.editor.annotation.metadata;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -26,11 +26,11 @@ import java.lang.annotation.Target;
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface Order
+public @interface EditorType
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    int value();
+    String value();
 }

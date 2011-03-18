@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.annotation.enabled;
+package org.wicketopia.editor.annotation.enabled;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  */
 @Retention( RetentionPolicy.RUNTIME )
 @Target( ElementType.METHOD )
-public @interface Enabled
+public @interface Disabled
 {
     String[] value();
 }
