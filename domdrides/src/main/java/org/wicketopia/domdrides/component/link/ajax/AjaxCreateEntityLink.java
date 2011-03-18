@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2010 Carman Consulting, Inc.
+ * Copyright (c) 2011 Carman Consulting, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package org.wicketopia.domdrides.component.link;
+package org.wicketopia.domdrides.component.link.ajax;
 
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;
@@ -25,25 +27,24 @@ import org.domdrides.repository.Repository;
 import java.io.Serializable;
 
 /**
- * An ajax-enabled link that removes an entity.
  * @since 1.0
  */
-public abstract class AjaxRemoveEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends AjaxLink<EntityType>
+public abstract class AjaxCreateEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends AjaxSubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final long serialVersionUID = 1L;
     private final Repository<EntityType,IdType> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxRemoveEntityLink( String id, Repository<EntityType, IdType> repository, IModel<EntityType> model )
+    public AjaxCreateEntityLink(String id, Repository<EntityType, IdType> repository, IModel<EntityType> model)
     {
-        super(id, model);
+        super(id);
+        setDefaultModel(model);
         this.repository = repository;
     }
 
@@ -51,24 +52,18 @@ public abstract class AjaxRemoveEntityLink<EntityType extends Entity<IdType>,IdT
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    /**
-     * Subclasses must override this to provide behavior after the entity has been removed (like redirecting to another page,
-     * perhaps).  Typically this would be used to update whatever component(s) displayed this link in the first place
-     * (such as a table or list).
-     *
-     * @param entity the entity that was removed
-     * @param ajaxRequestTarget the ajax request target
-     */
-    protected abstract void afterRemove(EntityType entity, AjaxRequestTarget ajaxRequestTarget);
+    protected abstract void afterCreate(EntityType entity, AjaxRequestTarget target);
 
 //----------------------------------------------------------------------------------------------------------------------
-// IAjaxLink Implementation
+// Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public final void onClick( AjaxRequestTarget ajaxRequestTarget )
+    @Override
+    @SuppressWarnings("unchecked")
+    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
-        final EntityType entity = getModelObject();
-        repository.remove(entity);
-        afterRemove(entity, ajaxRequestTarget);
+        EntityType entity = (EntityType)getDefaultModelObject();
+        entity = repository.add(entity);
+        afterCreate(entity, target);
     }
 }

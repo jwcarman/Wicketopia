@@ -16,6 +16,7 @@
 
 package org.wicketopia.domdrides.component.link;
 
+import org.wicketopia.domdrides.component.link.ajax.AjaxRemoveEntityLink;
 import org.wicketopia.domdrides.util.AbstractWicketTestCase;
 import org.wicketopia.domdrides.util.Person;
 import org.testng.annotations.Test;
