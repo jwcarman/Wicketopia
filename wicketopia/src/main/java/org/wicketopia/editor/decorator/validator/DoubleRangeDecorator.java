@@ -20,7 +20,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.annotation.validator.DoubleRange;
+import org.wicketopia.editor.annotation.validator.DoubleRange;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
 import org.wicketopia.metadata.WicketopiaFacet;

@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package org.wicketopia.component.editor;
+package org.wicketopia.editor.component.property;
 
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.component.choice.EnumDropDownChoice;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorProvider;
 
-public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
+/**
+ * @since 1.0
+ */
+public class EnumDropDownChoicePropertyEditor extends AbstractFormComponentPropertyEditor
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -43,9 +46,9 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public TextFieldPropertyEditor(String id, PropertyMetaData propertyMetaData, TextField<?> textField)
+    public EnumDropDownChoicePropertyEditor(String id, PropertyMetaData propertyMetaData, EnumDropDownChoice<?> formComponent)
     {
-        super(id, propertyMetaData, textField);
+        super(id, propertyMetaData, formComponent);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -56,7 +59,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
     {
         public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
-            return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField("editor", propertyModel));
+            return new EnumDropDownChoicePropertyEditor(componentId, propertyMetadata, new EnumDropDownChoice("ddc", propertyModel, propertyMetadata.getPropertyDescriptor().getPropertyType()));
         }
     }
 }

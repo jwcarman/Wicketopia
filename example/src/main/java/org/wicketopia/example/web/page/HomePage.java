@@ -27,7 +27,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.domdrides.model.repeater.PageableRepositoryDataProvider;
-import org.wicketopia.editor.BeanEditorHelper;
+import org.wicketopia.editor.component.bean.VerticalListBeanEditor;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.model.column.FragmentColumn;
@@ -96,7 +97,6 @@ public class HomePage extends BasePage
         feedback.setOutputMarkupPlaceholderTag(true);
         final IModel<Widget> model = new Model<Widget>(new Widget());
         final Form<Widget> widgetForm = new Form<Widget>("form", model);
-        final BeanEditorHelper helper = new BeanEditorHelper<Widget>("UPDATE", Widget.class, model);
         widgetForm.add(new AjaxCreateLink<Widget>("submit", widgetForm, persistenceProvider)
         {
             @Override
@@ -114,7 +114,8 @@ public class HomePage extends BasePage
                 target.addComponent(feedback);
             }
         });
-        widgetForm.add(helper.createEditorsView("editors", "id", "version"));
+        final EditorContext context = new EditorContext("CREATE");
+        widgetForm.add(new VerticalListBeanEditor<Widget>("editor", Widget.class, model, context, "id", "version"));
         add(feedback);
         add(widgetForm);
     }

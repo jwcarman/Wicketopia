@@ -16,6 +16,8 @@
 
 package org.wicketopia.editor.context;
 
+import org.apache.wicket.MetaDataKey;
+
 import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
@@ -31,7 +33,7 @@ public class EditorContext implements Serializable
 
     public static final String EDIT_TYPE_CREATE = EditorContext.class.getSimpleName() + ".CREATE";
     public static final String EDIT_TYPE_UPDATE = EditorContext.class.getSimpleName() + ".UPDATE";
-    private final Map<String, Object> attributes = new TreeMap<String, Object>();
+    private final Map<MetaDataKey<?>, Object> attributes = new TreeMap<MetaDataKey<?>, Object>();
     private final String editType;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -85,14 +87,14 @@ public class EditorContext implements Serializable
 //----------------------------------------------------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    public <T> T getAttribute(String name)
+    public <T> T getAttribute(MetaDataKey<T> key)
     {
-        return (T) attributes.get(name);
+        return (T) attributes.get(key);
     }
 
-    public <T> void setAttribute(String name, T value)
+    public <T> void setAttribute(MetaDataKey<T> key, T value)
     {
-        attributes.put(name, value);
+        attributes.put(key, value);
     }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -26,8 +26,7 @@ import org.wicketopia.editor.PropertyEditorDecorator;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @since 1.0
@@ -205,5 +204,17 @@ public class WicketopiaFacet implements Comparable
                 throw new WicketRuntimeException("Unable to find bean class " + className + ".", e);
             }
         }
+    }
+
+    public static void sort(List<PropertyMetaData> propertyMetaDataList)
+    {
+        Collections.sort(propertyMetaDataList, new Comparator<PropertyMetaData>()
+        {
+            @Override
+            public int compare(PropertyMetaData o1, PropertyMetaData o2)
+            {
+                return WicketopiaFacet.get(o1).compareTo(WicketopiaFacet.get(o2));
+            }
+        });
     }
 }

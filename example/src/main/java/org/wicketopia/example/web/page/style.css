@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
+table.beanEditor {
+    padding: 20px;
+}
+th.propertyLabel {
+    text-align:left;
+    vertical-align:middle;
+}
+
 .feedbackPanelERROR {
     color: red;
 }

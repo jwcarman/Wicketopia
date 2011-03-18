@@ -20,7 +20,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.CreditCardValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.annotation.validator.CreditCard;
+import org.wicketopia.editor.annotation.validator.CreditCard;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
 import org.wicketopia.metadata.WicketopiaFacet;

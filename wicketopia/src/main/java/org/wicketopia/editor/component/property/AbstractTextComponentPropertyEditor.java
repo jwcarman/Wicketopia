@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package org.wicketopia.component.editor;
+package org.wicketopia.editor.component.property;
 
 import org.apache.wicket.markup.html.form.AbstractTextComponent;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.metastopheles.PropertyMetaData;
 
 /**

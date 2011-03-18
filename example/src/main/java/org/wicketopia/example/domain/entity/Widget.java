@@ -17,14 +17,12 @@
 package org.wicketopia.example.domain.entity;
 
 import org.domdrides.entity.UuidEntity;
-import org.wicketopia.annotation.enabled.Disabled;
-import org.wicketopia.annotation.metadata.DisplayName;
-import org.wicketopia.annotation.metadata.EditorType;
-import org.wicketopia.annotation.metadata.Order;
-import org.wicketopia.annotation.required.Optional;
-import org.wicketopia.annotation.required.Required;
-import org.wicketopia.annotation.validator.*;
-import org.wicketopia.annotation.visible.Hidden;
+import org.wicketopia.editor.annotation.metadata.DisplayName;
+import org.wicketopia.editor.annotation.metadata.EditorType;
+import org.wicketopia.editor.annotation.metadata.Order;
+import org.wicketopia.editor.annotation.required.Required;
+import org.wicketopia.editor.annotation.validator.*;
+import org.wicketopia.editor.annotation.visible.Hidden;
 import org.wicketopia.example.domain.value.WidgetType;
 
 import javax.persistence.Entity;

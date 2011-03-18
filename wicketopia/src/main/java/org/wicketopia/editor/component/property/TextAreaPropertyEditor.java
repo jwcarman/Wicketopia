@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package org.wicketopia.component.editor;
+package org.wicketopia.editor.component.property;
 
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorProvider;
-import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
  * @since 1.0

@@ -20,8 +20,8 @@ import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wicketopia.annotation.visible.Hidden;
-import org.wicketopia.annotation.visible.Visible;
+import org.wicketopia.editor.annotation.visible.Hidden;
+import org.wicketopia.editor.annotation.visible.Visible;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.context.EditorContextPredicate;
@@ -71,7 +71,6 @@ public class VisibleDecorator extends ContextualDecorator
     public void apply(PropertyEditor editor, EditorContext context)
     {
         boolean value = predicate.evaluate(context);
-        logger.debug(value ? "Showing component " + editor.getEditorComponent().getId() + "." : "Hiding component " + editor.getEditorComponent().getId() + ".");
         editor.show(value);
     }
 }

@@ -6,7 +6,7 @@
  * You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,75 +14,49 @@
  * limitations under the License.
  */
 
-package org.wicketopia.component.editor;
+package org.wicketopia.editor.component.property;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.model.label.PropertyLabelModel;
+import org.wicketopia.editor.PropertyEditorProvider;
 
-/**
- * @since 1.0
- */
-public abstract class AbstractFormComponentPropertyEditor extends Panel implements PropertyEditor
+public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final FormComponent<?> formComponent;
+    private static final PropertyEditorProvider provider = new Provider();
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public static PropertyEditorProvider getProvider()
+    {
+        return provider;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractFormComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, FormComponent<?> formComponent)
+    public TextFieldPropertyEditor(String id, PropertyMetaData propertyMetaData, TextField<?> textField)
     {
-        super(id);
-        this.formComponent = formComponent;
-        formComponent.setLabel(new PropertyLabelModel(propertyMetaData));
-        setRenderBodyOnly(true);
-        add(formComponent);
+        super(id, propertyMetaData, textField);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// PropertyEditor Implementation
+// Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addBehavior(IBehavior behavior)
+    private static class Provider implements PropertyEditorProvider
     {
-        formComponent.add(behavior);
-    }
-
-    public void addValidator(IValidator validator)
-    {
-        formComponent.add(validator);
-    }
-
-    @Override
-    public void enable(boolean enabled)
-    {
-        formComponent.setEnabled(enabled);
-    }
-
-    public Component getEditorComponent()
-    {
-        return this;
-    }
-
-    @Override
-    public void require(boolean required)
-    {
-        formComponent.setRequired(required);
-    }
-
-    @Override
-    public void show(boolean visible)
-    {
-        formComponent.setVisible(visible);
+        public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        {
+            return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField("editor", propertyModel));
+        }
     }
 }
