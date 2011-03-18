@@ -14,10 +14,10 @@
     <orderEntry type="module" module-name="wicketopia" />
     <orderEntry type="library" name="Maven: net.sf.scannotation:scannotation:1.0.2" level="project" />
     <orderEntry type="library" name="Maven: javassist:javassist:3.6.0.GA" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.wicket:wicket:1.4.14" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket:1.4.16" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-extensions:1.4.14" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-datetime:1.4.14" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-extensions:1.4.16" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.wicket:wicket-datetime:1.4.16" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.metastopheles:metastopheles:1.0" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.4" level="project" />

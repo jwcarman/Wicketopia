@@ -35,7 +35,7 @@
     </modules>
 
     <properties>
-        <wicket.version>1.4.14</wicket.version>
+        <wicket.version>1.4.16</wicket.version>
         <slf4j.version>1.6.1</slf4j.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
@@ -44,6 +44,8 @@
         <jetty.version>6.1.4</jetty.version>
         <testng.version>5.9</testng.version>
         <jmock.version>2.5.0.1</jmock.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>  
 
     <developers>

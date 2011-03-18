@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.example.web.util.AbstractWicketTestCase;
+import org.wicketopia.persistence.PersistenceProvider;
 
 public class TestHomePage extends AbstractWicketTestCase
 {
@@ -39,6 +40,8 @@ public class TestHomePage extends AbstractWicketTestCase
                 will(returnValue(0));
             }
         });
+        final PersistenceProvider persistenceProvider = mockery.mock(PersistenceProvider.class);
+        springContext.putBean("persistenceProvider", persistenceProvider);
         springContext.putBean("widgetRepository", widgetRepository);
         new WicketopiaPlugin().install(tester.getApplication());
         tester.startPage(HomePage.class);
