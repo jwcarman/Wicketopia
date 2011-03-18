@@ -16,15 +16,44 @@
 
 package org.wicketopia.editor.decorator;
 
+import org.metastopheles.PropertyMetaData;
+import org.metastopheles.annotation.PropertyDecorator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wicketopia.annotation.visible.Hidden;
+import org.wicketopia.annotation.visible.Visible;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.context.EditorContextPredicate;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
  * @since 1.0
  */
 public class VisibleDecorator extends ContextualDecorator
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
+    private static final Logger logger = LoggerFactory.getLogger(VisibleDecorator.class);
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @PropertyDecorator
+    public static void onHidden(PropertyMetaData propertyMetaData, Hidden hidden)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new VisibleDecorator(EditorContext.notEditType(hidden.value())));
+    }
+
+    @PropertyDecorator
+    public static void onVisible(PropertyMetaData propertyMetaData, Visible visible)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new VisibleDecorator(EditorContext.editType(visible.value())));
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
@@ -41,6 +70,8 @@ public class VisibleDecorator extends ContextualDecorator
     @Override
     public void apply(PropertyEditor editor, EditorContext context)
     {
-        editor.show(predicate.evaluate(context));
+        boolean value = predicate.evaluate(context);
+        logger.debug(value ? "Showing component " + editor.getEditorComponent().getId() + "." : "Hiding component " + editor.getEditorComponent().getId() + ".");
+        editor.show(value);
     }
 }

@@ -16,16 +16,38 @@
 
 package org.wicketopia.editor.decorator;
 
+import org.metastopheles.PropertyMetaData;
+import org.metastopheles.annotation.PropertyDecorator;
+import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.annotation.required.Optional;
+import org.wicketopia.annotation.required.Required;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorDecorator;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.context.EditorContextPredicate;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
  * @since 1.0
  */
 public class RequiredDecorator extends ContextualDecorator
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @PropertyDecorator
+    public static void onOptional(PropertyMetaData propertyMetaData, Optional optional)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new RequiredDecorator(EditorContext.notEditType(optional.value())));
+    }
+
+    @PropertyDecorator
+    public static void onRequired(PropertyMetaData propertyMetaData, Required required)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new RequiredDecorator(EditorContext.editType(required.value())));
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------

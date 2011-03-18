@@ -18,8 +18,12 @@ package org.wicketopia.editor.decorator.validator;
 
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.StringValidator;
+import org.metastopheles.PropertyMetaData;
+import org.metastopheles.annotation.PropertyDecorator;
+import org.wicketopia.annotation.validator.Length;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
  * @author James Carman
@@ -33,6 +37,16 @@ public class LengthDecorator extends AbstractValidatorDecorator
     private static final long serialVersionUID = 1L;
     private final int min;
     private final int max;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @PropertyDecorator
+    public static void decorate(PropertyMetaData propertyMetaData, Length length)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new LengthDecorator(length.min(), length.max()));
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors

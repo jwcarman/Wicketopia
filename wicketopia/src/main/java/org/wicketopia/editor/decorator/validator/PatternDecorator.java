@@ -18,8 +18,12 @@ package org.wicketopia.editor.decorator.validator;
 
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.PatternValidator;
+import org.metastopheles.PropertyMetaData;
+import org.metastopheles.annotation.PropertyDecorator;
+import org.wicketopia.annotation.validator.Pattern;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 public class PatternDecorator extends AbstractValidatorDecorator
 {
@@ -28,6 +32,16 @@ public class PatternDecorator extends AbstractValidatorDecorator
 //----------------------------------------------------------------------------------------------------------------------
 
     private final String pattern;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @PropertyDecorator
+    public static void decorate(PropertyMetaData propertyMetaData, Pattern pattern)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new PatternDecorator(pattern.value()));
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors

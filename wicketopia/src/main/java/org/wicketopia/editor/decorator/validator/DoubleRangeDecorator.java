@@ -18,8 +18,12 @@ package org.wicketopia.editor.decorator.validator;
 
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
+import org.metastopheles.PropertyMetaData;
+import org.metastopheles.annotation.PropertyDecorator;
+import org.wicketopia.annotation.validator.DoubleRange;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
+import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
  * @author James Carman
@@ -33,6 +37,16 @@ public class DoubleRangeDecorator extends AbstractValidatorDecorator
 
     private final double min;
     private final double max;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @PropertyDecorator
+    public static void decorate(PropertyMetaData propertyMetaData, DoubleRange doubleRange)
+    {
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new DoubleRangeDecorator(doubleRange.min(), doubleRange.max()));
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors

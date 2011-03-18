@@ -17,12 +17,14 @@
 package org.wicketopia.example.domain.entity;
 
 import org.domdrides.entity.UuidEntity;
+import org.wicketopia.annotation.enabled.Disabled;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
 import org.wicketopia.annotation.required.Optional;
 import org.wicketopia.annotation.required.Required;
 import org.wicketopia.annotation.validator.*;
+import org.wicketopia.annotation.visible.Hidden;
 import org.wicketopia.example.domain.value.WidgetType;
 
 import javax.persistence.Entity;
@@ -99,8 +101,9 @@ public class Widget extends UuidEntity
 
     @DisplayName( "Widget Name" )
     @Order( 0 )
-    @Required({"CREATE", "UPDATE"})
+    //@Required({"CREATE", "UPDATE"})
     @Length( min = 5, max = 25 )
+    @Hidden("UPDATE")
     public String getName()
     {
         return name;
