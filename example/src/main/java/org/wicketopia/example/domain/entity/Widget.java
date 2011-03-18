@@ -20,6 +20,8 @@ import org.domdrides.entity.UuidEntity;
 import org.wicketopia.annotation.metadata.DisplayName;
 import org.wicketopia.annotation.metadata.EditorType;
 import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.annotation.required.Optional;
+import org.wicketopia.annotation.required.Required;
 import org.wicketopia.annotation.validator.*;
 import org.wicketopia.example.domain.value.WidgetType;
 
@@ -83,7 +85,7 @@ public class Widget extends UuidEntity
 
     @Order( 1 )
     @EditorType( "long-string" )
-    @Required
+    @Required("CREATE")
     @Length( min = 25 )
     public String getDescription()
     {
@@ -97,7 +99,7 @@ public class Widget extends UuidEntity
 
     @DisplayName( "Widget Name" )
     @Order( 0 )
-    @Required
+    @Required({"CREATE", "UPDATE"})
     @Length( min = 5, max = 25 )
     public String getName()
     {
@@ -154,7 +156,7 @@ public class Widget extends UuidEntity
         this.version = version;
     }
 
-    @Required
+    @Required("CREATE")
     public WidgetType getWidgetType()
     {
         return widgetType;

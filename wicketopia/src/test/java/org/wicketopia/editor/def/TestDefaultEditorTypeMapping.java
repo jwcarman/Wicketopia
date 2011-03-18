@@ -36,7 +36,7 @@ public class TestDefaultEditorTypeMapping
     @Test
     public void testAddOverride()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         impl.addEditorTypeOverride(Integer.class, "integer_override");
         //assertEquals("integer_override", impl.getEditorType(Integer.class));
     }
@@ -44,7 +44,7 @@ public class TestDefaultEditorTypeMapping
     @Test
     public void testDefaultMappings()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         /*assertEquals("byte", impl.getEditorType(Byte.class));
         assertEquals("byte", impl.getEditorType(Byte.TYPE));
         assertEquals("short", impl.getEditorType(Short.class));
@@ -70,7 +70,7 @@ public class TestDefaultEditorTypeMapping
     @Test
     public void testInterfaceMatch()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         impl.addEditorTypeOverride(Serializable.class, "serial");
         //assertEquals("serial", impl.getEditorType(Person.class));
     }
@@ -78,14 +78,14 @@ public class TestDefaultEditorTypeMapping
     @Test
     public void testNoMatch()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         //assertNull(impl.getEditorType(Connection.class));
     }
 
     @Test
     public void testSetOverrides()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         final Map<Class, String> overrides = new HashMap<Class, String>();
         overrides.put(Integer.class, "integer_override");
         impl.setEditorTypeOverrides(overrides);
@@ -95,7 +95,7 @@ public class TestDefaultEditorTypeMapping
     @Test
     public void testSuperclassMatch()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         impl.addEditorTypeOverride(RuntimeException.class, "exception");
         //assertEquals("exception", impl.getEditorType(IllegalArgumentException.class));
     }
@@ -104,7 +104,7 @@ public class TestDefaultEditorTypeMapping
     @Test
     public void testSettingMap()
     {
-        DefaultEditorTypeMapping impl = new DefaultEditorTypeMapping();
+        DefaultPropertyEditorTypeMapping impl = new DefaultPropertyEditorTypeMapping();
         final Map<Class,String> map = new HashMap<Class,String>();
         impl.setEditorTypeMap(map);
         assertNull(impl.getEditorType(String.class));

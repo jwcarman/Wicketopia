@@ -96,7 +96,7 @@ public class HomePage extends BasePage
         feedback.setOutputMarkupPlaceholderTag(true);
         final IModel<Widget> model = new Model<Widget>(new Widget());
         final Form<Widget> widgetForm = new Form<Widget>("form", model);
-        final BeanEditorHelper helper = new BeanEditorHelper<Widget>(Widget.class, model);
+        final BeanEditorHelper helper = new BeanEditorHelper<Widget>("UPDATE", Widget.class, model);
         widgetForm.add(new AjaxCreateLink<Widget>("submit", widgetForm, persistenceProvider)
         {
             @Override

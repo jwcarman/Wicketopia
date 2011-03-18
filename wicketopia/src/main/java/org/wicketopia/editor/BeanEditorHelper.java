@@ -26,6 +26,7 @@ import org.metastopheles.BeanMetaData;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.component.label.PropertyLabel;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 import java.io.Serializable;
@@ -39,14 +40,15 @@ public class BeanEditorHelper<T> implements Serializable
 
     private final Class<T> beanClass;
     private final IModel<T> beanModel;
-    private final EditorContext editorContext = new EditorContext();
+    private final EditorContext editorContext;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanEditorHelper(Class<T> beanClass, IModel<T> beanModel)
+    public BeanEditorHelper(String editType, Class<T> beanClass, IModel<T> beanModel)
     {
+        this.editorContext = new EditorContext(editType);
         this.beanClass = beanClass;
         this.beanModel = beanModel;
     }
@@ -83,6 +85,11 @@ public class BeanEditorHelper<T> implements Serializable
         return beanMetaData.getPropertyMetaData(propertyName);
     }
 
+    private BeanMetaData getBeanMetaData()
+    {
+        return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
+    }
+
     public Label createPropertyLabel(String componentId, String propertyName)
     {
         return new PropertyLabel(componentId, getPropertyMetaData(propertyName));
@@ -106,11 +113,6 @@ public class BeanEditorHelper<T> implements Serializable
             }
         });
         return propertyMetaDatas;
-    }
-
-    private BeanMetaData getBeanMetaData()
-    {
-        return WicketopiaPlugin.get().getBeanMetadataFactory().getBeanMetaData(beanClass);
     }
 
     public List<String> getPropertyNames(String... skippedProperties)

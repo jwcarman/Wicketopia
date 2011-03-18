@@ -16,18 +16,11 @@
 
 package org.wicketopia.example.web.page;
 
-import org.hamcrest.Matcher;
 import org.jmock.Expectations;
-import org.jmock.syntax.MethodClause;
 import org.testng.annotations.Test;
 import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.editor.def.DefaultEditorTypeMapping;
-import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
-import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.example.web.util.AbstractWicketTestCase;
-
-import java.util.Collections;
 
 public class TestHomePage extends AbstractWicketTestCase
 {

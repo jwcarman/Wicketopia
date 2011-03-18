@@ -29,11 +29,15 @@ public interface PropertyEditor
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addBehavior( IBehavior behavior );
+    public void addBehavior(IBehavior behavior);
 
-    public void addValidator( IValidator<?> validator );
+    public void addValidator(IValidator<?> validator);
 
     public Component getEditorComponent();
 
-    public void setRequired( boolean required );
+    public void show(boolean visible);
+
+    public void enable(boolean enabled);
+
+    public void require(boolean required);
 }

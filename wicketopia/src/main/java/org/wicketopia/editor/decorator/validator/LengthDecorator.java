@@ -18,7 +18,7 @@ package org.wicketopia.editor.decorator.validator;
 
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
 
 /**

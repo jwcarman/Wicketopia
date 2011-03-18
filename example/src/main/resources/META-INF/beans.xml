@@ -61,7 +61,7 @@
     Property Editor Support
     ====================================================================================================================
     -->
-    <bean id="editorTypeMapping" class="org.wicketopia.editor.def.DefaultEditorTypeMapping">
+    <bean id="propertyEditorTypeMapping" class="org.wicketopia.editor.def.DefaultPropertyEditorTypeMapping">
         <property name="editorTypeOverrides">
             <map>
             </map>

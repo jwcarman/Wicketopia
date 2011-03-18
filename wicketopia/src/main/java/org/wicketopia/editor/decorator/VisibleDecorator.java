@@ -14,37 +14,33 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.decorator.validator;
+package org.wicketopia.editor.decorator;
 
-import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.validator.PatternValidator;
+import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
+import org.wicketopia.editor.context.EditorContextPredicate;
 
-public class PatternDecorator extends AbstractValidatorDecorator
+/**
+ * @since 1.0
+ */
+public class VisibleDecorator extends ContextualDecorator
 {
-//----------------------------------------------------------------------------------------------------------------------
-// Fields
-//----------------------------------------------------------------------------------------------------------------------
-
-    private final String pattern;
-
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PatternDecorator(String pattern)
+    public VisibleDecorator(EditorContextPredicate predicate)
     {
-        this.pattern = pattern;
+        super(predicate);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// PropertyEditorDecorator Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator(EditorContext context)
+    public void apply(PropertyEditor editor, EditorContext context)
     {
-        return new PatternValidator(pattern);
+        editor.show(predicate.evaluate(context));
     }
 }

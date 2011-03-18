@@ -17,7 +17,7 @@
 package org.wicketopia.editor.decorator;
 
 import org.apache.wicket.validation.IValidator;
-import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorDecorator;
 
@@ -36,12 +36,12 @@ public abstract class AbstractValidatorDecorator implements PropertyEditorDecora
 // PropertyEditorDecorator Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public final void apply(PropertyEditor builder, EditorContext context)
+    public final void apply(PropertyEditor editor, EditorContext context)
     {
         final IValidator<?> validator = createValidator(context);
         if (validator != null)
         {
-            builder.addValidator(validator);
+            editor.addValidator(validator);
         }
     }
 }

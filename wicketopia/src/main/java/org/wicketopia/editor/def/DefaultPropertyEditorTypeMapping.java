@@ -18,7 +18,7 @@ package org.wicketopia.editor.def;
 
 import org.apache.commons.lang.ClassUtils;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.EditorTypeMapping;
+import org.wicketopia.editor.PropertyEditorTypeMapping;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -30,7 +30,7 @@ import java.util.Queue;
 /**
  * @since 1.0
  */
-public class DefaultEditorTypeMapping implements EditorTypeMapping
+public class DefaultPropertyEditorTypeMapping implements PropertyEditorTypeMapping
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -42,7 +42,7 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DefaultEditorTypeMapping()
+    public DefaultPropertyEditorTypeMapping()
     {
         addEditorTypeOverride(Byte.class, "byte");
         addEditorTypeOverride(Short.class, "short");
@@ -72,7 +72,7 @@ public class DefaultEditorTypeMapping implements EditorTypeMapping
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// EditorTypeMapping Implementation
+// PropertyEditorTypeMapping Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     public String getEditorType( PropertyMetaData propertyMetadata )

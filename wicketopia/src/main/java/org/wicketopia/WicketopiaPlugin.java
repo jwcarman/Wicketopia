@@ -22,9 +22,9 @@ import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
-import org.wicketopia.editor.EditorTypeMapping;
+import org.wicketopia.editor.PropertyEditorTypeMapping;
 import org.wicketopia.editor.PropertyEditorFactory;
-import org.wicketopia.editor.def.DefaultEditorTypeMapping;
+import org.wicketopia.editor.def.DefaultPropertyEditorTypeMapping;
 import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
 import org.wicketopia.metadata.WicketopiaFacet;
 
@@ -38,7 +38,7 @@ public class WicketopiaPlugin
 
     private BeanMetaDataFactory beanMetadataFactory = new AnnotationBeanMetaDataFactory();
     private PropertyEditorFactory propertyEditorFactory = new DefaultPropertyEditorFactory();
-    private EditorTypeMapping editorTypeMapping = new DefaultEditorTypeMapping();
+    private PropertyEditorTypeMapping propertyEditorTypeMapping = new DefaultPropertyEditorTypeMapping();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -63,14 +63,14 @@ public class WicketopiaPlugin
         this.beanMetadataFactory = beanMetadataFactory;
     }
 
-    public EditorTypeMapping getEditorTypeMapping()
+    public PropertyEditorTypeMapping getPropertyEditorTypeMapping()
     {
-        return editorTypeMapping;
+        return propertyEditorTypeMapping;
     }
 
-    public void setEditorTypeMapping(EditorTypeMapping editorTypeMapping)
+    public void setPropertyEditorTypeMapping(PropertyEditorTypeMapping propertyEditorTypeMapping)
     {
-        this.editorTypeMapping = editorTypeMapping;
+        this.propertyEditorTypeMapping = propertyEditorTypeMapping;
     }
 
     public PropertyEditorFactory getPropertyEditorFactory()
@@ -93,7 +93,7 @@ public class WicketopiaPlugin
         {
             public void decorate(PropertyMetaData propertyMetaData)
             {
-                WicketopiaFacet.get(propertyMetaData).setEditorType(editorTypeMapping.getEditorType(propertyMetaData));
+                WicketopiaFacet.get(propertyMetaData).setEditorType(propertyEditorTypeMapping.getEditorType(propertyMetaData));
             }
         });
         webApplication.setMetaData(META_KEY, this);

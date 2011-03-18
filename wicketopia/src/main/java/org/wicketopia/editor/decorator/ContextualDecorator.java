@@ -6,7 +6,7 @@
  * You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,37 +14,28 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.decorator.validator;
+package org.wicketopia.editor.decorator;
 
-import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.validator.PatternValidator;
-import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
+import org.wicketopia.editor.PropertyEditorDecorator;
+import org.wicketopia.editor.context.EditorContextPredicate;
 
-public class PatternDecorator extends AbstractValidatorDecorator
+/**
+ * @since 1.0
+ */
+public abstract class ContextualDecorator implements PropertyEditorDecorator
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final String pattern;
+    protected final EditorContextPredicate predicate;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PatternDecorator(String pattern)
+    public ContextualDecorator(EditorContextPredicate predicate)
     {
-        this.pattern = pattern;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    @Override
-    protected IValidator<?> createValidator(EditorContext context)
-    {
-        return new PatternValidator(pattern);
+        this.predicate = predicate;
     }
 }

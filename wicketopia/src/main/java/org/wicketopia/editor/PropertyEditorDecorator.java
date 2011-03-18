@@ -16,6 +16,8 @@
 
 package org.wicketopia.editor;
 
+import org.wicketopia.editor.context.EditorContext;
+
 import java.io.Serializable;
 
 /**
@@ -27,5 +29,5 @@ public interface PropertyEditorDecorator extends Serializable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void apply( PropertyEditor builder, EditorContext context);
+    public void apply( PropertyEditor editor, EditorContext context);
 }

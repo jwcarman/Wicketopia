@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2010 Carman Consulting, Inc.
+ * Copyright (c) 2011 Carman Consulting, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,35 +14,34 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor;
+package org.wicketopia.editor.decorator;
 
-import java.io.Serializable;
-import java.util.Map;
-import java.util.TreeMap;
+import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.editor.PropertyEditorDecorator;
+import org.wicketopia.editor.context.EditorContext;
+import org.wicketopia.editor.context.EditorContextPredicate;
 
 /**
- *
+ * @since 1.0
  */
-public class EditorContext implements Serializable
+public class RequiredDecorator extends ContextualDecorator
 {
 //----------------------------------------------------------------------------------------------------------------------
-// Fields
+// Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Map<String,Object> attributes = new TreeMap<String,Object>();
-
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    @SuppressWarnings("unchecked")
-    public <T> T getAttribute(String name)
+    public RequiredDecorator(EditorContextPredicate predicate)
     {
-        return (T)attributes.get(name);
+        super(predicate);
     }
 
-    public <T> void setAttribute(String name, T value)
+//----------------------------------------------------------------------------------------------------------------------
+// PropertyEditorDecorator Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void apply(PropertyEditor editor, EditorContext context)
     {
-        attributes.put(name, value);
+        editor.require(predicate.evaluate(context));
     }
 }

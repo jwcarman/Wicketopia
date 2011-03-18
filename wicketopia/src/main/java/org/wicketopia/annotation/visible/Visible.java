@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2010 Carman Consulting, Inc.
+ * Copyright (c) 2011 Carman Consulting, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor;
+package org.wicketopia.annotation.visible;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.model.IModel;
-import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.context.EditorContext;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @since 1.0
  */
-public interface PropertyEditorFactory
+@Retention( RetentionPolicy.RUNTIME )
+@Target( ElementType.METHOD )
+public @interface Visible
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context);
+    String[] value();
 }

@@ -166,7 +166,7 @@ public class WicketopiaFacet implements Comparable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addFacet(PropertyEditorDecorator decorator)
+    public void addDecorator(PropertyEditorDecorator decorator)
     {
         decorators.add(decorator);
     }

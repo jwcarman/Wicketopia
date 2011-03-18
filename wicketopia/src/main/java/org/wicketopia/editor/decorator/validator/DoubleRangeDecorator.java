@@ -17,11 +17,8 @@
 package org.wicketopia.editor.decorator.validator;
 
 import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.validator.MaximumValidator;
-import org.apache.wicket.validation.validator.MinimumValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
-import org.apache.wicket.validation.validator.RangeValidator;
-import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
 
 /**

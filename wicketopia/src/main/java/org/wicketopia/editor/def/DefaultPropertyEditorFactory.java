@@ -22,7 +22,7 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.component.editor.EnumDropDownChoicePropertyEditor;
 import org.wicketopia.component.editor.TextAreaPropertyEditor;
 import org.wicketopia.component.editor.TextFieldPropertyEditor;
-import org.wicketopia.editor.EditorContext;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorDecorator;
 import org.wicketopia.editor.PropertyEditorFactory;
@@ -50,16 +50,16 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 
     public DefaultPropertyEditorFactory()
     {
-        setEditorProviderOverride("string", TextFieldPropertyEditor.getProvider());
-        setEditorProviderOverride("short", TextFieldPropertyEditor.getProvider());
-        setEditorProviderOverride("integer", TextFieldPropertyEditor.getProvider());
-        setEditorProviderOverride("double", TextFieldPropertyEditor.getProvider());
-        setEditorProviderOverride("long", TextFieldPropertyEditor.getProvider());
-        setEditorProviderOverride("float", TextFieldPropertyEditor.getProvider());
-        setEditorProviderOverride("date", TextFieldPropertyEditor.getProvider());
+        registerProvider("string", TextFieldPropertyEditor.getProvider());
+        registerProvider("short", TextFieldPropertyEditor.getProvider());
+        registerProvider("integer", TextFieldPropertyEditor.getProvider());
+        registerProvider("double", TextFieldPropertyEditor.getProvider());
+        registerProvider("long", TextFieldPropertyEditor.getProvider());
+        registerProvider("float", TextFieldPropertyEditor.getProvider());
+        registerProvider("date", TextFieldPropertyEditor.getProvider());
         
-        setEditorProviderOverride("long-string", TextAreaPropertyEditor.getProvider());
-        setEditorProviderOverride("enum", EnumDropDownChoicePropertyEditor.getProvider());
+        registerProvider("long-string", TextAreaPropertyEditor.getProvider());
+        registerProvider("enum", EnumDropDownChoicePropertyEditor.getProvider());
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -94,7 +94,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void setEditorProviderOverride(String editorType, PropertyEditorProvider provider)
+    public void registerProvider(String editorType, PropertyEditorProvider provider)
     {
         providerMap.put(editorType, provider);
     }

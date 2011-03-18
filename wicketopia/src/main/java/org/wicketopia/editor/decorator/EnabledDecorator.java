@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2010 Carman Consulting, Inc.
+ * Copyright (c) 2011 Carman Consulting, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,46 +14,34 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.decorator.validator;
+package org.wicketopia.editor.decorator;
 
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.EditorContext;
 import org.wicketopia.editor.PropertyEditorDecorator;
+import org.wicketopia.editor.context.EditorContextPredicate;
 
 /**
  * @since 1.0
  */
-public class RequiredDecorator implements PropertyEditorDecorator
+public class EnabledDecorator extends ContextualDecorator
 {
-//----------------------------------------------------------------------------------------------------------------------
-// Fields
-//----------------------------------------------------------------------------------------------------------------------
-
-    private static RequiredDecorator instance = new RequiredDecorator();
-
-//----------------------------------------------------------------------------------------------------------------------
-// Static Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    public static RequiredDecorator getInstance()
-    {
-        return instance;
-    }
-
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private RequiredDecorator()
+    public EnabledDecorator(EditorContextPredicate predicate)
     {
+        super(predicate);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // PropertyEditorDecorator Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void apply( PropertyEditor builder, EditorContext context )
+    @Override
+    public void apply(PropertyEditor editor, EditorContext context)
     {
-        builder.setRequired(true);
+        editor.enable(predicate.evaluate(context));
     }
 }
