@@ -18,6 +18,8 @@ package org.wicketopia.editor.component.bean;
 
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.Fragment;
+import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.editor.context.EditorContext;
@@ -34,14 +36,14 @@ public class VerticalListBeanEditor<T> extends AbstractBeanEditor<T>
     public VerticalListBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... skippedProperties)
     {
         super(id, beanType, beanModel, editorContext, skippedProperties);
-        add(new ListView<PropertyMetaData>("editors", createPropertyMetaDataListModel())
+        final RepeatingView view = new RepeatingView("editors");
+        for (PropertyMetaData propertyMetaData : getPropertyMetaDataList())
         {
-            @Override
-            protected void populateItem(ListItem<PropertyMetaData> listItem)
-            {
-                listItem.add(createPropertyLabel("label", listItem.getModelObject()));
-                listItem.add(createPropertyEditor("editor", listItem.getModelObject()));
-            }
-        });
+            final Fragment row = new Fragment(view.newChildId(), "row", VerticalListBeanEditor.this);
+            row.add(createPropertyLabel("label", propertyMetaData));
+            row.add(createPropertyEditor("editor", propertyMetaData));
+            view.add(row);
+        }
+        add(view);
     }
 }

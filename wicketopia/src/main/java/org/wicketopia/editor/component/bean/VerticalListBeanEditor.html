@@ -15,9 +15,13 @@
   -->
 <wicket:panel>
     <table class="beanEditor">
-        <tr wicket:id="editors">
-            <th class="propertyLabel"><label wicket:id="label"/></th>
-            <td class="propertyEditor"><span wicket:id="editor"/></td>
-        </tr>
+        <tr wicket:id="editors"></tr>
     </table>
+
+    <wicket:fragment wicket:id="row">
+
+        <th class="propertyLabel"><label wicket:id="label"/></th>
+        <td class="propertyEditor"><span wicket:id="editor"/></td>
+
+    </wicket:fragment>
 </wicket:panel>
