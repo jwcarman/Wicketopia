@@ -1,15 +1,11 @@
 package org.wicketopia.hibernate.decorator;
 
-import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
-import org.hibernate.metadata.ClassMetadata;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.annotation.required.Required;
-import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.decorator.RequiredDecorator;
 import org.wicketopia.metadata.WicketopiaFacet;
 
@@ -22,6 +18,8 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 //----------------------------------------------------------------------------------------------------------------------
 
     private final Configuration configuration;
+
+    private boolean ignoreIdentifiers = true;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -43,12 +41,11 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
         if(classMapping != null)
         {
             final Property property = classMapping.getProperty(propertyMetaData.getPropertyDescriptor().getName());
-            property.getValue();
             if(property == null)
             {
-               // Do nothing, skip!
+               return;
             }
-            else if(property.equals(classMapping.getIdentifierProperty()))
+            else if(ignoreIdentifiers && property.equals(classMapping.getIdentifierProperty()))
             {
                 facet.setIgnored(true);
             }
@@ -68,7 +65,6 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-
     private PersistentClass findClassMapping(BeanMetaData beanMetaData)
     {
         for(Iterator i = configuration.getClassMappings(); i.hasNext(); )
@@ -80,5 +76,11 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
             }
         }
         return null;
+    }
+
+    public HibernatePropertyDecorator ignoreIdentifiers(boolean flag)
+    {
+        this.ignoreIdentifiers = flag;
+        return this;
     }
 }
