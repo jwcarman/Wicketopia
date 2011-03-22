@@ -75,6 +75,7 @@ public class Widget extends UuidEntity
         this.contactEmail = contactEmail;
     }
 
+    @Hidden("CREATE")
     public Date getDate() {
 		return date;
 	}

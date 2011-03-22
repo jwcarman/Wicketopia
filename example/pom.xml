@@ -30,7 +30,6 @@
     <name>Wicketopia Example Application</name>
 
     <properties>
-        <wicket.version>1.4.14</wicket.version>
         <domdrides.version>1.2</domdrides.version>
         <dbcp.version>1.2.2</dbcp.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>

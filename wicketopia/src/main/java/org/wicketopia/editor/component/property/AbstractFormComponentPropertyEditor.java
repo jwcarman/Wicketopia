@@ -85,4 +85,10 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
     {
         formComponent.setVisible(visible);
     }
+
+    @Override
+    public boolean isVisible()
+    {
+        return formComponent.isVisible();
+    }
 }
