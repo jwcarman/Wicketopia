@@ -3,6 +3,7 @@ package org.wicketopia.hibernate.decorator;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
+import org.hibernate.mapping.SimpleValue;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
@@ -41,9 +42,14 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
         if(classMapping != null)
         {
             final Property property = classMapping.getProperty(propertyMetaData.getPropertyDescriptor().getName());
+
             if(property == null)
             {
                return;
+            }
+            else if(!(property.getValue() instanceof SimpleValue))
+            {
+                facet.setIgnored(true);
             }
             else if(ignoreIdentifiers && property.equals(classMapping.getIdentifierProperty()))
             {

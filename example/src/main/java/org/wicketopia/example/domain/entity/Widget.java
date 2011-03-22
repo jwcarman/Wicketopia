@@ -26,9 +26,13 @@ import org.wicketopia.editor.annotation.validator.*;
 import org.wicketopia.editor.annotation.visible.Hidden;
 import org.wicketopia.example.domain.value.WidgetType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Widget extends UuidEntity
@@ -52,20 +56,11 @@ public class Widget extends UuidEntity
 
     private Integer version;
 
+    private Set<Gadget> gadgets = new HashSet<Gadget>();
+
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
-
-    @Ignored
-    public String getSomeImplementationField()
-    {
-        return someImplementationField;
-    }
-
-    public void setSomeImplementationField(String someImplementationField)
-    {
-        this.someImplementationField = someImplementationField;
-    }
 
     public String getAnotherProperty()
     {
@@ -109,6 +104,18 @@ public class Widget extends UuidEntity
     public void setDescription( String description )
     {
         this.description = description;
+    }
+
+
+    @OneToMany(cascade = CascadeType.PERSIST, targetEntity = Gadget.class)
+    public Set<Gadget> getGadgets()
+    {
+        return gadgets;
+    }
+
+    public void setGadgets(Set<Gadget> gadgets)
+    {
+        this.gadgets = gadgets;
     }
 
     @DisplayName( "Widget Name" )
@@ -158,6 +165,17 @@ public class Widget extends UuidEntity
     public void setSizeAsInt( int sizeAsInt )
     {
         this.sizeAsInt = sizeAsInt;
+    }
+
+    @Ignored
+    public String getSomeImplementationField()
+    {
+        return someImplementationField;
+    }
+
+    public void setSomeImplementationField(String someImplementationField)
+    {
+        this.someImplementationField = someImplementationField;
     }
 
     @Version
