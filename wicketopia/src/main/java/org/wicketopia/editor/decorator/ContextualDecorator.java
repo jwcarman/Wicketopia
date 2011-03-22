@@ -17,6 +17,7 @@
 package org.wicketopia.editor.decorator;
 
 import org.wicketopia.editor.PropertyEditorDecorator;
+import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.context.EditorContextPredicate;
 
 /**
@@ -37,5 +38,68 @@ public abstract class ContextualDecorator implements PropertyEditorDecorator
     public ContextualDecorator(EditorContextPredicate predicate)
     {
         this.predicate = predicate;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    protected static EditorContextPredicate not(EditorContextPredicate predicate)
+    {
+        return new NotPredicate(predicate);
+    }
+
+    protected static EditorContextPredicate whereEditTypeIn(String... editTypes)
+    {
+        return editTypes == null || editTypes.length == 0 ? new WhereEditTypeIn(EditorContext.ALL_EDIT_TYPES) : new WhereEditTypeIn(editTypes);
+    }
+
+    protected static EditorContextPredicate whereEditTypeNotIn(String... editTypes)
+    {
+        return not(whereEditTypeIn(editTypes));
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Inner Classes
+//----------------------------------------------------------------------------------------------------------------------
+
+    private static class NotPredicate implements EditorContextPredicate
+    {
+        private final EditorContextPredicate inner;
+
+        private NotPredicate(EditorContextPredicate inner)
+        {
+            this.inner = inner;
+        }
+
+        @Override
+        public boolean evaluate(EditorContext context)
+        {
+            return !inner.evaluate(context);
+        }
+    }
+
+    private static class WhereEditTypeIn implements EditorContextPredicate
+    {
+        private final String[] editTypes;
+
+        private WhereEditTypeIn(String... editTypes)
+        {
+            this.editTypes = editTypes;
+        }
+
+        @Override
+        public boolean evaluate(EditorContext context)
+        {
+            String target = context.getEditType();
+            for (String editType : editTypes)
+            {
+                if (EditorContext.ALL_EDIT_TYPES.equals(editType) || target.equals(editType))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

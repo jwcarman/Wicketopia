@@ -46,7 +46,7 @@ public class WicketopiaFacet implements Comparable
     private int order = Integer.MAX_VALUE;
     private String editorType;
     private Set<PropertyEditorDecorator> decorators = new HashSet<PropertyEditorDecorator>();
-
+    private boolean ignored = false;
     private final PropertyMetaData propertyMetaData;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -65,6 +65,18 @@ public class WicketopiaFacet implements Comparable
             }
             return meta;
         }
+    }
+
+    public static void sort(List<PropertyMetaData> propertyMetaDataList)
+    {
+        Collections.sort(propertyMetaDataList, new Comparator<PropertyMetaData>()
+        {
+            @Override
+            public int compare(PropertyMetaData o1, PropertyMetaData o2)
+            {
+                return WicketopiaFacet.get(o1).compareTo(WicketopiaFacet.get(o2));
+            }
+        });
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -163,6 +175,16 @@ public class WicketopiaFacet implements Comparable
         return propertyMetaData;
     }
 
+    public boolean isIgnored()
+    {
+        return ignored;
+    }
+
+    public void setIgnored(boolean ignored)
+    {
+        this.ignored = ignored;
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -206,17 +228,5 @@ public class WicketopiaFacet implements Comparable
                 throw new WicketRuntimeException("Unable to find bean class " + className + ".", e);
             }
         }
-    }
-
-    public static void sort(List<PropertyMetaData> propertyMetaDataList)
-    {
-        Collections.sort(propertyMetaDataList, new Comparator<PropertyMetaData>()
-        {
-            @Override
-            public int compare(PropertyMetaData o1, PropertyMetaData o2)
-            {
-                return WicketopiaFacet.get(o1).compareTo(WicketopiaFacet.get(o2));
-            }
-        });
     }
 }

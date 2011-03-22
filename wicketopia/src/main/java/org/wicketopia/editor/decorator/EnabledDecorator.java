@@ -37,13 +37,13 @@ public class EnabledDecorator extends ContextualDecorator
     @PropertyDecorator
     public static void onDisabled(PropertyMetaData propertyMetaData, Disabled disabled)
     {
-        WicketopiaFacet.get(propertyMetaData).addDecorator(new EnabledDecorator(EditorContext.notEditType(disabled.value())));
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new EnabledDecorator(whereEditTypeNotIn(disabled.value())));
     }
 
     @PropertyDecorator
     public static void onEnabled(PropertyMetaData propertyMetaData, Enabled enabled)
     {
-        WicketopiaFacet.get(propertyMetaData).addDecorator(new EnabledDecorator(EditorContext.editType(enabled.value())));
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new EnabledDecorator(whereEditTypeIn(enabled.value())));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

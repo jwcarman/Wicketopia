@@ -18,10 +18,7 @@ package org.wicketopia;
 
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.metastopheles.BeanMetaData;
-import org.metastopheles.BeanMetaDataFactory;
-import org.metastopheles.MetaDataDecorator;
-import org.metastopheles.PropertyMetaData;
+import org.metastopheles.*;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.wicketopia.editor.PropertyEditorTypeMapping;
 import org.wicketopia.editor.PropertyEditorFactory;
@@ -54,23 +51,14 @@ public class WicketopiaPlugin
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanMetaData getBeanMetaData(Class<?> beanClass)
+    public PropertyEditorFactory getPropertyEditorFactory()
     {
-        if(WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
-        {
-            beanMetadataFactory.clear();
-        }
-        return beanMetadataFactory.getBeanMetaData(beanClass);
+        return propertyEditorFactory;
     }
 
-    /*public BeanMetaDataFactory getBeanMetadataFactory()
+    public void setPropertyEditorFactory(PropertyEditorFactory propertyEditorFactory)
     {
-        return beanMetadataFactory;
-    }*/
-
-    public void setBeanMetadataFactory(BeanMetaDataFactory beanMetadataFactory)
-    {
-        this.beanMetadataFactory = beanMetadataFactory;
+        this.propertyEditorFactory = propertyEditorFactory;
     }
 
     public PropertyEditorTypeMapping getPropertyEditorTypeMapping()
@@ -83,19 +71,43 @@ public class WicketopiaPlugin
         this.propertyEditorTypeMapping = propertyEditorTypeMapping;
     }
 
-    public PropertyEditorFactory getPropertyEditorFactory()
+    /*public BeanMetaDataFactory getBeanMetadataFactory()
     {
-        return propertyEditorFactory;
-    }
+        return beanMetadataFactory;
+    }*/
 
-    public void setPropertyEditorFactory(PropertyEditorFactory propertyEditorFactory)
+    public void setBeanMetadataFactory(BeanMetaDataFactory beanMetadataFactory)
     {
-        this.propertyEditorFactory = propertyEditorFactory;
+        this.beanMetadataFactory = beanMetadataFactory;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+    public void addBeanMetaDataDecorator(MetaDataDecorator<BeanMetaData> decorator)
+    {
+        beanMetadataFactory.getBeanMetaDataDecorators().add(decorator);
+    }
+
+    public void addMethodMetaDataDecorator(MetaDataDecorator<MethodMetaData> decorator)
+    {
+        beanMetadataFactory.getMethodMetaDataDecorators().add(decorator);
+    }
+
+    public void addPropertyMetaDataDecorator(MetaDataDecorator<PropertyMetaData> decorator)
+    {
+        beanMetadataFactory.getPropertyMetaDataDecorators().add(decorator);
+    }
+
+    public BeanMetaData getBeanMetaData(Class<?> beanClass)
+    {
+        if(WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
+        {
+            beanMetadataFactory.clear();
+        }
+        return beanMetadataFactory.getBeanMetaData(beanClass);
+    }
 
     public void install(WebApplication webApplication)
     {

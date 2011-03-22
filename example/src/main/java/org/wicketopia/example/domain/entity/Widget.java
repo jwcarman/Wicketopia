@@ -19,6 +19,7 @@ package org.wicketopia.example.domain.entity;
 import org.domdrides.entity.UuidEntity;
 import org.wicketopia.editor.annotation.metadata.DisplayName;
 import org.wicketopia.editor.annotation.metadata.EditorType;
+import org.wicketopia.editor.annotation.metadata.Ignored;
 import org.wicketopia.editor.annotation.metadata.Order;
 import org.wicketopia.editor.annotation.required.Required;
 import org.wicketopia.editor.annotation.validator.*;
@@ -47,6 +48,7 @@ public class Widget extends UuidEntity
     private String contactEmail;
     private Date date;
     private String patternField;
+    private String someImplementationField;
 
     private Integer version;
 
@@ -54,7 +56,18 @@ public class Widget extends UuidEntity
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-	public String getAnotherProperty()
+    @Ignored
+    public String getSomeImplementationField()
+    {
+        return someImplementationField;
+    }
+
+    public void setSomeImplementationField(String someImplementationField)
+    {
+        this.someImplementationField = someImplementationField;
+    }
+
+    public String getAnotherProperty()
     {
         return anotherProperty;
     }
@@ -86,7 +99,7 @@ public class Widget extends UuidEntity
 
     @Order( 1 )
     @EditorType( "long-string" )
-    @Required("CREATE")
+    @Required
     @Length( min = 25 )
     public String getDescription()
     {
@@ -158,7 +171,7 @@ public class Widget extends UuidEntity
         this.version = version;
     }
 
-    @Required("CREATE")
+    @Required
     public WidgetType getWidgetType()
     {
         return widgetType;

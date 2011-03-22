@@ -115,7 +115,7 @@ public class HomePage extends BasePage
             }
         });
         final EditorContext context = new EditorContext("CREATE");
-        widgetForm.add(new VerticalListBeanEditor<Widget>("editor", Widget.class, model, context, "id", "version"));
+        widgetForm.add(new VerticalListBeanEditor<Widget>("editor", Widget.class, model, context));
         add(feedback);
         add(widgetForm);
     }

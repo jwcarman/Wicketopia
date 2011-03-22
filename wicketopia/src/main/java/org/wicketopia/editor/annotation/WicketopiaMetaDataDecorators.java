@@ -20,6 +20,7 @@ import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.editor.annotation.metadata.DisplayName;
 import org.wicketopia.editor.annotation.metadata.EditorType;
+import org.wicketopia.editor.annotation.metadata.Ignored;
 import org.wicketopia.editor.annotation.metadata.Order;
 import org.wicketopia.metadata.WicketopiaFacet;
 
@@ -43,6 +44,12 @@ public class WicketopiaMetaDataDecorators
     public static void onEditorType(PropertyMetaData propertyMetaData, EditorType editorType)
     {
         WicketopiaFacet.get(propertyMetaData).setEditorType(editorType.value());
+    }
+    
+    @PropertyDecorator
+    public static void onIgnored(PropertyMetaData propertyMetaData, Ignored ignored)
+    {
+        WicketopiaFacet.get(propertyMetaData).setIgnored(true);
     }
 
     @PropertyDecorator

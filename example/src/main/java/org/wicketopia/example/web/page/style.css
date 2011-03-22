@@ -17,6 +17,11 @@
 table.beanEditor {
     padding: 20px;
 }
+
+table.beanEditor tr {
+    margin: 10px;
+}
+
 th.propertyLabel {
     text-align:left;
     vertical-align:middle;

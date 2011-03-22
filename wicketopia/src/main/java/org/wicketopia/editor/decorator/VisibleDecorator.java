@@ -45,13 +45,13 @@ public class VisibleDecorator extends ContextualDecorator
     @PropertyDecorator
     public static void onHidden(PropertyMetaData propertyMetaData, Hidden hidden)
     {
-        WicketopiaFacet.get(propertyMetaData).addDecorator(new VisibleDecorator(EditorContext.notEditType(hidden.value())));
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new VisibleDecorator(whereEditTypeNotIn(hidden.value())));
     }
 
     @PropertyDecorator
     public static void onVisible(PropertyMetaData propertyMetaData, Visible visible)
     {
-        WicketopiaFacet.get(propertyMetaData).addDecorator(new VisibleDecorator(EditorContext.editType(visible.value())));
+        WicketopiaFacet.get(propertyMetaData).addDecorator(new VisibleDecorator(whereEditTypeIn(visible.value())));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

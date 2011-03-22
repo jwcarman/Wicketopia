@@ -37,13 +37,24 @@ public class RequiredDecorator extends ContextualDecorator
     @PropertyDecorator
     public static void onOptional(PropertyMetaData propertyMetaData, Optional optional)
     {
-        WicketopiaFacet.get(propertyMetaData).addDecorator(new RequiredDecorator(EditorContext.notEditType(optional.value())));
+        WicketopiaFacet.get(propertyMetaData).addDecorator(optional(optional.value()));
     }
 
     @PropertyDecorator
     public static void onRequired(PropertyMetaData propertyMetaData, Required required)
     {
-        WicketopiaFacet.get(propertyMetaData).addDecorator(new RequiredDecorator(EditorContext.editType(required.value())));
+        String[] editTypes = required.value();
+        WicketopiaFacet.get(propertyMetaData).addDecorator(required(required.value()));
+    }
+
+    public static RequiredDecorator optional(String... editTypes)
+    {
+        return new RequiredDecorator(whereEditTypeNotIn(editTypes));
+    }
+
+    public static RequiredDecorator required(String... editTypes)
+    {
+        return new RequiredDecorator(whereEditTypeIn(editTypes));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

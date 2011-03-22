@@ -42,36 +42,44 @@ public class AbstractBeanEditor<T> extends Panel
 
     protected final EditorContext editorContext;
     private final Class<T> beanType;
-    private final Set<String> skippedProperties;
+    private final Set<String> properties;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... skippedProperties)
+    protected AbstractBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... properties)
     {
         super(id, beanModel);
         this.beanType = beanType;
         this.editorContext = editorContext;
-        this.skippedProperties = new TreeSet<String>(Arrays.asList(skippedProperties));
+        this.properties = new TreeSet<String>(Arrays.asList(properties));
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected List<PropertyMetaData> getPropertyMetaDataList()
+    protected List<String> getPropertyNameList()
     {
         List<PropertyMetaData> propertyMetaDataList = new LinkedList<PropertyMetaData>();
         final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
-        Set<String> propertyNames = beanMetaData.getPropertyNames();
-        propertyNames.removeAll(skippedProperties );
+        Set<String> propertyNames = properties.isEmpty() ? beanMetaData.getPropertyNames() : properties;
         for (String propertyName : propertyNames)
         {
-            propertyMetaDataList.add(beanMetaData.getPropertyMetaData(propertyName));
+            PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
+            if (!WicketopiaFacet.get(propertyMetaData).isIgnored())
+            {
+                propertyMetaDataList.add(propertyMetaData);
+            }
         }
         WicketopiaFacet.sort(propertyMetaDataList);
-        return propertyMetaDataList;
+        final List<String> propertyNamesList = new ArrayList<String>(propertyMetaDataList.size());
+        for (PropertyMetaData propertyMetaData : propertyMetaDataList)
+        {
+            propertyNamesList.add(propertyMetaData.getPropertyDescriptor().getName());
+        }
+        return propertyNamesList;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -97,17 +105,10 @@ public class AbstractBeanEditor<T> extends Panel
     {
         return new PropertyLabel(componentId, propertyMetaData);
     }
-    
-    protected IModel<List<PropertyMetaData>> createPropertyMetaDataListModel()
+
+    protected IModel<List<String>> createPropertyNameListModel()
     {
-        return new LoadableDetachableModel<List<PropertyMetaData>>()
-        {
-            @Override
-            protected List<PropertyMetaData> load()
-            {
-                return getPropertyMetaDataList();
-            }
-        };
+        return new PropertyNameListModel();
     }
 
     protected <P> IModel<P> createPropertyModel(PropertyMetaData propertyMetaData)
@@ -119,5 +120,14 @@ public class AbstractBeanEditor<T> extends Panel
     {
         final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
         return beanMetaData.getPropertyMetaData(propertyName);
+    }
+
+    private class PropertyNameListModel extends LoadableDetachableModel<List<String>>
+    {
+        @Override
+        protected List<String> load()
+        {
+            return getPropertyNameList();
+        }
     }
 }

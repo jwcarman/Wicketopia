@@ -16,6 +16,8 @@
 
 package org.wicketopia.editor.annotation.enabled;
 
+import org.wicketopia.editor.context.EditorContext;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -28,5 +30,5 @@ import java.lang.annotation.Target;
 @Target( ElementType.METHOD )
 public @interface Enabled
 {
-    String[] value();
+    String[] value() default {EditorContext.ALL_EDIT_TYPES};
 }

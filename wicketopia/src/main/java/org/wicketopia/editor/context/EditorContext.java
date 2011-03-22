@@ -31,38 +31,12 @@ public class EditorContext implements Serializable
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static final String ALL_EDIT_TYPES = "<<<ALL>>>";
+
     public static final String EDIT_TYPE_CREATE = EditorContext.class.getSimpleName() + ".CREATE";
     public static final String EDIT_TYPE_UPDATE = EditorContext.class.getSimpleName() + ".UPDATE";
     private final Map<MetaDataKey<?>, Object> attributes = new TreeMap<MetaDataKey<?>, Object>();
     private final String editType;
-
-//----------------------------------------------------------------------------------------------------------------------
-// Static Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    public static EditorContextPredicate editType(final String... editTypes)
-    {
-        return new EditorContextPredicate()
-        {
-            @Override
-            public boolean evaluate(EditorContext context)
-            {
-                for (String editType : editTypes)
-                {
-                    if(context.getEditType().equals(editType))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        };
-    }
-
-    public static EditorContextPredicate notEditType(final String... editTypes)
-    {
-        return new NotPredicate(editType(editTypes));
-    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -95,25 +69,5 @@ public class EditorContext implements Serializable
     public <T> void setAttribute(MetaDataKey<T> key, T value)
     {
         attributes.put(key, value);
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Inner Classes
-//----------------------------------------------------------------------------------------------------------------------
-
-    private static class NotPredicate implements EditorContextPredicate
-    {
-        private final EditorContextPredicate predicate;
-
-        private NotPredicate(EditorContextPredicate predicate)
-        {
-            this.predicate = predicate;
-        }
-
-        @Override
-        public boolean evaluate(EditorContext context)
-        {
-            return !predicate.evaluate(context); 
-        }
     }
 }
