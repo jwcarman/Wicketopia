@@ -25,7 +25,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>wicketopia-hibernate</artifactId>
-
+    <name>Wicketopia/Hibernate Integration</name>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -49,8 +49,8 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jta_1.1_spec</artifactId>
+            <groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
             <version>1.1</version>
             <scope>provided</scope>
         </dependency>
