@@ -103,9 +103,8 @@ public class WicketApplication extends WebApplication implements ISpringContextL
     protected void init()
     {
         super.init();
-        WicketopiaPlugin plugin = new WicketopiaPlugin();
+        WicketopiaPlugin plugin = new WicketopiaPlugin(this);
         plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(sessionFactoryBean.getConfiguration()));
-        plugin.install(this);
         addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
     }
 }

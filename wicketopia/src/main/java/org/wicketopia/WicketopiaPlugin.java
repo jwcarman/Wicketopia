@@ -20,11 +20,21 @@ import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.metastopheles.*;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
+import org.scannotation.ClasspathUrlFinder;
+import org.scannotation.WarUrlFinder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wicketopia.editor.PropertyEditorTypeMapping;
 import org.wicketopia.editor.PropertyEditorFactory;
 import org.wicketopia.editor.def.DefaultPropertyEditorTypeMapping;
 import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
 import org.wicketopia.metadata.WicketopiaFacet;
+
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class WicketopiaPlugin
 {
@@ -34,7 +44,7 @@ public class WicketopiaPlugin
 
     private static MetaDataKey<WicketopiaPlugin> META_KEY = new WicketopiaPluginKey();
 
-    private BeanMetaDataFactory beanMetadataFactory = new AnnotationBeanMetaDataFactory();
+    private BeanMetaDataFactory beanMetaDataFactory;
     private PropertyEditorFactory propertyEditorFactory = new DefaultPropertyEditorFactory();
     private PropertyEditorTypeMapping propertyEditorTypeMapping = new DefaultPropertyEditorTypeMapping();
 
@@ -45,6 +55,43 @@ public class WicketopiaPlugin
     public static WicketopiaPlugin get()
     {
         return WebApplication.get().getMetaData(META_KEY);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
+    public WicketopiaPlugin(WebApplication webApplication)
+    {
+        this(webApplication, new AnnotationBeanMetaDataFactory(findClasspathUrls(webApplication)));
+    }
+
+    private static URL[] findClasspathUrls(WebApplication webApplication)
+    {
+        final Set<URL> urls = new HashSet<URL>();
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        if(cl instanceof URLClassLoader)
+        {
+            urls.addAll(Arrays.asList(((URLClassLoader) cl).getURLs()));
+        }
+        urls.add(WarUrlFinder.findWebInfClassesPath(webApplication.getServletContext()));
+        urls.addAll(Arrays.asList(WarUrlFinder.findWebInfLibClasspaths(webApplication.getServletContext())));
+        urls.addAll(Arrays.asList(ClasspathUrlFinder.findClassPaths()));
+        urls.remove(null);
+        return urls.toArray(new URL[urls.size()]);
+    }
+
+    public WicketopiaPlugin(WebApplication webApplication, BeanMetaDataFactory beanMetaDataFactory)
+    {
+        this.beanMetaDataFactory = beanMetaDataFactory;
+        beanMetaDataFactory.getPropertyMetaDataDecorators().add(new MetaDataDecorator<PropertyMetaData>()
+        {
+            public void decorate(PropertyMetaData propertyMetaData)
+            {
+                WicketopiaFacet.get(propertyMetaData).setEditorType(propertyEditorTypeMapping.getEditorType(propertyMetaData));
+            }
+        });
+        webApplication.setMetaData(META_KEY, this);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -76,9 +123,9 @@ public class WicketopiaPlugin
         return beanMetadataFactory;
     }*/
 
-    public void setBeanMetadataFactory(BeanMetaDataFactory beanMetadataFactory)
+    public void setBeanMetaDataFactory(BeanMetaDataFactory beanMetaDataFactory)
     {
-        this.beanMetadataFactory = beanMetadataFactory;
+        this.beanMetaDataFactory = beanMetaDataFactory;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -87,38 +134,26 @@ public class WicketopiaPlugin
 
     public void addBeanMetaDataDecorator(MetaDataDecorator<BeanMetaData> decorator)
     {
-        beanMetadataFactory.getBeanMetaDataDecorators().add(decorator);
+        beanMetaDataFactory.getBeanMetaDataDecorators().add(decorator);
     }
 
     public void addMethodMetaDataDecorator(MetaDataDecorator<MethodMetaData> decorator)
     {
-        beanMetadataFactory.getMethodMetaDataDecorators().add(decorator);
+        beanMetaDataFactory.getMethodMetaDataDecorators().add(decorator);
     }
 
     public void addPropertyMetaDataDecorator(MetaDataDecorator<PropertyMetaData> decorator)
     {
-        beanMetadataFactory.getPropertyMetaDataDecorators().add(decorator);
+        beanMetaDataFactory.getPropertyMetaDataDecorators().add(decorator);
     }
 
     public BeanMetaData getBeanMetaData(Class<?> beanClass)
     {
         if(WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
         {
-            beanMetadataFactory.clear();
+            beanMetaDataFactory.clear();
         }
-        return beanMetadataFactory.getBeanMetaData(beanClass);
-    }
-
-    public void install(WebApplication webApplication)
-    {
-        beanMetadataFactory.getPropertyMetaDataDecorators().add(new MetaDataDecorator<PropertyMetaData>()
-        {
-            public void decorate(PropertyMetaData propertyMetaData)
-            {
-                WicketopiaFacet.get(propertyMetaData).setEditorType(propertyEditorTypeMapping.getEditorType(propertyMetaData));
-            }
-        });
-        webApplication.setMetaData(META_KEY, this);
+        return beanMetaDataFactory.getBeanMetaData(beanClass);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
