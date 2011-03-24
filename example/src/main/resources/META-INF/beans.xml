@@ -74,8 +74,4 @@
         </property>
     </bean>
 
-    <bean id="persistenceProvider" class="org.wicketopia.hibernate.HibernatePersistenceProvider" autowire="byType">
-
-    </bean>
-
 </beans>

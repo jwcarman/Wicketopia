@@ -17,6 +17,7 @@
 package org.wicketopia.example.domain.entity;
 
 import org.domdrides.entity.UuidEntity;
+import org.hibernate.annotations.IndexColumn;
 import org.wicketopia.editor.annotation.metadata.DisplayName;
 import org.wicketopia.editor.annotation.metadata.EditorType;
 import org.wicketopia.editor.annotation.metadata.Ignored;
@@ -32,6 +33,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -56,7 +59,7 @@ public class Widget extends UuidEntity
 
     private Integer version;
 
-    private Set<Gadget> gadgets = new HashSet<Gadget>();
+    private List<Gadget> gadgets = new LinkedList<Gadget>();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
@@ -106,14 +109,14 @@ public class Widget extends UuidEntity
         this.description = description;
     }
 
-
-    @OneToMany(cascade = CascadeType.PERSIST, targetEntity = Gadget.class)
-    public Set<Gadget> getGadgets()
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Gadget.class)
+    @IndexColumn(name="GADGET_INDEX")
+    public List<Gadget> getGadgets()
     {
         return gadgets;
     }
 
-    public void setGadgets(Set<Gadget> gadgets)
+    public void setGadgets(List<Gadget> gadgets)
     {
         this.gadgets = gadgets;
     }

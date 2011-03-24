@@ -88,7 +88,11 @@ public class WicketopiaPlugin
         {
             public void decorate(PropertyMetaData propertyMetaData)
             {
-                WicketopiaFacet.get(propertyMetaData).setEditorType(propertyEditorTypeMapping.getEditorType(propertyMetaData));
+                WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+                if(facet.getEditorType() == null )
+                {
+                    facet.setEditorType(propertyEditorTypeMapping.getEditorType(propertyMetaData));
+                }
             }
         });
         webApplication.setMetaData(META_KEY, this);

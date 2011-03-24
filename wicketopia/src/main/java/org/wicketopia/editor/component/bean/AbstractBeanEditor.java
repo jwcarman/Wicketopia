@@ -27,6 +27,7 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.component.label.PropertyLabel;
 import org.wicketopia.editor.context.EditorContext;
+import org.wicketopia.editor.factory.BeanEditorComponentFactory;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 import java.util.*;
@@ -41,8 +42,10 @@ public class AbstractBeanEditor<T> extends Panel
 //----------------------------------------------------------------------------------------------------------------------
 
     protected final EditorContext editorContext;
+    private final BeanEditorComponentFactory<T> editorComponentFactory;
     private final Class<T> beanType;
     private final Set<String> properties;
+    private final IModel<T> beanModel;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -51,14 +54,31 @@ public class AbstractBeanEditor<T> extends Panel
     protected AbstractBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... properties)
     {
         super(id, beanModel);
+        editorComponentFactory = new BeanEditorComponentFactory<T>(beanType);
         this.beanType = beanType;
+        this.beanModel = beanModel;
         this.editorContext = editorContext;
         this.properties = new TreeSet<String>(Arrays.asList(properties));
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Getter/Setter Methods
+// Other Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+    protected Component createPropertyEditor(String componentId, String propertyName)
+    {
+        return editorComponentFactory.createPropertyEditor(componentId, beanModel, propertyName, editorContext);
+    }
+
+    protected Label createPropertyLabel(String componentId, String propertyName)
+    {
+        return editorComponentFactory.createPropertyLabel(componentId, propertyName);
+    }
+
+    protected IModel<List<String>> createPropertyNameListModel()
+    {
+        return new PropertyNameListModel();
+    }
 
     protected List<String> getPropertyNameList()
     {
@@ -83,44 +103,8 @@ public class AbstractBeanEditor<T> extends Panel
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
-
-    protected Component createPropertyEditor(String componentId, String propertyName)
-    {
-        return createPropertyEditor(componentId, getPropertyMetaData(propertyName));
-    }
-
-    protected Component createPropertyEditor(String componentId, PropertyMetaData propertyMetaData)
-    {
-        return WicketopiaPlugin.get().getPropertyEditorFactory().createPropertyEditor(componentId, propertyMetaData, createPropertyModel(propertyMetaData), editorContext);
-    }
-
-    protected Label createPropertyLabel(String componentId, String propertyName)
-    {
-        return createPropertyLabel(componentId, getPropertyMetaData(propertyName));
-    }
-
-    protected Label createPropertyLabel(String componentId, PropertyMetaData propertyMetaData)
-    {
-        return new PropertyLabel(componentId, propertyMetaData);
-    }
-
-    protected IModel<List<String>> createPropertyNameListModel()
-    {
-        return new PropertyNameListModel();
-    }
-
-    protected <P> IModel<P> createPropertyModel(PropertyMetaData propertyMetaData)
-    {
-        return new PropertyModel<P>(getDefaultModel(), propertyMetaData.getPropertyDescriptor().getName());
-    }
-
-    protected PropertyMetaData getPropertyMetaData(String propertyName)
-    {
-        final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
-        return beanMetaData.getPropertyMetaData(propertyName);
-    }
 
     private class PropertyNameListModel extends LoadableDetachableModel<List<String>>
     {

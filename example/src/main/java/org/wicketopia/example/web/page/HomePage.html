@@ -17,25 +17,17 @@
 <html>
 <body>
 <wicket:extend>
-    <h3>Existing Widgets</h3>
-    <table class="dataview" wicket:id="table"/>
-
-    <p/>
-
     <h3>Create your own widget!</h3>
 
     <form wicket:id="form">
-        <div wicket:id="editor" />
-
-        <button wicket:id="submit">Add</button>
+        <div wicket:id="editor"/>
+        <div wicket:id="gadgets" />
+        <button wicket:id="addGadget">New Gadget</button>
+        &nbsp;
+        <button wicket:id="submit">Save</button>
     </form>
 
-    <p/>
-    <span wicket:id="feedback"/>
-
-    <wicket:fragment wicket:id="linksPanel">
-        <a wicket:id="removeLink">[delete]</a>
-    </wicket:fragment>
+    <div wicket:id="feedback"/>
 </wicket:extend>
 </body>
 </html>
