@@ -143,12 +143,12 @@
         <repository>
             <id>sourceforge.net</id>
             <name>Wicketopia Release</name>
-            <url>scp://shell.sf.net/home/project-web/wicketopia/htdocs/m2repo/releases</url>
+            <url>scp://shell.sourceforge.net/home/project-web/wicketopia/htdocs/m2repo/releases</url>
         </repository>
         <snapshotRepository>
             <id>sourceforge.net</id>
             <name>Wicketopia Snapshot</name>
-            <url>scp://shell.sf.net/home/project-web/wicketopia/htdocs/m2repo/snapshots</url>
+            <url>scp://shell.sourceforge.net/home/project-web/wicketopia/htdocs/m2repo/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
