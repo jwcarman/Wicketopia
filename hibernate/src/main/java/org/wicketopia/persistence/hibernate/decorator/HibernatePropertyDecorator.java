@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.hibernate.decorator;
+package org.wicketopia.persistence.hibernate.decorator;
 
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;

@@ -14,44 +14,47 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.component.link;
+package org.wicketopia.persistence.link;
 
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public class DeleteLink<T> extends Link<T>
+
+public abstract class CreateLink<T> extends SubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private PersistenceProvider persistenceProvider;
+    private final PersistenceProvider persistenceProvider;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
+    public CreateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
     {
         super(id, model);
         this.persistenceProvider = persistenceProvider;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected void afterDelete(T object)
-    {
+    protected abstract void afterCreate(T object);
 
-    }
+//----------------------------------------------------------------------------------------------------------------------
+// IFormSubmittingComponent Implementation
+//----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public final void onClick()
+    @SuppressWarnings("unchecked")
+    public final void onSubmit()
     {
-        final T object = getModelObject();
-        persistenceProvider.delete(object);
-        afterDelete(object);
+        T object = (T) getDefaultModelObject();
+        object = persistenceProvider.create(object);
+        afterCreate(object);
     }
 }

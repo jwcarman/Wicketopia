@@ -31,8 +31,6 @@ import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.example.domain.entity.Gadget;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
-import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
 import java.util.List;
 

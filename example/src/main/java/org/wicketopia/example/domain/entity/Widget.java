@@ -23,19 +23,21 @@ import org.wicketopia.editor.annotation.metadata.EditorType;
 import org.wicketopia.editor.annotation.metadata.Ignored;
 import org.wicketopia.editor.annotation.metadata.Order;
 import org.wicketopia.editor.annotation.required.Required;
-import org.wicketopia.editor.annotation.validator.*;
+import org.wicketopia.editor.annotation.validator.LongRange;
+import org.wicketopia.editor.annotation.validator.Pattern;
 import org.wicketopia.editor.annotation.visible.Hidden;
 import org.wicketopia.example.domain.value.WidgetType;
+import org.wicketopia.editor.annotation.validator.DoubleRange;
+import org.wicketopia.editor.annotation.validator.Email;
+import org.wicketopia.editor.annotation.validator.Length;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Widget extends UuidEntity

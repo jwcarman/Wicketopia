@@ -14,47 +14,68 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.component.link.ajax;
+package org.wicketopia.persistence.hibernate;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.markup.html.form.Form;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
+
+/**
+ * @author James Carman
+ */
+public class HibernatePersistenceProvider implements PersistenceProvider
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final PersistenceProvider persistenceProvider;
+    private SessionFactory sessionFactory;
 
 //----------------------------------------------------------------------------------------------------------------------
-// Constructors
+// PersistenceProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AjaxUpdateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
+    @Override
+    public <T> T create(T object)
     {
-        super(id, form);
-        this.persistenceProvider = persistenceProvider;
+        getSession().save(object);
+        return object;
+    }
+
+    @Override
+    public <T> void delete(T object)
+    {
+        getSession().delete(object);
+    }
+
+    @Override
+    public <T> T update(T object)
+    {
+        getSession().update(object);
+        return object;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Abstract Methods
+// Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterUpdate(T object, AjaxRequestTarget target);
+    public SessionFactory getSessionFactory()
+    {
+        return sessionFactory;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory)
+    {
+        this.sessionFactory = sessionFactory;
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    @Override
-    @SuppressWarnings("unchecked")
-    protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
+    protected Session getSession()
     {
-        T object = (T)form.getModelObject();
-        object = persistenceProvider.update(object);
-        afterUpdate(object, target);
+        return sessionFactory.getCurrentSession();
     }
 }

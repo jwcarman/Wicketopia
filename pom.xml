@@ -33,9 +33,11 @@
     <inceptionYear>2010</inceptionYear>
     <modules>
         <module>wicketopia</module>
+        <module>persistence</module>
+        <module>hibernate</module>
+        <module>jpa</module>
         <module>domdrides</module>
         <module>example</module>
-        <module>hibernate</module>
     </modules>
 
     <properties>

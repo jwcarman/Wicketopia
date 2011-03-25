@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.component.link;
+package org.wicketopia.persistence.link;
 
 import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;

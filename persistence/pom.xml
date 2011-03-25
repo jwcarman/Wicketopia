@@ -24,24 +24,13 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wicketopia-hibernate</artifactId>
-    <name>Wicketopia/Hibernate Integration</name>
+    <artifactId>wicketopia-persistence</artifactId>
+    <name>Wicketopia Persistence Support</name>
     <dependencies>
         <dependency>
             <groupId>org.wicketopia</groupId>
-            <artifactId>wicketopia-persistence</artifactId>
+            <artifactId>wicketopia</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 </project>

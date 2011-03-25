@@ -24,8 +24,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wicketopia-hibernate</artifactId>
-    <name>Wicketopia/Hibernate Integration</name>
+    <artifactId>wicketopia-jpa</artifactId>
+    <name>Wicketopia/JPA Integration</name>
     <dependencies>
         <dependency>
             <groupId>org.wicketopia</groupId>
@@ -33,15 +33,9 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.transaction</groupId>
-                    <artifactId>jta</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 </project>
