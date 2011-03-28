@@ -14,23 +14,50 @@
  * limitations under the License.
  */
 
+div.css-bean-editor div.prop-div {
+    clear: both;
+
+    display: table-row;
+}
+
+div.css-bean-editor div.prop-div div.prop-label {
+    text-align: right;
+    display: table-cell;
+    font-weight:bold;
+    color:blue;
+    padding-top:10px;
+    vertical-align:top;
+    padding-right: 5px;
+}
+
+div.css-bean-editor div.prop-div div.prop-label:after {
+    content:":"
+}
+
+
+div.css-bean-editor div.prop-div div.prop-editor {
+    text-align: left;
+    padding-top:10px;
+    display:table-cell;
+}
+
 table.beanListEditor {
-    border-style:solid;
-    border-width:1px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 table.beanListEditor th {
-    font-weight:bold;
-    text-align:center;
+    font-weight: bold;
+    text-align: center;
     color: blue;
-    border-style:solid;
-    border-width:1px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 table.beanListEditor td {
     text-align: center;
-    border-style:solid;
-    border-width:1px;
+    border-style: solid;
+    border-width: 1px;
 }
 
 table.beanEditor {
@@ -42,8 +69,8 @@ table.beanEditor tr {
 }
 
 th.propertyLabel {
-    text-align:left;
-    vertical-align:top;
+    text-align: left;
+    vertical-align: top;
 }
 
 .feedbackPanelERROR {
@@ -120,16 +147,16 @@ table.dataview tr th {
 
 table.dataview tr th.wicket_orderDown {
     background-color: #87cbff;
-    background-image: url( 'images/arrow_down.png' );
+    background-image: url('images/arrow_down.png');
 }
 
 table.dataview tr th.wicket_orderUp {
     background-color: #87cbff;
-    background-image: url( 'images/arrow_up.png' );
+    background-image: url('images/arrow_up.png');
 }
 
 table.dataview tr th.wicket_orderNone {
-    background-image: url( 'images/arrow_off.png' );
+    background-image: url('images/arrow_off.png');
 }
 
 table.dataview tr th a {

@@ -20,26 +20,27 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
-import org.metastopheles.PropertyMetaData;
 import org.wicketopia.editor.context.EditorContext;
 
 /**
+ * A simple layout that uses one <tr> per property containing a <th> for the label and a <td> for the property editor.
+ *
  * @since 1.0
  */
-public class VerticalListBeanEditor<T> extends AbstractBeanEditor<T>
+public class TableLayoutBeanEditor<T> extends AbstractBeanEditor<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public VerticalListBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... properties)
+    public TableLayoutBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... properties)
     {
         super(id, beanType, beanModel, editorContext, properties);
         final RepeatingView view = new RepeatingView("editors");
         for (String propertyName : getPropertyNameList())
         {
             final Component editor = createPropertyEditor("editor", propertyName);
-            final Fragment row = new Fragment(view.newChildId(), "row", VerticalListBeanEditor.this)
+            final Fragment row = new Fragment(view.newChildId(), "row", TableLayoutBeanEditor.this)
             {
                 @Override
                 public boolean isVisible()

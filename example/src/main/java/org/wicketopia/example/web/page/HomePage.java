@@ -25,7 +25,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.domdrides.component.link.ajax.AjaxCreateEntityLink;
-import org.wicketopia.editor.component.bean.VerticalListBeanEditor;
+import org.wicketopia.editor.component.bean.CssLayoutBeanEditor;
 import org.wicketopia.editor.component.list.BeanListEditor;
 import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.example.domain.entity.Gadget;
@@ -78,7 +78,7 @@ public class HomePage extends BasePage
         });
 
         EditorContext context = new EditorContext("CREATE");
-        widgetForm.add(new VerticalListBeanEditor<Widget>("editor", Widget.class, model, context));
+        widgetForm.add(new CssLayoutBeanEditor<Widget>("editor", Widget.class, model, context));
         widgetForm.add(new BeanListEditor<Gadget>("gadgets", Gadget.class, new PropertyModel<List<Gadget>>(model, "gadgets"), context, "name", "description").setOutputMarkupPlaceholderTag(true));
         widgetForm.add(new AjaxLink<Void>("addGadget")
         {

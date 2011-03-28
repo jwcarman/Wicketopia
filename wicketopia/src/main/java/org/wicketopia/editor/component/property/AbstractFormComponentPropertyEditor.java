@@ -45,7 +45,6 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
         super(id);
         this.formComponent = formComponent;
         formComponent.setLabel(new PropertyLabelModel(propertyMetaData));
-        setRenderBodyOnly(true);
         add(formComponent);
     }
 
