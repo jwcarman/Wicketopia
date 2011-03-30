@@ -20,7 +20,9 @@ import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.builder.feature.annotation.visible.Hidden;
@@ -30,7 +32,7 @@ import org.wicketopia.metadata.WicketopiaFacet;
 /**
  * @since 1.0
  */
-public class VisibleFeature extends ContextualFeature
+public class VisibleFeature<B extends ComponentBuilder> extends ContextualFeature<B>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -45,13 +47,15 @@ public class VisibleFeature extends ContextualFeature
     @PropertyDecorator
     public static void onHidden(PropertyMetaData propertyMetaData, Hidden hidden)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new VisibleFeature(whereContextnameNot(hidden.value())));
+        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new VisibleFeature<EditorBuilder>(whereContextnameNot(hidden.value())));
+        WicketopiaFacet.get(propertyMetaData).addViewerFeature(new VisibleFeature<ViewerBuilder>(whereContextnameNot(hidden.value())));
     }
 
     @PropertyDecorator
     public static void onVisible(PropertyMetaData propertyMetaData, Visible visible)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new VisibleFeature(whereContextNameIn(visible.value())));
+        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new VisibleFeature<EditorBuilder>(whereContextNameIn(visible.value())));
+        WicketopiaFacet.get(propertyMetaData).addViewerFeature(new VisibleFeature<ViewerBuilder>(whereContextNameIn(visible.value())));
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -64,11 +68,11 @@ public class VisibleFeature extends ContextualFeature
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// EditorFeature Implementation
+// ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void apply(EditorBuilder editor, Context context)
+    public void apply(B editor, Context context)
     {
         boolean value = predicate.evaluate(context);
         editor.setViewable(value);

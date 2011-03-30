@@ -18,13 +18,12 @@ package org.wicketopia.builder.feature;
 
 import org.apache.wicket.validation.IValidator;
 import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.builder.feature.EditorFeature;
 import org.wicketopia.context.Context;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractValidatorFeature implements EditorFeature
+public abstract class AbstractValidatorFeature implements ComponentBuilderFeature<EditorBuilder>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
@@ -33,7 +32,7 @@ public abstract class AbstractValidatorFeature implements EditorFeature
     protected abstract IValidator<?> createValidator(Context context);
 
 //----------------------------------------------------------------------------------------------------------------------
-// EditorFeature Implementation
+// ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     public final void apply(EditorBuilder editor, Context context)

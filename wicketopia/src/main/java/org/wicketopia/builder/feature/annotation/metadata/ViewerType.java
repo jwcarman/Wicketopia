@@ -14,16 +14,23 @@
  * limitations under the License.
  */
 
-package org.wicketopia.builder.feature;
+package org.wicketopia.builder.feature.annotation.metadata;
 
-import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.context.Context;
-
-import java.io.Serializable;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @since 1.0
  */
-public interface EditorFeature extends ComponentBuilderFeature<EditorBuilder>
+@Retention( RetentionPolicy.RUNTIME )
+@Target( ElementType.METHOD )
+public @interface ViewerType
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    String value();
 }

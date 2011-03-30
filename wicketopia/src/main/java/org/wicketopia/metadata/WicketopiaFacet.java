@@ -17,13 +17,11 @@
 package org.wicketopia.metadata;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.WicketRuntimeException;
-import org.metastopheles.BeanMetaData;
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.builder.feature.EditorFeature;
-import org.wicketopia.builder.feature.ViewerFeature;
+import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.builder.feature.ComponentBuilderFeature;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -51,8 +49,8 @@ public class WicketopiaFacet implements Comparable, Serializable
     private int order = Integer.MAX_VALUE;
     private String editorType;
     private String viewerType;
-    private final Set<EditorFeature> editorFeatures = new HashSet<EditorFeature>();
-    private final Set<ViewerFeature> viewerFeatures = new HashSet<ViewerFeature>();
+    private final Set<ComponentBuilderFeature<EditorBuilder>> editorFeatures = new HashSet<ComponentBuilderFeature<EditorBuilder>>();
+    private final Set<ComponentBuilderFeature<ViewerBuilder>> viewerFeatures = new HashSet<ComponentBuilderFeature<ViewerBuilder>>();
     private boolean ignored = false;
     private final PropertyMetaData propertyMetaData;
 
@@ -142,7 +140,7 @@ public class WicketopiaFacet implements Comparable, Serializable
         this.defaultLabelText = defaultLabelText;
     }
 
-    public Set<EditorFeature> getEditorFeatures()
+    public Set<ComponentBuilderFeature<EditorBuilder>> getEditorFeatures()
     {
         return editorFeatures;
     }
@@ -182,7 +180,7 @@ public class WicketopiaFacet implements Comparable, Serializable
         return propertyMetaData;
     }
 
-    public Set<ViewerFeature> getViewerFeatures()
+    public Set<ComponentBuilderFeature<ViewerBuilder>> getViewerFeatures()
     {
         return viewerFeatures;
     }
@@ -211,12 +209,12 @@ public class WicketopiaFacet implements Comparable, Serializable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addEditorFeature(EditorFeature feature)
+    public void addEditorFeature(ComponentBuilderFeature<EditorBuilder> feature)
     {
         editorFeatures.add(feature);
     }
 
-    public void addViewerFeature(ViewerFeature feature)
+    public void addViewerFeature(ComponentBuilderFeature<ViewerBuilder> feature)
     {
         viewerFeatures.add(feature);
     }

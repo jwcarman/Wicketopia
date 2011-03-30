@@ -17,14 +17,13 @@
 package org.wicketopia.builder.feature;
 
 import org.apache.wicket.behavior.IBehavior;
-import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.builder.feature.EditorFeature;
+import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.context.Context;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractBehaviorFeature implements EditorFeature
+public abstract class AbstractBehaviorFeature<B extends ComponentBuilder> implements ComponentBuilderFeature<B>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
@@ -33,10 +32,11 @@ public abstract class AbstractBehaviorFeature implements EditorFeature
     protected abstract IBehavior createBehavior();
 
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void apply( EditorBuilder builder, Context context )
+    @Override
+    public void apply( B builder, Context context )
     {
         builder.addBehavior(createBehavior());
     }

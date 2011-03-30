@@ -21,7 +21,11 @@ import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.metastopheles.*;
+import org.metastopheles.BeanMetaData;
+import org.metastopheles.BeanMetaDataFactory;
+import org.metastopheles.MetaDataDecorator;
+import org.metastopheles.MethodMetaData;
+import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.scannotation.ClasspathUrlFinder;
 import org.scannotation.WarUrlFinder;
@@ -29,8 +33,6 @@ import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.builder.feature.ComponentBuilderFeature;
-import org.wicketopia.builder.feature.EditorFeature;
-import org.wicketopia.builder.feature.ViewerFeature;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
@@ -48,7 +50,11 @@ import org.wicketopia.viewer.component.LabelPropertyViewer;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class WicketopiaPlugin
 {
@@ -180,8 +186,7 @@ public class WicketopiaPlugin
     {
         final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetadata);
         EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
-        Set<EditorFeature> features = facet.getEditorFeatures();
-        this.<EditorBuilder>applyFeatures(features, builder, context);
+        applyFeatures(facet.getEditorFeatures(), builder, context);
         return builder.build();
     }
 

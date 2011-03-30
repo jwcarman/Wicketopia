@@ -16,14 +16,14 @@
 
 package org.wicketopia.builder.feature;
 
+import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
-import org.wicketopia.builder.feature.EditorFeature;
 
 /**
  * @since 1.0
  */
-public abstract class ContextualFeature implements EditorFeature
+public abstract class ContextualFeature<B extends ComponentBuilder> implements ComponentBuilderFeature<B>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields

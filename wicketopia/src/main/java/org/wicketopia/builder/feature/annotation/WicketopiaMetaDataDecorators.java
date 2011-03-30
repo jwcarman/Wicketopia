@@ -22,6 +22,7 @@ import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
 import org.wicketopia.builder.feature.annotation.metadata.EditorType;
 import org.wicketopia.builder.feature.annotation.metadata.Ignored;
 import org.wicketopia.builder.feature.annotation.metadata.Order;
+import org.wicketopia.builder.feature.annotation.metadata.ViewerType;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -44,6 +45,12 @@ public class WicketopiaMetaDataDecorators
     public static void onEditorType(PropertyMetaData propertyMetaData, EditorType editorType)
     {
         WicketopiaFacet.get(propertyMetaData).setEditorType(editorType.value());
+    }
+
+    @PropertyDecorator
+    public static void onViewerType(PropertyMetaData propertyMetaData, ViewerType viewerType)
+    {
+        WicketopiaFacet.get(propertyMetaData).setViewerType(viewerType.value());
     }
     
     @PropertyDecorator

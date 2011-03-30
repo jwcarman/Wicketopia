@@ -28,7 +28,7 @@ import org.wicketopia.metadata.WicketopiaFacet;
 /**
  * @since 1.0
  */
-public class RequiredFeature extends ContextualFeature
+public class RequiredFeature extends ContextualFeature<EditorBuilder>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -67,7 +67,7 @@ public class RequiredFeature extends ContextualFeature
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// EditorFeature Implementation
+// ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
