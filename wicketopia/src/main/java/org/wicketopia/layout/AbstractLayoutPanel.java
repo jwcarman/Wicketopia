@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,20 +14,17 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.component.bean;
+package org.wicketopia.layout;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.PropertyModel;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.component.label.PropertyLabel;
-import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.factory.BeanEditorComponentFactory;
+import org.wicketopia.context.Context;
+import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 import java.util.*;
@@ -35,56 +32,40 @@ import java.util.*;
 /**
  * @since 1.0
  */
-public class AbstractBeanEditor<T> extends Panel
+public class AbstractLayoutPanel<T> extends Panel
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected final EditorContext editorContext;
-    private final BeanEditorComponentFactory<T> editorComponentFactory;
-    private final Class<T> beanType;
-    private final Set<String> properties;
-    private final IModel<T> beanModel;
+    protected final Context context;
+    protected final Class<T> beanType;
+    protected final PropertyComponentFactory<T> componentFactory;
+    protected final List<String> propertyNames;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    private static int getOrder(BeanMetaData beanMetaData, String propertyName)
+    {
+        return WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName)).getOrder();
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractBeanEditor(String id, Class<T> beanType, IModel<T> beanModel, EditorContext editorContext, String... properties)
+    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory)
     {
-        super(id, beanModel);
-        editorComponentFactory = new BeanEditorComponentFactory<T>(beanType);
-        this.beanType = beanType;
-        this.beanModel = beanModel;
-        this.editorContext = editorContext;
-        this.properties = new TreeSet<String>(Arrays.asList(properties));
+        this(id, beanType, context, componentFactory, getPropertyNames(beanType));
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    protected Component createPropertyEditor(String componentId, String propertyName)
-    {
-        return editorComponentFactory.createPropertyEditor(componentId, beanModel, propertyName, editorContext);
-    }
-
-    protected Label createPropertyLabel(String componentId, String propertyName)
-    {
-        return editorComponentFactory.createPropertyLabel(componentId, propertyName);
-    }
-
-    protected IModel<List<String>> createPropertyNameListModel()
-    {
-        return new PropertyNameListModel();
-    }
-
-    protected List<String> getPropertyNameList()
+    private static List<String> getPropertyNames(Class<?> beanType)
     {
         List<PropertyMetaData> propertyMetaDataList = new LinkedList<PropertyMetaData>();
         final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
-        Set<String> propertyNames = properties.isEmpty() ? beanMetaData.getPropertyNames() : properties;
+        Set<String> propertyNames = beanMetaData.getPropertyNames();
         for (String propertyName : propertyNames)
         {
             PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
@@ -102,16 +83,36 @@ public class AbstractBeanEditor<T> extends Panel
         return propertyNamesList;
     }
 
+    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames)
+    {
+        super(id);
+        this.context = context;
+        this.beanType = beanType;
+        this.componentFactory = componentFactory;
+        this.propertyNames = propertyNames;
+    }
+
+    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
+    {
+        this(id, beanType, context, componentFactory, new ArrayList<String>(Arrays.asList(propertyNames)));
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
-// Inner Classes
+// Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class PropertyNameListModel extends LoadableDetachableModel<List<String>>
+    protected Component createPropertyComponent(String componentId, IModel<T> beanModel, String propertyName)
     {
-        @Override
-        protected List<String> load()
-        {
-            return getPropertyNameList();
-        }
+        return componentFactory.createPropertyComponent(componentId, beanModel, propertyName, context);
+    }
+
+    protected Label createPropertyLabel(String componentId, String propertyName)
+    {
+        return componentFactory.createPropertyLabel(componentId, propertyName);
+    }
+
+    public List<String> getPropertyNames()
+    {
+        return propertyNames;
     }
 }

@@ -5,8 +5,8 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,52 +14,38 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.component.property;
+package org.wicketopia.factory;
 
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.markup.html.basic.Label;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorProvider;
+import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.component.label.PropertyLabel;
 
-/**
- * @since 1.0
- */
-public class TextAreaPropertyEditor extends AbstractTextComponentPropertyEditor
+public abstract class AbstractPropertyComponentFactory<T> implements PropertyComponentFactory<T> 
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
-    public static final String TYPE_NAME = "text-area";
-    private static final PropertyEditorProvider provider = new Provider();
 
-//----------------------------------------------------------------------------------------------------------------------
-// Static Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    public static PropertyEditorProvider getProvider()
-    {
-        return provider;
-    }
+    protected final Class<T> beanType;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public TextAreaPropertyEditor(String id, PropertyMetaData propertyMetaData, TextArea formComponent)
+    protected AbstractPropertyComponentFactory(Class<T> beanType)
     {
-        super(id, propertyMetaData, formComponent);
+        this.beanType = beanType;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Inner Classes
+// Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class Provider implements PropertyEditorProvider
+    public Label createPropertyLabel(String id, String propertyName)
     {
-        public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
-        {
-            return new TextAreaPropertyEditor(componentId, propertyMetadata, new TextArea("editor", propertyModel));
-        }
+        WicketopiaPlugin plugin = WicketopiaPlugin.get();
+        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
+        return new PropertyLabel(id, propertyMetaData);
     }
 }

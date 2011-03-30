@@ -16,25 +16,37 @@
 
 package org.wicketopia;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.metastopheles.*;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.scannotation.ClasspathUrlFinder;
 import org.scannotation.WarUrlFinder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.wicketopia.editor.PropertyEditorTypeMapping;
-import org.wicketopia.editor.PropertyEditorFactory;
-import org.wicketopia.editor.def.DefaultPropertyEditorTypeMapping;
-import org.wicketopia.editor.def.DefaultPropertyEditorFactory;
+import org.wicketopia.context.Context;
+import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.editor.PropertyEditorDecorator;
+import org.wicketopia.editor.PropertyEditorProvider;
+import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
+import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
+import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
+import org.wicketopia.factory.PropertyComponentFactory;
+import org.wicketopia.factory.PropertyEditorComponentFactory;
+import org.wicketopia.factory.PropertyViewerComponentFactory;
+import org.wicketopia.mapping.TypeMapping;
+import org.wicketopia.mapping.editor.DefaultEditorTypeMapping;
+import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
 import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.viewer.PropertyViewer;
+import org.wicketopia.viewer.PropertyViewerDecorator;
+import org.wicketopia.viewer.PropertyViewerProvider;
+import org.wicketopia.viewer.component.LabelPropertyViewer;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class WicketopiaPlugin
 {
@@ -45,8 +57,10 @@ public class WicketopiaPlugin
     private static MetaDataKey<WicketopiaPlugin> META_KEY = new WicketopiaPluginKey();
 
     private BeanMetaDataFactory beanMetaDataFactory;
-    private PropertyEditorFactory propertyEditorFactory = new DefaultPropertyEditorFactory();
-    private PropertyEditorTypeMapping propertyEditorTypeMapping = new DefaultPropertyEditorTypeMapping();
+    private TypeMapping editorTypeMapping = new DefaultEditorTypeMapping();
+    private TypeMapping viewerTypeMapping = new DefaultViewerTypeMapping();
+    private final Map<String, PropertyEditorProvider> editorProviders = new HashMap<String, PropertyEditorProvider>();
+    private final Map<String, PropertyViewerProvider> viewerProviders = new HashMap<String, PropertyViewerProvider>();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -70,7 +84,7 @@ public class WicketopiaPlugin
     {
         final Set<URL> urls = new HashSet<URL>();
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        if(cl instanceof URLClassLoader)
+        if (cl instanceof URLClassLoader)
         {
             urls.addAll(Arrays.asList(((URLClassLoader) cl).getURLs()));
         }
@@ -84,42 +98,36 @@ public class WicketopiaPlugin
     public WicketopiaPlugin(WebApplication webApplication, BeanMetaDataFactory beanMetaDataFactory)
     {
         this.beanMetaDataFactory = beanMetaDataFactory;
-        beanMetaDataFactory.getPropertyMetaDataDecorators().add(new MetaDataDecorator<PropertyMetaData>()
-        {
-            public void decorate(PropertyMetaData propertyMetaData)
-            {
-                WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
-                if(facet.getEditorType() == null )
-                {
-                    facet.setEditorType(propertyEditorTypeMapping.getEditorType(propertyMetaData));
-                }
-            }
-        });
         webApplication.setMetaData(META_KEY, this);
+        addPropertyEditorProvider(TextFieldPropertyEditor.TYPE_NAME, TextFieldPropertyEditor.getProvider());
+        addPropertyEditorProvider(TextAreaPropertyEditor.TYPE_NAME, TextAreaPropertyEditor.getProvider());
+        addPropertyEditorProvider(EnumDropDownChoicePropertyEditor.TYPE_NAME, EnumDropDownChoicePropertyEditor.getProvider());
+
+        addPropertyViewerProvider(LabelPropertyViewer.TYPE_NAME, LabelPropertyViewer.getProvider());
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyEditorFactory getPropertyEditorFactory()
+    public TypeMapping getEditorTypeMapping()
     {
-        return propertyEditorFactory;
+        return editorTypeMapping;
     }
 
-    public void setPropertyEditorFactory(PropertyEditorFactory propertyEditorFactory)
+    public void setEditorTypeMapping(TypeMapping editorTypeMapping)
     {
-        this.propertyEditorFactory = propertyEditorFactory;
+        this.editorTypeMapping = editorTypeMapping;
     }
 
-    public PropertyEditorTypeMapping getPropertyEditorTypeMapping()
+    public TypeMapping getViewerTypeMapping()
     {
-        return propertyEditorTypeMapping;
+        return viewerTypeMapping;
     }
 
-    public void setPropertyEditorTypeMapping(PropertyEditorTypeMapping propertyEditorTypeMapping)
+    public void setViewerTypeMapping(TypeMapping viewerTypeMapping)
     {
-        this.propertyEditorTypeMapping = propertyEditorTypeMapping;
+        this.viewerTypeMapping = viewerTypeMapping;
     }
 
     /*public BeanMetaDataFactory getBeanMetadataFactory()
@@ -146,18 +154,108 @@ public class WicketopiaPlugin
         beanMetaDataFactory.getMethodMetaDataDecorators().add(decorator);
     }
 
+    public void addPropertyEditorProvider(String typeName, PropertyEditorProvider provider)
+    {
+        editorProviders.put(typeName, provider);
+    }
+
     public void addPropertyMetaDataDecorator(MetaDataDecorator<PropertyMetaData> decorator)
     {
         beanMetaDataFactory.getPropertyMetaDataDecorators().add(decorator);
     }
 
+    public void addPropertyViewerProvider(String typeName, PropertyViewerProvider provider)
+    {
+        viewerProviders.put(typeName, provider);
+    }
+
+    public <T> PropertyComponentFactory<T> createEditorFactory(Class<T> beanType)
+    {
+        return new PropertyEditorComponentFactory<T>(beanType);
+    }
+
+    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
+    {
+        final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetadata);
+        PropertyEditor builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
+        for (PropertyEditorDecorator decorator : facet.getEditorDecorators())
+        {
+            decorator.apply(builder, context);
+        }
+        return builder.getEditorComponent();
+    }
+
+    public Component createPropertyViewer(String id, PropertyMetaData propertyMetaData, IModel<?> propertyModel, Context context)
+    {
+        final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        PropertyViewer builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
+        for (PropertyViewerDecorator decorator : facet.getViewerDecorators())
+        {
+            decorator.apply(builder, context);
+        }
+        return builder.getViewerComponent();
+    }
+    
+    public <T> PropertyComponentFactory<T> createViewerFactory(Class<T> beanType)
+    {
+        return new PropertyViewerComponentFactory<T>(beanType);
+    }
+
     public BeanMetaData getBeanMetaData(Class<?> beanClass)
     {
-        if(WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
+        if (WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
         {
             beanMetaDataFactory.clear();
         }
         return beanMetaDataFactory.getBeanMetaData(beanClass);
+    }
+
+    public PropertyEditorProvider getEditorProvider(PropertyMetaData propertyMetaData)
+    {
+        WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        String editorType = facet.getEditorType();
+        if (editorType == null)
+        {
+            editorType = editorTypeMapping.getTypeName(propertyMetaData);
+        }
+        if (editorType == null)
+        {
+            throw new WicketRuntimeException("No editor type defined for property " +
+                    propertyMetaData.getPropertyDescriptor().getName() + " of class " +
+                    propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + ".");
+        }
+        PropertyEditorProvider provider = editorProviders.get(editorType);
+        if (provider == null)
+        {
+            throw new WicketRuntimeException("No property editor provider registered for editor type \"" + editorType + "\" for property " +
+                    propertyMetaData.getPropertyDescriptor().getName() + " of class " +
+                    propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + ".");
+        }
+        return provider;
+    }
+
+    public PropertyViewerProvider getViewerProvider(PropertyMetaData propertyMetaData)
+    {
+        WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        String viewerType = facet.getViewerType();
+        if (viewerType == null)
+        {
+            viewerType = viewerTypeMapping.getTypeName(propertyMetaData);
+        }
+        if (viewerType == null)
+        {
+            throw new WicketRuntimeException("No viewer type defined for property " +
+                    propertyMetaData.getPropertyDescriptor().getName() + " of class " +
+                    propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + ".");
+        }
+        PropertyViewerProvider provider = viewerProviders.get(viewerType);
+        if (provider == null)
+        {
+            throw new WicketRuntimeException("No property viewer provider registered for viewer type \"" + viewerType + "\" for property " +
+                    propertyMetaData.getPropertyDescriptor().getName() + " of class " +
+                    propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + ".");
+        }
+        return viewerProviders.get(viewerType);
     }
 
 //----------------------------------------------------------------------------------------------------------------------

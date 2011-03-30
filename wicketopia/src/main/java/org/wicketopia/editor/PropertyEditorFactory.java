@@ -19,7 +19,7 @@ package org.wicketopia.editor;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.context.EditorContext;
+import org.wicketopia.context.Context;
 
 /**
  * @since 1.0
@@ -30,5 +30,5 @@ public interface PropertyEditorFactory
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context);
+    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context);
 }

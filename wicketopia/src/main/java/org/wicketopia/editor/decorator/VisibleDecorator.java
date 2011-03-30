@@ -23,8 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.wicketopia.editor.annotation.visible.Hidden;
 import org.wicketopia.editor.annotation.visible.Visible;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.context.EditorContextPredicate;
+import org.wicketopia.context.Context;
+import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -58,7 +58,7 @@ public class VisibleDecorator extends ContextualDecorator
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public VisibleDecorator(EditorContextPredicate predicate)
+    public VisibleDecorator(ContextPredicate predicate)
     {
         super(predicate);
     }
@@ -68,9 +68,9 @@ public class VisibleDecorator extends ContextualDecorator
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void apply(PropertyEditor editor, EditorContext context)
+    public void apply(PropertyEditor editor, Context context)
     {
         boolean value = predicate.evaluate(context);
-        editor.show(value);
+        editor.setViewable(value);
     }
 }

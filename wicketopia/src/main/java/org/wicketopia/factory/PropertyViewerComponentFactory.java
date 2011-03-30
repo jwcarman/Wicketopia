@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,34 +14,38 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.decorator;
+package org.wicketopia.factory;
 
-import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.Component;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+import org.metastopheles.PropertyMetaData;
+import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.context.Context;
-import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorDecorator;
 
 /**
- * @since 1.0
+ * @ince 1.0
  */
-public abstract class AbstractValidatorDecorator implements PropertyEditorDecorator
+public class PropertyViewerComponentFactory<T> extends AbstractPropertyComponentFactory<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
-// Abstract Methods
+// Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract IValidator<?> createValidator(Context context);
-
-//----------------------------------------------------------------------------------------------------------------------
-// PropertyEditorDecorator Implementation
-//----------------------------------------------------------------------------------------------------------------------
-
-    public final void apply(PropertyEditor editor, Context context)
+    public PropertyViewerComponentFactory(Class<T> beanType)
     {
-        final IValidator<?> validator = createValidator(context);
-        if (validator != null)
-        {
-            editor.addValidator(validator);
-        }
+        super(beanType);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// PropertyComponentFactory Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context)
+    {
+        WicketopiaPlugin plugin = WicketopiaPlugin.get();
+        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
+        return plugin.createPropertyViewer(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);
     }
 }

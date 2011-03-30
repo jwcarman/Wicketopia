@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.StringValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.editor.annotation.validator.Length;
-import org.wicketopia.editor.context.EditorContext;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.decorator.AbstractValidatorDecorator;
 import org.wicketopia.metadata.WicketopiaFacet;
 
@@ -63,7 +63,7 @@ public class LengthDecorator extends AbstractValidatorDecorator
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator(EditorContext context)
+    protected IValidator<?> createValidator(Context context)
     {
         if (max != Integer.MAX_VALUE && min != Integer.MIN_VALUE)
         {

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor;
+package org.wicketopia.viewer;
 
-import org.wicketopia.context.Context;
+import org.apache.wicket.model.IModel;
+import org.metastopheles.PropertyMetaData;
 
-import java.io.Serializable;
-
-/**
- * @since 1.0
- */
-public interface PropertyEditorDecorator extends Serializable
+public interface PropertyViewerProvider
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void apply( PropertyEditor editor, Context context);
+    public PropertyViewer createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
 }

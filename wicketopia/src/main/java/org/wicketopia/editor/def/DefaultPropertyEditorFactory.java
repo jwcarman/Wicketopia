@@ -19,10 +19,10 @@ package org.wicketopia.editor.def;
 import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
 import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
-import org.wicketopia.editor.context.EditorContext;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorDecorator;
 import org.wicketopia.editor.PropertyEditorFactory;
@@ -66,7 +66,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
 // PropertyEditorFactory Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, EditorContext context)
+    public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
         WicketopiaFacet wicketopiaFacet = WicketopiaFacet.get(propertyMetadata);
         String editorType = wicketopiaFacet.getEditorType();
@@ -83,7 +83,7 @@ public class DefaultPropertyEditorFactory implements PropertyEditorFactory
                     "No property editor builder defined for editor type \"" + editorType + ".\"");
         }
         PropertyEditor builder = provider.createPropertyEditor(id, propertyMetadata, propertyModel);
-        for (PropertyEditorDecorator decorator : wicketopiaFacet.getDecorators())
+        for (PropertyEditorDecorator decorator : wicketopiaFacet.getEditorDecorators())
         {
             decorator.apply(builder, context);
         }

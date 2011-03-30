@@ -27,6 +27,8 @@ import org.wicketopia.editor.PropertyEditorProvider;
  */
 public class EnumDropDownChoicePropertyEditor extends AbstractFormComponentPropertyEditor
 {
+    public static final String TYPE_NAME = "enum-ddc";
+
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------

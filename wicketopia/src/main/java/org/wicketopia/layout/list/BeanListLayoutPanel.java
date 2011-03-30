@@ -5,8 +5,8 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,31 +14,25 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.component.list;
+package org.wicketopia.layout.list;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListItemModel;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.component.label.PropertyLabel;
-import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.factory.BeanEditorComponentFactory;
+import org.wicketopia.context.Context;
+import org.wicketopia.factory.PropertyComponentFactory;
+import org.wicketopia.layout.AbstractLayoutPanel;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-/**
- * @since 1.0
- * @author James Carman
- */
-public class BeanListEditor<T> extends Panel
+public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -50,16 +44,12 @@ public class BeanListEditor<T> extends Panel
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanListEditor(String id,
-                          Class<T> beanType,
-                          IModel<? extends List<? extends T>> model,
-                          EditorContext editorContext,
-                          String... properties)
+    public BeanListLayoutPanel(String id, Class<T> beanType, IModel<? extends List<? extends T>> model, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
     {
-        super(id);
+        super(id, beanType, context, componentFactory, propertyNames);
         BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
         final RepeatingView headers = new RepeatingView("headers");
-        for (String property : properties)
+        for (String property : getPropertyNames())
         {
             PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(property);
             if(propertyMetaData == null)
@@ -69,7 +59,7 @@ public class BeanListEditor<T> extends Panel
             headers.add(new PropertyLabel(headers.newChildId(), propertyMetaData));
         }
         add(headers);
-        listView = new BeanListView("rows", model, beanType, editorContext, properties);
+        listView = new BeanListView("rows", beanType, model, componentFactory, context);
         add(listView);
     }
 
@@ -88,16 +78,14 @@ public class BeanListEditor<T> extends Panel
 
     private class BeanListView extends ListView<T>
     {
-        private final BeanEditorComponentFactory<T> editorComponentFactory;
-        private final List<String> propertyNames;
-        private final EditorContext editorContext;
+        private final PropertyComponentFactory<T> componentFactory;
+        private final Context context;
 
-        private BeanListView(String id, IModel<? extends List<? extends T>> model, Class<T> beanType, EditorContext editorContext, String... properties)
+        private BeanListView(String id, Class<T> beanType, IModel<? extends List<? extends T>> model, PropertyComponentFactory<T> componentFactory, Context context)
         {
             super(id, model);
-            editorComponentFactory = new BeanEditorComponentFactory<T>(beanType);
-            this.editorContext = editorContext;
-            propertyNames = new ArrayList<String>(Arrays.asList(properties));
+            this.componentFactory = componentFactory;
+            this.context = context;
             setReuseItems(true);
         }
 
@@ -110,18 +98,17 @@ public class BeanListEditor<T> extends Panel
                 @Override
                 protected void populateItem(ListItem<String> cellItem)
                 {
-                    cellItem.add(editorComponentFactory.createPropertyEditor("editor", beanModel, cellItem.getModelObject(), editorContext));
+                    cellItem.add(componentFactory.createPropertyComponent("editor", beanModel, cellItem.getModelObject(), context));
                 }
             };
             cells.setReuseItems(true);
             rowItem.add(cells);
-
         }
 
         @Override
         protected IModel<T> getListItemModel(IModel<? extends List<T>> model, int index)
         {
-            return BeanListEditor.this.getListItemModel(model, index);
+            return BeanListLayoutPanel.this.getListItemModel(model, index);
         }
     }
 }

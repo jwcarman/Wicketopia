@@ -16,7 +16,7 @@
 
 package org.wicketopia.editor.annotation.visible;
 
-import org.wicketopia.editor.context.EditorContext;
+import org.wicketopia.context.Context;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -34,5 +34,5 @@ public @interface Visible
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    String[] value() default {EditorContext.ALL_EDIT_TYPES};
+    String[] value() default {Context.ALL_EDIT_TYPES};
 }

@@ -6,7 +6,7 @@
  * You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,54 +14,59 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.factory;
+package org.wicketopia.layout.view;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
-import org.metastopheles.PropertyMetaData;
-import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.component.label.PropertyLabel;
 import org.wicketopia.context.Context;
+import org.wicketopia.factory.PropertyComponentFactory;
+import org.wicketopia.layout.AbstractLayoutPanel;
 
-import java.io.Serializable;
+import java.util.List;
 
-/**
- * @author James Carman
- */
-public class BeanEditorComponentFactory<T> implements Serializable
+public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Class<T> beanType;
+    protected final IModel<T> beanModel;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanEditorComponentFactory(Class<T> beanType)
+    public BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory)
     {
-        this.beanType = beanType;
+        super(id, beanType, context, componentFactory);
+        this.beanModel = beanModel;
+    }
+
+    protected BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> tPropertyComponentFactory, List<String> propertyNames)
+    {
+        super(id, beanType, context, tPropertyComponentFactory, propertyNames);
+        this.beanModel = beanModel;
+    }
+
+    public BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
+    {
+        super(id, beanType, context, componentFactory, propertyNames);
+        this.beanModel = beanModel;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Component createPropertyEditor(String id, IModel<T> beanModel, String propertyName, Context context)
+    protected Component createPropertyComponent(String componentId, String propertyName)
     {
-        WicketopiaPlugin plugin = WicketopiaPlugin.get();
-        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
-        return plugin.createPropertyEditor(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);
+        return createPropertyComponent(componentId, beanModel, propertyName);
     }
 
-    public Label createPropertyLabel(String id, String propertyName)
+    @Override
+    protected void onDetach()
     {
-        WicketopiaPlugin plugin = WicketopiaPlugin.get();
-        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
-        return new PropertyLabel(id, propertyMetaData);
+        super.onDetach();
+        beanModel.detach();
     }
 }

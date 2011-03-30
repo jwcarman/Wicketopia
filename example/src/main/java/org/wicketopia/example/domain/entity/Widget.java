@@ -26,6 +26,7 @@ import org.wicketopia.editor.annotation.required.Required;
 import org.wicketopia.editor.annotation.validator.LongRange;
 import org.wicketopia.editor.annotation.validator.Pattern;
 import org.wicketopia.editor.annotation.visible.Hidden;
+import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
 import org.wicketopia.example.domain.value.WidgetType;
 import org.wicketopia.editor.annotation.validator.DoubleRange;
 import org.wicketopia.editor.annotation.validator.Email;
@@ -72,7 +73,7 @@ public class Widget extends UuidEntity
         return anotherProperty;
     }
 
-    public void setAnotherProperty( String anotherProperty )
+    public void setAnotherProperty(String anotherProperty)
     {
         this.anotherProperty = anotherProperty;
     }
@@ -83,36 +84,38 @@ public class Widget extends UuidEntity
         return contactEmail;
     }
 
-    public void setContactEmail( String contactEmail )
+    public void setContactEmail(String contactEmail)
     {
         this.contactEmail = contactEmail;
     }
 
     @Hidden("CREATE")
-    public Date getDate() {
-		return date;
-	}
+    public Date getDate()
+    {
+        return date;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setDate(Date date)
+    {
+        this.date = date;
+    }
 
-    @Order( 1 )
-    @EditorType( "long-string" )
+    @Order(1)
+    @EditorType(TextAreaPropertyEditor.TYPE_NAME)
     @Required
-    @Length( min = 25 )
+    @Length(min = 25)
     public String getDescription()
     {
         return description;
     }
 
-    public void setDescription( String description )
+    public void setDescription(String description)
     {
         this.description = description;
     }
 
     @OneToMany(cascade = CascadeType.ALL, targetEntity = Gadget.class)
-    @IndexColumn(name="GADGET_INDEX")
+    @IndexColumn(name = "GADGET_INDEX")
     public List<Gadget> getGadgets()
     {
         return gadgets;
@@ -123,17 +126,17 @@ public class Widget extends UuidEntity
         this.gadgets = gadgets;
     }
 
-    @DisplayName( "Widget Name" )
-    @Order( 0 )
+    @DisplayName("Widget Name")
+    @Order(0)
     //@Required({"CREATE", "UPDATE"})
-    @Length( min = 5, max = 25 )
+    @Length(min = 5, max = 25)
     @Hidden("UPDATE")
     public String getName()
     {
         return name;
     }
 
-    public void setName( String name )
+    public void setName(String name)
     {
         this.name = name;
     }
@@ -150,24 +153,24 @@ public class Widget extends UuidEntity
         this.patternField = patternField;
     }
 
-    @DoubleRange( max = 100.0 )
+    @DoubleRange(max = 100.0)
     public double getSizeAsDouble()
     {
         return sizeAsDouble;
     }
 
-    public void setSizeAsDouble( double sizeAsDouble )
+    public void setSizeAsDouble(double sizeAsDouble)
     {
         this.sizeAsDouble = sizeAsDouble;
     }
 
-    @LongRange( min = -25 )
+    @LongRange(min = -25)
     public int getSizeAsInt()
     {
         return sizeAsInt;
     }
 
-    public void setSizeAsInt( int sizeAsInt )
+    public void setSizeAsInt(int sizeAsInt)
     {
         this.sizeAsInt = sizeAsInt;
     }
@@ -200,7 +203,7 @@ public class Widget extends UuidEntity
         return widgetType;
     }
 
-    public void setWidgetType( WidgetType widgetType )
+    public void setWidgetType(WidgetType widgetType)
     {
         this.widgetType = widgetType;
     }

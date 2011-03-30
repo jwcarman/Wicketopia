@@ -18,11 +18,11 @@ package org.wicketopia.editor.decorator;
 
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
+import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.editor.annotation.enabled.Disabled;
 import org.wicketopia.editor.annotation.enabled.Enabled;
-import org.wicketopia.editor.context.EditorContext;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.context.EditorContextPredicate;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -50,7 +50,7 @@ public class EnabledDecorator extends ContextualDecorator
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public EnabledDecorator(EditorContextPredicate predicate)
+    public EnabledDecorator(ContextPredicate predicate)
     {
         super(predicate);
     }
@@ -60,8 +60,8 @@ public class EnabledDecorator extends ContextualDecorator
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void apply(PropertyEditor editor, EditorContext context)
+    public void apply(PropertyEditor editor, Context context)
     {
-        editor.enable(predicate.evaluate(context));
+        editor.setEditable(predicate.evaluate(context));
     }
 }

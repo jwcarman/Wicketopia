@@ -28,6 +28,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static final String TYPE_NAME = "text-field";
     private static final PropertyEditorProvider provider = new Provider();
 
 //----------------------------------------------------------------------------------------------------------------------

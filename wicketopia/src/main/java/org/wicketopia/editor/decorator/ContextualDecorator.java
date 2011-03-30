@@ -16,9 +16,9 @@
 
 package org.wicketopia.editor.decorator;
 
+import org.wicketopia.context.Context;
+import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.editor.PropertyEditorDecorator;
-import org.wicketopia.editor.context.EditorContext;
-import org.wicketopia.editor.context.EditorContextPredicate;
 
 /**
  * @since 1.0
@@ -29,13 +29,13 @@ public abstract class ContextualDecorator implements PropertyEditorDecorator
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected final EditorContextPredicate predicate;
+    protected final ContextPredicate predicate;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ContextualDecorator(EditorContextPredicate predicate)
+    public ContextualDecorator(ContextPredicate predicate)
     {
         this.predicate = predicate;
     }
@@ -44,17 +44,17 @@ public abstract class ContextualDecorator implements PropertyEditorDecorator
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected static EditorContextPredicate not(EditorContextPredicate predicate)
+    protected static ContextPredicate not(ContextPredicate predicate)
     {
         return new NotPredicate(predicate);
     }
 
-    protected static EditorContextPredicate whereEditTypeIn(String... editTypes)
+    protected static ContextPredicate whereEditTypeIn(String... editTypes)
     {
-        return editTypes == null || editTypes.length == 0 ? new WhereEditTypeIn(EditorContext.ALL_EDIT_TYPES) : new WhereEditTypeIn(editTypes);
+        return editTypes == null || editTypes.length == 0 ? new WhereEditTypeIn(Context.ALL_EDIT_TYPES) : new WhereEditTypeIn(editTypes);
     }
 
-    protected static EditorContextPredicate whereEditTypeNotIn(String... editTypes)
+    protected static ContextPredicate whereEditTypeNotIn(String... editTypes)
     {
         return not(whereEditTypeIn(editTypes));
     }
@@ -63,23 +63,23 @@ public abstract class ContextualDecorator implements PropertyEditorDecorator
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class NotPredicate implements EditorContextPredicate
+    private static class NotPredicate implements ContextPredicate
     {
-        private final EditorContextPredicate inner;
+        private final ContextPredicate inner;
 
-        private NotPredicate(EditorContextPredicate inner)
+        private NotPredicate(ContextPredicate inner)
         {
             this.inner = inner;
         }
 
         @Override
-        public boolean evaluate(EditorContext context)
+        public boolean evaluate(Context context)
         {
             return !inner.evaluate(context);
         }
     }
 
-    private static class WhereEditTypeIn implements EditorContextPredicate
+    private static class WhereEditTypeIn implements ContextPredicate
     {
         private final String[] editTypes;
 
@@ -89,12 +89,12 @@ public abstract class ContextualDecorator implements PropertyEditorDecorator
         }
 
         @Override
-        public boolean evaluate(EditorContext context)
+        public boolean evaluate(Context context)
         {
-            String target = context.getEditType();
+            String target = context.getName();
             for (String editType : editTypes)
             {
-                if (EditorContext.ALL_EDIT_TYPES.equals(editType) || target.equals(editType))
+                if (Context.ALL_EDIT_TYPES.equals(editType) || target.equals(editType))
                 {
                     return true;
                 }

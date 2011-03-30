@@ -35,9 +35,9 @@ public interface PropertyEditor
 
     public Component getEditorComponent();
 
-    public void show(boolean visible);
+    public void setViewable(boolean visible);
 
-    public void enable(boolean enabled);
+    public void setEditable(boolean enabled);
 
-    public void require(boolean required);
+    public void setRequired(boolean required);
 }

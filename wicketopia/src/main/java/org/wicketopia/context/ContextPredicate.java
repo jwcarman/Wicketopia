@@ -14,20 +14,14 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor;
+package org.wicketopia.context;
 
 import org.wicketopia.context.Context;
-
-import java.io.Serializable;
 
 /**
  * @since 1.0
  */
-public interface PropertyEditorDecorator extends Serializable
+public interface ContextPredicate
 {
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    public void apply( PropertyEditor editor, Context context);
+    public boolean evaluate(Context context);
 }

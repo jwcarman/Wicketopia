@@ -5,8 +5,8 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *  
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,30 +14,32 @@
  * limitations under the License.
  */
 
-package org.wicketopia.editor.component.property;
+package org.wicketopia.viewer.component;
 
-import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.Component;
+import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorProvider;
+import org.wicketopia.viewer.PropertyViewer;
+import org.wicketopia.viewer.PropertyViewerProvider;
 
-/**
- * @since 1.0
- */
-public class TextAreaPropertyEditor extends AbstractTextComponentPropertyEditor
+public class LabelPropertyViewer extends Label implements PropertyViewer
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
-    public static final String TYPE_NAME = "text-area";
-    private static final PropertyEditorProvider provider = new Provider();
+    public static final String TYPE_NAME = "label";
+    private static final PropertyViewerProvider provider = new Provider();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyEditorProvider getProvider()
+    public static PropertyViewerProvider getProvider()
     {
         return provider;
     }
@@ -46,20 +48,43 @@ public class TextAreaPropertyEditor extends AbstractTextComponentPropertyEditor
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public TextAreaPropertyEditor(String id, PropertyMetaData propertyMetaData, TextArea formComponent)
+    public LabelPropertyViewer(String id, IModel<?> model)
     {
-        super(id, propertyMetaData, formComponent);
+        super(id, model);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// PropertyViewer Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public void addBehavior(IBehavior behavior)
+    {
+        add(behavior);
+    }
+
+    @Override
+    public Component getViewerComponent()
+    {
+        return this;
+    }
+
+    @Override
+    public void setViewable(boolean viewable)
+    {
+        setVisible(viewable);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class Provider implements PropertyEditorProvider
+    private static class Provider implements PropertyViewerProvider
     {
-        public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        @Override
+        public PropertyViewer createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
-            return new TextAreaPropertyEditor(componentId, propertyMetadata, new TextArea("editor", propertyModel));
+            return new LabelPropertyViewer(componentId, propertyModel);
         }
     }
 }

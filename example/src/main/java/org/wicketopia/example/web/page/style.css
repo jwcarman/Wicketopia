@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-div.css-bean-editor div.prop-div {
+div.css-layout div.prop-div {
     clear: both;
-
     display: table-row;
 }
 
-div.css-bean-editor div.prop-div div.prop-label {
+div.css-layout div.prop-div div.prop-label {
     text-align: right;
     display: table-cell;
     font-weight:bold;
@@ -30,12 +29,12 @@ div.css-bean-editor div.prop-div div.prop-label {
     padding-right: 5px;
 }
 
-div.css-bean-editor div.prop-div div.prop-label:after {
+div.css-layout div.prop-div div.prop-label:after {
     content:":"
 }
 
 
-div.css-bean-editor div.prop-div div.prop-editor {
+div.css-layout div.prop-div div.prop-component {
     text-align: left;
     padding-top:10px;
     display:table-cell;

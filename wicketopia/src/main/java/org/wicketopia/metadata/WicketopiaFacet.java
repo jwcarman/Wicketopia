@@ -23,6 +23,7 @@ import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.editor.PropertyEditorDecorator;
+import org.wicketopia.viewer.PropertyViewerDecorator;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -49,7 +50,10 @@ public class WicketopiaFacet implements Comparable
     private String defaultLabelText;
     private int order = Integer.MAX_VALUE;
     private String editorType;
-    private Set<PropertyEditorDecorator> decorators = new HashSet<PropertyEditorDecorator>();
+    private String viewerType;
+    private final Set<PropertyEditorDecorator> editorDecorators = new HashSet<PropertyEditorDecorator>();
+    private final Set<PropertyViewerDecorator> viewerDecorators = new HashSet<PropertyViewerDecorator>();
+    
     private boolean ignored = false;
     private final PropertyMetaData propertyMetaData;
 
@@ -129,11 +133,6 @@ public class WicketopiaFacet implements Comparable
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Set<PropertyEditorDecorator> getDecorators()
-    {
-        return decorators;
-    }
-
     public String getDefaultLabelText()
     {
         return defaultLabelText;
@@ -142,6 +141,11 @@ public class WicketopiaFacet implements Comparable
     public void setDefaultLabelText(String defaultLabelText)
     {
         this.defaultLabelText = defaultLabelText;
+    }
+
+    public Set<PropertyEditorDecorator> getEditorDecorators()
+    {
+        return editorDecorators;
     }
 
     public String getEditorType()
@@ -179,6 +183,21 @@ public class WicketopiaFacet implements Comparable
         return propertyMetaData;
     }
 
+    public Set<PropertyViewerDecorator> getViewerDecorators()
+    {
+        return viewerDecorators;
+    }
+
+    public String getViewerType()
+    {
+        return viewerType;
+    }
+
+    public void setViewerType(String viewerType)
+    {
+        this.viewerType = viewerType;
+    }
+
     public boolean isIgnored()
     {
         return ignored;
@@ -195,7 +214,7 @@ public class WicketopiaFacet implements Comparable
 
     public void addDecorator(PropertyEditorDecorator decorator)
     {
-        decorators.add(decorator);
+        editorDecorators.add(decorator);
     }
 
     Object writeReplace()
