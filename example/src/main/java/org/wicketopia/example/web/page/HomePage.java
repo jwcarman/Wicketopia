@@ -18,6 +18,8 @@ package org.wicketopia.example.web.page;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
@@ -27,6 +29,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.context.Context;
 import org.wicketopia.domdrides.component.link.ajax.AjaxCreateEntityLink;
+import org.wicketopia.domdrides.model.repeater.PageableRepositoryDataProvider;
 import org.wicketopia.example.domain.entity.Gadget;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
@@ -34,7 +37,10 @@ import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.factory.PropertyEditorComponentFactory;
 import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
+import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.model.column.BeanPropertyColumn;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,16 +68,14 @@ public class HomePage extends BasePage
         feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupPlaceholderTag(true);
         final IModel<Widget> model = new Model<Widget>(new Widget());
-        final IModel<Widget> createdModel = new Model<Widget>();
-        final CssBeanViewLayoutPanel<Widget> viewerPanel = new CssBeanViewLayoutPanel<Widget>("viewer", Widget.class, createdModel, new Context(Context.VIEW), WicketopiaPlugin.get().createViewerFactory(Widget.class))
-        {
-            @Override
-            public boolean isVisible()
-            {
-                return createdModel.getObject() != null;
-            }
-        };
-        add(viewerPanel.setOutputMarkupPlaceholderTag(true));
+        final PropertyComponentFactory<Widget> viewerFactory = WicketopiaPlugin.get().createViewerFactory(Widget.class);
+        final List<IColumn<Widget>> columns = new ArrayList<IColumn<Widget>>();
+        final Context viewContext = new Context(Context.LIST);
+        columns.add(new BeanPropertyColumn<Widget>(viewerFactory, "name", viewContext));
+        columns.add(new BeanPropertyColumn<Widget>(viewerFactory, "description", viewContext));
+        columns.add(new BeanPropertyColumn<Widget>(viewerFactory, "widgetType", viewContext));
+        final AjaxFallbackDefaultDataTable<Widget> table = new AjaxFallbackDefaultDataTable<Widget>("table", columns, new PageableRepositoryDataProvider<Widget, String>(widgetRepository, "name"), 20);
+        add(table);
 
         final Form<Widget> widgetForm = new Form<Widget>("form", model);
         widgetForm.add(new AjaxCreateEntityLink<Widget, String>("submit", widgetRepository, model)
@@ -81,8 +85,7 @@ public class HomePage extends BasePage
             {
                 target.addComponent(widgetForm);
                 target.addComponent(feedback);
-                target.addComponent(viewerPanel);
-                createdModel.setObject(object);
+                target.addComponent(table);
                 model.setObject(new Widget());
             }
 
@@ -97,16 +100,6 @@ public class HomePage extends BasePage
 
         Context context = new Context(Context.CREATE);
         widgetForm.add(new CssBeanViewLayoutPanel<Widget>("editor", Widget.class, model, context, WicketopiaPlugin.get().createEditorFactory(Widget.class)));
-        widgetForm.add(new BeanListLayoutPanel<Gadget>("gadgets", Gadget.class, new PropertyModel<List<Gadget>>(model, "gadgets"), context, WicketopiaPlugin.get().createEditorFactory(Gadget.class), "name", "description").setOutputMarkupPlaceholderTag(true));
-        widgetForm.add(new AjaxLink<Void>("addGadget")
-        {
-            @Override
-            public void onClick(AjaxRequestTarget target)
-            {
-                model.getObject().getGadgets().add(new Gadget());
-                target.addComponent(widgetForm);
-            }
-        });
         add(feedback);
         add(widgetForm);
 
