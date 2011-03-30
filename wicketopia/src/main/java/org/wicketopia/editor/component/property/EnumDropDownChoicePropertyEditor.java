@@ -18,8 +18,8 @@ package org.wicketopia.editor.component.property;
 
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.component.choice.EnumDropDownChoice;
-import org.wicketopia.editor.PropertyEditor;
 import org.wicketopia.editor.PropertyEditorProvider;
 
 /**
@@ -59,7 +59,8 @@ public class EnumDropDownChoicePropertyEditor extends AbstractFormComponentPrope
 
     private static class Provider implements PropertyEditorProvider
     {
-        public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        @SuppressWarnings("unchecked")
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
             return new EnumDropDownChoicePropertyEditor(componentId, propertyMetadata, new EnumDropDownChoice("ddc", propertyModel, propertyMetadata.getPropertyDescriptor().getPropertyType()));
         }

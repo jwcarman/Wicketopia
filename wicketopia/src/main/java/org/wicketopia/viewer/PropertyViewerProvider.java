@@ -18,6 +18,7 @@ package org.wicketopia.viewer;
 
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.builder.ViewerBuilder;
 
 public interface PropertyViewerProvider
 {
@@ -25,5 +26,5 @@ public interface PropertyViewerProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyViewer createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
+    public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
 }

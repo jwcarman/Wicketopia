@@ -57,7 +57,13 @@ public class ClassBasedTypeMapping implements TypeMapping
     @Override
     public String getTypeName(PropertyMetaData propertyMetaData)
     {
-        final Queue<Class<?>> typeQueue = createTypeQueue(propertyMetaData.getPropertyDescriptor().getPropertyType());
+        Class<?> propertyType = propertyMetaData.getPropertyDescriptor().getPropertyType();
+        return getTypeName(propertyType);
+    }
+
+    public String getTypeName(Class<?> propertyType)
+    {
+        final Queue<Class<?>> typeQueue = createTypeQueue(propertyType);
         while (!typeQueue.isEmpty())
         {
             Class<?> type = typeQueue.remove();
@@ -69,7 +75,6 @@ public class ClassBasedTypeMapping implements TypeMapping
         }
         return defaultType;
     }
-
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------

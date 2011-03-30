@@ -19,6 +19,7 @@ package org.wicketopia.context;
 import org.apache.wicket.MetaDataKey;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -37,7 +38,7 @@ public class Context implements Serializable
 
     public static final String ALL_EDIT_TYPES = "<<<ALL>>>";
 
-    private final Map<MetaDataKey<? extends Serializable>, Object> attributes = new TreeMap<MetaDataKey<? extends Serializable>, Object>();
+    private final Map<MetaDataKey<? extends Serializable>, Object> attributes = new HashMap<MetaDataKey<? extends Serializable>, Object>();
     private final String name;
 
 //----------------------------------------------------------------------------------------------------------------------

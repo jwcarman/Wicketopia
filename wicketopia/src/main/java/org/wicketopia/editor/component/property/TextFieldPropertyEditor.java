@@ -19,7 +19,7 @@ package org.wicketopia.editor.component.property;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.editor.PropertyEditorProvider;
 
 public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
@@ -55,7 +55,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 
     private static class Provider implements PropertyEditorProvider
     {
-        public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
             return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField("editor", propertyModel));
         }

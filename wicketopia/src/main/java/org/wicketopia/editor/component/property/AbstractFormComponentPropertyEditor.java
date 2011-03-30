@@ -22,13 +22,13 @@ import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.validation.IValidator;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.model.label.PropertyLabelModel;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractFormComponentPropertyEditor extends Panel implements PropertyEditor
+public abstract class AbstractFormComponentPropertyEditor extends Panel implements EditorBuilder
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -49,7 +49,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// PropertyEditor Implementation
+// EditorBuilder Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     public void addBehavior(IBehavior behavior)
@@ -57,6 +57,8 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
         formComponent.add(behavior);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public void addValidator(IValidator validator)
     {
         formComponent.add(validator);
@@ -68,7 +70,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
         formComponent.setEnabled(enabled);
     }
 
-    public Component getEditorComponent()
+    public Component build()
     {
         return this;
     }

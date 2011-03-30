@@ -19,13 +19,13 @@ package org.wicketopia.editor.component.property;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.PropertyEditor;
+import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.editor.PropertyEditorProvider;
 
 /**
  * @since 1.0
  */
-public class TextAreaPropertyEditor extends AbstractTextComponentPropertyEditor
+public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEditor
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -57,7 +57,8 @@ public class TextAreaPropertyEditor extends AbstractTextComponentPropertyEditor
 
     private static class Provider implements PropertyEditorProvider
     {
-        public PropertyEditor createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        @SuppressWarnings("unchecked")
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
             return new TextAreaPropertyEditor(componentId, propertyMetadata, new TextArea("editor", propertyModel));
         }

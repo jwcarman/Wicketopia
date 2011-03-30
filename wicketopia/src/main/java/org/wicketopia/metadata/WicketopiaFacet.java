@@ -22,8 +22,8 @@ import org.metastopheles.BeanMetaData;
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.editor.PropertyEditorDecorator;
-import org.wicketopia.viewer.PropertyViewerDecorator;
+import org.wicketopia.builder.feature.EditorFeature;
+import org.wicketopia.builder.feature.ViewerFeature;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -36,7 +36,7 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public class WicketopiaFacet implements Comparable
+public class WicketopiaFacet implements Comparable, Serializable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -51,9 +51,8 @@ public class WicketopiaFacet implements Comparable
     private int order = Integer.MAX_VALUE;
     private String editorType;
     private String viewerType;
-    private final Set<PropertyEditorDecorator> editorDecorators = new HashSet<PropertyEditorDecorator>();
-    private final Set<PropertyViewerDecorator> viewerDecorators = new HashSet<PropertyViewerDecorator>();
-    
+    private final Set<EditorFeature> editorFeatures = new HashSet<EditorFeature>();
+    private final Set<ViewerFeature> viewerFeatures = new HashSet<ViewerFeature>();
     private boolean ignored = false;
     private final PropertyMetaData propertyMetaData;
 
@@ -124,7 +123,7 @@ public class WicketopiaFacet implements Comparable
         if (o instanceof WicketopiaFacet)
         {
             WicketopiaFacet other = (WicketopiaFacet) o;
-            return new Integer(order).compareTo(other.order);
+            return new Integer(getOrder()).compareTo(other.getOrder());
         }
         return 1;
     }
@@ -143,9 +142,9 @@ public class WicketopiaFacet implements Comparable
         this.defaultLabelText = defaultLabelText;
     }
 
-    public Set<PropertyEditorDecorator> getEditorDecorators()
+    public Set<EditorFeature> getEditorFeatures()
     {
-        return editorDecorators;
+        return editorFeatures;
     }
 
     public String getEditorType()
@@ -183,9 +182,9 @@ public class WicketopiaFacet implements Comparable
         return propertyMetaData;
     }
 
-    public Set<PropertyViewerDecorator> getViewerDecorators()
+    public Set<ViewerFeature> getViewerFeatures()
     {
-        return viewerDecorators;
+        return viewerFeatures;
     }
 
     public String getViewerType()
@@ -212,14 +211,19 @@ public class WicketopiaFacet implements Comparable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addDecorator(PropertyEditorDecorator decorator)
+    public void addEditorFeature(EditorFeature feature)
     {
-        editorDecorators.add(decorator);
+        editorFeatures.add(feature);
     }
 
-    Object writeReplace()
+    public void addViewerFeature(ViewerFeature feature)
     {
-        return new SerializedForm(getPropertyMetaData().getBeanMetaData().getBeanDescriptor().getBeanClass().getName(), getPropertyMetaData().getPropertyDescriptor().getName());
+        viewerFeatures.add(feature);
+    }
+
+    private Object writeReplace()
+    {
+        return new SerializedForm(getPropertyMetaData());
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -228,28 +232,16 @@ public class WicketopiaFacet implements Comparable
 
     private static class SerializedForm implements Serializable
     {
-        private final String className;
-        private final String propertyName;
+        private final PropertyMetaData propertyMetaData;
 
-        private SerializedForm(String className, String propertyName)
+        private SerializedForm(PropertyMetaData propertyMetaData)
         {
-            this.className = className;
-            this.propertyName = propertyName;
+            this.propertyMetaData = propertyMetaData;
         }
 
-        Object readResolve()
+        private Object readResolve()
         {
-            try
-            {
-                Class beanClass = Class.forName(className);
-                BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanClass);
-                PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
-                return WicketopiaFacet.get(propertyMetaData);
-            }
-            catch (ClassNotFoundException e)
-            {
-                throw new WicketRuntimeException("Unable to find bean class " + className + ".", e);
-            }
+            return WicketopiaFacet.get(propertyMetaData);
         }
     }
 }

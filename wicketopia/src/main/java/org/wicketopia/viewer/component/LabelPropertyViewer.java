@@ -19,15 +19,12 @@ package org.wicketopia.viewer.component;
 import org.apache.wicket.Component;
 import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorProvider;
-import org.wicketopia.viewer.PropertyViewer;
+import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
-public class LabelPropertyViewer extends Label implements PropertyViewer
+public class LabelPropertyViewer extends Label implements ViewerBuilder
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -64,7 +61,7 @@ public class LabelPropertyViewer extends Label implements PropertyViewer
     }
 
     @Override
-    public Component getViewerComponent()
+    public Component build()
     {
         return this;
     }
@@ -82,7 +79,7 @@ public class LabelPropertyViewer extends Label implements PropertyViewer
     private static class Provider implements PropertyViewerProvider
     {
         @Override
-        public PropertyViewer createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
             return new LabelPropertyViewer(componentId, propertyModel);
         }

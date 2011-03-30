@@ -16,10 +16,12 @@
 
 package org.wicketopia.util;
 
+import java.io.Serializable;
+
 /**
  * @author James Carman
  */
-public class Person
+public class Person implements Serializable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -30,6 +32,7 @@ public class Person
     private String last;
     private Gender gender;
     private String multiWordProperty;
+    private Integer ssn;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
@@ -73,5 +76,15 @@ public class Person
     public void setMultiWordProperty( String multiWordProperty )
     {
         this.multiWordProperty = multiWordProperty;
+    }
+
+    public Integer getSsn()
+    {
+        return ssn;
+    }
+
+    public void setSsn(Integer ssn)
+    {
+        this.ssn = ssn;
     }
 }

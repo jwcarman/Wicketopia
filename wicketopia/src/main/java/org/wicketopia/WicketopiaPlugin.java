@@ -25,9 +25,13 @@ import org.metastopheles.*;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.scannotation.ClasspathUrlFinder;
 import org.scannotation.WarUrlFinder;
+import org.wicketopia.builder.ComponentBuilder;
+import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.builder.feature.ComponentBuilderFeature;
+import org.wicketopia.builder.feature.EditorFeature;
+import org.wicketopia.builder.feature.ViewerFeature;
 import org.wicketopia.context.Context;
-import org.wicketopia.editor.PropertyEditor;
-import org.wicketopia.editor.PropertyEditorDecorator;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
 import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
@@ -39,8 +43,6 @@ import org.wicketopia.mapping.TypeMapping;
 import org.wicketopia.mapping.editor.DefaultEditorTypeMapping;
 import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
 import org.wicketopia.metadata.WicketopiaFacet;
-import org.wicketopia.viewer.PropertyViewer;
-import org.wicketopia.viewer.PropertyViewerDecorator;
 import org.wicketopia.viewer.PropertyViewerProvider;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
 
@@ -177,23 +179,26 @@ public class WicketopiaPlugin
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
         final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetadata);
-        PropertyEditor builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
-        for (PropertyEditorDecorator decorator : facet.getEditorDecorators())
+        EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
+        Set<EditorFeature> features = facet.getEditorFeatures();
+        this.<EditorBuilder>applyFeatures(features, builder, context);
+        return builder.build();
+    }
+
+    private <B extends ComponentBuilder> void applyFeatures(Set<? extends ComponentBuilderFeature<B>> features, B builder, Context context)
+    {
+        for (ComponentBuilderFeature<B> feature : features)
         {
-            decorator.apply(builder, context);
+            feature.apply(builder, context);
         }
-        return builder.getEditorComponent();
     }
 
     public Component createPropertyViewer(String id, PropertyMetaData propertyMetaData, IModel<?> propertyModel, Context context)
     {
         final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
-        PropertyViewer builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
-        for (PropertyViewerDecorator decorator : facet.getViewerDecorators())
-        {
-            decorator.apply(builder, context);
-        }
-        return builder.getViewerComponent();
+        ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
+        applyFeatures(facet.getViewerFeatures(), builder, context);
+        return builder.build();
     }
     
     public <T> PropertyComponentFactory<T> createViewerFactory(Class<T> beanType)

@@ -62,16 +62,4 @@
         <property name="password" value="${db.password}"/>
     </bean>
 
-    <!--
-    ====================================================================================================================
-    Property Editor Support
-    ====================================================================================================================
-    -->
-    <bean id="propertyEditorTypeMapping" class="org.wicketopia.editor.def.DefaultPropertyEditorTypeMapping">
-        <property name="editorTypeOverrides">
-            <map>
-            </map>
-        </property>
-    </bean>
-
 </beans>

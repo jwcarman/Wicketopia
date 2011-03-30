@@ -24,7 +24,7 @@ import org.metastopheles.PropertyMetaData;
  */
 public abstract class AbstractTextComponentPropertyEditor extends AbstractFormComponentPropertyEditor
 {
-    protected AbstractTextComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, AbstractTextComponent<?> formComponent)
+    protected AbstractTextComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, AbstractTextComponent formComponent)
     {
         super(id, propertyMetaData, formComponent);
         Class<?> propertyType = propertyMetaData.getPropertyDescriptor().getPropertyType();
