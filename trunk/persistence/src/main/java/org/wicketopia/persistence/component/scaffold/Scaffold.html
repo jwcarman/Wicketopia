@@ -1,0 +1,119 @@
+<!--
+  ~ Copyright (c) 2011 Carman Consulting, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<wicket:panel>
+
+    <div wicket:id="feedback" class="feedback"></div>
+    <div wicket:id="content"></div>
+
+
+    <wicket:fragment wicket:id="list">
+        <div class="nav">
+            <span class="menuButton"><a wicket:id="newEntity" class="create">New <label
+                    wicket:id="displayName"/></a></span>
+        </div>
+        <div class="body">
+            <h1><label wicket:id="pluralName"></label> List</h1>
+
+            <div class="list">
+                <table wicket:id="table" class="scaffold-list"/>
+            </div>
+        </div>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="view">
+        <div class="nav">
+            <span class="menuButton"><a wicket:id="listButton" class="list"><label
+                    wicket:id="nameList"/> List</a></span>
+            <span class="menuButton"><a wicket:id="createButton" class="create">New <label
+                    wicket:id="nameCreate"/></a></span>
+        </div>
+        <div class="body">
+            <h1>Show <label wicket:id="nameCaption"/></h1>
+
+            <div class="dialog">
+                <div wicket:id="layout"/>
+            </div>
+        </div>
+        <div class="buttons">
+            <span class="button"><a wicket:id="editButton" class="edit">Edit</a></span>
+            <span class="button"><a wicket:id="deleteButton" class="delete">Delete</a></span>
+        </div>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="edit">
+        <div class="nav">
+            <span class="menuButton"><a wicket:id="listButton" class="list"><label
+                    wicket:id="nameList"/> List</a></span>
+            <span class="menuButton"><a wicket:id="createButton" class="create">New <label
+                    wicket:id="nameCreate"/></a></span>
+        </div>
+
+        <div class="body">
+            <h1>Edit <label wicket:id="nameCaption"></label></h1>
+
+            <form wicket:id="form">
+                <div class="dialog">
+                    <div wicket:id="layout"/>
+                </div>
+
+            </form>
+            <div class="buttons">
+              <span class="button">
+                  <a wicket:id="saveButton" class="save">Update</a>
+              </span>
+                <span class="button">
+                  <a wicket:id="deleteButton" class="delete">Delete</a>
+              </span>
+            </div>
+        </div>
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="create">
+        <div class="nav">
+            <span class="menuButton"><a wicket:id="listButton" class="list"><label wicket:id="nameList"></label>
+                List</a></span>
+        </div>
+        <div class="body">
+            <h1>Create <label wicket:id="nameCaption"></label></h1>
+
+            <form wicket:id="form">
+                <div class="dialog">
+                    <div wicket:id="layout"/>
+                </div>
+
+            </form>
+            <div class="buttons">
+              <span class="button">
+                  <a wicket:id="saveButton" class="save">Create</a>
+              </span>
+            </div>
+        </div>
+
+
+    </wicket:fragment>
+
+    <wicket:fragment wicket:id="actions">
+        <div class="scaffold-actions">
+            <a class="scaffold-link" wicket:id="viewLink">View</a>&nbsp;
+            <a class="scaffold-link" wicket:id="updateLink">Update</a>&nbsp;
+            <a class="scaffold-link" wicket:id="deleteLink">Delete</a>
+        </div>
+    </wicket:fragment>
+</wicket:panel>
+
+
+

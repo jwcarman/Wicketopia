@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011 Carman Consulting, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Wicketopia!</title>
+        <author email="james@carmanconsulting.com">James Carman</author>
+    </properties>
+
+    <body>
+        <section name="Introduction">
+            <p>
+                Wicketopia is a Rapid Application Development (RAD) library for the
+                <a href="http://wicket.apache.org">Apache Wicket</a>
+                framework. Wicketopia is driven by metadata (data about data) you add to your bean classes. It uses the
+                <a href="http://metastopheles.sourceforge.net">Metastopheles</a>
+                metadata library to generate and access
+                that metadata. Here's an example:
+            </p>
+            <subsection name="Metadata-Annotated Property...">
+                <source><![CDATA[
+@Order(1)
+@EditorType(TextAreaPropertyEditor.TYPE_NAME)
+@Required
+@Length(min = 25)
+@Hidden(Context.LIST)
+public String getDescription()
+{
+  return description;
+}]]>
+                </source>
+            </subsection>
+            <p>
+                Here, we have a &quot;description&quot; property with annotations on it specifying:
+            </p>
+            <ul>
+                <li>The property should be displayed in position 1</li>
+                <li>The property should be edited using a text area</li>
+                <li>The property is required</li>
+                <li>The property must be at least 25 characters</li>
+                <li>The property is hidden in list (showing a list of beans) context</li>
+            </ul>
+            <p>
+                There are other annotations, but you get the idea. Wicketopia uses this metadata to automatically
+                generate components for you that are &quot;bound&quot; to your bean's properties.
+            </p>
+        </section>
+        <!-- The body of the document contains a number of sections -->
+        <section name="Scaffolding">
+
+            <p>Wicketopia includes a &quot;Scaffold&quot; component, inspired by Groovy's scaffolding support:
+            </p>
+            <subsection name="Java Code...">
+                <source><![CDATA[
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketopia.example.domain.entity.Widget;
+import org.wicketopia.persistence.PersistenceProvider;
+import org.wicketopia.persistence.component.scaffold.Scaffold;
+
+public class HomePage extends WebPage
+{
+    @SpringBean
+    private PersistenceProvider persistenceProvider;
+
+    public HomePage()
+    {
+        add(new Scaffold<Widget>("scaffold", Widget.class, persistenceProvider));
+    }
+}]]>
+                </source>
+            </subsection>
+            <subsection name="Markup...">
+                <source><![CDATA[
+<html>
+  <body>
+    <div wicket:id="scaffold" />
+  </body>
+</html>]]>
+                </source>
+            </subsection>
+            <p>
+                That's it! That's all you have to do to get a scaffolding up and running.
+            </p>
+        </section>
+
+        <section name="Automatic Form Generation">
+            <p>
+                Most people won't want to use the scaffolding in their production applications. They can, however, use
+                Wicketopia's automatically-generated forms! Here's a snippet from the scaffolding code:
+            </p>
+            <subsection name="Auto-Generated Editor...">
+                <source><![CDATA[
+Form<T> form = new Form<T>("form", model);
+PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+Context context = new Context(Context.CREATE);
+form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));]]>
+                </source>
+            </subsection>
+            <p>
+                Here, we see the use of a &quot;layout&quot; panel. It takes a &quot;Context&quot; object which helps
+                Wicketopia understand which components should be enabled, visible, required, etc. It also uses a
+                &quot;PropertyComponentFactory&quot;. A PropertyComponentFactory is responsible for generating
+                components for bean properties. In this case, we're using a PropertyComponentFactory which generates
+                editor components. To create a &quot;viewer&quot; instead, we would simply do this:
+            </p>
+
+            <subsection name="Auto-Generated Viewer...">
+                <source><![CDATA[
+PropertyComponentFactory<T> viewerFactory = WicketopiaPlugin.get().createViewerFactory(beanType);
+Context context = new Context(Context.VIEW);
+add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, viewerFactory));]]>
+                </source>
+            </subsection>
+
+            <p>The auto-generated editors/viewers will display all currently visible fields in their order based on the
+                metadata. You can specify the fields you want and the order you want them in also:
+            </p>
+            <subsection name="Auto-Generated Editor With Selected Properties...">
+                <source><![CDATA[
+Form<T> form = new Form<T>("form", model);
+PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+Context context = new Context(Context.CREATE);
+form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory, "firstName", "lastName"));]]>
+                </source>
+                <p>
+                    Here, we're specifying that we only want to edit the &quot;firstName&quot; and &quot;lastName&quot;
+                    properties.
+                </p>
+            </subsection>
+        </section>
+        <section name="Manual Form Generation">
+            <p>
+                Sometimes the automatic form generation just won't suit your needs and you'll have to get
+                &quot;down-and-dirty.&quot; However, even that's a snap with Wicketopia:
+            </p>
+            <subsection name="Manually-Generated Editor...">
+                <source><![CDATA[
+Form<T> form = new Form<T>("form", model);
+PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+Context context = new Context(Context.CREATE);
+form.add(editorFactory.createPropertyLabel("nameLabel", "name"));
+form.add(editorFactory.createPropertyComponent("nameEditor", model, "name", context));
+      ]]>
+                </source>
+            </subsection>
+            <p>
+                Here, we're still using a PropertyComponentFactory, but instead of using a layout component to
+                automatically generate and layout our labels and components, we're using it to generate them manually.
+                In this case, we're generating a label and editor component (a text field probably) for the &quot;name&quot;
+                property.
+            </p>
+        </section>
+    </body>
+
+</document>
