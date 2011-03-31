@@ -65,7 +65,7 @@ public String getDescription()
         <!-- The body of the document contains a number of sections -->
         <section name="Scaffolding">
 
-            <p>Wicketopia includes a &quot;Scaffold&quot; component, inspired by Groovy's scaffolding support:
+            <p>Wicketopia includes a &quot;Scaffold&quot; component, inspired by Grails' scaffolding support:
             </p>
             <subsection name="Java Code...">
                 <source><![CDATA[
