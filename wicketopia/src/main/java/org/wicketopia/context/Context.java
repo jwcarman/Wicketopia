@@ -21,7 +21,6 @@ import org.apache.wicket.MetaDataKey;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 /**
  *
@@ -31,15 +30,27 @@ public class Context implements Serializable
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
+    public static final String ALL = "***ALL***";
+
     public static final String CREATE = "CREATE";
     public static final String UPDATE = "UPDATE";
     public static final String VIEW = "VIEW";
     public static final String LIST = "LIST";
 
-    public static final String ALL_EDIT_TYPES = "<<<ALL>>>";
+
+    public static final ContextPredicate ALL_CONTEXTS = new AllContextsPredicate();
 
     private final Map<MetaDataKey<? extends Serializable>, Object> attributes = new HashMap<MetaDataKey<? extends Serializable>, Object>();
     private final String name;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public static ContextPredicate whereContextNameIn(String... contextNames)
+    {
+        return new ContextNamePredicate(contextNames);
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -72,5 +83,49 @@ public class Context implements Serializable
     public <T extends Serializable> void setAttribute(MetaDataKey<T> key, T value)
     {
         attributes.put(key, value);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Inner Classes
+//----------------------------------------------------------------------------------------------------------------------
+
+    private static class AllContextsPredicate implements ContextPredicate
+    {
+        @Override
+        public boolean evaluate(Context context)
+        {
+            return true;
+        }
+    }
+    
+    private static class ContextNamePredicate implements ContextPredicate
+    {
+        private final String[] contextNames;
+
+        private ContextNamePredicate(String... contextNames)
+        {
+            this.contextNames = contextNames;
+        }
+
+        @Override
+        public boolean evaluate(Context context)
+        {
+            if (contextNames == null || contextNames.length == 0)
+            {
+                return true;
+            }
+            else
+            {
+                final String target = context.getName();
+                for (String contextName : contextNames)
+                {
+                    if (ALL.equals(contextName) || target.equals(contextName))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 }

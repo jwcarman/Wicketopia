@@ -19,6 +19,7 @@ package org.wicketopia;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.metastopheles.BeanMetaData;
@@ -45,14 +46,20 @@ import org.wicketopia.mapping.TypeMapping;
 import org.wicketopia.mapping.editor.DefaultEditorTypeMapping;
 import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
 import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.model.column.BeanPropertyColumn;
 import org.wicketopia.viewer.PropertyViewerProvider;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -177,6 +184,18 @@ public class WicketopiaPlugin
         viewerProviders.put(typeName, provider);
     }
 
+    public <T> List<IColumn<T>> createColumns(Class<T> beanType, PropertyComponentFactory<T> factory, Context context, String... properties)
+    {
+        BeanMetaData beanMetaData = getBeanMetaData(beanType);
+        final List<String> visible = getVisibleProperties(beanType, context, properties);
+        final List<IColumn<T>> columns = new ArrayList<IColumn<T>>(visible.size());
+        for (String propertyName : visible)
+        {
+            columns.add(new BeanPropertyColumn<T>(factory, propertyName, context));
+        }
+        return columns;
+    }
+
     public <T> PropertyComponentFactory<T> createEditorFactory(Class<T> beanType)
     {
         return new PropertyEditorComponentFactory<T>(beanType);
@@ -186,26 +205,18 @@ public class WicketopiaPlugin
     {
         final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetadata);
         EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
-        applyFeatures(facet.getEditorFeatures(), builder, context);
+        facet.decorate(builder, context);
         return builder.build();
-    }
-
-    private <B extends ComponentBuilder> void applyFeatures(Set<? extends ComponentBuilderFeature<B>> features, B builder, Context context)
-    {
-        for (ComponentBuilderFeature<B> feature : features)
-        {
-            feature.apply(builder, context);
-        }
     }
 
     public Component createPropertyViewer(String id, PropertyMetaData propertyMetaData, IModel<?> propertyModel, Context context)
     {
         final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
         ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
-        applyFeatures(facet.getViewerFeatures(), builder, context);
+        facet.decorate(builder, context);
         return builder.build();
     }
-    
+
     public <T> PropertyComponentFactory<T> createViewerFactory(Class<T> beanType)
     {
         return new PropertyViewerComponentFactory<T>(beanType);
@@ -266,6 +277,45 @@ public class WicketopiaPlugin
                     propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + ".");
         }
         return viewerProviders.get(viewerType);
+    }
+
+    public List<String> getVisibleProperties(Class<?> beanType, Context context, String... properties)
+    {
+        final List<String> names = new LinkedList<String>();
+        final BeanMetaData beanMetaData = getBeanMetaData(beanType);
+        if (properties == null || properties.length == 0)
+        {
+            for (String propertyName : beanMetaData.getPropertyNames())
+            {
+                WicketopiaFacet facet = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName));
+                if (!facet.isIgnored() && facet.isVisible(context))
+                {
+                    names.add(propertyName);
+                }
+            }
+            Collections.sort(names, new Comparator<String>()
+            {
+                @Override
+                public int compare(String o1, String o2)
+                {
+                    WicketopiaFacet facet1 = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(o1));
+                    WicketopiaFacet facet2 = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(o2));
+                    return facet1.compareTo(facet2);
+                }
+            });
+        }
+        else
+        {
+            for (String propertyName : properties)
+            {
+                WicketopiaFacet facet = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName));
+                if (!facet.isIgnored() && facet.isVisible(context))
+                {
+                    names.add(propertyName);
+                }
+            }
+        }
+        return names;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

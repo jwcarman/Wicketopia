@@ -20,9 +20,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.builder.feature.AbstractValidatorFeature;
 import org.wicketopia.builder.feature.annotation.validator.LongRange;
-import org.wicketopia.context.Context;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -64,7 +62,7 @@ public class LongRangeFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator(Context context)
+    protected IValidator<?> createValidator()
     {
         if (max != Long.MAX_VALUE && min != Long.MIN_VALUE)
         {

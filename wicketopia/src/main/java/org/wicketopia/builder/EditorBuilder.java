@@ -1,7 +1,5 @@
 package org.wicketopia.builder;
 
-import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
 import org.apache.wicket.validation.IValidator;
 
 /**
@@ -9,9 +7,13 @@ import org.apache.wicket.validation.IValidator;
  */
 public interface EditorBuilder extends ViewerBuilder
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     public void addValidator(IValidator validator);
 
-    public void setEditable(boolean enabled);
+    public void enabled(boolean enabled);
 
-    public void setRequired(boolean required);
+    public void required(boolean required);
 }

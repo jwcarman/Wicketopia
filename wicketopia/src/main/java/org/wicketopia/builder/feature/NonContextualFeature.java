@@ -3,16 +3,18 @@ package org.wicketopia.builder.feature;
 import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.context.Context;
 
-import java.io.Serializable;
-
 /**
- * @author James Carman
+ * @since 1.0
  */
-public interface ComponentBuilderFeature<B extends ComponentBuilder> extends Serializable
+public abstract class NonContextualFeature<B extends ComponentBuilder> implements ComponentBuilderFeature<B>
 {
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
-    public boolean isActiveFor(Context context);
-    public void activate(B builder);
+
+    @Override
+    public boolean isActiveFor(Context context)
+    {
+        return true;
+    }
 }

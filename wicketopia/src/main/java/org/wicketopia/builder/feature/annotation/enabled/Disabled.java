@@ -30,5 +30,5 @@ import java.lang.annotation.Target;
 @Target( ElementType.METHOD )
 public @interface Disabled
 {
-    String[] value() default {Context.ALL_EDIT_TYPES};
+    String[] value() default Context.ALL;
 }

@@ -20,9 +20,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.context.Context;
 import org.wicketopia.builder.feature.annotation.validator.Email;
-import org.wicketopia.builder.feature.AbstractValidatorFeature;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -66,7 +64,7 @@ public class EmailFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator(Context context)
+    protected IValidator<?> createValidator()
     {
         return EmailAddressValidator.getInstance();
     }

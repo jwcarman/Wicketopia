@@ -23,7 +23,7 @@ import org.hibernate.mapping.SimpleValue;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.builder.feature.RequiredFeature;
+import org.wicketopia.context.Context;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 import java.util.Iterator;
@@ -78,7 +78,7 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 
             if(!property.isOptional())
             {
-                facet.addEditorFeature(RequiredFeature.required());
+                facet.setRequired(Context.ALL_CONTEXTS, true);
             }
         }
     }

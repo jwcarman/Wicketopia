@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package org.wicketopia.builder.feature;
+package org.wicketopia.builder.feature.validator;
 
 import org.apache.wicket.validation.IValidator;
 import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.context.Context;
+import org.wicketopia.builder.feature.NonContextualFeature;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractValidatorFeature implements ComponentBuilderFeature<EditorBuilder>
+abstract class AbstractValidatorFeature extends NonContextualFeature<EditorBuilder>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract IValidator<?> createValidator(Context context);
+    protected abstract IValidator<?> createValidator();
 
 //----------------------------------------------------------------------------------------------------------------------
 // ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public final void apply(EditorBuilder editor, Context context)
+    public final void activate(EditorBuilder editor)
     {
-        final IValidator<?> validator = createValidator(context);
+        final IValidator<?> validator = createValidator();
         if (validator != null)
         {
             editor.addValidator(validator);

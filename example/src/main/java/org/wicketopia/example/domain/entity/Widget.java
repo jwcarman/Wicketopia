@@ -26,6 +26,7 @@ import org.wicketopia.builder.feature.annotation.required.Required;
 import org.wicketopia.builder.feature.annotation.validator.LongRange;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
 import org.wicketopia.builder.feature.annotation.visible.Hidden;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
 import org.wicketopia.example.domain.value.WidgetType;
 import org.wicketopia.builder.feature.annotation.validator.DoubleRange;
@@ -89,7 +90,7 @@ public class Widget extends UuidEntity
         this.contactEmail = contactEmail;
     }
 
-    @Hidden("CREATE")
+    @Hidden({"CREATE", "LIST"})
     public Date getDate()
     {
         return date;
@@ -104,6 +105,7 @@ public class Widget extends UuidEntity
     @EditorType(TextAreaPropertyEditor.TYPE_NAME)
     @Required
     @Length(min = 25)
+    @Hidden(Context.LIST)
     public String getDescription()
     {
         return description;
@@ -154,6 +156,7 @@ public class Widget extends UuidEntity
     }
 
     @DoubleRange(max = 100.0)
+    @Hidden(Context.LIST)
     public double getSizeAsDouble()
     {
         return sizeAsDouble;
@@ -165,6 +168,7 @@ public class Widget extends UuidEntity
     }
 
     @LongRange(min = -25)
+    @Hidden(Context.LIST)
     public int getSizeAsInt()
     {
         return sizeAsInt;
@@ -197,7 +201,7 @@ public class Widget extends UuidEntity
         this.version = version;
     }
 
-    @Required
+    @Required()
     public WidgetType getWidgetType()
     {
         return widgetType;

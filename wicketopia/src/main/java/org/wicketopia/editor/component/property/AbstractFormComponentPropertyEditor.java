@@ -65,7 +65,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
     }
 
     @Override
-    public void setEditable(boolean enabled)
+    public void enabled(boolean enabled)
     {
         formComponent.setEnabled(enabled);
     }
@@ -76,13 +76,13 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
     }
 
     @Override
-    public void setRequired(boolean required)
+    public void required(boolean required)
     {
         formComponent.setRequired(required);
     }
 
     @Override
-    public void setViewable(boolean visible)
+    public void visible(boolean visible)
     {
         formComponent.setVisible(visible);
     }

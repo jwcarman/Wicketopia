@@ -20,9 +20,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.NumberValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.context.Context;
 import org.wicketopia.builder.feature.annotation.validator.DoubleRange;
-import org.wicketopia.builder.feature.AbstractValidatorFeature;
 import org.wicketopia.metadata.WicketopiaFacet;
 
 /**
@@ -63,7 +61,7 @@ public class DoubleRangeFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator(Context context)
+    protected IValidator<?> createValidator()
     {
         if (max != Double.MAX_VALUE && min != Double.MIN_VALUE)
         {

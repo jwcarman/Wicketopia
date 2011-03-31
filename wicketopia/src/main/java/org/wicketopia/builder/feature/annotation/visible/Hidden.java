@@ -26,9 +26,13 @@ import java.lang.annotation.Target;
 /**
  * @since 1.0
  */
-@Retention( RetentionPolicy.RUNTIME )
-@Target( ElementType.METHOD )
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
 public @interface Hidden
 {
-    String[] value() default {Context.ALL_EDIT_TYPES};
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    String[] value() default Context.ALL;
 }

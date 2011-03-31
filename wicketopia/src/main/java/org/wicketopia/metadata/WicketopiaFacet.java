@@ -19,15 +19,19 @@ package org.wicketopia.metadata;
 import org.apache.commons.lang.StringUtils;
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.builder.feature.ComponentBuilderFeature;
+import org.wicketopia.context.Context;
+import org.wicketopia.context.ContextPredicate;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -53,6 +57,9 @@ public class WicketopiaFacet implements Comparable, Serializable
     private final Set<ComponentBuilderFeature<ViewerBuilder>> viewerFeatures = new HashSet<ComponentBuilderFeature<ViewerBuilder>>();
     private boolean ignored = false;
     private final PropertyMetaData propertyMetaData;
+    private ContextualBoolean viewable = new ContextualBoolean(true);
+    private ContextualBoolean editable = new ContextualBoolean(true);
+    private ContextualBoolean required = new ContextualBoolean(false);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -219,14 +226,103 @@ public class WicketopiaFacet implements Comparable, Serializable
         viewerFeatures.add(feature);
     }
 
+    public boolean isEnabled(Context context)
+    {
+        return editable.getValue(context);
+    }
+    
+    public boolean isRequired(Context context)
+    {
+        return propertyMetaData.getPropertyDescriptor().getPropertyType().isPrimitive() || required.getValue(context);
+    }
+    
+    public boolean isVisible(Context context)
+    {
+        return viewable.getValue(context);
+    }
+    
+    public void setEnabled(ContextPredicate predicate, boolean value)
+    {
+        this.editable.setValue(predicate, value);
+    }
+
+    public void setRequired(ContextPredicate predicate, boolean value)
+    {
+        this.required.setValue(predicate, value);
+    }
+
+    public void setVisible(ContextPredicate predicate, boolean value)
+    {
+        this.viewable.setValue(predicate, value);
+    }
+
     private Object writeReplace()
     {
         return new SerializedForm(getPropertyMetaData());
     }
 
+    private <B extends ComponentBuilder> void applyFeatures(Set<? extends ComponentBuilderFeature<B>> features, B builder, Context context)
+    {
+        for (ComponentBuilderFeature<B> feature : features)
+        {
+            if(feature.isActiveFor(context))
+            {
+                feature.activate(builder);
+            }
+        }
+    }
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
+
+    private class ContextualBoolean
+    {
+        private final boolean defaultValue;
+        private final List<ContextualCondition> conditions = new LinkedList<ContextualCondition>();
+
+        private ContextualBoolean(boolean defaultValue)
+        {
+            this.defaultValue = defaultValue;
+        }
+        
+        public void setValue(ContextPredicate predicate, boolean value)
+        {
+            conditions.add(new ContextualCondition(predicate, value));
+        }
+        
+        public boolean getValue(Context context)
+        {
+            if(conditions.isEmpty())
+            {
+                return defaultValue;
+            }
+            boolean aggregate = true;
+            for (ContextualCondition condition : conditions)
+            {
+                if(condition.predicate.evaluate(context))
+                {
+                    aggregate = aggregate && condition.value;
+                }
+                else
+                {
+                    aggregate = aggregate && !condition.value;
+                }
+            }
+            return aggregate;
+        }
+    }
+
+    private class ContextualCondition
+    {
+        private final ContextPredicate predicate;
+        private final boolean value;
+
+        private ContextualCondition(ContextPredicate predicate, boolean value)
+        {
+            this.predicate = predicate;
+            this.value = value;
+        }
+    }
 
     private static class SerializedForm implements Serializable
     {
@@ -241,5 +337,19 @@ public class WicketopiaFacet implements Comparable, Serializable
         {
             return WicketopiaFacet.get(propertyMetaData);
         }
+    }
+
+    public void decorate(ViewerBuilder builder, Context context)
+    {
+        applyFeatures(viewerFeatures, builder, context);
+        builder.visible(isVisible(context));
+    }
+
+    public void decorate(EditorBuilder builder, Context context)
+    {
+        applyFeatures(editorFeatures, builder, context);
+        builder.visible(isVisible(context));
+        builder.required(isRequired(context));
+        builder.enabled(isEnabled(context));
     }
 }

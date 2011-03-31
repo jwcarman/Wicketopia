@@ -67,7 +67,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
     }
 
     @Override
-    public void setViewable(boolean viewable)
+    public void visible(boolean viewable)
     {
         setVisible(viewable);
     }

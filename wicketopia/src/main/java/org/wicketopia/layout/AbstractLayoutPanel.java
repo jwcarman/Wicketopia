@@ -27,7 +27,8 @@ import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.metadata.WicketopiaFacet;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @since 1.0
@@ -47,6 +48,22 @@ public class AbstractLayoutPanel<T> extends Panel
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    private static List<String> filter(Class<?> beanType, List<String> propertyNames, Context context)
+    {
+        BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
+        for (Iterator<String> iterator = propertyNames.iterator(); iterator.hasNext();)
+        {
+            String propertyName = iterator.next();
+            PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
+            final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+            if (!facet.isIgnored() && facet.isVisible(context))
+            {
+                iterator.remove();
+            }
+        }
+        return propertyNames;
+    }
+
     private static int getOrder(BeanMetaData beanMetaData, String propertyName)
     {
         return WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName)).getOrder();
@@ -58,29 +75,7 @@ public class AbstractLayoutPanel<T> extends Panel
 
     protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory)
     {
-        this(id, beanType, context, componentFactory, getPropertyNames(beanType));
-    }
-
-    private static List<String> getPropertyNames(Class<?> beanType)
-    {
-        List<PropertyMetaData> propertyMetaDataList = new LinkedList<PropertyMetaData>();
-        final BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
-        Set<String> propertyNames = beanMetaData.getPropertyNames();
-        for (String propertyName : propertyNames)
-        {
-            PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
-            if (!WicketopiaFacet.get(propertyMetaData).isIgnored())
-            {
-                propertyMetaDataList.add(propertyMetaData);
-            }
-        }
-        WicketopiaFacet.sort(propertyMetaDataList);
-        final List<String> propertyNamesList = new ArrayList<String>(propertyMetaDataList.size());
-        for (PropertyMetaData propertyMetaData : propertyMetaDataList)
-        {
-            propertyNamesList.add(propertyMetaData.getPropertyDescriptor().getName());
-        }
-        return propertyNamesList;
+        this(id, beanType, context, componentFactory, WicketopiaPlugin.get().getVisibleProperties(beanType, context));
     }
 
     protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames)
@@ -94,7 +89,16 @@ public class AbstractLayoutPanel<T> extends Panel
 
     protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
     {
-        this(id, beanType, context, componentFactory, new ArrayList<String>(Arrays.asList(propertyNames)));
+        this(id, beanType, context, componentFactory, WicketopiaPlugin.get().getVisibleProperties(beanType, context, propertyNames));
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Getter/Setter Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public List<String> getPropertyNames()
+    {
+        return propertyNames;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -109,10 +113,5 @@ public class AbstractLayoutPanel<T> extends Panel
     protected Label createPropertyLabel(String componentId, String propertyName)
     {
         return componentFactory.createPropertyLabel(componentId, propertyName);
-    }
-
-    public List<String> getPropertyNames()
-    {
-        return propertyNames;
     }
 }

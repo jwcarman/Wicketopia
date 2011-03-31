@@ -18,7 +18,6 @@ package org.wicketopia.builder.feature;
 
 import org.apache.wicket.behavior.IBehavior;
 import org.wicketopia.builder.ComponentBuilder;
-import org.wicketopia.context.Context;
 
 /**
  * @since 1.0
@@ -36,7 +35,7 @@ public abstract class AbstractBehaviorFeature<B extends ComponentBuilder> implem
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void apply( B builder, Context context )
+    public void activate(B builder)
     {
         builder.addBehavior(createBehavior());
     }

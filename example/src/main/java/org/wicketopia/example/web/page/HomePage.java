@@ -17,30 +17,22 @@
 package org.wicketopia.example.web.page;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.context.Context;
 import org.wicketopia.domdrides.component.link.ajax.AjaxCreateEntityLink;
 import org.wicketopia.domdrides.model.repeater.PageableRepositoryDataProvider;
-import org.wicketopia.example.domain.entity.Gadget;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.example.domain.repository.WidgetRepository;
 import org.wicketopia.factory.PropertyComponentFactory;
-import org.wicketopia.factory.PropertyEditorComponentFactory;
-import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
-import org.wicketopia.metadata.WicketopiaFacet;
-import org.wicketopia.model.column.BeanPropertyColumn;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,11 +61,8 @@ public class HomePage extends BasePage
         feedback.setOutputMarkupPlaceholderTag(true);
         final IModel<Widget> model = new Model<Widget>(new Widget());
         final PropertyComponentFactory<Widget> viewerFactory = WicketopiaPlugin.get().createViewerFactory(Widget.class);
-        final List<IColumn<Widget>> columns = new ArrayList<IColumn<Widget>>();
-        final Context viewContext = new Context(Context.LIST);
-        columns.add(new BeanPropertyColumn<Widget>(viewerFactory, "name", viewContext));
-        columns.add(new BeanPropertyColumn<Widget>(viewerFactory, "description", viewContext));
-        columns.add(new BeanPropertyColumn<Widget>(viewerFactory, "widgetType", viewContext));
+        final Context listContext = new Context(Context.LIST);
+        final List<IColumn<Widget>> columns = WicketopiaPlugin.get().createColumns(Widget.class, viewerFactory, listContext);
         final AjaxFallbackDefaultDataTable<Widget> table = new AjaxFallbackDefaultDataTable<Widget>("table", columns, new PageableRepositoryDataProvider<Widget, String>(widgetRepository, "name"), 20);
         add(table);
 
@@ -97,12 +86,10 @@ public class HomePage extends BasePage
         });
 
 
-
         Context context = new Context(Context.CREATE);
         widgetForm.add(new CssBeanViewLayoutPanel<Widget>("editor", Widget.class, model, context, WicketopiaPlugin.get().createEditorFactory(Widget.class)));
         add(feedback);
         add(widgetForm);
-
 
 
     }
