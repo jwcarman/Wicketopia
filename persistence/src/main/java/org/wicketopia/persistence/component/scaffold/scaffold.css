@@ -272,13 +272,15 @@
     padding: 0;
 }
 
+
 .scaffold li.feedbackPanelERROR {
-    background: #fff3f3;
-    border: 1px solid red;
-    color: #cc0000;
     margin: 10px 0 5px 0;
     padding: 5px 0 5px 0;
     background: url(images/exclamation.png) 8px 0% no-repeat;
     line-height: 16px;
     padding-left: 30px;
+}
+
+.scaffold li.feedbackPanelERROR span {
+    vertical-align:middle;
 }
