@@ -21,12 +21,11 @@
     <parent>
         <artifactId>wicketopia-parent</artifactId>
         <groupId>org.wicketopia</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.9-SNAPSHOT</version>
     </parent>
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-example</artifactId>
     <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
     <name>Wicketopia Example Application</name>
 
     <properties>
