@@ -32,6 +32,7 @@ import org.wicketopia.example.domain.value.WidgetType;
 import org.wicketopia.builder.feature.annotation.validator.DoubleRange;
 import org.wicketopia.builder.feature.annotation.validator.Email;
 import org.wicketopia.builder.feature.annotation.validator.Length;
+import org.wicketopia.spring.security.annotation.VisibleForRole;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -60,7 +61,8 @@ public class Widget extends UuidEntity
     private Date date;
     private String patternField;
     private String someImplementationField;
-
+    private String adminProperty;
+    
     private Integer version;
 
     private List<Gadget> gadgets = new LinkedList<Gadget>();
@@ -68,6 +70,17 @@ public class Widget extends UuidEntity
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+    @VisibleForRole("ROLE_ADMIN")
+    public String getAdminProperty()
+    {
+        return adminProperty;
+    }
+
+    public void setAdminProperty(String adminProperty)
+    {
+        this.adminProperty = adminProperty;
+    }
 
     public String getAnotherProperty()
     {

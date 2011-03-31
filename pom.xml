@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -36,14 +37,23 @@
         <module>hibernate</module>
         <module>jpa</module>
         <module>domdrides</module>
+        <module>spring-security</module>
         <module>example</module>
     </modules>
-
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <issueManagement>
-        <system />
+        <system>sourceforge</system>
         <url>https://sourceforge.net/tracker/?group_id=238630</url>
     </issueManagement>
+
     <properties>
         <wicket.version>1.4.16</wicket.version>
         <slf4j.version>1.6.1</slf4j.version>
