@@ -76,6 +76,18 @@ Context context = new Context(Context.VIEW);
 add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, viewerFactory));]]>
                 </source>
             </subsection>
+
+            <p>The auto-generated editors/viewers will display all currently visible fields in their order based on the
+                metadata.  You can specify the fields you want and the order you want them in also:
+            </p>
+            <subsection name="Auto-Generated Editor With Selected Properties...">
+                <source><![CDATA[
+Form<T> form = new Form<T>("form", model);
+PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+Context context = new Context(Context.CREATE);
+form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory, "firstName", "lastName"));]]>
+                </source>
+            </subsection>
         </section>
         <section name="Manual Form Generation">
             <p>
