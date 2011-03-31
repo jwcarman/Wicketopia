@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.wicketopia</groupId>
         <artifactId>wicketopia-parent</artifactId>
-        <version>0.9</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <artifactId>wicketopia</artifactId>
     <name>Wicketopia Core Library</name>
