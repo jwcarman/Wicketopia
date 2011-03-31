@@ -70,7 +70,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         displayName = new DisplayNameModel(beanFacet);
         add(new AttributeModifier("class", true, new Model<String>("scaffold")));
         feedback.setOutputMarkupPlaceholderTag(true);
-        //feedback.setFilter(new ContainerFeedbackMessageFilter(this));
+        feedback.setFilter(new ContainerFeedbackMessageFilter(this));
         add(feedback);
         this.beanType = beanType;
         this.persistenceProvider = persistenceProvider;
