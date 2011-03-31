@@ -218,7 +218,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
                 protected void afterCreate(T object, AjaxRequestTarget target)
                 {
                     mode = ScaffoldMode.View;
-                    info(displayName.getObject() + " Created");
+                    Scaffold.this.info(displayName.getObject() + " Created");
                     model = new LoadableDetachableEntityModel<T>(beanType, object, persistenceProvider);
                     refreshContent(target);
                 }
@@ -276,7 +276,8 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         public void onClick(AjaxRequestTarget target)
         {
             persistenceProvider.delete(getModelObject());
-            info(displayName.getObject() + " Deleted");
+            Scaffold.this.info(displayName.getObject() + " Deleted");
+            mode = ScaffoldMode.List;
             refreshContent(target);
         }
     }
@@ -304,7 +305,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
                 protected void afterUpdate(T object, AjaxRequestTarget target)
                 {
                     mode = ScaffoldMode.View;
-                    info(displayName.getObject() + " Updated");
+                    Scaffold.this.info(displayName.getObject() + " Updated");
                     refreshContent(target);
                 }
 
