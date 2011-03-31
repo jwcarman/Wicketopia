@@ -9,7 +9,43 @@
     </properties>
 
     <body>
-
+        <section name="Introduction">
+            <p>
+                Wicketopia is a Rapid Application Development (RAD) library for the
+                <a href="http://wicket.apache.org">Apache Wicket</a>
+                framework. Wicketopia is driven by metadata (data about data) you add to your bean classes. It uses the
+                <a href="http://metastopheles.sourceforge.net">Metastopheles</a>
+                metadata library to generate and access
+                that metadata. Here's an example:
+            </p>
+            <subsection name="Metadata-Annotated Property...">
+                <source><![CDATA[
+@Order(1)
+@EditorType(TextAreaPropertyEditor.TYPE_NAME)
+@Required
+@Length(min = 25)
+@Hidden(Context.LIST)
+public String getDescription()
+{
+  return description;
+}]]>
+                </source>
+            </subsection>
+            <p>
+                Here, we have a &quot;description&quot; property with annotations on it specifying:
+            </p>
+            <ul>
+                <li>The property should be displayed in position 1</li>
+                <li>The property should be edited using a text area</li>
+                <li>The property is required</li>
+                <li>The property must be at least 25 characters</li>
+                <li>The property is hidden in list (showing a list of beans) context</li>
+            </ul>
+            <p>
+                There are other annotations, but you get the idea. Wicketopia uses this metadata to automatically
+                generate components for you that are &quot;bound&quot; to your bean's properties.
+            </p>
+        </section>
         <!-- The body of the document contains a number of sections -->
         <section name="Scaffolding">
 
@@ -78,7 +114,7 @@ add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, viewerFact
             </subsection>
 
             <p>The auto-generated editors/viewers will display all currently visible fields in their order based on the
-                metadata.  You can specify the fields you want and the order you want them in also:
+                metadata. You can specify the fields you want and the order you want them in also:
             </p>
             <subsection name="Auto-Generated Editor With Selected Properties...">
                 <source><![CDATA[
@@ -87,6 +123,10 @@ PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorF
 Context context = new Context(Context.CREATE);
 form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory, "firstName", "lastName"));]]>
                 </source>
+                <p>
+                    Here, we're specifying that we only want to edit the &quot;firstName&quot; and &quot;lastName&quot;
+                    properties.
+                </p>
             </subsection>
         </section>
         <section name="Manual Form Generation">
