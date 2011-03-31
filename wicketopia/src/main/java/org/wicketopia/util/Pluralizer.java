@@ -3,7 +3,6 @@ package org.wicketopia.util;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.rmi.runtime.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
