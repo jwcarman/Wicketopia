@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.NumberValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.builder.feature.annotation.validator.DoubleRange;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 /**
  * @author James Carman
@@ -43,7 +43,7 @@ public class DoubleRangeFeature extends AbstractValidatorFeature
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, DoubleRange doubleRange)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new DoubleRangeFeature(doubleRange.min(), doubleRange.max()));
+        WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new DoubleRangeFeature(doubleRange.min(), doubleRange.max()));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

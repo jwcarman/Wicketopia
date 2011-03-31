@@ -30,10 +30,8 @@ import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.scannotation.ClasspathUrlFinder;
 import org.scannotation.WarUrlFinder;
-import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.builder.ViewerBuilder;
-import org.wicketopia.builder.feature.ComponentBuilderFeature;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
@@ -45,7 +43,7 @@ import org.wicketopia.factory.PropertyViewerComponentFactory;
 import org.wicketopia.mapping.TypeMapping;
 import org.wicketopia.mapping.editor.DefaultEditorTypeMapping;
 import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.model.column.BeanPropertyColumn;
 import org.wicketopia.viewer.PropertyViewerProvider;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
@@ -203,7 +201,7 @@ public class WicketopiaPlugin
 
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
-        final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetadata);
+        final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetadata);
         EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
         facet.decorate(builder, context);
         return builder.build();
@@ -211,7 +209,7 @@ public class WicketopiaPlugin
 
     public Component createPropertyViewer(String id, PropertyMetaData propertyMetaData, IModel<?> propertyModel, Context context)
     {
-        final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
         facet.decorate(builder, context);
         return builder.build();
@@ -233,7 +231,7 @@ public class WicketopiaPlugin
 
     public PropertyEditorProvider getEditorProvider(PropertyMetaData propertyMetaData)
     {
-        WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         String editorType = facet.getEditorType();
         if (editorType == null)
         {
@@ -257,7 +255,7 @@ public class WicketopiaPlugin
 
     public PropertyViewerProvider getViewerProvider(PropertyMetaData propertyMetaData)
     {
-        WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         String viewerType = facet.getViewerType();
         if (viewerType == null)
         {
@@ -287,7 +285,7 @@ public class WicketopiaPlugin
         {
             for (String propertyName : beanMetaData.getPropertyNames())
             {
-                WicketopiaFacet facet = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName));
+                WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(propertyName));
                 if (!facet.isIgnored() && facet.isVisible(context))
                 {
                     names.add(propertyName);
@@ -298,8 +296,8 @@ public class WicketopiaPlugin
                 @Override
                 public int compare(String o1, String o2)
                 {
-                    WicketopiaFacet facet1 = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(o1));
-                    WicketopiaFacet facet2 = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(o2));
+                    WicketopiaPropertyFacet facet1 = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(o1));
+                    WicketopiaPropertyFacet facet2 = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(o2));
                     return facet1.compareTo(facet2);
                 }
             });
@@ -308,7 +306,7 @@ public class WicketopiaPlugin
         {
             for (String propertyName : properties)
             {
-                WicketopiaFacet facet = WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName));
+                WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(propertyName));
                 if (!facet.isIgnored() && facet.isVisible(context))
                 {
                     names.add(propertyName);

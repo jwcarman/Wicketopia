@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.CreditCardValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.builder.feature.annotation.validator.CreditCard;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 /**
  * @author James Carman
@@ -43,7 +43,7 @@ public class CreditCardFeature extends AbstractValidatorFeature
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, CreditCard creditCard)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(CreditCardFeature.getInstance());
+        WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(CreditCardFeature.getInstance());
     }
 
     public static CreditCardFeature getInstance()

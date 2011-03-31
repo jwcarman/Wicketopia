@@ -24,7 +24,7 @@ import org.metastopheles.BeanMetaData;
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.context.Context;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 import java.util.Iterator;
 
@@ -53,7 +53,7 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 
     public void decorate(PropertyMetaData propertyMetaData)
     {
-        WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         final PersistentClass classMapping = findClassMapping(propertyMetaData.getBeanMetaData());
         if(classMapping != null)
         {

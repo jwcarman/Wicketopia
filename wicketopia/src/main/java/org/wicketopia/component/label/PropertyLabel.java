@@ -18,12 +18,13 @@ package org.wicketopia.component.label;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.model.label.PropertyLabelModel;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
+import org.wicketopia.model.label.DisplayNameModel;
 
 /**
  * A label which displays the appropriate label text for the property.
  *
- * @see org.wicketopia.model.label.PropertyLabelModel the model used by this component
+ * @see org.wicketopia.model.label.DisplayNameModel the model used by this component
  * @since 1.0
  */
 public class PropertyLabel extends Label
@@ -40,6 +41,6 @@ public class PropertyLabel extends Label
 
     public PropertyLabel( String id, PropertyMetaData propertyMetadata )
     {
-        super(id, new PropertyLabelModel(propertyMetadata));
+        super(id, new DisplayNameModel(WicketopiaPropertyFacet.get(propertyMetadata)));
     }
 }

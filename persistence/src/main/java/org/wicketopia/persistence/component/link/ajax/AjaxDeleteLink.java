@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.link.ajax;
+package org.wicketopia.persistence.component.link.ajax;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.model.IModel;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
+public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -33,9 +33,9 @@ public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AjaxCreateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
+    public AjaxDeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
     {
-        super(id, form);
+        super(id, model);
         this.persistenceProvider = persistenceProvider;
     }
 
@@ -43,17 +43,17 @@ public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterCreate(T object, AjaxRequestTarget target);
+    protected abstract void afterDelete(T object, AjaxRequestTarget target);
 
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// IAjaxLink Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+    public final void onClick(AjaxRequestTarget target)
     {
-        T object = (T)form.getModelObject();
-        object = persistenceProvider.create(object);
-        afterCreate(object, target);
+        final T object = getModelObject();
+        persistenceProvider.delete(object);
+        afterDelete(object, target);
     }
 }

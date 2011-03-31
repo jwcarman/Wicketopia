@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.link.ajax;
+package org.wicketopia.persistence.component.link;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.model.IModel;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
+
+public abstract class CreateLink<T> extends SubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -33,9 +33,9 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AjaxUpdateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
+    public CreateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
     {
-        super(id, form);
+        super(id, model);
         this.persistenceProvider = persistenceProvider;
     }
 
@@ -43,18 +43,18 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterUpdate(T object, AjaxRequestTarget target);
+    protected abstract void afterCreate(T object);
 
 //----------------------------------------------------------------------------------------------------------------------
-// Other Methods
+// IFormSubmittingComponent Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
     @SuppressWarnings("unchecked")
-    protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
+    public final void onSubmit()
     {
-        T object = (T)form.getModelObject();
-        object = persistenceProvider.update(object);
-        afterUpdate(object, target);
+        T object = (T) getDefaultModelObject();
+        object = persistenceProvider.create(object);
+        afterCreate(object);
     }
 }

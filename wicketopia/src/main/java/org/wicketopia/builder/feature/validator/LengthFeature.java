@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.StringValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.builder.feature.annotation.validator.Length;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 /**
  * @author James Carman
@@ -43,7 +43,7 @@ public class LengthFeature extends AbstractValidatorFeature
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, Length length)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new LengthFeature(length.min(), length.max()));
+        WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new LengthFeature(length.min(), length.max()));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -20,6 +20,9 @@ import org.wicketopia.persistence.PersistenceProvider;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author James Carman
@@ -54,6 +57,38 @@ public class JpaPersistenceProvider implements PersistenceProvider
     public <T> T update(T object)
     {
         return entityManager.merge(object);
+    }
+
+    @Override
+    public int getCount(Class<?> entityType)
+    {
+        List results = entityManager.createQuery("select count(*) from " + entityType.getName()).getResultList();
+        return ((Number)results.get(0)).intValue();
+    }
+
+    @Override
+    public Serializable getIdentifier(Object entity)
+    {
+        throw new UnsupportedOperationException("This feature isn't available until JPA 2.0");
+    }
+
+    @Override
+    public <T> T getByIdentifier(Class<T> entityType, Serializable identifier)
+    {
+        return entityManager.find(entityType, identifier);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending)
+    {
+        String jpaql = "select x from " + entityType.getName() + " x";
+        if(sortProperty != null)
+        {
+            jpaql = jpaql + " order by x." + sortProperty + ( ascending ? " asc" : " desc" );
+        }
+        final Query query = entityManager.createQuery(jpaql);
+        query.setFirstResult(first).setMaxResults(max);
+        return query.getResultList();
     }
 }
 

@@ -16,7 +16,6 @@
 
 package org.wicketopia.metadata;
 
-import org.apache.commons.lang.StringUtils;
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ComponentBuilder;
@@ -25,6 +24,8 @@ import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.builder.feature.ComponentBuilderFeature;
 import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
+import org.wicketopia.util.Displayable;
+import org.wicketopia.util.Pluralizer;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -38,18 +39,18 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public class WicketopiaFacet implements Comparable, Serializable
+public class WicketopiaPropertyFacet implements Comparable, Serializable, Displayable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final FacetKey<WicketopiaFacet> FACET_KEY = new FacetKey<WicketopiaFacet>()
+    private static final FacetKey<WicketopiaPropertyFacet> FACET_KEY = new FacetKey<WicketopiaPropertyFacet>()
     {
     };
 
-    private String labelTextMessageKey;
-    private String defaultLabelText;
+    private String displayNameMessageKey;
+    private String displayName;
     private int order = Integer.MAX_VALUE;
     private String editorType;
     private String viewerType;
@@ -65,14 +66,14 @@ public class WicketopiaFacet implements Comparable, Serializable
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static WicketopiaFacet get(PropertyMetaData propertyMetaData)
+    public static WicketopiaPropertyFacet get(PropertyMetaData propertyMetaData)
     {
         synchronized (propertyMetaData)
         {
-            WicketopiaFacet meta = propertyMetaData.getFacet(FACET_KEY);
+            WicketopiaPropertyFacet meta = propertyMetaData.getFacet(FACET_KEY);
             if (meta == null)
             {
-                meta = new WicketopiaFacet(propertyMetaData);
+                meta = new WicketopiaPropertyFacet(propertyMetaData);
                 propertyMetaData.setFacet(FACET_KEY, meta);
             }
             return meta;
@@ -86,7 +87,7 @@ public class WicketopiaFacet implements Comparable, Serializable
             @Override
             public int compare(PropertyMetaData o1, PropertyMetaData o2)
             {
-                return WicketopiaFacet.get(o1).compareTo(WicketopiaFacet.get(o2));
+                return WicketopiaPropertyFacet.get(o1).compareTo(WicketopiaPropertyFacet.get(o2));
             }
         });
     }
@@ -95,29 +96,19 @@ public class WicketopiaFacet implements Comparable, Serializable
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    WicketopiaFacet(PropertyMetaData propertyMetaData)
+    WicketopiaPropertyFacet(PropertyMetaData propertyMetaData)
     {
         this.propertyMetaData = propertyMetaData;
-        this.labelTextMessageKey = propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
-        this.defaultLabelText = calculateDefaultLabelText(propertyMetaData.getPropertyDescriptor());
+        this.displayNameMessageKey = propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
+        this.displayName = calculateDefaultLabelText(propertyMetaData.getPropertyDescriptor());
     }
 
     private String calculateDefaultLabelText(PropertyDescriptor propertyDescriptor)
     {
-        String[] words = StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName());
-        words[0] = StringUtils.capitalize(words[0]);
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < words.length; i++)
-        {
-            String word = words[i];
-            sb.append(word);
-            if (i != words.length - 1)
-            {
-                sb.append(" ");
-            }
-        }
-        return sb.toString();
+        final String name = propertyDescriptor.getName();
+        return Pluralizer.splitIntoWords(name);
     }
+
 
 //----------------------------------------------------------------------------------------------------------------------
 // Comparable Implementation
@@ -125,9 +116,9 @@ public class WicketopiaFacet implements Comparable, Serializable
 
     public int compareTo(Object o)
     {
-        if (o instanceof WicketopiaFacet)
+        if (o instanceof WicketopiaPropertyFacet)
         {
-            WicketopiaFacet other = (WicketopiaFacet) o;
+            WicketopiaPropertyFacet other = (WicketopiaPropertyFacet) o;
             return new Integer(getOrder()).compareTo(other.getOrder());
         }
         return 1;
@@ -137,14 +128,14 @@ public class WicketopiaFacet implements Comparable, Serializable
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public String getDefaultLabelText()
+    public String getDisplayName()
     {
-        return defaultLabelText;
+        return displayName;
     }
 
-    public void setDefaultLabelText(String defaultLabelText)
+    public void setDisplayName(String displayName)
     {
-        this.defaultLabelText = defaultLabelText;
+        this.displayName = displayName;
     }
 
     public Set<ComponentBuilderFeature<EditorBuilder>> getEditorFeatures()
@@ -162,14 +153,14 @@ public class WicketopiaFacet implements Comparable, Serializable
         this.editorType = editorType;
     }
 
-    public String getLabelTextMessageKey()
+    public String getDisplayNameMessageKey()
     {
-        return labelTextMessageKey;
+        return displayNameMessageKey;
     }
 
-    public void setLabelTextMessageKey(String labelTextMessageKey)
+    public void setDisplayNameMessageKey(String displayNameMessageKey)
     {
-        this.labelTextMessageKey = labelTextMessageKey;
+        this.displayNameMessageKey = displayNameMessageKey;
     }
 
     public int getOrder()
@@ -335,7 +326,7 @@ public class WicketopiaFacet implements Comparable, Serializable
 
         private Object readResolve()
         {
-            return WicketopiaFacet.get(propertyMetaData);
+            return WicketopiaPropertyFacet.get(propertyMetaData);
         }
     }
 

@@ -16,9 +16,15 @@
 
 package org.wicketopia.persistence.hibernate;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.wicketopia.persistence.PersistenceProvider;
+
+import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -30,11 +36,19 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    private static final String ASSOCIATION_ALIAS = "sp";
     private SessionFactory sessionFactory;
 
 //----------------------------------------------------------------------------------------------------------------------
 // PersistenceProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
+
+
+    @Override
+    public int getCount(Class<?> beanType)
+    {
+        return ((Number) getSession().createCriteria(beanType).setProjection(Projections.rowCount()).uniqueResult()).intValue();
+    }
 
     @Override
     public <T> T create(T object)
@@ -47,6 +61,43 @@ public class HibernatePersistenceProvider implements PersistenceProvider
     public <T> void delete(T object)
     {
         getSession().delete(object);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> T getByIdentifier(Class<T> beanType, Serializable identifier)
+    {
+        return (T) getSession().get(beanType, identifier);
+    }
+
+    public Serializable getIdentifier(Object entity)
+    {
+        return getSession().getIdentifier(entity);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> List<T> getList(Class<T> entityType, int first, int max, String sortProperty, boolean ascending)
+    {
+        Criteria c = getSession().createCriteria(entityType)
+                .setMaxResults(max)
+                .setFirstResult(first);
+        if (sortProperty != null)
+        {
+            final int ndx = sortProperty.lastIndexOf('.');
+            if (ndx != -1)
+            {
+                final String associationPath = sortProperty.substring(0, ndx);
+                final String propertyName = sortProperty.substring(ndx + 1);
+                c = c.createAlias(associationPath, ASSOCIATION_ALIAS)
+                        .addOrder(ascending ? Order.asc(ASSOCIATION_ALIAS + "." + propertyName) : Order.desc(ASSOCIATION_ALIAS + "." + propertyName));
+            }
+            else
+            {
+                c = c.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
+            }
+        }
+        return c.list();
     }
 
     @Override

@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.link.ajax;
+package org.wicketopia.persistence.component.link;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
+public abstract class UpdateLink<T> extends SubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -33,7 +32,7 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxDeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
+    public UpdateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
     {
         super(id, model);
         this.persistenceProvider = persistenceProvider;
@@ -43,17 +42,17 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterDelete(T object, AjaxRequestTarget target);
+    protected abstract void afterUpdate(T object);
 
 //----------------------------------------------------------------------------------------------------------------------
-// IAjaxLink Implementation
+// IFormSubmittingComponent Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public final void onClick(AjaxRequestTarget target)
+    public final void onSubmit()
     {
-        final T object = getModelObject();
-        persistenceProvider.delete(object);
-        afterDelete(object, target);
+        T object = (T) getDefaultModelObject();
+        object = persistenceProvider.update(object);
+        afterUpdate(object);
     }
 }

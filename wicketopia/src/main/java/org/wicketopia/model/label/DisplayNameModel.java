@@ -14,44 +14,29 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.link;
+package org.wicketopia.model.label;
 
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.IModel;
-import org.wicketopia.persistence.PersistenceProvider;
+import org.apache.wicket.model.ResourceModel;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
+import org.wicketopia.util.Displayable;
 
-public class DeleteLink<T> extends Link<T>
+/**
+ * @since 1.0
+ */
+public class DisplayNameModel extends ResourceModel
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private PersistenceProvider persistenceProvider;
+    private static final long serialVersionUID = 1L;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
+    public DisplayNameModel(Displayable displayable)
     {
-        super(id, model);
-        this.persistenceProvider = persistenceProvider;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    protected void afterDelete(T object)
-    {
-
-    }
-
-    @Override
-    public final void onClick()
-    {
-        final T object = getModelObject();
-        persistenceProvider.delete(object);
-        afterDelete(object);
+        super(displayable.getDisplayNameMessageKey(), displayable.getDisplayName());
     }
 }

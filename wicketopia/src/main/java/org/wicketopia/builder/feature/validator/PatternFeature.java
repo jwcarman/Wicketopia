@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.PatternValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 public class PatternFeature extends AbstractValidatorFeature
 {
@@ -38,7 +38,7 @@ public class PatternFeature extends AbstractValidatorFeature
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, Pattern pattern)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new PatternFeature(pattern.value()));
+        WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new PatternFeature(pattern.value()));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

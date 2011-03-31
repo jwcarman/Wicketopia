@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.builder.feature.annotation.validator.Email;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 /**
  * @author James Carman
@@ -48,7 +48,7 @@ public class EmailFeature extends AbstractValidatorFeature
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, Email email)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(EmailFeature.getInstance());
+        WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(EmailFeature.getInstance());
     }
 
 //----------------------------------------------------------------------------------------------------------------------

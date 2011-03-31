@@ -21,7 +21,7 @@ import org.apache.wicket.validation.validator.NumberValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.builder.feature.annotation.validator.LongRange;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 /**
  * @author James Carman
@@ -44,7 +44,7 @@ public class LongRangeFeature extends AbstractValidatorFeature
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, LongRange longRange)
     {
-        WicketopiaFacet.get(propertyMetaData).addEditorFeature(new LongRangeFeature(longRange.min(), longRange.max()));
+        WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new LongRangeFeature(longRange.min(), longRange.max()));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

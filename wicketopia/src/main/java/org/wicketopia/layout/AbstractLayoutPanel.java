@@ -25,7 +25,7 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 import java.util.Iterator;
 import java.util.List;
@@ -55,7 +55,7 @@ public class AbstractLayoutPanel<T> extends Panel
         {
             String propertyName = iterator.next();
             PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
-            final WicketopiaFacet facet = WicketopiaFacet.get(propertyMetaData);
+            final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
             if (!facet.isIgnored() && facet.isVisible(context))
             {
                 iterator.remove();
@@ -66,7 +66,7 @@ public class AbstractLayoutPanel<T> extends Panel
 
     private static int getOrder(BeanMetaData beanMetaData, String propertyName)
     {
-        return WicketopiaFacet.get(beanMetaData.getPropertyMetaData(propertyName)).getOrder();
+        return WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(propertyName)).getOrder();
     }
 
 //----------------------------------------------------------------------------------------------------------------------

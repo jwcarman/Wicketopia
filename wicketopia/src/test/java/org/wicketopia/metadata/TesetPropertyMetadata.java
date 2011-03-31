@@ -25,8 +25,8 @@ public class TesetPropertyMetadata
     public void testDefaultLabelText()
     {
         WicketopiaBeanMetaData<Person> beanMetadata = new BeanMetadata<Person>(Person.class);
-        WicketopiaFacet propertyMetadata = beanMetadata.getPropertyMetadata("first");
-        assertEquals(propertyMetadata.getDefaultLabelText(), "First");        
+        WicketopiaPropertyFacet propertyMetadata = beanMetadata.getPropertyMetadata("first");
+        assertEquals(propertyMetadata.getDisplayName(), "First");
     }
 
 
@@ -34,7 +34,7 @@ public class TesetPropertyMetadata
     public void testLabelTextMessageKey()
     {
         BeanMetadata<Person> beanMetadata = new BeanMetadata<Person>(Person.class);
-        WicketopiaFacet propertyMetadata = beanMetadata.getPropertyMetadata("first");
-        assertEquals(propertyMetadata.getLabelTextMessageKey(), "org.wicketopia.util.Person.first");        
+        WicketopiaPropertyFacet propertyMetadata = beanMetadata.getPropertyMetadata("first");
+        assertEquals(propertyMetadata.getDisplayNameMessageKey(), "org.wicketopia.util.Person.first");
     }*/
 }

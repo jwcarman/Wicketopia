@@ -14,29 +14,44 @@
  * limitations under the License.
  */
 
-package org.wicketopia.model.label;
+package org.wicketopia.persistence.component.link;
 
-import org.apache.wicket.model.ResourceModel;
-import org.metastopheles.PropertyMetaData;
-import org.wicketopia.metadata.WicketopiaFacet;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.IModel;
+import org.wicketopia.persistence.PersistenceProvider;
 
-/**
- * @since 1.0
- */
-public class PropertyLabelModel extends ResourceModel
+public class DeleteLink<T> extends Link<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final long serialVersionUID = 1L;
+    private PersistenceProvider persistenceProvider;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyLabelModel( PropertyMetaData propertyMetadata )
+    public DeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
     {
-        super(WicketopiaFacet.get(propertyMetadata).getLabelTextMessageKey(), WicketopiaFacet.get(propertyMetadata).getDefaultLabelText());
+        super(id, model);
+        this.persistenceProvider = persistenceProvider;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    protected void afterDelete(T object)
+    {
+
+    }
+
+    @Override
+    public final void onClick()
+    {
+        final T object = getModelObject();
+        persistenceProvider.delete(object);
+        afterDelete(object);
     }
 }

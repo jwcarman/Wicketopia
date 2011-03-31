@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.link;
+package org.wicketopia.persistence.component.link.ajax;
 
-import org.apache.wicket.markup.html.form.SubmitLink;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.markup.html.form.Form;
 import org.wicketopia.persistence.PersistenceProvider;
 
-
-public abstract class CreateLink<T> extends SubmitLink
+public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -33,9 +33,9 @@ public abstract class CreateLink<T> extends SubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CreateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
+    protected AjaxCreateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
     {
-        super(id, model);
+        super(id, form);
         this.persistenceProvider = persistenceProvider;
     }
 
@@ -43,18 +43,17 @@ public abstract class CreateLink<T> extends SubmitLink
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterCreate(T object);
+    protected abstract void afterCreate(T object, AjaxRequestTarget target);
 
 //----------------------------------------------------------------------------------------------------------------------
-// IFormSubmittingComponent Implementation
+// Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    @SuppressWarnings("unchecked")
-    public final void onSubmit()
+    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
-        T object = (T) getDefaultModelObject();
+        T object = (T)form.getModelObject();
         object = persistenceProvider.create(object);
-        afterCreate(object);
+        afterCreate(object, target);
     }
 }

@@ -23,7 +23,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.validation.IValidator;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.model.label.PropertyLabelModel;
+import org.wicketopia.metadata.WicketopiaPropertyFacet;
+import org.wicketopia.model.label.DisplayNameModel;
 
 /**
  * @since 1.0
@@ -44,7 +45,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
     {
         super(id);
         this.formComponent = formComponent;
-        formComponent.setLabel(new PropertyLabelModel(propertyMetaData));
+        formComponent.setLabel(new DisplayNameModel(WicketopiaPropertyFacet.get(propertyMetaData)));
         add(formComponent);
     }
 

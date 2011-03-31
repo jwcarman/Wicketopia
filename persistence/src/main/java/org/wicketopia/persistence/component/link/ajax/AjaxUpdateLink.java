@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence.link;
+package org.wicketopia.persistence.component.link.ajax;
 
-import org.apache.wicket.markup.html.form.SubmitLink;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.markup.html.form.Form;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class UpdateLink<T> extends SubmitLink
+public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -32,9 +33,9 @@ public abstract class UpdateLink<T> extends SubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public UpdateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
+    protected AjaxUpdateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
     {
-        super(id, model);
+        super(id, form);
         this.persistenceProvider = persistenceProvider;
     }
 
@@ -42,17 +43,18 @@ public abstract class UpdateLink<T> extends SubmitLink
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterUpdate(T object);
+    protected abstract void afterUpdate(T object, AjaxRequestTarget target);
 
 //----------------------------------------------------------------------------------------------------------------------
-// IFormSubmittingComponent Implementation
+// Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public final void onSubmit()
+    @SuppressWarnings("unchecked")
+    protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
-        T object = (T) getDefaultModelObject();
+        T object = (T)form.getModelObject();
         object = persistenceProvider.update(object);
-        afterUpdate(object);
+        afterUpdate(object, target);
     }
 }

@@ -28,7 +28,7 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet facet = WicketopiaFacet.get(metaData.getPropertyMetaData("first"));
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
         assertNotNull(facet);
     }
 
@@ -37,10 +37,10 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet facet = WicketopiaFacet.get(metaData.getPropertyMetaData("multiWordProperty"));
-        assertEquals(facet.getDefaultLabelText(), "Multi Word Property");
-        facet.setDefaultLabelText("Something Else");
-        assertEquals(facet.getDefaultLabelText(), "Something Else");
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("multiWordProperty"));
+        assertEquals(facet.getDisplayName(), "Multi Word Property");
+        facet.setDisplayName("Something Else");
+        assertEquals(facet.getDisplayName(), "Something Else");
     }
 
     @Test
@@ -48,10 +48,10 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet facet = WicketopiaFacet.get(metaData.getPropertyMetaData("first"));
-        assertEquals(facet.getLabelTextMessageKey(), "org.wicketopia.util.Person.first");
-        facet.setLabelTextMessageKey("Person.first");
-        assertEquals(facet.getLabelTextMessageKey(), "Person.first");
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
+        assertEquals(facet.getDisplayNameMessageKey(), "org.wicketopia.util.Person.first");
+        facet.setDisplayNameMessageKey("Person.first");
+        assertEquals(facet.getDisplayNameMessageKey(), "Person.first");
     }
 
     @Test
@@ -59,7 +59,7 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet facet = WicketopiaFacet.get(metaData.getPropertyMetaData("first"));
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
         assertFalse(facet.isIgnored());
         facet.setIgnored(true);
         assertTrue(facet.isIgnored());
@@ -70,7 +70,7 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet facet = WicketopiaFacet.get(metaData.getPropertyMetaData("first"));
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
         assertNull(facet.getViewerType());
         facet.setViewerType("blah");
         assertEquals(facet.getViewerType(), "blah");
@@ -81,7 +81,7 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet facet = WicketopiaFacet.get(metaData.getPropertyMetaData("first"));
+        WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
         assertNull(facet.getEditorType());
         facet.setEditorType("blah");
         assertEquals(facet.getEditorType(), "blah");
@@ -96,15 +96,15 @@ public class TestWicketopiaFacet
         PropertyMetaData last = metaData.getPropertyMetaData("last");
         PropertyMetaData multi = metaData.getPropertyMetaData("multiWordProperty");
         final List<PropertyMetaData> list = new ArrayList<PropertyMetaData>(Arrays.asList(first, last, multi));
-        WicketopiaFacet.sort(list);
+        WicketopiaPropertyFacet.sort(list);
         assertSame(list.get(0), first);
         assertSame(list.get(1), last);
         assertSame(list.get(2), multi);
 
-        WicketopiaFacet.get(first).setOrder(3);
-        WicketopiaFacet.get(multi).setOrder(2);
-        WicketopiaFacet.get(last).setOrder(1);
-        WicketopiaFacet.sort(list);
+        WicketopiaPropertyFacet.get(first).setOrder(3);
+        WicketopiaPropertyFacet.get(multi).setOrder(2);
+        WicketopiaPropertyFacet.get(last).setOrder(1);
+        WicketopiaPropertyFacet.sort(list);
         assertSame(list.get(2), first);
         assertSame(list.get(0), last);
         assertSame(list.get(1), multi);
@@ -116,7 +116,7 @@ public class TestWicketopiaFacet
     {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
-        WicketopiaFacet first = WicketopiaFacet.get(metaData.getPropertyMetaData("first"));
+        WicketopiaPropertyFacet first = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
         assertSame(SerializationUtils.clone(first), first);
     }
 }
