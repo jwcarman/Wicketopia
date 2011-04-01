@@ -52,6 +52,12 @@ public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor
         super(id, propertyMetaData, checkBox);
     }
 
+    @Override
+    public void required(boolean required)
+    {
+        // Do nothing.  CheckBoxes are always supplied anyway.
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
