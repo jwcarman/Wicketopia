@@ -16,6 +16,7 @@
 
 package org.wicketopia.mapping.editor;
 
+import org.wicketopia.editor.component.property.CheckBoxPropertyEditor;
 import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
 import org.wicketopia.mapping.ClassBasedTypeMapping;
@@ -30,5 +31,6 @@ public class DefaultEditorTypeMapping extends ClassBasedTypeMapping
     {
         super(TextFieldPropertyEditor.TYPE_NAME);
         addTypeOverride(Enum.class, EnumDropDownChoicePropertyEditor.TYPE_NAME);
+        addTypeOverride(Boolean.TYPE, CheckBoxPropertyEditor.TYPE_NAME);
     }
 }

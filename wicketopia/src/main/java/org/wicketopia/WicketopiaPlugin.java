@@ -34,9 +34,7 @@ import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
-import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
-import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
-import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
+import org.wicketopia.editor.component.property.*;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.factory.PropertyEditorComponentFactory;
 import org.wicketopia.factory.PropertyViewerComponentFactory;
@@ -115,6 +113,8 @@ public class WicketopiaPlugin
         addPropertyEditorProvider(TextFieldPropertyEditor.TYPE_NAME, TextFieldPropertyEditor.getProvider());
         addPropertyEditorProvider(TextAreaPropertyEditor.TYPE_NAME, TextAreaPropertyEditor.getProvider());
         addPropertyEditorProvider(EnumDropDownChoicePropertyEditor.TYPE_NAME, EnumDropDownChoicePropertyEditor.getProvider());
+        addPropertyEditorProvider(PasswordFieldPropertyEditor.TYPE_NAME, PasswordFieldPropertyEditor.getProvider());
+        addPropertyEditorProvider(CheckBoxPropertyEditor.TYPE_NAME, CheckBoxPropertyEditor.getProvider());
 
         addPropertyViewerProvider(LabelPropertyViewer.TYPE_NAME, LabelPropertyViewer.getProvider());
     }

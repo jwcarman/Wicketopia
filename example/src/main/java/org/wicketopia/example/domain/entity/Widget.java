@@ -26,6 +26,7 @@ import org.wicketopia.builder.feature.annotation.required.Required;
 import org.wicketopia.builder.feature.annotation.validator.LongRange;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
 import org.wicketopia.builder.feature.annotation.visible.Hidden;
+import org.wicketopia.builder.feature.annotation.visible.Visible;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
 import org.wicketopia.example.domain.value.WidgetType;
@@ -62,7 +63,7 @@ public class Widget extends UuidEntity
     private String patternField;
     private String someImplementationField;
     private String adminProperty;
-    
+    private boolean cool;
     private Integer version;
 
     private List<Gadget> gadgets = new LinkedList<Gadget>();
@@ -223,5 +224,16 @@ public class Widget extends UuidEntity
     public void setWidgetType(WidgetType widgetType)
     {
         this.widgetType = widgetType;
+    }
+
+    @Visible(Context.CREATE)
+    public boolean isCool()
+    {
+        return cool;
+    }
+
+    public void setCool(boolean cool)
+    {
+        this.cool = cool;
     }
 }
