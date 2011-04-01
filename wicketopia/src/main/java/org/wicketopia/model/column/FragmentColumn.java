@@ -23,7 +23,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
 /**
- * @sine 1.0
+ * @since 1.0
  */
 public abstract class FragmentColumn<T> extends AbstractColumn<T>
 {

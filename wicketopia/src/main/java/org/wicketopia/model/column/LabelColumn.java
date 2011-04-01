@@ -23,7 +23,7 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
 /**
- * @auothor James Carman
+ * @since 1.0
  */
 public abstract class LabelColumn<T> extends AbstractColumn<T>
 {
