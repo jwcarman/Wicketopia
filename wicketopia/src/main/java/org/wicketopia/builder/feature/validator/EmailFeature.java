@@ -40,15 +40,15 @@ public class EmailFeature extends AbstractValidatorFeature
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static EmailFeature getInstance()
-    {
-        return instance;
-    }
-
     @PropertyDecorator
     public static void decorate(PropertyMetaData propertyMetaData, Email email)
     {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(EmailFeature.getInstance());
+    }
+
+    public static EmailFeature getInstance()
+    {
+        return instance;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

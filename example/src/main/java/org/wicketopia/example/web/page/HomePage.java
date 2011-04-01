@@ -17,6 +17,7 @@
 package org.wicketopia.example.web.page;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketopia.example.domain.entity.Person;
 import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.component.scaffold.Scaffold;
@@ -41,6 +42,6 @@ public class HomePage extends BasePage
 
     public HomePage()
     {
-        add(new Scaffold<Widget>("scaffold", Widget.class, persistenceProvider));
+        add(new Scaffold<Person>("scaffold", Person.class, persistenceProvider));
     }
 }
