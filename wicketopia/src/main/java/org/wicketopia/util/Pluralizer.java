@@ -77,9 +77,8 @@ public abstract class Pluralizer
      */
     private static PluralizationRule lookupPluralizationRule(String term)
     {
-        for (int i = 0; i < pluralizationRules.size(); i++)
+        for (PluralizationRule rule : pluralizationRules)
         {
-            PluralizationRule rule = pluralizationRules.get(i);
             if (rule.appliesTo(term))
             {
                 return rule;

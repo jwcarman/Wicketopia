@@ -26,6 +26,7 @@ import org.wicketopia.example.domain.value.Gender;
 import org.wicketopia.spring.security.annotation.VisibleForRole;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 @Entity
 public class Person extends UuidEntity
@@ -39,12 +40,23 @@ public class Person extends UuidEntity
     private String ssn;
     private String email;
     private Gender gender;
-
+    private Date dob;
+    
     private boolean smoker;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+    public Date getDob()
+    {
+        return dob;
+    }
+
+    public void setDob(Date dob)
+    {
+        this.dob = dob;
+    }
 
     @Email
     @Order(3)

@@ -24,6 +24,7 @@ import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.builder.feature.ComponentBuilderFeature;
 import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
+import org.wicketopia.util.ContextualBoolean;
 import org.wicketopia.util.Displayable;
 import org.wicketopia.util.Pluralizer;
 
@@ -265,55 +266,6 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
-
-    private class ContextualBoolean
-    {
-        private final boolean defaultValue;
-        private final List<ContextualCondition> conditions = new LinkedList<ContextualCondition>();
-
-        private ContextualBoolean(boolean defaultValue)
-        {
-            this.defaultValue = defaultValue;
-        }
-        
-        public void setValue(ContextPredicate predicate, boolean value)
-        {
-            conditions.add(new ContextualCondition(predicate, value));
-        }
-        
-        public boolean getValue(Context context)
-        {
-            if(conditions.isEmpty())
-            {
-                return defaultValue;
-            }
-            boolean aggregate = true;
-            for (ContextualCondition condition : conditions)
-            {
-                if(condition.predicate.evaluate(context))
-                {
-                    aggregate = aggregate && condition.value;
-                }
-                else
-                {
-                    aggregate = aggregate && !condition.value;
-                }
-            }
-            return aggregate;
-        }
-    }
-
-    private class ContextualCondition
-    {
-        private final ContextPredicate predicate;
-        private final boolean value;
-
-        private ContextualCondition(ContextPredicate predicate, boolean value)
-        {
-            this.predicate = predicate;
-            this.value = value;
-        }
-    }
 
     private static class SerializedForm implements Serializable
     {
