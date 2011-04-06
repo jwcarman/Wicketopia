@@ -6,6 +6,7 @@ import org.joda.time.LocalTime;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.joda.provider.editor.JodaTimeTextFieldProvider;
+import org.wicketopia.joda.util.format.DateTimeFormatSupport;
 import org.wicketopia.joda.util.translator.DateTimeTranslators;
 
 /**
@@ -22,14 +23,14 @@ public class JodaPlugin implements WicketopiaPlugin
     {
         // DateTime support...
         wicketopia.addEditorTypeOverride(DateTime.class, DATE_TIME_TYPE);
-        wicketopia.addPropertyEditorProvider(DATE_TIME_TYPE, new JodaTimeTextFieldProvider<DateTime>(DateTimeTranslators.noOpTranslator(), "SS"));
+        wicketopia.addPropertyEditorProvider(DATE_TIME_TYPE, new JodaTimeTextFieldProvider<DateTime>(new DateTimeFormatSupport<DateTime>(DateTimeTranslators.noOpTranslator(), "SS")));
 
         // LocalDate support...
         wicketopia.addEditorTypeOverride(LocalDate.class, LOCAL_DATE_TYPE);
-        wicketopia.addPropertyEditorProvider(LOCAL_DATE_TYPE, new JodaTimeTextFieldProvider<LocalDate>(DateTimeTranslators.localDateTranslator(), "S-"));
+        wicketopia.addPropertyEditorProvider(LOCAL_DATE_TYPE, new JodaTimeTextFieldProvider<LocalDate>(new DateTimeFormatSupport<LocalDate>(DateTimeTranslators.localDateTranslator(), "S-")));
 
         // LocalTime support...
         wicketopia.addEditorTypeOverride(LocalTime.class, LOCAL_TIME_TYPE);
-        wicketopia.addPropertyEditorProvider(LOCAL_TIME_TYPE, new JodaTimeTextFieldProvider<LocalTime>(DateTimeTranslators.localTimeTranslator(), "-S"));
+        wicketopia.addPropertyEditorProvider(LOCAL_TIME_TYPE, new JodaTimeTextFieldProvider<LocalTime>(new DateTimeFormatSupport<LocalTime>(DateTimeTranslators.localTimeTranslator(), "-S")));
     }
 }
