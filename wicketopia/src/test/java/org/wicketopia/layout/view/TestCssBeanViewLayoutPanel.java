@@ -18,7 +18,8 @@ package org.wicketopia.layout.view;
 
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
-import org.wicketopia.WicketopiaPlugin;
+
+import org.wicketopia.Wicketopia;
 import org.wicketopia.util.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 import org.wicketopia.util.Gender;
@@ -31,7 +32,8 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     @Test
     public void testWithViewer()
     {
-        WicketopiaPlugin plugin = new WicketopiaPlugin(tester.getApplication());
+        Wicketopia plugin = new Wicketopia();
+        plugin.initialize();
         final EditableBean bean = new EditableBean();
         bean.setStringProperty("Hello");
         bean.setIntProperty(123);
@@ -55,7 +57,8 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     @Test
     public void testWithEditor()
     {
-        WicketopiaPlugin plugin = new WicketopiaPlugin(tester.getApplication());
+        Wicketopia plugin = new Wicketopia();
+        plugin.initialize();
         final EditableBean bean = new EditableBean();
         bean.setStringProperty("Hello");
         bean.setIntProperty(123);

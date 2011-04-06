@@ -18,90 +18,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>wicketopia-parent</artifactId>
         <groupId>org.wicketopia</groupId>
+        <artifactId>wicketopia-module-template</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../module-template</relativePath>
     </parent>
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-domdrides</artifactId>
     <name>Wicketopia-Domdrides Integration</name>
     <dependencies>
-
         <dependency>
             <groupId>org.wicketopia</groupId>
             <artifactId>wicketopia</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.domdrides</groupId>
             <artifactId>domdrides-core</artifactId>
             <version>1.1</version>
         </dependency>
-
-        <!--
-        ================================================================================================================
-        Unit Testing Dependencies
-        ================================================================================================================
-        -->
-
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>${testng.version}</version>
-            <classifier>jdk15</classifier>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jcl</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jmock</groupId>
-            <artifactId>jmock</artifactId>
-            <version>${jmock.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
-
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </resource>
-        </resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/java</directory>
-                <includes>
-                    <include>**</include>
-                </includes>
-                <excludes>
-                    <exclude>**/*.java</exclude>
-                </excludes>
-            </testResource>
-        </testResources>
-    </build>
-
-
 </project>

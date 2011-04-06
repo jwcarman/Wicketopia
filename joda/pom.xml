@@ -23,13 +23,18 @@
         <relativePath>../module-template</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>wicketopia-persistence</artifactId>
-    <name>Wicketopia Persistence Support</name>
+    <artifactId>wicketopia-joda</artifactId>
+    <name>Wicketopia/Joda Time Integration</name>
     <dependencies>
         <dependency>
             <groupId>org.wicketopia</groupId>
             <artifactId>wicketopia</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda.version}</version>
         </dependency>
     </dependencies>
 </project>

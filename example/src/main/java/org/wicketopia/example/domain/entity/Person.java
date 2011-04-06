@@ -17,12 +17,15 @@
 package org.wicketopia.example.domain.entity;
 
 import org.domdrides.entity.UuidEntity;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
 import org.wicketopia.builder.feature.annotation.metadata.Order;
 import org.wicketopia.builder.feature.annotation.required.Required;
 import org.wicketopia.builder.feature.annotation.validator.Email;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
 import org.wicketopia.example.domain.value.Gender;
+import org.wicketopia.joda.annotation.DatePattern;
 import org.wicketopia.spring.security.annotation.VisibleForRole;
 
 import javax.persistence.Entity;
@@ -40,7 +43,7 @@ public class Person extends UuidEntity
     private String ssn;
     private String email;
     private Gender gender;
-    private Date dob;
+    private LocalDate dob;
     
     private boolean smoker;
 
@@ -48,12 +51,13 @@ public class Person extends UuidEntity
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Date getDob()
+    @DatePattern("MM/dd/yyyy")
+    public LocalDate getDob()
     {
         return dob;
     }
 
-    public void setDob(Date dob)
+    public void setDob(LocalDate dob)
     {
         this.dob = dob;
     }

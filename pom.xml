@@ -32,10 +32,12 @@
     <url>http://www.wicketopia.org</url>
     <inceptionYear>2010</inceptionYear>
     <modules>
+        <module>module-template</module>
         <module>wicketopia</module>
         <module>persistence</module>
         <module>hibernate</module>
         <module>jpa</module>
+        <module>joda</module>
         <module>domdrides</module>
         <module>spring-security</module>
         <module>example</module>
@@ -59,11 +61,13 @@
         <slf4j.version>1.6.1</slf4j.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
+        <domdrides.version>1.2</domdrides.version>
         <spring.version>3.0.5.RELEASE</spring.version>
         <log4j.version>1.2.14</log4j.version>
         <jetty.version>6.1.4</jetty.version>
         <testng.version>5.9</testng.version>
         <jmock.version>2.5.0.1</jmock.version>
+        <joda.version>1.6.2</joda.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>

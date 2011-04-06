@@ -24,7 +24,7 @@ import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.component.label.PropertyLabel;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
@@ -47,7 +47,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
     public BeanListLayoutPanel(String id, Class<T> beanType, IModel<? extends List<? extends T>> model, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
     {
         super(id, beanType, context, componentFactory, propertyNames);
-        BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
+        BeanMetaData beanMetaData = Wicketopia.get().getBeanMetaData(beanType);
         final RepeatingView headers = new RepeatingView("headers");
         for (String property : getPropertyNames())
         {

@@ -20,7 +20,7 @@ import org.apache.wicket.Component;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 
 public class PropertyEditorComponentFactory<T> extends AbstractPropertyComponentFactory<T>
@@ -40,7 +40,7 @@ public class PropertyEditorComponentFactory<T> extends AbstractPropertyComponent
 
     public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context)
     {
-        WicketopiaPlugin plugin = WicketopiaPlugin.get();
+        Wicketopia plugin = Wicketopia.get();
         PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
         return plugin.createPropertyEditor(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);
     }

@@ -18,7 +18,6 @@ package org.wicketopia.persistence.component.scaffold;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -26,7 +25,6 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.behavior.AbstractBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.IHeaderContributor;
@@ -37,11 +35,10 @@ import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
-import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
@@ -82,7 +79,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
     public Scaffold(String id, Class<T> beanType, PersistenceProvider persistenceProvider)
     {
         super(id);
-        WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(WicketopiaPlugin.get().getBeanMetaData(beanType));
+        WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
         displayName = new DisplayNameModel(beanFacet);
         add(new AttributeModifier("class", true, new Model<String>("scaffold")));
         feedback.setOutputMarkupPlaceholderTag(true);
@@ -225,7 +222,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             add(listLink.add(new Label("nameList", displayName).setRenderBodyOnly(true)));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             final Form<T> form = new Form<T>("form", model);
-            final PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+            final PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
             final Context context = new Context(Context.CREATE);
             form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));
             add(new AjaxCreateLink<T>("saveButton", form, persistenceProvider)
@@ -303,14 +300,14 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         private EditFragment()
         {
             super(CONTENT_ID, "edit", Scaffold.this);
-            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(WicketopiaPlugin.get().getBeanMetaData(beanType));
+            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new DeleteLink("deleteButton", model));
             add(new ListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
             add(new CreateLink("createButton").add(new Label("nameCreate", displayName).setRenderBodyOnly(true)));
 
             final Form<T> form = new Form<T>("form", model);
-            final PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+            final PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
             final Context context = new Context(Context.UPDATE);
             form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));
             add(form);
@@ -359,9 +356,9 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             add(create);
             add(new Label("pluralName", new PluralizedModel(displayName)).setRenderBodyOnly(true));
             create.add(new Label("displayName", displayName).setRenderBodyOnly(true));
-            final PropertyComponentFactory<T> viewerFactory = WicketopiaPlugin.get().createViewerFactory(beanType);
+            final PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
             final Context context = new Context(Context.LIST);
-            final List<IColumn<T>> columns = WicketopiaPlugin.get().createColumns(beanType, viewerFactory, context);
+            final List<IColumn<T>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
             columns.add(new ActionsColumn());
             add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), 25));
         }
@@ -387,13 +384,13 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         private ViewFragment()
         {
             super(CONTENT_ID, "view", Scaffold.this);
-            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(WicketopiaPlugin.get().getBeanMetaData(beanType));
+            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new EditLink("editButton", model));
             add(new DeleteLink("deleteButton", model));
             add(new ListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
             add(new CreateLink("createButton").add(new Label("nameCreate", displayName).setRenderBodyOnly(true)));
-            final PropertyComponentFactory<T> factory = WicketopiaPlugin.get().createViewerFactory(beanType);
+            final PropertyComponentFactory<T> factory = Wicketopia.get().createViewerFactory(beanType);
             final Context context = new Context(Context.VIEW);
             add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, factory));
         }

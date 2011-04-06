@@ -26,7 +26,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
-import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.example.web.page.HomePage;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
@@ -102,8 +102,9 @@ public class WicketApplication extends WebApplication implements ISpringContextL
     protected void init()
     {
         super.init();
-        WicketopiaPlugin plugin = new WicketopiaPlugin(this);
+        Wicketopia plugin = new Wicketopia();
         plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(sessionFactoryBean.getConfiguration()));
+        plugin.initialize();
         addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
     }
 }

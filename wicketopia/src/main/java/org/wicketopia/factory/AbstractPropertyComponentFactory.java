@@ -18,7 +18,7 @@ package org.wicketopia.factory;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.component.label.PropertyLabel;
 
 public abstract class AbstractPropertyComponentFactory<T> implements PropertyComponentFactory<T> 
@@ -44,7 +44,7 @@ public abstract class AbstractPropertyComponentFactory<T> implements PropertyCom
 
     public Label createPropertyLabel(String id, String propertyName)
     {
-        WicketopiaPlugin plugin = WicketopiaPlugin.get();
+        Wicketopia plugin = Wicketopia.get();
         PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
         return new PropertyLabel(id, propertyMetaData);
     }

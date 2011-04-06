@@ -22,7 +22,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
@@ -50,7 +50,7 @@ public class AbstractLayoutPanel<T> extends Panel
 
     private static List<String> filter(Class<?> beanType, List<String> propertyNames, Context context)
     {
-        BeanMetaData beanMetaData = WicketopiaPlugin.get().getBeanMetaData(beanType);
+        BeanMetaData beanMetaData = Wicketopia.get().getBeanMetaData(beanType);
         for (Iterator<String> iterator = propertyNames.iterator(); iterator.hasNext();)
         {
             String propertyName = iterator.next();
@@ -75,7 +75,7 @@ public class AbstractLayoutPanel<T> extends Panel
 
     protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory)
     {
-        this(id, beanType, context, componentFactory, WicketopiaPlugin.get().getVisibleProperties(beanType, context));
+        this(id, beanType, context, componentFactory, Wicketopia.get().getVisibleProperties(beanType, context));
     }
 
     protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames)
@@ -89,7 +89,7 @@ public class AbstractLayoutPanel<T> extends Panel
 
     protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
     {
-        this(id, beanType, context, componentFactory, WicketopiaPlugin.get().getVisibleProperties(beanType, context, propertyNames));
+        this(id, beanType, context, componentFactory, Wicketopia.get().getVisibleProperties(beanType, context, propertyNames));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

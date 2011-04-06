@@ -28,6 +28,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static final String TEXT_FIELD_ID = "editor";
     public static final String TYPE_NAME = "text-field";
     private static final PropertyEditorProvider provider = new Provider();
 
@@ -57,7 +58,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
     {
         public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
-            return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField("editor", propertyModel));
+            return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField(TEXT_FIELD_ID, propertyModel));
         }
     }
 }
