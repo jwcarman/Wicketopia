@@ -41,6 +41,7 @@ public class DateTimeTextFieldProvider implements PropertyEditorProvider
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
+    @SuppressWarnings("unchecked")
     public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
     {
         FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);

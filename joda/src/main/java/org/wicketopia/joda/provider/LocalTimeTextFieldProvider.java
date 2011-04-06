@@ -1,37 +1,37 @@
 package org.wicketopia.joda.provider;
 
 import org.apache.wicket.model.IModel;
-import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
-import org.wicketopia.joda.component.LocalDateTextField;
+import org.wicketopia.joda.component.LocalTimeTextField;
 import org.wicketopia.joda.util.FormatProvider;
 import org.wicketopia.joda.util.StyleFormatProvider;
 
 /**
  * @since 1.0
  */
-public class LocalDateTextFieldProvider implements PropertyEditorProvider
+public class LocalTimeTextFieldProvider implements PropertyEditorProvider
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static final String TYPE_NAME = "joda-local-date";
+    public static final String TYPE_NAME = "joda-local-time";
     private FormatProvider defaultFormatProvider;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public LocalDateTextFieldProvider()
+    public LocalTimeTextFieldProvider()
     {
-        this(new StyleFormatProvider("S-"));
+        this(new StyleFormatProvider("-S"));
     }
 
-    public LocalDateTextFieldProvider(FormatProvider defaultFormatProvider)
+    public LocalTimeTextFieldProvider(FormatProvider defaultFormatProvider)
     {
         this.defaultFormatProvider = defaultFormatProvider;
     }
@@ -46,6 +46,6 @@ public class LocalDateTextFieldProvider implements PropertyEditorProvider
     {
         FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);
         
-        return new TextFieldPropertyEditor(componentId, propertyMetadata, new LocalDateTextField(TextFieldPropertyEditor.TEXT_FIELD_ID, (IModel<LocalDate>)propertyModel, specifiedFormatProvider == null ? defaultFormatProvider : specifiedFormatProvider));
+        return new TextFieldPropertyEditor(componentId, propertyMetadata, new LocalTimeTextField(TextFieldPropertyEditor.TEXT_FIELD_ID, (IModel<LocalTime>)propertyModel, specifiedFormatProvider == null ? defaultFormatProvider : specifiedFormatProvider));
     }
 }

@@ -19,6 +19,7 @@ package org.wicketopia.example.domain.entity;
 import org.domdrides.entity.UuidEntity;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
 import org.wicketopia.builder.feature.annotation.metadata.Order;
 import org.wicketopia.builder.feature.annotation.required.Required;
@@ -46,6 +47,8 @@ public class Person extends UuidEntity
     private LocalDate dob;
     
     private boolean smoker;
+    
+    private LocalTime timeOfDay = new LocalTime();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
@@ -119,6 +122,17 @@ public class Person extends UuidEntity
     public void setSsn(String ssn)
     {
         this.ssn = ssn;
+    }
+
+    //@DatePattern("hh:mm a")
+    public LocalTime getTimeOfDay()
+    {
+        return timeOfDay;
+    }
+
+    public void setTimeOfDay(LocalTime timeOfDay)
+    {
+        this.timeOfDay = timeOfDay;
     }
 
     public boolean isSmoker()
