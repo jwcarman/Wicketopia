@@ -1,39 +1,39 @@
-package org.wicketopia.joda.util;
+package org.wicketopia.joda.util.format;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.joda.annotation.DateStyle;
+import org.wicketopia.joda.annotation.DatePattern;
 
 /**
  * @since 1.0
  */
-public class StyleFormatProvider implements FormatProvider
+public class PatternFormatProvider implements FormatProvider
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final String style;
+    private final String datePattern;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, DateStyle dateStyle)
+    public static void decorate(PropertyMetaData propertyMetaData, DatePattern datePattern)
     {
-        propertyMetaData.setFacet(FACET_KEY, new StyleFormatProvider(dateStyle.value()));
+        propertyMetaData.setFacet(FACET_KEY, new PatternFormatProvider(datePattern.value()));
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public StyleFormatProvider(String style)
+    public PatternFormatProvider(String datePattern)
     {
-        this.style = style;
+        this.datePattern = datePattern;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -43,6 +43,6 @@ public class StyleFormatProvider implements FormatProvider
     @Override
     public DateTimeFormatter getFormatter()
     {
-        return DateTimeFormat.forStyle(style);
+        return DateTimeFormat.forPattern(datePattern);
     }
 }

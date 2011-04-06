@@ -5,29 +5,31 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.joda.provider.DateTimeTextFieldProvider;
-import org.wicketopia.joda.provider.LocalDateTextFieldProvider;
-import org.wicketopia.joda.provider.LocalTimeTextFieldProvider;
+import org.wicketopia.joda.provider.editor.JodaTimeTextFieldProvider;
+import org.wicketopia.joda.util.translator.DateTimeTranslators;
 
 /**
  * @since 1.0
  */
 public class JodaPlugin implements WicketopiaPlugin
 {
+    public static final String LOCAL_DATE_TYPE = "joda-local-date";
+    public static final String LOCAL_TIME_TYPE = "joda-local-time";
+    public static final String DATE_TIME_TYPE = "joda-date-time";
+
     @Override
     public void initialize(Wicketopia wicketopia)
     {
         // DateTime support...
-        wicketopia.addEditorTypeOverride(DateTime.class, DateTimeTextFieldProvider.TYPE_NAME);
-        wicketopia.addPropertyEditorProvider(DateTimeTextFieldProvider.TYPE_NAME, new DateTimeTextFieldProvider());
+        wicketopia.addEditorTypeOverride(DateTime.class, DATE_TIME_TYPE);
+        wicketopia.addPropertyEditorProvider(DATE_TIME_TYPE, new JodaTimeTextFieldProvider<DateTime>(DateTimeTranslators.noOpTranslator(), "SS"));
 
         // LocalDate support...
-        wicketopia.addEditorTypeOverride(LocalDate.class, LocalDateTextFieldProvider.TYPE_NAME);
-        wicketopia.addPropertyEditorProvider(LocalDateTextFieldProvider.TYPE_NAME, new LocalDateTextFieldProvider());
+        wicketopia.addEditorTypeOverride(LocalDate.class, LOCAL_DATE_TYPE);
+        wicketopia.addPropertyEditorProvider(LOCAL_DATE_TYPE, new JodaTimeTextFieldProvider<LocalDate>(DateTimeTranslators.localDateTranslator(), "S-"));
 
         // LocalTime support...
-        wicketopia.addEditorTypeOverride(LocalTime.class, LocalTimeTextFieldProvider.TYPE_NAME);
-        wicketopia.addPropertyEditorProvider(LocalTimeTextFieldProvider.TYPE_NAME, new LocalTimeTextFieldProvider());
-
+        wicketopia.addEditorTypeOverride(LocalTime.class, LOCAL_TIME_TYPE);
+        wicketopia.addPropertyEditorProvider(LOCAL_TIME_TYPE, new JodaTimeTextFieldProvider<LocalTime>(DateTimeTranslators.localTimeTranslator(), "-S"));
     }
 }

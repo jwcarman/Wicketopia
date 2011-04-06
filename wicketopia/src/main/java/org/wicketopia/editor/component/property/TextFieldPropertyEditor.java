@@ -56,6 +56,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 
     private static class Provider implements PropertyEditorProvider
     {
+        @SuppressWarnings("unchecked")
         public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
         {
             return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField(TEXT_FIELD_ID, propertyModel));

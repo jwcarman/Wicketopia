@@ -17,7 +17,6 @@
 package org.wicketopia.example.domain.entity;
 
 import org.domdrides.entity.UuidEntity;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
@@ -30,7 +29,6 @@ import org.wicketopia.joda.annotation.DatePattern;
 import org.wicketopia.spring.security.annotation.VisibleForRole;
 
 import javax.persistence.Entity;
-import java.util.Date;
 
 @Entity
 public class Person extends UuidEntity
@@ -45,10 +43,11 @@ public class Person extends UuidEntity
     private String email;
     private Gender gender;
     private LocalDate dob;
-    
+
     private boolean smoker;
-    
-    private LocalTime timeOfDay = new LocalTime();
+
+    private LocalTime workDayBegin = new LocalTime(9, 0);
+    private LocalTime workDayEnd = new LocalTime(17, 0);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
@@ -125,14 +124,24 @@ public class Person extends UuidEntity
     }
 
     //@DatePattern("hh:mm a")
-    public LocalTime getTimeOfDay()
+    public LocalTime getWorkDayBegin()
     {
-        return timeOfDay;
+        return workDayBegin;
     }
 
-    public void setTimeOfDay(LocalTime timeOfDay)
+    public void setWorkDayBegin(LocalTime workDayBegin)
     {
-        this.timeOfDay = timeOfDay;
+        this.workDayBegin = workDayBegin;
+    }
+
+    public LocalTime getWorkDayEnd()
+    {
+        return workDayEnd;
+    }
+
+    public void setWorkDayEnd(LocalTime workDayEnd)
+    {
+        this.workDayEnd = workDayEnd;
     }
 
     public boolean isSmoker()

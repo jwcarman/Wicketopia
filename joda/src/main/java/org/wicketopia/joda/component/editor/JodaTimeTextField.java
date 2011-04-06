@@ -1,4 +1,4 @@
-package org.wicketopia.joda.component;
+package org.wicketopia.joda.component.editor;
 
 import org.apache.wicket.Session;
 import org.apache.wicket.markup.html.form.TextField;
@@ -12,7 +12,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.MutableDateTime;
 import org.joda.time.format.DateTimeFormatter;
-import org.wicketopia.joda.util.FormatProvider;
+import org.wicketopia.joda.util.translator.DateTimeTranslator;
+import org.wicketopia.joda.util.format.FormatProvider;
 
 import java.text.ParseException;
 import java.util.Locale;
@@ -21,7 +22,7 @@ import java.util.TimeZone;
 /**
  * @since 1.0
  */
-public abstract class AbstractJodaTimeTextField<T> extends TextField<T>
+public class JodaTimeTextField<T> extends TextField<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -30,31 +31,26 @@ public abstract class AbstractJodaTimeTextField<T> extends TextField<T>
     public static final int DEFAULT_PIVOT_YEAR = 2000;
     private final boolean applyTimeZoneDifference = true;
     private final FormatProvider formatProvider;
+    private final DateTimeTranslator<T> translator;
     private int pivotYear = DEFAULT_PIVOT_YEAR;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AbstractJodaTimeTextField(String id, FormatProvider formatProvider, Class<T> type)
+    public JodaTimeTextField(String id, FormatProvider formatProvider, DateTimeTranslator<T> translator, Class<T> type)
     {
         super(id, type);
         this.formatProvider = formatProvider;
+        this.translator = translator;
     }
 
-    public AbstractJodaTimeTextField(String id, IModel<T> model, FormatProvider formatProvider, Class<T> type)
+    public JodaTimeTextField(String id, IModel<T> model, FormatProvider formatProvider, DateTimeTranslator<T> translator, Class<T> type)
     {
         super(id, model, type);
         this.formatProvider = formatProvider;
+        this.translator = translator;
     }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Abstract Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    protected abstract T fromDateTime(DateTime date);
-
-    protected abstract DateTime toDateTime(T object);
 
 //----------------------------------------------------------------------------------------------------------------------
 // IConverterLocator Implementation
@@ -157,14 +153,14 @@ public abstract class AbstractJodaTimeTextField<T> extends TextField<T>
                 }
                 // apply the server time zone to the parsed value
                 dt.setZone(getTimeZone());
-                return fromDateTime(dt.toDateTime());
+                return translator.fromDateTime(dt.toDateTime());
             }
             else
             {
                 try
                 {
                     DateTime date = format.parseDateTime(value);
-                    return fromDateTime(date);
+                    return translator.fromDateTime(date);
                 }
                 catch (RuntimeException e)
                 {
@@ -176,7 +172,7 @@ public abstract class AbstractJodaTimeTextField<T> extends TextField<T>
         @SuppressWarnings("unchecked")
         public String convertToString(Object object, Locale locale)
         {
-            DateTime dt = toDateTime((T) object);
+            DateTime dt = translator.toDateTime((T) object);
 
             DateTimeFormatter format = formatProvider.getFormatter();
 

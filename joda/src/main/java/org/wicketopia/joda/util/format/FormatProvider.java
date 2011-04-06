@@ -1,4 +1,4 @@
-package org.wicketopia.joda.util;
+package org.wicketopia.joda.util.format;
 
 import org.apache.wicket.IClusterable;
 import org.joda.time.format.DateTimeFormatter;
