@@ -24,7 +24,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>wicketopia-spring-security</artifactId>
-    <name>Wicketopia/Spring Security Support</name>
+    <name>Wicketopia/Spring Security Integration</name>
     <dependencies>
         <dependency>
             <groupId>org.wicketopia</groupId>

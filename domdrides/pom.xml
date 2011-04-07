@@ -25,7 +25,7 @@
     </parent>
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-domdrides</artifactId>
-    <name>Wicketopia-Domdrides Integration</name>
+    <name>Wicketopia/Domdrides Integration</name>
     <dependencies>
         <dependency>
             <groupId>org.wicketopia</groupId>
