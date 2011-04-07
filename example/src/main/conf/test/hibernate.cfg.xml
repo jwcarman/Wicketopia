@@ -13,6 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
