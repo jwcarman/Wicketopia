@@ -33,7 +33,7 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     public void testWithViewer()
     {
         Wicketopia plugin = new Wicketopia();
-        plugin.initialize();
+        plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();
         bean.setStringProperty("Hello");
         bean.setIntProperty(123);
@@ -58,7 +58,7 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     public void testWithEditor()
     {
         Wicketopia plugin = new Wicketopia();
-        plugin.initialize();
+        plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();
         bean.setStringProperty("Hello");
         bean.setIntProperty(123);

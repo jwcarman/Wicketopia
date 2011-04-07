@@ -43,9 +43,7 @@ public class Person extends UuidEntity
     private String email;
     private Gender gender;
     private LocalDate dob;
-
     private boolean smoker;
-
     private LocalTime workDayBegin = new LocalTime(9, 0);
     private LocalTime workDayEnd = new LocalTime(17, 0);
 

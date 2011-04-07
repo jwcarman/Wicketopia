@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011 Carman Consulting, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Scaffolding</title>
+    </properties>
+
+    <body>
+        <section name="Overview">
+            <p>Wicketopia includes a &quot;Scaffold&quot; component, which is inspired by Grails' scaffolding support.
+                The scaffolding is generated based on your class' metadata. For example, consider the following domain
+                class (taken from the example application):
+            </p>
+            <subsection name="Example Domain Class...">
+                <source><![CDATA[
+public class Person extends UuidEntity
+{
+    private String firstName;
+    private String lastName;
+    private String ssn;
+    private String email;
+    private Gender gender;
+    private LocalDate dob;
+    private boolean smoker;
+    private LocalTime workDayBegin = new LocalTime(9, 0);
+    private LocalTime workDayEnd = new LocalTime(17, 0);
+
+    @DatePattern("MM/dd/yyyy")
+    public LocalDate getDob()
+    {
+        return dob;
+    }
+
+    public void setDob(LocalDate dob)
+    {
+        this.dob = dob;
+    }
+
+    @Email
+    @Order(3)
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    @Order(1)
+    public String getFirstName()
+    {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        this.firstName = firstName;
+    }
+
+    public Gender getGender()
+    {
+        return gender;
+    }
+
+    public void setGender(Gender gender)
+    {
+        this.gender = gender;
+    }
+
+    @Required
+    @Order(2)
+    public String getLastName()
+    {
+        return lastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        this.lastName = lastName;
+    }
+
+    @DisplayName("SSN")
+    @Order(4)
+    @Pattern("^\\d{3}[- ]?\\d{2}[- ]?\\d{4}$")
+    @VisibleForRole("ROLE_ADMIN")
+    public String getSsn()
+    {
+        return ssn;
+    }
+
+    public void setSsn(String ssn)
+    {
+        this.ssn = ssn;
+    }
+
+    //@DatePattern("hh:mm a")
+    public LocalTime getWorkDayBegin()
+    {
+        return workDayBegin;
+    }
+
+    public void setWorkDayBegin(LocalTime workDayBegin)
+    {
+        this.workDayBegin = workDayBegin;
+    }
+
+    public LocalTime getWorkDayEnd()
+    {
+        return workDayEnd;
+    }
+
+    public void setWorkDayEnd(LocalTime workDayEnd)
+    {
+        this.workDayEnd = workDayEnd;
+    }
+
+    public boolean isSmoker()
+    {
+        return smoker;
+    }
+
+    public void setSmoker(boolean smoker)
+    {
+        this.smoker = smoker;
+    }
+}]]></source>
+            </subsection>
+            <p>
+                Now, let's create a web page that shows a scaffolding for that domain class:
+            </p>
+            <subsection name="Web Page Java Code...">
+                <source><![CDATA[
+public class HomePage extends WebPage
+{
+    @SpringBean
+    private PersistenceProvider persistenceProvider;
+
+    public HomePage()
+    {
+        add(new Scaffold<Person>("scaffold", Person.class, persistenceProvider));
+    }
+}]]></source>
+            </subsection>
+            <subsection name="Web Page Markup...">
+                <source><![CDATA[
+<html>
+  <body>
+    <div wicket:id="scaffold" />
+  </body>
+</html>]]></source>
+            </subsection>
+            <p>
+                That's it! That's all you have to do to get a scaffolding up and running. A scaffolding will
+                automatically generate the following views:
+            </p>
+            <subsection name="Scaffold List">
+                <img src="./images/scaffold-list.PNG" alt="Scaffold List"/>
+            </subsection>
+
+            <subsection name="Scaffold View">
+                <img src="./images/scaffold-view.PNG" alt="Scaffold View"/>
+            </subsection>
+
+            <subsection name="Scaffold Create">
+                <img src="./images/scaffold-create.PNG" alt="Scaffold Update"/>
+            </subsection>
+
+            <subsection name="Scaffold Update">
+                <img src="./images/scaffold-update.PNG" alt="Scaffold Update"/>
+            </subsection>
+
+        </section>
+    </body>
+
+</document>

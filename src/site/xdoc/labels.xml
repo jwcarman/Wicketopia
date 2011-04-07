@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2011 Carman Consulting, Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~   http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Property Labels</title>
+    </properties>
+
+    <body>
+        <section name="Default Behavior">
+            <p>
+                Wicketopia tries to use sensible defaults wherever possible to avoid the need for customization.
+                To display a property name, Wicketopia will capitalize it and split it based on capitalization. For
+                example:
+            </p>
+            <ul>
+                <li>&quot;gender&quot; becomes &quot;Gender&quot;</li>
+                <li>&quot;firstName&quot; becomes &quot;First Name&quot;</li>
+                <li>&quot;ssn&quot; becomes &quot;Ssn&quot;</li>
+            </ul>
+        </section>
+
+        <section name="Custom Behavior">
+            <p>
+                Of course, these rules aren't perfect. For example, &quot;Ssn&quot; should probably be displayed as
+                &quot;SSN&quot;. Wicketopia allows you to customize this behavior using annotations:
+            </p>
+            <subsection name="Custom SSN Label...">
+                <source><![CDATA[
+@DisplayName("SSN")
+public String getSsn()
+{
+  return ssn;
+}]]></source>
+            </subsection>
+        </section>
+        <section name="Using Internationalization (i18n)">
+            <p>
+                Thus far, we have only had the option to display one name for the property, either based on the property
+                name itself or supplying a custom name to be used via annotations. However, sometimes we would like to
+                be able to display property names differently depending on the locale of the user. Wicketopia relies
+                upon Wicket's flexible
+                <a href="https://cwiki.apache.org/WICKET/everything-about-wicket-internationalization.html">i18n</a>
+                support for this. Wicketopia allows you to override property names by supplying an i18n message. For
+                example, consider the &quot;fName&quot; property of a class named &quot;com.myco.domain.Person&quot;:
+            </p>
+            <subsection name="In English (Application.properties)...">
+                <source><![CDATA[com.myco.domain.Person.fName=First Name]]></source>
+            </subsection>
+            <subsection name="In Dutch (Application_nl.properties)...">
+                <source><![CDATA[com.myco.domain.Person.fName=Voornaam]]></source>
+            </subsection>
+            <p>
+                Sometimes, these keys can be tough to manage, especially if there are a lot of classes with properties
+                of the same name. You can customize the default message key by overriding the
+                <code>calculateDisplayNameMessageKey()</code>
+                method of the
+                <a href="apidocs/org/wicketopia/Wicketopia.html">Wicketopia</a>
+                class.
+            </p>
+            <subsection name="Custom i18n Keys">
+                <source><![CDATA[
+public String calculateDisplayNameMessageKey(PropertyMetaData propertyMetaData)
+{
+  return propertyMetaData.getPropertyDescriptor().getName();
+}]]></source>
+            </subsection>
+            <p>
+                Here, we have set it up so that the keys are simply the property names themselves.
+            </p>
+        </section>
+    </body>
+
+</document>

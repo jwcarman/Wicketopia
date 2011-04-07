@@ -19,6 +19,7 @@ package org.wicketopia.metadata;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.util.Displayable;
 import org.wicketopia.util.Pluralizer;
 
@@ -66,8 +67,8 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
     public WicketopiaBeanFacet(BeanMetaData beanMetaData)
     {
         this.beanMetaData = beanMetaData;
-        this.displayNameMessageKey = getBeanMetaData().getBeanDescriptor().getBeanClass().getName();
-        this.displayName = Pluralizer.splitIntoWords(beanMetaData.getBeanDescriptor().getBeanClass().getSimpleName());
+        this.displayNameMessageKey = Wicketopia.get().calculateDisplayNameMessageKey(beanMetaData);
+        this.displayName = Wicketopia.get().calculateDefaultDisplayName(beanMetaData);
     }
 
 //----------------------------------------------------------------------------------------------------------------------

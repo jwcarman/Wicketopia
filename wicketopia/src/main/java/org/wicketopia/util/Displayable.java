@@ -17,7 +17,7 @@
 package org.wicketopia.util;
 
 /**
- * @author James Carman
+ * @since 1.0
  */
 public interface Displayable
 {

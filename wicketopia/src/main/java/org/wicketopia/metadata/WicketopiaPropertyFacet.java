@@ -18,6 +18,7 @@ package org.wicketopia.metadata;
 
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.builder.ViewerBuilder;
@@ -26,14 +27,11 @@ import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.util.ContextualBoolean;
 import org.wicketopia.util.Displayable;
-import org.wicketopia.util.Pluralizer;
 
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -100,16 +98,9 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
     WicketopiaPropertyFacet(PropertyMetaData propertyMetaData)
     {
         this.propertyMetaData = propertyMetaData;
-        this.displayNameMessageKey = propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
-        this.displayName = calculateDefaultLabelText(propertyMetaData.getPropertyDescriptor());
+        this.displayNameMessageKey = Wicketopia.get().calculateDisplayNameMessageKey(propertyMetaData);
+        this.displayName = Wicketopia.get().calculateDefaultDisplayName(propertyMetaData);
     }
-
-    private String calculateDefaultLabelText(PropertyDescriptor propertyDescriptor)
-    {
-        final String name = propertyDescriptor.getName();
-        return Pluralizer.splitIntoWords(name);
-    }
-
 
 //----------------------------------------------------------------------------------------------------------------------
 // Comparable Implementation
