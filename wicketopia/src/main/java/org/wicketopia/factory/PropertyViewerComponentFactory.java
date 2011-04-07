@@ -24,7 +24,7 @@ import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 
 /**
- * @ince 1.0
+ * @since 1.0
  */
 public class PropertyViewerComponentFactory<T> extends AbstractPropertyComponentFactory<T>
 {
