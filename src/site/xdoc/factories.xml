@@ -41,7 +41,7 @@
             <subsection name="Auto-Generated Editor...">
                 <source><![CDATA[
 Form<T> form = new Form<T>("form", model);
-PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
 Context context = new Context(Context.CREATE);
 form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));]]>
                 </source>
@@ -56,7 +56,7 @@ form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, edito
 
             <subsection name="Auto-Generated Viewer...">
                 <source><![CDATA[
-PropertyComponentFactory<T> viewerFactory = WicketopiaPlugin.get().createViewerFactory(beanType);
+PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
 Context context = new Context(Context.VIEW);
 add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, viewerFactory));]]>
                 </source>
@@ -68,7 +68,7 @@ add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, viewerFact
             <subsection name="Auto-Generated Editor With Selected Properties...">
                 <source><![CDATA[
 Form<T> form = new Form<T>("form", model);
-PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
 Context context = new Context(Context.CREATE);
 form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory, "firstName", "lastName"));]]>
                 </source>
@@ -86,7 +86,7 @@ form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, edito
             <subsection name="Manually-Generated Editor...">
                 <source><![CDATA[
 Form<T> form = new Form<T>("form", model);
-PropertyComponentFactory<T> editorFactory = WicketopiaPlugin.get().createEditorFactory(beanType);
+PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
 Context context = new Context(Context.CREATE);
 form.add(editorFactory.createPropertyLabel("nameLabel", "name"));
 form.add(editorFactory.createPropertyComponent("nameEditor", model, "name", context));
