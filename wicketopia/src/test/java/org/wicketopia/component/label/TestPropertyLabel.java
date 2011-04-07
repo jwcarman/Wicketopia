@@ -19,7 +19,10 @@ package org.wicketopia.component.label;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.util.AbstractWicketTestCase;
 import org.wicketopia.util.Person;
 
@@ -28,9 +31,16 @@ import org.wicketopia.util.Person;
  */
 public class TestPropertyLabel extends AbstractWicketTestCase
 {
+    @BeforeMethod
+    public void installWicketopia()
+    {
+        Wicketopia.install();
+    }
+
     @Test
     public void testWithMessageKey()
     {
+
         final BeanMetaDataFactory factory = new AnnotationBeanMetaDataFactory();
         final BeanMetaData beanMetaData = factory.getBeanMetaData(Person.class);
         final PropertyLabelTestPage page = new PropertyLabelTestPage(beanMetaData.getPropertyMetaData("last"));
