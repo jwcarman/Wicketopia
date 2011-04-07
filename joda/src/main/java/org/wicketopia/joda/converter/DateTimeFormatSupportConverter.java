@@ -1,7 +1,7 @@
 package org.wicketopia.joda.converter;
 
 import org.apache.wicket.util.convert.IConverter;
-import org.wicketopia.joda.util.format.DateTimeFormatSupport;
+import org.wicketopia.joda.util.format.JodaFormatSupport;
 
 import java.util.Locale;
 
@@ -10,9 +10,9 @@ import java.util.Locale;
  */
 public class DateTimeFormatSupportConverter<T> implements IConverter
 {
-    private final DateTimeFormatSupport<T> formatSupport;
+    private final JodaFormatSupport<T> formatSupport;
 
-    public DateTimeFormatSupportConverter(DateTimeFormatSupport<T> formatSupport)
+    public DateTimeFormatSupportConverter(JodaFormatSupport<T> formatSupport)
     {
         this.formatSupport = formatSupport;
     }

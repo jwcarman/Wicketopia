@@ -16,7 +16,7 @@ import java.text.ParseException;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class DateTimeFormatSupport<T> implements IClusterable
+public class JodaFormatSupport<T> implements IClusterable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -32,18 +32,18 @@ public class DateTimeFormatSupport<T> implements IClusterable
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DateTimeFormatSupport(DateTimeTranslator<T> translator, String defaultStyle)
+    public JodaFormatSupport(DateTimeTranslator<T> translator, String defaultStyle)
     {
         this(translator, new StyleFormatProvider(defaultStyle));
     }
 
-    public DateTimeFormatSupport(DateTimeTranslator<T> translator, FormatProvider formatProvider)
+    public JodaFormatSupport(DateTimeTranslator<T> translator, FormatProvider formatProvider)
     {
         this.translator = translator;
         this.formatProvider = formatProvider;
     }
 
-    public DateTimeFormatSupport(DateTimeTranslator<T> translator, FormatProvider formatProvider, boolean applyTimeZoneDifference, int pivotYear)
+    public JodaFormatSupport(DateTimeTranslator<T> translator, FormatProvider formatProvider, boolean applyTimeZoneDifference, int pivotYear)
     {
         this.translator = translator;
         this.formatProvider = formatProvider;
@@ -127,7 +127,7 @@ public class DateTimeFormatSupport<T> implements IClusterable
             try
             {
                 DateTime date = format.parseDateTime(value);
-                return translator.fromDateTime(date);
+                return date == null ? null : translator.fromDateTime(date);
             }
             catch (RuntimeException e)
             {
@@ -160,8 +160,11 @@ public class DateTimeFormatSupport<T> implements IClusterable
     @SuppressWarnings("unchecked")
     public String convertToString(T object, Locale locale)
     {
+        if(object == null)
+        {
+            return "";
+        }
         DateTime dt = translator.toDateTime((T) object);
-
         DateTimeFormatter format = formatProvider.getFormatter();
         format.withPivotYear(pivotYear).withLocale(locale);
         if (applyTimeZoneDifference)
@@ -175,8 +178,8 @@ public class DateTimeFormatSupport<T> implements IClusterable
         return format.print(dt);
     }
 
-    public DateTimeFormatSupport<T> withProvider(FormatProvider formatProvider)
+    public JodaFormatSupport<T> withProvider(FormatProvider formatProvider)
     {
-        return new DateTimeFormatSupport<T>(translator, formatProvider);
+        return new JodaFormatSupport<T>(translator, formatProvider);
     }
 }

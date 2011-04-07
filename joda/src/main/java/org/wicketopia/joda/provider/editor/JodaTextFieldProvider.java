@@ -5,27 +5,27 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
-import org.wicketopia.joda.component.editor.JodaTimeTextField;
-import org.wicketopia.joda.util.format.DateTimeFormatSupport;
+import org.wicketopia.joda.component.editor.JodaTextField;
+import org.wicketopia.joda.util.format.JodaFormatSupport;
 import org.wicketopia.joda.util.format.FormatProvider;
 
 /**
  * @since 1.0
  */
-public class JodaTimeTextFieldProvider<T> implements PropertyEditorProvider
+public class JodaTextFieldProvider<T> implements PropertyEditorProvider
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private DateTimeFormatSupport<T> formatSupport;
+    private JodaFormatSupport<T> formatSupport;
 
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public JodaTimeTextFieldProvider(DateTimeFormatSupport<T> formatSupport)
+    public JodaTextFieldProvider(JodaFormatSupport<T> formatSupport)
     {
         this.formatSupport = formatSupport;
     }
@@ -39,7 +39,7 @@ public class JodaTimeTextFieldProvider<T> implements PropertyEditorProvider
     public final EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
     {
         final FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);
-        final JodaTimeTextField<T> field = new JodaTimeTextField<T>(TextFieldPropertyEditor.TEXT_FIELD_ID, (IModel<T>) propertyModel, specifiedFormatProvider == null ? formatSupport : formatSupport.withProvider(specifiedFormatProvider), (Class<T>) propertyMetadata.getPropertyDescriptor().getPropertyType());
+        final JodaTextField<T> field = new JodaTextField<T>(TextFieldPropertyEditor.TEXT_FIELD_ID, (IModel<T>) propertyModel, specifiedFormatProvider == null ? formatSupport : formatSupport.withProvider(specifiedFormatProvider), (Class<T>) propertyMetadata.getPropertyDescriptor().getPropertyType());
         return new TextFieldPropertyEditor(componentId, propertyMetadata, field);
     }
 }
