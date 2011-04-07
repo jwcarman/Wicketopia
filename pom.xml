@@ -57,7 +57,7 @@
     </issueManagement>
 
     <properties>
-        <wicket.version>1.4.16</wicket.version>
+        <wicket.version>1.4.17</wicket.version>
         <slf4j.version>1.6.1</slf4j.version>
         <hibernate.version>3.3.2.GA</hibernate.version>
         <hibernate.annotations.version>3.4.0.GA</hibernate.annotations.version>
