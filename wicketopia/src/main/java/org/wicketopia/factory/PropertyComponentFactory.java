@@ -17,13 +17,14 @@
 package org.wicketopia.factory;
 
 import org.apache.wicket.Component;
+import org.apache.wicket.IClusterable;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.wicketopia.context.Context;
 
 import java.io.Serializable;
 
-public interface PropertyComponentFactory<T> extends Serializable
+public interface PropertyComponentFactory<T> extends IClusterable
 {
     public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context);
     public Label createPropertyLabel(String id, String propertyName);
