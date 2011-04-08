@@ -51,7 +51,7 @@
         </section>
         <section name="Using Component Factories">
             <p>
-                A component factory can be used to generate an &quot;editor&quot; for a bean.
+                To use a component factory, we simply create one and ask it to generate components for us:
             </p>
             <subsection name="Manually-Constructed Form (Java Code)...">
                 <source><![CDATA[
