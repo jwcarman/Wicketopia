@@ -24,80 +24,123 @@
     </properties>
 
     <body>
-        <section name="Introduction">
+        <section name="Overview">
             <p>
-                Wicketopia supports two types of component factories, viewer factories and editor factories. A viewer
-                factory is used to generate components for read-only viewing of a property. An editor factory is used to
-                generate components for editing a property. Luckily (actually by design) the component factories
-                implement the same interface, so they can be used interchangeably depending upon the desired view.
+                Wicketopia supports two types of<a href="apidocs/org/wicketopia/factory/PropertyComponentFactory.html">
+                component factories</a>, viewer factories and editor factories. A viewer factory is used to generate
+                components for read-only viewing of a property. An editor factory is used to generate components for
+                editing a property. Luckily (actually by design) the component factories implement the same interface,
+                so they can be used interchangeably depending upon the desired view. When creating property components,
+                you must do so within a certain context.
             </p>
         </section>
 
-        <section name="Automatic Form Generation">
+        <section name="Contexts">
             <p>
-                Most people won't want to use the scaffolding in their production applications. They can, however, use
-                Wicketopia's automatically-generated forms! Here's a snippet from the scaffolding code:
+                A
+                <a href="apidocs/org/wicketopia/context/Context.html">Context</a>, is used to define the
+                &quot;context&quot; (hence the name) in which an operation is taking place. Each context has a name,
+                (defined by a String of course) and there are four default context names, CREATE, UPDATE, VIEW, and
+                LIST, defined as constants on the Context class. Users can also come up with their own context names
+                (like "REGISTER" or "LOGIN") to suit their needs. A Context can also have attributes associated with it.
+                They are stored using a map keyed by a type-safe MetaDataKey, similar to the way you assign metadata to
+                Wicket components. The context of an operation helps Wicketopia figure out which components should be
+                visible, enabled, or required (among other things). A context is used by the component factories to
+                generate a property-configured component at runtime.
             </p>
-            <subsection name="Auto-Generated Editor...">
-                <source><![CDATA[
-Form<T> form = new Form<T>("form", model);
-PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
-Context context = new Context(Context.CREATE);
-form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));]]>
-                </source>
-            </subsection>
-            <p>
-                Here, we see the use of a &quot;layout&quot; panel. It takes a &quot;Context&quot; object which helps
-                Wicketopia understand which components should be enabled, visible, required, etc. It also uses a
-                &quot;PropertyComponentFactory&quot;. A PropertyComponentFactory is responsible for generating
-                components for bean properties. In this case, we're using a PropertyComponentFactory which generates
-                editor components. To create a &quot;viewer&quot; instead, we would simply do this:
-            </p>
-
-            <subsection name="Auto-Generated Viewer...">
-                <source><![CDATA[
-PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
-Context context = new Context(Context.VIEW);
-add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, viewerFactory));]]>
-                </source>
-            </subsection>
-
-            <p>The auto-generated editors/viewers will display all currently visible fields in their order based on the
-                metadata. You can specify the fields you want and the order you want them in also:
-            </p>
-            <subsection name="Auto-Generated Editor With Selected Properties...">
-                <source><![CDATA[
-Form<T> form = new Form<T>("form", model);
-PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
-Context context = new Context(Context.CREATE);
-form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory, "firstName", "lastName"));]]>
-                </source>
-                <p>
-                    Here, we're specifying that we only want to edit the &quot;firstName&quot; and &quot;lastName&quot;
-                    properties.
-                </p>
-            </subsection>
         </section>
-        <section name="Manual Form Generation">
+        <section name="Using Component Factories">
             <p>
-                Sometimes the automatic form generation just won't suit your needs and you'll have to get
-                &quot;down-and-dirty.&quot; However, even that's a snap with Wicketopia:
+                A component factory can be used to generate an &quot;editor&quot; for a bean.
             </p>
-            <subsection name="Manually-Generated Editor...">
+            <subsection name="Manually-Constructed Form (Java Code)...">
                 <source><![CDATA[
-Form<T> form = new Form<T>("form", model);
-PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
+IModel<Person> model = new Model<Person>(new Person());
+Form<Person> form = new Form<Person>("form", model);
+// Create a factory...
+PropertyComponentFactory<Person> editorFactory = Wicketopia.get().createEditorFactory(Person.class);
+// Establish a context...
 Context context = new Context(Context.CREATE);
+// Create the label...
 form.add(editorFactory.createPropertyLabel("nameLabel", "name"));
-form.add(editorFactory.createPropertyComponent("nameEditor", model, "name", context));
-      ]]>
+// Create an "editor" for the "name" property...
+form.add(editorFactory.createPropertyComponent("nameEditor", model, "name", context));]]></source>
+            </subsection>
+            <p>
+                Here, we're asking Wicketopia to create an editor component factory for the Person class. We set up a
+                CREATE context, which means we're creating a new Person object. Then, we use the factory to create a
+                label for the &quot;name&quot; property. Finally, we ask the factory to create an editor for the &quot;name&quot;
+                property. Notice that we could easily change this code to generate a read-only view of our Person object
+                by merely asking Wicketopia to create a viewer component factory as opposed to an editor component
+                factory. Our markup would look something like:
+            </p>
+            <subsection name="Manually-Constructed Form (Markup)...">
+                <source><![CDATA[
+<form wicket:id="form">
+  <table>
+    ...
+    <tr>
+      <th><div wicket:id="nameLabel" /></th>
+      <td><div wicket:id="nameEditor" /></td>
+    </tr>
+    ...
+  </table>
+</form>]]></source>
+            </subsection>
+            <p>
+                Notice that we use &lt;div&gt; elements to position our generated components. This is part of the &quot;contract&quot;
+                we have with Wicketopia. Since we don't know what type of component Wicketopia is going to generate, we
+                can't reliably use a specific element type (some components insist that they are attached to the proper
+                element type in the markup) in our markup. We must use generic element types supported by Wicket Panels.
+                One caveat to this approach is that whenever a new property is added to the Person class and we want to
+                display it on our form, we have to make sure we set up the new label/component for that property. To
+                avoid this, we use a dynamic layout!
+            </p>
+        </section>
+
+        <section name="Using Dynamic Layouts">
+            <p>
+                A &quot;layout&quot; component will automatically generate labels/components for all currently-visible
+                fields in their order based on the bean class' metadata. For our Person class:
+            </p>
+            <subsection name="Dynamically-Generated Form...">
+                <source><![CDATA[
+Form<Person> form = new Form<Person>("form", model);
+PropertyComponentFactory<Person> editorFactory = Wicketopia.get().createEditorFactory(Person.class);
+Context context = new Context(Context.CREATE);
+form.add(new CssBeanViewLayoutPanel<Person>("layout", beanType, model, context, editorFactory));]]>
                 </source>
             </subsection>
             <p>
-                Here, we're still using a PropertyComponentFactory, but instead of using a layout component to
-                automatically generate and layout our labels and components, we're using it to generate them manually.
-                In this case, we're generating a label and editor component (a text field probably) for the &quot;name&quot;
-                property.
+                Here, we again ask Wicketopia to create an editor component factory, but rather than manually generating
+                the components, we just instantiate a
+                <a href="apidocs/org/wicketopia/layout/view/CssBeanViewLayoutPanel.html">CssBeanViewLayoutPanel</a>
+                and let it use the factory to generate all the fields labels/components for the Person class. For each
+                property, the CssBeanViewLayoutPanel will generate a section that looks like:
+            </p>
+            <subsection name="CSS Bean View Layout Markup">
+                <source><![CDATA[
+<div class="prop-div">
+  <div class="prop-label"></div>
+  <div class="prop-component"></div>
+</div>]]></source>
+            </subsection>
+            <p>
+                Sometimes, we don't want
+                <em>all</em>
+                of the properties to be displayed. We can control that by passing in a list of property names to the
+                constructor of our layout panel:
+            </p>
+            <subsection name="Dynamically-Generated Form with Specified Properties...">
+                <source><![CDATA[
+Form<Person> form = new Form<Person>("form", model);
+PropertyComponentFactory<Person> editorFactory = Wicketopia.get().createEditorFactory(beanType);
+Context context = new Context(Context.CREATE);
+form.add(new CssBeanViewLayoutPanel<Person>("layout", beanType, model, context, editorFactory, "firstName", "lastName"));]]></source>
+            </subsection>
+            <p>
+                Here, we're using a layout panel as we were before, but we're telling it to only display the &quot;firstName&quot;
+                and &quot;lastName&quot; properties.
             </p>
         </section>
     </body>

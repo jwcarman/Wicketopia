@@ -37,17 +37,18 @@
                     <a href="metadata.html">Metadata</a>: Wicketopia employs a very flexible metadata facility.
                 </li>
                 <li>
-                    <a href="labels.html">Property Labels</a>: when a property is displayed, it is often accompanied by
-                    a label.
-                </li>
-                <li>
-                    <a href="scaffold.html">Scaffolding</a>: Wicketopia supports &quot;Scaffolding&quot; (a la Grails)
-                    out of the box!
+                    <a href="labels.html">Property Labels</a>: Wicketopia generates labels for your properties
+                    automatically using sensible defaults, but allows easy customization!
                 </li>
                 <li>
                     <a href="factories.html">Component Factories</a>: Wicketopia uses factories to create components
                     used to view/edit properties.
                 </li>
+                <li>
+                    <a href="scaffold.html">Scaffolding</a>: Wicketopia supports &quot;Scaffolding&quot; (a la Grails)
+                    out of the box!
+                </li>
+
             </ul>
         </section>
 
