@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.spring.security.annotation;
+package org.wicketopia.security.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface OptionalForRole
+public @interface HiddenForRole
 {
     String[] value();
 }

@@ -26,7 +26,7 @@ import org.wicketopia.builder.feature.annotation.validator.Email;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
 import org.wicketopia.example.domain.value.Gender;
 import org.wicketopia.joda.annotation.DatePattern;
-import org.wicketopia.spring.security.annotation.VisibleForRole;
+import org.wicketopia.security.annotation.VisibleForRole;
 
 import javax.persistence.Entity;
 

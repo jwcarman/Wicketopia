@@ -38,7 +38,9 @@
         <module>jpa</module>
         <module>joda</module>
         <module>domdrides</module>
+        <module>security</module>
         <module>spring-security</module>
+        <module>shiro</module>
         <module>example</module>
     </modules>
     <licenses>
