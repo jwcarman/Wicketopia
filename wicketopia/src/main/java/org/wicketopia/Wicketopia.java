@@ -18,6 +18,7 @@ package org.wicketopia;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
@@ -288,7 +289,7 @@ public class Wicketopia
 
     public BeanMetaData getBeanMetaData(Class<?> beanClass)
     {
-        if (WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
+        if (WebApplication.get().getConfigurationType().equals(RuntimeConfigurationType.DEVELOPMENT))
         {
             beanMetaDataFactory.clear();
         }

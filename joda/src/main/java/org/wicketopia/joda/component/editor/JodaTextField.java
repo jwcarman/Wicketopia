@@ -54,7 +54,8 @@ public class JodaTextField<T> extends TextField<T>
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public IConverter getConverter(Class<?> type)
+//    public IConverter getConverter(Class<?> type)
+	public <C> IConverter<C> getConverter(Class<C> type)
     {
         if (type.equals(getType()))
         {

@@ -16,14 +16,13 @@
 
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.IPageMap;
-import org.apache.wicket.PageParameters;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.resources.StyleSheetReference;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 
 public class BasePage extends WebPage implements IHeaderContributor
 {
@@ -46,24 +45,9 @@ public class BasePage extends WebPage implements IHeaderContributor
         super(model);
     }
 
-    public BasePage(IPageMap pageMap)
-    {
-        super(pageMap);
-    }
-
     public BasePage(PageParameters parameters)
     {
         super(parameters);
-    }
-
-    public BasePage(IPageMap pageMap, IModel<?> model)
-    {
-        super(pageMap, model);
-    }
-
-    public BasePage(IPageMap pageMap, PageParameters parameters)
-    {
-        super(pageMap, parameters);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -72,6 +56,6 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     public void renderHead(IHeaderResponse header)
     {
-        header.renderCSSReference(new ResourceReference(getClass(), "style.css"));
+        header.renderCSSReference(new PackageResourceReference(getClass(), "style.css"));
     }
 }

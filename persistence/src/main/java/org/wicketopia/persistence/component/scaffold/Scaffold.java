@@ -16,9 +16,10 @@
 
 package org.wicketopia.persistence.component.scaffold;
 
+import java.util.List;
+
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -38,6 +39,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
@@ -52,8 +55,6 @@ import org.wicketopia.persistence.component.link.ajax.AjaxUpdateLink;
 import org.wicketopia.persistence.model.LoadableDetachableEntityModel;
 import org.wicketopia.persistence.model.repeater.PersistenceDataProvider;
 
-import java.util.List;
-
 /**
  * @author James Carman
  */
@@ -63,7 +64,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final ResourceReference CSS_REFERENCE = new ResourceReference(Scaffold.class, "scaffold.css");
+    private static final PackageResourceReference CSS_REFERENCE = new PackageResourceReference(Scaffold.class, "scaffold.css");
     private static final String CONTENT_ID = "content";
     private final Class<T> beanType;
     private final PersistenceProvider persistenceProvider;

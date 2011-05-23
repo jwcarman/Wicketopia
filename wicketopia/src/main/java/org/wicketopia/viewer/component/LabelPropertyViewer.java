@@ -17,7 +17,7 @@
 package org.wicketopia.viewer.component;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
@@ -55,7 +55,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addBehavior(IBehavior behavior)
+    public void addBehavior(Behavior behavior)
     {
         add(behavior);
     }

@@ -60,7 +60,7 @@ public class HomePage extends BasePage
                 final UsernamePasswordAuthenticationToken tok = new UsernamePasswordAuthenticationToken("admin", "admin");
                 SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(tok));
                 setResponsePage(HomePage.class);
-                setRedirect(true);
+//                setRedirect(true);
             }
 
             @Override
@@ -77,7 +77,7 @@ public class HomePage extends BasePage
             {
                 SecurityContextHolder.clearContext();
                 setResponsePage(HomePage.class);
-                setRedirect(true);
+//                setRedirect(true);
             }
 
             @Override

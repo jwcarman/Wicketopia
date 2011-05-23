@@ -17,7 +17,7 @@
 package org.wicketopia.editor.component.property;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.validation.IValidator;
@@ -53,7 +53,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
 // EditorBuilder Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addBehavior(IBehavior behavior)
+    public void addBehavior(Behavior behavior)
     {
         formComponent.add(behavior);
     }

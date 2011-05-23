@@ -16,7 +16,6 @@
 
 package org.wicketopia.example.web.util;
 
-import org.apache.wicket.spring.injection.annot.test.AnnotApplicationContextMock;
 import org.apache.wicket.spring.test.ApplicationContextMock;
 import org.apache.wicket.util.tester.WicketTester;
 import org.jmock.Mockery;
