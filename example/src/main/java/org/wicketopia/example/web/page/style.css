@@ -18,6 +18,10 @@ html * {
     margin: 0;
 }
 
+.childContent {
+    margin-top: 20px;
+}
+
 table {
     border-style: solid;
 }
@@ -93,8 +97,6 @@ th.formField {
 }
 
 td.content {
-    margin: 20px;
-    padding: 20px;
     vertical-align: top;
     height: 100%;
 }

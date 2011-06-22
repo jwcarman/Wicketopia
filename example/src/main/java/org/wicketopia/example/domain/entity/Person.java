@@ -63,6 +63,10 @@ public class Person implements Serializable
     @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsString")
     private LocalTime workDayEnd = new LocalTime(17, 0);
 
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     public static Person createDummy()
     {
         Person dummy = new Person();
@@ -72,6 +76,7 @@ public class Person implements Serializable
         dummy.setGender(Gender.Male);
         return dummy;
     }
+
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -186,6 +191,10 @@ public class Person implements Serializable
     {
         this.smoker = smoker;
     }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Canonical Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     public String toString()
     {

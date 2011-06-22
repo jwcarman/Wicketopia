@@ -24,6 +24,7 @@ import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.resources.StyleSheetReference;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
@@ -57,6 +58,7 @@ public class BasePage extends WebPage implements IHeaderContributor
                 Calendar.YEAR))).setEscapeModelStrings(false));
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
         add(new StyleSheetReference("stylesheet", BasePage.class, "style.css"));
+        add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
     }
 
     public BasePage(IModel<?> model)

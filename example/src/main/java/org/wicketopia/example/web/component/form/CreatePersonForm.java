@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-package org.wicketopia.example.web.page.list;
+package org.wicketopia.example.web.component.form;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketopia.Wicketopia;
-import org.wicketopia.context.Context;
 import org.wicketopia.example.domain.entity.Person;
-import org.wicketopia.example.web.page.BasePage;
-import org.wicketopia.factory.PropertyComponentFactory;
-import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.model.list.EntityListModel;
+import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
-import java.text.Normalizer;
-
-public class BeanListEditorExample extends BasePage
+/**
+ * A simple utility form that merely creates a Person object.
+ */
+public class CreatePersonForm extends Form<Person>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -45,24 +40,19 @@ public class BeanListEditorExample extends BasePage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanListEditorExample()
+    public CreatePersonForm(String id)
     {
-        final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
-        Form form = new Form<Void>("form");
-        final BeanListLayoutPanel<Person> list = new BeanListLayoutPanel<Person>("list", Person.class, new EntityListModel<Person>(Person.class, persistenceProvider), new Context(Context.UPDATE), factory);
-        list.setOutputMarkupPlaceholderTag(true);
-        form.add(new AjaxSubmitLink("submit")
+        super(id);
+        setModel(new Model<Person>(new Person()));
+        add(new AjaxCreateLink<Person>("submit", this, persistenceProvider)
         {
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            protected void afterCreate(Person object, AjaxRequestTarget target)
             {
-                persistenceProvider.update(list.getList());
-                info("Persons updated successfully.");
-                target.addComponent(list);
+                CreatePersonForm.this.setModelObject(new Person());
+                info("Person " + object + " created.");
+                target.addComponent(CreatePersonForm.this);
             }
         });
-
-        form.add(list);
-        add(form);
     }
 }

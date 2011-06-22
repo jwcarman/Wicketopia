@@ -28,12 +28,22 @@ import org.wicketopia.persistence.model.list.EntityListModel;
 
 public class BeanListViewerExample extends BasePage
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
     @SpringBean
     private PersistenceProvider persistenceProvider;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
 
     public BeanListViewerExample()
     {
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
-        add(new BeanListLayoutPanel<Person>("list", Person.class, new EntityListModel<Person>(Person.class, persistenceProvider), new Context(Context.LIST), factory));
+        final Context context = new Context(Context.LIST);
+        final EntityListModel<Person> listModel = new EntityListModel<Person>(Person.class, persistenceProvider);
+        add(new BeanListLayoutPanel<Person>("list", Person.class, listModel, context, factory));
     }
 }

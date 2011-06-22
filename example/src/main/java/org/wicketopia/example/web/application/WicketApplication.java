@@ -16,6 +16,8 @@
 
 package org.wicketopia.example.web.application;
 
+import org.apache.wicket.Page;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.ISpringContextLocator;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -28,6 +30,7 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.example.web.page.HomePage;
+import org.wicketopia.listener.ajax.AutoFeedbackListener;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
 /**
@@ -106,5 +109,13 @@ public class WicketApplication extends WebApplication implements ISpringContextL
         plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(sessionFactoryBean.getConfiguration()));
         plugin.install(this);
         addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
+    }
+
+    @Override
+    public AjaxRequestTarget newAjaxRequestTarget(Page page)
+    {
+        AjaxRequestTarget target = super.newAjaxRequestTarget(page);
+        target.addListener(new AutoFeedbackListener());
+        return target;
     }
 }
