@@ -14,14 +14,25 @@
   ~ limitations under the License.
   -->
 
-<wicket:panel>
-    <table class="beanList">
-        <tr>
-            <th wicket:id="headers"></th>
-        </tr>
-        <tr wicket:id="rows">
-            <td wicket:id="cells"><span wicket:id="component" /></td>
-        </tr>
-    </table>
+<html>
+<body>
+<wicket:extend>
+    <div wicket:id="feedback"/>
+    <form wicket:id="form">
+        <button wicket:id="submit">Create</button>
+        <table>
+            <tr>
+                <th><label wicket:id="firstNameLabel" /></th>
+                <td><div wicket:id="firstName" /></td>
+                <th><label wicket:id="lastNameLabel" /></th>
+                <td><div wicket:id="lastName" /></td>
+            </tr>
+        </table>
+    </form>
 
-</wicket:panel>
+</wicket:extend>
+</body>
+</html>
+
+
+

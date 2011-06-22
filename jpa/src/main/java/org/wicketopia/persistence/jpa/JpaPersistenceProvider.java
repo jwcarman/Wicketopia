@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -60,10 +61,37 @@ public class JpaPersistenceProvider implements PersistenceProvider
     }
 
     @Override
+    public <T, C extends Collection<? extends T>> void create(C collection)
+    {
+        for (T entity : collection)
+        {
+            entityManager.persist(entity);
+        }
+    }
+
+    @Override
+    public <T, C extends Collection<? extends T>> void delete(C collection)
+    {
+        for (T entity : collection)
+        {
+            entityManager.remove(entity);
+        }
+    }
+
+    @Override
+    public <T, C extends Collection<? extends T>> void update(C collection)
+    {
+        for (T entity : collection)
+        {
+            entityManager.merge(entity);
+        }
+    }
+
+    @Override
     public int getCount(Class<?> entityType)
     {
         List results = entityManager.createQuery("select count(*) from " + entityType.getName()).getResultList();
-        return ((Number)results.get(0)).intValue();
+        return ((Number) results.get(0)).intValue();
     }
 
     @Override
@@ -78,13 +106,22 @@ public class JpaPersistenceProvider implements PersistenceProvider
         return entityManager.find(entityType, identifier);
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> List<T> getAll(Class<T> entityType)
+    {
+        String jpaql = "select x from " + entityType.getName() + " x";
+        final Query query = entityManager.createQuery(jpaql);
+        return query.getResultList();
+    }
+
     @SuppressWarnings("unchecked")
     public <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending)
     {
         String jpaql = "select x from " + entityType.getName() + " x";
-        if(sortProperty != null)
+        if (sortProperty != null)
         {
-            jpaql = jpaql + " order by x." + sortProperty + ( ascending ? " asc" : " desc" );
+            jpaql = jpaql + " order by x." + sortProperty + (ascending ? " asc" : " desc");
         }
         final Query query = entityManager.createQuery(jpaql);
         query.setFirstResult(first).setMaxResults(max);

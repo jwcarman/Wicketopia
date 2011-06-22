@@ -14,14 +14,13 @@
   ~ limitations under the License.
   -->
 
-<wicket:panel>
-    <table class="beanList">
-        <tr>
-            <th wicket:id="headers"></th>
-        </tr>
-        <tr wicket:id="rows">
-            <td wicket:id="cells"><span wicket:id="component" /></td>
-        </tr>
-    </table>
+<html>
+<body>
+<wicket:extend>
+    <div wicket:id="bean" />
+</wicket:extend>
+</body>
+</html>
 
-</wicket:panel>
+
+

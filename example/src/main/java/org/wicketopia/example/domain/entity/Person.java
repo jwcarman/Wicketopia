@@ -16,7 +16,7 @@
 
 package org.wicketopia.example.domain.entity;
 
-import org.domdrides.entity.UuidEntity;
+import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
@@ -29,24 +29,49 @@ import org.wicketopia.joda.annotation.DatePattern;
 import org.wicketopia.security.annotation.VisibleForRole;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
-public class Person extends UuidEntity
+public class Person implements Serializable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    @Id
+    private String id = UUID.randomUUID().toString();
+
     private String firstName;
     private String lastName;
     private String ssn;
     private String email;
-    private Gender gender;
-    private LocalDate dob;
     private boolean smoker;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalDate")
+    private LocalDate dob;
+
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsString")
     private LocalTime workDayBegin = new LocalTime(9, 0);
+
+    @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsString")
     private LocalTime workDayEnd = new LocalTime(17, 0);
 
+    public static Person createDummy()
+    {
+        Person dummy = new Person();
+        dummy.setFirstName("Dummy");
+        dummy.setLastName("Person");
+        dummy.setEmail("dummy@person.com");
+        dummy.setGender(Gender.Male);
+        return dummy;
+    }
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -93,6 +118,16 @@ public class Person extends UuidEntity
     public void setGender(Gender gender)
     {
         this.gender = gender;
+    }
+
+    public String getId()
+    {
+        return id;
+    }
+
+    protected void setId(String id)
+    {
+        this.id = id;
     }
 
     @Required
@@ -150,5 +185,10 @@ public class Person extends UuidEntity
     public void setSmoker(boolean smoker)
     {
         this.smoker = smoker;
+    }
+
+    public String toString()
+    {
+        return firstName + " " + lastName;
     }
 }

@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>wicketopia-parent</artifactId>
@@ -28,13 +29,14 @@
     <name>Wicketopia Example Application</name>
 
     <properties>
-        <domdrides.version>1.2</domdrides.version>
         <dbcp.version>1.2.2</dbcp.version>
         <hsqldb.version>1.8.0.7</hsqldb.version>
         <jpa.version>1.0</jpa.version>
         <log4j.version>1.2.14</log4j.version>
         <jetty.version>6.1.4</jetty.version>
         <jmock.version>2.5.0.1</jmock.version>
+        <hibernate.version>3.6.3.Final</hibernate.version>
+        <hibernate.annotations.version>3.5.6.Final</hibernate.annotations.version>
         <configuration>dev</configuration>
     </properties>
 
@@ -62,15 +64,14 @@
 
         <dependency>
             <groupId>org.wicketopia</groupId>
-            <artifactId>wicketopia-domdrides</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wicketopia</groupId>
             <artifactId>wicketopia-joda</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-hibernate</artifactId>
+            <version>1.3</version>
+        </dependency>
         <dependency>
             <groupId>org.wicketopia</groupId>
             <artifactId>wicketopia-spring-security</artifactId>
@@ -130,18 +131,6 @@
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>${dbcp.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.domdrides</groupId>
-            <artifactId>domdrides-hibernate</artifactId>
-            <version>${domdrides.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hibernate</groupId>
-                    <artifactId>hibernate</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>

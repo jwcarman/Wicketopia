@@ -17,6 +17,7 @@
 package org.wicketopia.persistence;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 public interface PersistenceProvider
@@ -33,9 +34,17 @@ public interface PersistenceProvider
 
     public <T> T create(T object);
 
+    public <T,C extends Collection<? extends T>> void create(C collection);
+
     public <T> void delete(T object);
-    
+
+    public <T,C extends Collection<? extends T>> void delete(C collection);
+
+    public <T> List<T> getAll(Class<T> entityType);
+
     public <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending);
 
     public <T> T update(T object);
+
+    public <T,C extends Collection<? extends T>> void update(C collection);
 }

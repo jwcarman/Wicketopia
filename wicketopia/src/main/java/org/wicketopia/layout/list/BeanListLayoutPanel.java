@@ -67,6 +67,11 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    public List<? extends T> getList()
+    {
+        return listView.getList();
+    }
+
     protected IModel<T> getListItemModel(IModel<? extends List<? extends T>> model, int index)
     {
         return new ListItemModel<T>(listView, index);
@@ -98,7 +103,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
                 @Override
                 protected void populateItem(ListItem<String> cellItem)
                 {
-                    cellItem.add(componentFactory.createPropertyComponent("editor", beanModel, cellItem.getModelObject(), context));
+                    cellItem.add(componentFactory.createPropertyComponent("component", beanModel, cellItem.getModelObject(), context));
                 }
             };
             cells.setReuseItems(true);

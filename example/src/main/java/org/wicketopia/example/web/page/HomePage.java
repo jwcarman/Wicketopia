@@ -16,17 +16,9 @@
 
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.wicketopia.example.domain.entity.Person;
-import org.wicketopia.example.domain.entity.Widget;
 import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.component.scaffold.Scaffold;
-
-import java.security.Security;
 
 /**
  * Homepage
@@ -51,40 +43,5 @@ public class HomePage extends BasePage
 
     public HomePage()
     {
-        add(new Scaffold<Person>("scaffold", Person.class, persistenceProvider));
-        add(new Link("loginAdmin")
-        {
-            @Override
-            public void onClick()
-            {
-                final UsernamePasswordAuthenticationToken tok = new UsernamePasswordAuthenticationToken("admin", "admin");
-                SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(tok));
-                setResponsePage(HomePage.class);
-                setRedirect(true);
-            }
-
-            @Override
-            public boolean isVisible()
-            {
-                return SecurityContextHolder.getContext().getAuthentication() == null;
-            }
-        });
-
-        add(new Link("logout")
-        {
-            @Override
-            public void onClick()
-            {
-                SecurityContextHolder.clearContext();
-                setResponsePage(HomePage.class);
-                setRedirect(true);
-            }
-
-            @Override
-            public boolean isVisible()
-            {
-                return SecurityContextHolder.getContext().getAuthentication() != null;
-            }
-        });
     }
 }

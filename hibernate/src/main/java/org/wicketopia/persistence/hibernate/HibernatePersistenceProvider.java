@@ -24,6 +24,7 @@ import org.hibernate.criterion.Projections;
 import org.wicketopia.persistence.PersistenceProvider;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -45,12 +46,6 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 
 
     @Override
-    public int getCount(Class<?> beanType)
-    {
-        return ((Number) getSession().createCriteria(beanType).setProjection(Projections.rowCount()).uniqueResult()).intValue();
-    }
-
-    @Override
     public <T> T create(T object)
     {
         getSession().save(object);
@@ -65,9 +60,22 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 
     @Override
     @SuppressWarnings("unchecked")
+    public <T> List<T> getAll(Class<T> entityType)
+    {
+        return getSession().createCriteria(entityType).list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public <T> T getByIdentifier(Class<T> beanType, Serializable identifier)
     {
         return (T) getSession().get(beanType, identifier);
+    }
+
+    @Override
+    public int getCount(Class<?> beanType)
+    {
+        return ((Number) getSession().createCriteria(beanType).setProjection(Projections.rowCount()).uniqueResult()).intValue();
     }
 
     public Serializable getIdentifier(Object entity)
@@ -107,7 +115,34 @@ public class HibernatePersistenceProvider implements PersistenceProvider
         return object;
     }
 
-//----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public <T, C extends Collection<? extends T>> void create(C collection)
+    {
+        for (T entity : collection)
+        {
+            getSession().save(entity);
+        }
+    }
+
+    @Override
+    public <T, C extends Collection<? extends T>> void delete(C collection)
+    {
+        for (T entity : collection)
+        {
+            getSession().delete(entity);
+        }
+    }
+
+    @Override
+    public <T, C extends Collection<? extends T>> void update(C collection)
+    {
+        for (T entity : collection)
+        {
+            getSession().update(entity);
+        }
+    }
+
+    //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
