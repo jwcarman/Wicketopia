@@ -37,14 +37,11 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
-public class Person implements Serializable
+public class Person extends BaseEntity
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
-
-    @Id
-    private String id = UUID.randomUUID().toString();
 
     private String firstName;
     private String lastName;
@@ -124,16 +121,6 @@ public class Person implements Serializable
     public void setGender(Gender gender)
     {
         this.gender = gender;
-    }
-
-    public String getId()
-    {
-        return id;
-    }
-
-    protected void setId(String id)
-    {
-        this.id = id;
     }
 
     @Required
