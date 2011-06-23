@@ -41,6 +41,7 @@ public class CustomBeanEditorExample extends BasePage
         final Context context = new Context(Context.CREATE);
         addLabelAndEditor(form, factory, model, "firstName", context);
         addLabelAndEditor(form, factory, model, "lastName", context);
+        addLabelAndEditor(form, factory, model, "smoker", context);
         add(form);
     }
 
