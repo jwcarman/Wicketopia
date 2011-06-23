@@ -30,6 +30,7 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.example.web.page.HomePage;
+import org.wicketopia.example.web.page.custom.viewer.ImageBooleanViewer;
 import org.wicketopia.listener.ajax.AutoFeedbackListener;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
@@ -107,6 +108,7 @@ public class WicketApplication extends WebApplication implements ISpringContextL
         super.init();
         Wicketopia plugin = new Wicketopia();
         plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(sessionFactoryBean.getConfiguration()));
+        plugin.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
         plugin.install(this);
         addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
     }

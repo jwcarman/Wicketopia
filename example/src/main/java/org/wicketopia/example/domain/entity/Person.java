@@ -21,6 +21,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
 import org.wicketopia.builder.feature.annotation.metadata.Order;
+import org.wicketopia.builder.feature.annotation.metadata.ViewerType;
 import org.wicketopia.builder.feature.annotation.required.Required;
 import org.wicketopia.builder.feature.annotation.validator.Email;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
@@ -182,6 +183,7 @@ public class Person implements Serializable
         this.workDayEnd = workDayEnd;
     }
 
+    @ViewerType("image-boolean")
     public boolean isSmoker()
     {
         return smoker;
