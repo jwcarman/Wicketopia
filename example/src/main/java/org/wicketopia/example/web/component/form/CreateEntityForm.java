@@ -21,6 +21,9 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketopia.Wicketopia;
+import org.wicketopia.metadata.WicketopiaBeanFacet;
+import org.wicketopia.model.label.DisplayNameModel;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
@@ -49,7 +52,8 @@ public class CreateEntityForm<T extends Serializable> extends Form<T>
             protected void afterCreate(final T object, AjaxRequestTarget target)
             {
                 CreateEntityForm.this.setModelObject(createEntity(entityType));
-                info("Object created.");
+                final WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(entityType));
+                info(DisplayNameModel.getDisplayName(facet, getLocalizer(), CreateEntityForm.this) + " created.");
                 target.addComponent(CreateEntityForm.this);
             }
         });

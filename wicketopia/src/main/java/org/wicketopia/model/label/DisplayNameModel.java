@@ -16,6 +16,8 @@
 
 package org.wicketopia.model.label;
 
+import org.apache.wicket.Component;
+import org.apache.wicket.Localizer;
 import org.apache.wicket.model.ResourceModel;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.util.Displayable;
@@ -30,6 +32,15 @@ public class DisplayNameModel extends ResourceModel
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Static Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public static String getDisplayName(Displayable displayable, Localizer localizer, Component component)
+    {
+        return localizer.getString(displayable.getDisplayNameMessageKey(), component, displayable.getDisplayName());
+    }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
