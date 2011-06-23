@@ -16,6 +16,7 @@
 
 package org.wicketopia.persistence.hibernate.decorator;
 
+import org.apache.wicket.model.IModel;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.mapping.Property;
@@ -34,7 +35,7 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Configuration configuration;
+    private final IModel<Configuration> configuration;
 
     private boolean ignoreIdentifiers = true;
 
@@ -42,7 +43,7 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public HibernatePropertyDecorator(Configuration configuration)
+    public HibernatePropertyDecorator(IModel<Configuration> configuration)
     {
         this.configuration = configuration;
     }
@@ -89,7 +90,7 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 
     private PersistentClass findClassMapping(BeanMetaData beanMetaData)
     {
-        for(Iterator i = configuration.getClassMappings(); i.hasNext(); )
+        for(Iterator i = configuration.getObject().getClassMappings(); i.hasNext(); )
         {
             PersistentClass classMapping = (PersistentClass)i.next();
             if(classMapping.getMappedClass().equals(beanMetaData.getBeanDescriptor().getBeanClass()))

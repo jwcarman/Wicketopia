@@ -18,9 +18,11 @@ package org.wicketopia.example.web.application;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.ISpringContextLocator;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -107,7 +109,7 @@ public class WicketApplication extends WebApplication implements ISpringContextL
     {
         super.init();
         Wicketopia plugin = new Wicketopia();
-        plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(sessionFactoryBean.getConfiguration()));
+        plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
         plugin.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
         plugin.install(this);
         addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
