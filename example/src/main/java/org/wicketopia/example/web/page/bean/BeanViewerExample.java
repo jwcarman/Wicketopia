@@ -16,6 +16,7 @@
 
 package org.wicketopia.example.web.page.bean;
 
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
@@ -33,7 +34,7 @@ public class BeanViewerExample extends BasePage
     public BeanViewerExample()
     {
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
-        final Model<Person> model = new Model<Person>(Person.createDummy());
+        final IModel<Person> model = new Model<Person>(Person.createDummy());
         final Context context = new Context(Context.VIEW);
         add(new CssBeanViewLayoutPanel<Person>("bean", Person.class, model, context, factory));
     }

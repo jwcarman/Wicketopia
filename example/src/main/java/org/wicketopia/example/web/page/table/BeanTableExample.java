@@ -36,11 +36,10 @@ public class BeanTableExample extends BasePage
 
     public BeanTableExample()
     {
-        final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
         final PersistenceDataProvider<Person> dataProvider = new PersistenceDataProvider<Person>(Person.class, persistenceProvider);
+        final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         final Context context = new Context(Context.LIST);
         final List<IColumn<Person>> columns = Wicketopia.get().createColumns(Person.class, factory, context);
         add(new AjaxFallbackDefaultDataTable<Person>("table", columns, dataProvider, 25));
-
     }
 }
