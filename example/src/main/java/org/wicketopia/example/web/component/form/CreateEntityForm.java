@@ -16,18 +16,17 @@
 
 package org.wicketopia.example.web.component.form;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.wicketopia.example.domain.entity.Person;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
-/**
- * A simple utility form that merely creates a Person object.
- */
-public class CreatePersonForm extends Form<Person>
+import java.io.Serializable;
+
+public class CreateEntityForm<T extends Serializable> extends Form<T>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -40,19 +39,35 @@ public class CreatePersonForm extends Form<Person>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CreatePersonForm(String id)
+    public CreateEntityForm(String id, final Class<T> entityType)
     {
         super(id);
-        setModel(new Model<Person>(new Person()));
-        add(new AjaxCreateLink<Person>("submit", this, persistenceProvider)
+        setModel(new Model<T>(createEntity(entityType)));
+        add(new AjaxCreateLink<T>("submit", this, persistenceProvider)
         {
             @Override
-            protected void afterCreate(Person object, AjaxRequestTarget target)
+            protected void afterCreate(final T object, AjaxRequestTarget target)
             {
-                CreatePersonForm.this.setModelObject(new Person());
-                info("Person " + object + " created.");
-                target.addComponent(CreatePersonForm.this);
+                CreateEntityForm.this.setModelObject(createEntity(entityType));
+                info("Object created.");
+                target.addComponent(CreateEntityForm.this);
             }
         });
+    }
+
+    private static <T> T createEntity(Class<T> entityType)
+    {
+        try
+        {
+            return entityType.newInstance();
+        }
+        catch (InstantiationException e)
+        {
+            throw new WicketRuntimeException("Unable to instantate a " + entityType.getSimpleName() + " object.", e);
+        }
+        catch (IllegalAccessException e)
+        {
+            throw new WicketRuntimeException("Unable to instantate a " + entityType.getSimpleName() + " object.", e);
+        }
     }
 }

@@ -18,14 +18,12 @@ package org.wicketopia.example.web.page.custom;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.example.domain.entity.Person;
-import org.wicketopia.example.web.component.form.CreatePersonForm;
+import org.wicketopia.example.web.component.form.CreateEntityForm;
 import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
-import org.wicketopia.persistence.PersistenceProvider;
 
 public class CustomBeanEditorExample extends BasePage
 {
@@ -35,7 +33,7 @@ public class CustomBeanEditorExample extends BasePage
 
     public CustomBeanEditorExample()
     {
-        final Form<Person> form = new CreatePersonForm("form");
+        final Form<Person> form = new CreateEntityForm<Person>("form", Person.class);
         final IModel<Person> model = form.getModel();
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         final Context context = new Context(Context.CREATE);

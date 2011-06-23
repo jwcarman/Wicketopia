@@ -21,7 +21,7 @@ import org.apache.wicket.model.IModel;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.example.domain.entity.Person;
-import org.wicketopia.example.web.component.form.CreatePersonForm;
+import org.wicketopia.example.web.component.form.CreateEntityForm;
 import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
@@ -34,7 +34,7 @@ public class BeanEditorExample extends BasePage
 
     public BeanEditorExample()
     {
-        final Form<Person> form = new CreatePersonForm("form");
+        final Form<Person> form = new CreateEntityForm<Person>("form", Person.class);
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         final Context context = new Context(Context.CREATE);
         final IModel<Person> model = form.getModel();
