@@ -131,6 +131,29 @@ table.beanList tr td {
 
 }
 
+.beanList th a:link, th a:visited, th a:hover {
+    color: #333;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    padding-right: 8px;
+    padding-left: 5px;
+}
+
+
+.beanList th.wicket_orderUp a, .beanList th.wicket_orderDown a {
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.beanList th.wicket_orderUp a {
+    background-image: url(images/sorted_asc.gif);
+}
+
+.beanList th.wicket_orderDown a {
+    background-image: url(images/sorted_desc.gif);
+}
+
 table.beanList tr th {
     color: black;
     padding-top: 3px;

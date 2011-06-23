@@ -37,6 +37,7 @@ public class ScaffoldExample extends BasePage
 
     public ScaffoldExample()
     {
+        get("feedback").setVisible(false);
         add(new Scaffold<Person>("scaffold", Person.class, persistenceProvider));
     }
 }
