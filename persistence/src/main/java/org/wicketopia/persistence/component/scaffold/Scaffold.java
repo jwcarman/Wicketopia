@@ -182,7 +182,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 
         public void onComponentTag(Component component, ComponentTag tag)
         {
-            StringBuilder handler = new StringBuilder(128);
+            StringBuilder handler = new StringBuilder();
             handler.append("if (!confirm('");
             handler.append(message.getObject().replaceAll("'", "\\\\'"));
             handler.append("')) {return false;} ");
