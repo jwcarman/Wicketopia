@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  * @since 1.0
  */
-public class DateTimeTranslators
+public final class DateTimeTranslators
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
