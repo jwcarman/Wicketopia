@@ -369,7 +369,6 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         private ViewFragment()
         {
             super(CONTENT_ID, "view", Scaffold.this);
-            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new EditLink("editButton", model));
             add(new DeleteLink("deleteButton", model));
