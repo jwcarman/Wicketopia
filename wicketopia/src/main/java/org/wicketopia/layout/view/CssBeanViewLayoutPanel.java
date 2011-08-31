@@ -32,7 +32,7 @@ public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T>
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static String DEFAULT_CSS_CLASS = "css-layout";
+    public static final String DEFAULT_CSS_CLASS = "css-layout";
     private String cssClass = DEFAULT_CSS_CLASS;
 
 //----------------------------------------------------------------------------------------------------------------------

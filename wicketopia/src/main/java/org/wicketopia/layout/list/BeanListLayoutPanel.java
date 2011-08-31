@@ -98,7 +98,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
         protected void populateItem(ListItem<T> rowItem)
         {
             final IModel<T> beanModel = rowItem.getModel();
-            ListView<String> cells = new ListView<String>("cells", propertyNames)
+            ListView<String> cells = new ListView<String>("cells", getPropertyNames())
             {
                 @Override
                 protected void populateItem(ListItem<String> cellItem)

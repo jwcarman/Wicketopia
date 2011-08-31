@@ -39,10 +39,10 @@ public class AbstractLayoutPanel<T> extends Panel
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected final Context context;
-    protected final Class<T> beanType;
-    protected final PropertyComponentFactory<T> componentFactory;
-    protected final List<String> propertyNames;
+    private final Context context;
+    private final Class<T> beanType;
+    private final PropertyComponentFactory<T> componentFactory;
+    private final List<String> propertyNames;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -107,11 +107,26 @@ public class AbstractLayoutPanel<T> extends Panel
 
     protected Component createPropertyComponent(String componentId, IModel<T> beanModel, String propertyName)
     {
-        return componentFactory.createPropertyComponent(componentId, beanModel, propertyName, context);
+        return getComponentFactory().createPropertyComponent(componentId, beanModel, propertyName, getContext());
     }
 
     protected Label createPropertyLabel(String componentId, String propertyName)
     {
-        return componentFactory.createPropertyLabel(componentId, propertyName);
+        return getComponentFactory().createPropertyLabel(componentId, propertyName);
+    }
+
+    protected Context getContext()
+    {
+        return context;
+    }
+
+    protected Class<T> getBeanType()
+    {
+        return beanType;
+    }
+
+    protected PropertyComponentFactory<T> getComponentFactory()
+    {
+        return componentFactory;
     }
 }
