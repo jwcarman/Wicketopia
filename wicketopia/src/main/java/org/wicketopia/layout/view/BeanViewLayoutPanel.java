@@ -30,7 +30,7 @@ public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected final IModel<T> beanModel;
+    private final IModel<T> beanModel;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -60,13 +60,18 @@ public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T>
 
     protected Component createPropertyComponent(String componentId, String propertyName)
     {
-        return createPropertyComponent(componentId, beanModel, propertyName);
+        return createPropertyComponent(componentId, getBeanModel(), propertyName);
     }
 
     @Override
     protected void onDetach()
     {
         super.onDetach();
-        beanModel.detach();
+        getBeanModel().detach();
+    }
+
+    protected IModel<T> getBeanModel()
+    {
+        return beanModel;
     }
 }
