@@ -41,7 +41,7 @@ public class JodaLabel<T> extends LabelPropertyViewer
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class JodaLabelModel<T> extends AbstractReadOnlyModel<String>
+    private final class JodaLabelModel<T> extends AbstractReadOnlyModel<String>
     {
         private final IModel<T> inner;
         private final JodaFormatSupport<T> formatSupport;

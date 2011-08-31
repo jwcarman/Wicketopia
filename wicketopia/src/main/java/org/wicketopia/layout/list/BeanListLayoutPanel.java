@@ -81,7 +81,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class BeanListView extends ListView<T>
+    private final class BeanListView extends ListView<T>
     {
         private final PropertyComponentFactory<T> componentFactory;
         private final Context context;
