@@ -258,7 +258,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             }
             catch (Exception e)
             {
-                throw new WicketRuntimeException("Unable to instantiate " + beanType.getName() + " object (" + e.getMessage() + ").");
+                throw new WicketRuntimeException("Unable to instantiate " + beanType.getName() + " object (" + e.getMessage() + ").", e);
             }
         }
     }
