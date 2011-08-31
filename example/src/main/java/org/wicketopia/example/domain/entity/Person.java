@@ -43,6 +43,9 @@ public class Person extends BaseEntity
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static final int NINE_AM = 9;
+    public static final int FIVE_PM = 17;
+
     private String firstName;
     private String lastName;
     private String ssn;
@@ -56,10 +59,10 @@ public class Person extends BaseEntity
     private LocalDate dob;
 
     @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsString")
-    private LocalTime workDayBegin = new LocalTime(9, 0);
+    private LocalTime workDayBegin = new LocalTime(NINE_AM, 0);
 
     @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsString")
-    private LocalTime workDayEnd = new LocalTime(17, 0);
+    private LocalTime workDayEnd = new LocalTime(FIVE_PM, 0);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
