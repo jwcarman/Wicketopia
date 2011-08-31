@@ -73,9 +73,9 @@ public class Wicketopia
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final Logger logger = LoggerFactory.getLogger(Wicketopia.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Wicketopia.class);
 
-    private static MetaDataKey<Wicketopia> META_KEY = new WicketopiaPluginKey();
+    private static final MetaDataKey<Wicketopia> META_KEY = new WicketopiaPluginKey();
 
     private BeanMetaDataFactory beanMetaDataFactory = new AnnotationBeanMetaDataFactory(findClasspathUrls());
     private TypeMapping editorTypeMapping = new DefaultEditorTypeMapping();
@@ -411,7 +411,7 @@ public class Wicketopia
         adDefaultViewerProviders();
         for (WicketopiaPlugin plugin : plugins)
         {
-            logger.debug("Initializing plugin " + plugin + "...");
+            LOGGER.debug("Initializing plugin " + plugin + "...");
             plugin.initialize(this);
         }
     }
