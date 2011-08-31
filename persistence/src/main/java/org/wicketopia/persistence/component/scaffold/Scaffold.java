@@ -144,7 +144,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class ActionsColumn extends FragmentColumn<T>
+    private final class ActionsColumn extends FragmentColumn<T>
     {
         private ActionsColumn()
         {
@@ -162,22 +162,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CancelLink extends AjaxLink<Void>
-    {
-        private CancelLink(String id)
-        {
-            super(id);
-        }
-
-        @Override
-        public void onClick(AjaxRequestTarget target)
-        {
-            mode = ScaffoldMode.List;
-            refreshContent(target);
-        }
-    }
-
-    private class ConfirmBehavior extends AbstractBehavior
+    private final class ConfirmBehavior extends AbstractBehavior
     {
         private final String event;
         private final IModel<String> message;
@@ -212,7 +197,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CreateFragment extends Fragment
+    private final class CreateFragment extends Fragment
     {
         private CreateFragment()
         {
@@ -246,7 +231,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CreateLink extends AjaxLink<Void>
+    private final class CreateLink extends AjaxLink<Void>
     {
         private CreateLink(String id)
         {
@@ -261,7 +246,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CreateModel extends LoadableDetachableModel<T>
+    private final class CreateModel extends LoadableDetachableModel<T>
     {
         @Override
         protected T load()
@@ -277,7 +262,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class DeleteLink extends AjaxLink<T>
+    private final class DeleteLink extends AjaxLink<T>
     {
         private DeleteLink(String id, IModel<T> tiModel)
         {
@@ -295,7 +280,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class EditFragment extends Fragment
+    private final class EditFragment extends Fragment
     {
         private EditFragment()
         {
@@ -331,7 +316,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class EditLink extends AjaxLink<T>
+    private final class EditLink extends AjaxLink<T>
     {
         private EditLink(String id, IModel<T> model)
         {
@@ -347,7 +332,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ListFragment extends Fragment
+    private final class ListFragment extends Fragment
     {
         private ListFragment()
         {
@@ -364,7 +349,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ListLink extends AjaxLink<Void>
+    private final class ListLink extends AjaxLink<Void>
     {
         private ListLink(String id)
         {
@@ -379,7 +364,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ViewFragment extends Fragment
+    private final class ViewFragment extends Fragment
     {
         private ViewFragment()
         {
@@ -396,7 +381,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ViewLink extends AjaxLink<T>
+    private final class ViewLink extends AjaxLink<T>
     {
         private ViewLink(String id, IModel<T> tiModel)
         {
