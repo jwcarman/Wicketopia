@@ -36,12 +36,12 @@ public class DateTimeTranslators
     {
         return new JavaDateTranslator();
     }
-    
+
     public static DateTimeTranslator<java.sql.Date> jdbcDateTranslator()
     {
         return new JdbcDateTranslator();
     }
-    
+
     public static DateTimeTranslator<Timestamp> jdbcTimestampTranslator()
     {
         return new JdbcTimestampTranslator();
@@ -60,6 +60,15 @@ public class DateTimeTranslators
     public static DateTimeTranslator<DateTime> noOpTranslator()
     {
         return new NoOpTranslator();
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
+    private DateTimeTranslators()
+    {
+        // Avoid instantiation.
     }
 
 //----------------------------------------------------------------------------------------------------------------------
