@@ -65,6 +65,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 
     private static final ResourceReference CSS_REFERENCE = new ResourceReference(Scaffold.class, "scaffold.css");
     private static final String CONTENT_ID = "content";
+    public static final int DEFAULT_ROWS_PER_PAGE = 25;
     private final Class<T> beanType;
     private final PersistenceProvider persistenceProvider;
     private ScaffoldMode mode = ScaffoldMode.List;
@@ -345,7 +346,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             final Context context = new Context(Context.LIST);
             final List<IColumn<T>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
             columns.add(new ActionsColumn());
-            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), 25));
+            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
         }
     }
 
