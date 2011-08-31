@@ -23,6 +23,6 @@ import org.metastopheles.PropertyMetaData;
  */
 public interface TypeMapping
 {
-    public String getTypeName(PropertyMetaData propertyMetaData);
-    public void addTypeOverride( Class<?> propertyType, String type );
+    String getTypeName(PropertyMetaData propertyMetaData);
+    void addTypeOverride( Class<?> propertyType, String type );
 }

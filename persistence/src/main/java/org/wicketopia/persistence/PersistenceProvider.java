@@ -26,25 +26,25 @@ public interface PersistenceProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public int getCount(Class<?> beanType);
+    int getCount(Class<?> beanType);
 
-    public Serializable getIdentifier(Object entity);
+    Serializable getIdentifier(Object entity);
 
-    public <T> T getByIdentifier(Class<T> entityType, Serializable identifier);
+    <T> T getByIdentifier(Class<T> entityType, Serializable identifier);
 
-    public <T> T create(T object);
+    <T> T create(T object);
 
-    public <T,C extends Collection<? extends T>> void create(C collection);
+    <T,C extends Collection<? extends T>> void create(C collection);
 
-    public <T> void delete(T object);
+    <T> void delete(T object);
 
-    public <T,C extends Collection<? extends T>> void delete(C collection);
+    <T,C extends Collection<? extends T>> void delete(C collection);
 
-    public <T> List<T> getAll(Class<T> entityType);
+    <T> List<T> getAll(Class<T> entityType);
 
-    public <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending);
+    <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending);
 
-    public <T> T update(T object);
+    <T> T update(T object);
 
-    public <T,C extends Collection<? extends T>> void update(C collection);
+    <T,C extends Collection<? extends T>> void update(C collection);
 }

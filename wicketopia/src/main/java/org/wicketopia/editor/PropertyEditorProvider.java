@@ -26,5 +26,5 @@ public interface PropertyEditorProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
+    EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
 }

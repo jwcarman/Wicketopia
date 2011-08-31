@@ -35,5 +35,5 @@ public interface FormatProvider extends IClusterable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DateTimeFormatter getFormatter();
+    DateTimeFormatter getFormatter();
 }

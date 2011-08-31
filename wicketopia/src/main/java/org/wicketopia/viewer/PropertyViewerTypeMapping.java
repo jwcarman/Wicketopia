@@ -23,5 +23,5 @@ import org.metastopheles.PropertyMetaData;
  */
 public interface PropertyViewerTypeMapping
 {
-    public String getViewerType(PropertyMetaData propertyMetaData);
+    String getViewerType(PropertyMetaData propertyMetaData);
 }

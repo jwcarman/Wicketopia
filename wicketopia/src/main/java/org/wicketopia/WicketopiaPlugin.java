@@ -25,5 +25,5 @@ public interface WicketopiaPlugin
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void initialize(Wicketopia wicketopia);
+    void initialize(Wicketopia wicketopia);
 }

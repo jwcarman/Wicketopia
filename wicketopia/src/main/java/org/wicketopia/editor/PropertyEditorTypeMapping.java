@@ -35,5 +35,5 @@ public interface PropertyEditorTypeMapping
      * @param propertyMetadata the property metadata
      * @return the editor type
      */
-    public String getEditorType(PropertyMetaData propertyMetadata);
+    String getEditorType(PropertyMetaData propertyMetadata);
 }

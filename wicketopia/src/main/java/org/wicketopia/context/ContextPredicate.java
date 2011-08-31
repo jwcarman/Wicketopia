@@ -23,5 +23,5 @@ import org.wicketopia.context.Context;
  */
 public interface ContextPredicate
 {
-    public boolean evaluate(Context context);
+    boolean evaluate(Context context);
 }

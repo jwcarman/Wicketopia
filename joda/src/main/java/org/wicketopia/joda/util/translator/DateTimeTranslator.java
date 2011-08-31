@@ -24,6 +24,6 @@ import org.joda.time.DateTime;
  */
 public interface DateTimeTranslator<T> extends IClusterable
 {
-    public DateTime toDateTime(T object);
-    public T fromDateTime(DateTime dateTime);
+    DateTime toDateTime(T object);
+    T fromDateTime(DateTime dateTime);
 }
