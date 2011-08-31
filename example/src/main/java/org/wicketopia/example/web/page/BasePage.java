@@ -61,7 +61,7 @@ public class BasePage extends WebPage implements IHeaderContributor
         init();
     }
 
-    private void init()
+    private final void init()
     {
         setOutputMarkupId(true);
         add(new Label("titleLabel", getTitleModel()).setRenderBodyOnly(true));
