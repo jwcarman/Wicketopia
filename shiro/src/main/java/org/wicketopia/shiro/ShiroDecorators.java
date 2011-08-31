@@ -30,7 +30,7 @@ public class ShiroDecorators extends AbstractSecurityDecorators
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ShiroDecorators(SecurityProvider securityProvider)
+    public ShiroDecorators()
     {
         super(new ShiroSecurityProvider());
     }
