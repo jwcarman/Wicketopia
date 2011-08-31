@@ -27,7 +27,7 @@ public abstract class AbstractPropertyComponentFactory<T> implements PropertyCom
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected final Class<T> beanType;
+    private final Class<T> beanType;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -45,7 +45,12 @@ public abstract class AbstractPropertyComponentFactory<T> implements PropertyCom
     public Label createPropertyLabel(String id, String propertyName)
     {
         Wicketopia plugin = Wicketopia.get();
-        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
+        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(getBeanType()).getPropertyMetaData(propertyName);
         return new PropertyLabel(id, propertyMetaData);
+    }
+
+    protected Class<T> getBeanType()
+    {
+        return beanType;
     }
 }
