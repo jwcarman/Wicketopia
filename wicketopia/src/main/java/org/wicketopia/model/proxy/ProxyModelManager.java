@@ -58,7 +58,7 @@ public class ProxyModelManager implements Serializable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class ProxyModel<T extends Serializable> extends Model<T>
+    private static final class ProxyModel<T extends Serializable> extends Model<T>
     {
         private final IModel<T> destination;
         private static final long serialVersionUID = 1L;

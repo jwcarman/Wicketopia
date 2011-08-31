@@ -58,7 +58,7 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class Provider implements PropertyEditorProvider
+    private static final class Provider implements PropertyEditorProvider
     {
         @SuppressWarnings("unchecked")
         public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)

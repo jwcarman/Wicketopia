@@ -258,7 +258,7 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class SerializedForm implements Serializable
+    private static final class SerializedForm implements Serializable
     {
         private final PropertyMetaData propertyMetaData;
 

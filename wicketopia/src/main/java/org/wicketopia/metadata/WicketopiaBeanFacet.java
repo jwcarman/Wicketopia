@@ -113,7 +113,7 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class SerializedForm implements Serializable
+    private static final class SerializedForm implements Serializable
     {
         private final BeanMetaData beanMetaData;
 

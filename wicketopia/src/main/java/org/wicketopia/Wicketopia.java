@@ -434,7 +434,7 @@ public class Wicketopia
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class WicketopiaPluginKey extends MetaDataKey<Wicketopia>
+    private static final class WicketopiaPluginKey extends MetaDataKey<Wicketopia>
     {
     }
 }

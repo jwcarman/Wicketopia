@@ -36,7 +36,7 @@ public class MessageFormatPropertyViewer extends LabelPropertyViewer implements 
     }
 
 
-    private static class Provider implements PropertyViewerProvider
+    private static final class Provider implements PropertyViewerProvider
     {
         @Override
         public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)

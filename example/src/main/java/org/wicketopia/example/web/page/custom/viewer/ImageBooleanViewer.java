@@ -82,7 +82,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class ImageResourceModel extends LoadableDetachableModel<ResourceReference>
+    private static final class ImageResourceModel extends LoadableDetachableModel<ResourceReference>
     {
         private final IModel<?> inner;
 
@@ -105,7 +105,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
         }
     }
 
-    private static class Provider implements PropertyViewerProvider
+    private static final class Provider implements PropertyViewerProvider
     {
         @Override
         public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)

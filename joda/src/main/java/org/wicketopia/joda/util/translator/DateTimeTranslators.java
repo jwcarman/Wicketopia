@@ -66,7 +66,7 @@ public class DateTimeTranslators
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class JavaDateTranslator implements DateTimeTranslator<Date>
+    private static final class JavaDateTranslator implements DateTimeTranslator<Date>
     {
         @Override
         public Date fromDateTime(DateTime dateTime)
@@ -81,7 +81,7 @@ public class DateTimeTranslators
         }
     }
 
-    private static class JdbcDateTranslator implements DateTimeTranslator<java.sql.Date>
+    private static final class JdbcDateTranslator implements DateTimeTranslator<java.sql.Date>
     {
         @Override
         public java.sql.Date fromDateTime(DateTime dateTime)
@@ -96,7 +96,7 @@ public class DateTimeTranslators
         }
     }
 
-    private static class JdbcTimestampTranslator implements DateTimeTranslator<Timestamp>
+    private static final class JdbcTimestampTranslator implements DateTimeTranslator<Timestamp>
     {
         @Override
         public Timestamp fromDateTime(DateTime dateTime)
@@ -111,7 +111,7 @@ public class DateTimeTranslators
         }
     }
 
-    private static class LocalDateTranslator implements DateTimeTranslator<LocalDate>
+    private static final class LocalDateTranslator implements DateTimeTranslator<LocalDate>
     {
         @Override
         public LocalDate fromDateTime(DateTime date)
@@ -126,7 +126,7 @@ public class DateTimeTranslators
         }
     }
 
-    private static class LocalTimeTranslator implements DateTimeTranslator<LocalTime>
+    private static final class LocalTimeTranslator implements DateTimeTranslator<LocalTime>
     {
         @Override
         public LocalTime fromDateTime(DateTime date)
@@ -141,7 +141,7 @@ public class DateTimeTranslators
         }
     }
 
-    private static class NoOpTranslator implements DateTimeTranslator<DateTime>
+    private static final class NoOpTranslator implements DateTimeTranslator<DateTime>
     {
         @Override
         public DateTime fromDateTime(DateTime dateTime)
