@@ -194,7 +194,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
                 handler.append(script);
             }
 
-            tag.put(event.toString(), handler.toString());
+            tag.put(event, handler.toString());
         }
     }
 
