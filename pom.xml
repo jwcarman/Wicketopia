@@ -36,6 +36,7 @@
         <module>persistence</module>
         <module>hibernate</module>
         <module>jpa</module>
+        <module>jpa2</module>
         <module>joda</module>
         <module>domdrides</module>
         <module>security</module>
