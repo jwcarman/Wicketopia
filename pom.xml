@@ -58,7 +58,7 @@
     </issueManagement>
 
     <properties>
-        <wicket.version>1.5-rc2</wicket.version>
+        <wicket.version>1.5.0</wicket.version>
         <slf4j.version>1.6.1</slf4j.version>
         <hibernate.version>3.6.0.Final</hibernate.version>
         <domdrides.version>1.2</domdrides.version>
