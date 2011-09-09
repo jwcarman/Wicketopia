@@ -97,7 +97,7 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
     @Override
     public Serializable getIdentifier(Object entity)
     {
-        throw new UnsupportedOperationException("This feature isn't available until JPA 2.0");
+    	return (Serializable) entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity);
     }
 
     @Override
