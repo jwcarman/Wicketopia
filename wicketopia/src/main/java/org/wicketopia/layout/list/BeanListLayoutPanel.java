@@ -67,6 +67,11 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    public List<? extends T> getList()
+    {
+        return listView.getList();
+    }
+
     protected IModel<T> getListItemModel(IModel<? extends List<? extends T>> model, int index)
     {
         return new ListItemModel<T>(listView, index);
@@ -76,7 +81,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class BeanListView extends ListView<T>
+    private final class BeanListView extends ListView<T>
     {
         private final PropertyComponentFactory<T> componentFactory;
         private final Context context;
@@ -93,12 +98,12 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
         protected void populateItem(ListItem<T> rowItem)
         {
             final IModel<T> beanModel = rowItem.getModel();
-            ListView<String> cells = new ListView<String>("cells", propertyNames)
+            ListView<String> cells = new ListView<String>("cells", getPropertyNames())
             {
                 @Override
                 protected void populateItem(ListItem<String> cellItem)
                 {
-                    cellItem.add(componentFactory.createPropertyComponent("editor", beanModel, cellItem.getModelObject(), context));
+                    cellItem.add(componentFactory.createPropertyComponent("component", beanModel, cellItem.getModelObject(), context));
                 }
             };
             cells.setReuseItems(true);

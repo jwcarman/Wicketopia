@@ -17,9 +17,11 @@
 package org.wicketopia.example.web.application;
 
 import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.ISpringContextLocator;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,6 +31,8 @@ import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.example.web.page.HomePage;
+import org.wicketopia.example.web.page.custom.viewer.ImageBooleanViewer;
+import org.wicketopia.listener.ajax.AutoFeedbackListener;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
 /**
@@ -96,13 +100,15 @@ public class WicketApplication extends WebApplication implements
 		return HomePage.class;
 	}
 
-	protected void init() {
-		super.init();
-		Wicketopia plugin = new Wicketopia();
-		plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(
-				sessionFactoryBean.getConfiguration()));
-		plugin.install(this);
+    protected void init()
+    {
+        super.init();
+        Wicketopia plugin = new Wicketopia();
+        plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
+        plugin.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
+        plugin.install(this);
 		getComponentInstantiationListeners().add(
 				new SpringComponentInjector(this, getSpringContext(), true));
-	}
+		getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
+    }
 }

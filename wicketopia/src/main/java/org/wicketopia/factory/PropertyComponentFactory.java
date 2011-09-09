@@ -26,6 +26,6 @@ import java.io.Serializable;
 
 public interface PropertyComponentFactory<T> extends IClusterable
 {
-    public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context);
-    public Label createPropertyLabel(String id, String propertyName);
+    Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context);
+    Label createPropertyLabel(String id, String propertyName);
 }

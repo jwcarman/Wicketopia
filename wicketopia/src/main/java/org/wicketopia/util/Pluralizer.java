@@ -154,7 +154,7 @@ public abstract class Pluralizer
         String apply(String term);
     }
 
-    private static class RegexPluralizationRule implements PluralizationRule
+    private static final class RegexPluralizationRule implements PluralizationRule
     {
         private Pattern pattern;
 

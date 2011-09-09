@@ -24,7 +24,7 @@ import org.apache.wicket.behavior.Behavior;
  */
 public interface ComponentBuilder
 {
-    public void addBehavior(Behavior behavior);
-    public void visible(boolean viewable);
-    public Component build();
+    void addBehavior(Behavior behavior);
+    void visible(boolean viewable);
+    Component build();
 }

@@ -41,7 +41,7 @@ public class PropertyEditorComponentFactory<T> extends AbstractPropertyComponent
     public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context)
     {
         Wicketopia plugin = Wicketopia.get();
-        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
+        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(getBeanType()).getPropertyMetaData(propertyName);
         return plugin.createPropertyEditor(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);
     }
 }

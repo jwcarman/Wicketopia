@@ -29,6 +29,6 @@ public interface ComponentBuilderFeature<B extends ComponentBuilder> extends Ser
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
-    public boolean isActiveFor(Context context);
-    public void activate(B builder);
+    boolean isActiveFor(Context context);
+    void activate(B builder);
 }

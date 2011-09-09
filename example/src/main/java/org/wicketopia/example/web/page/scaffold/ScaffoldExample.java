@@ -14,22 +14,30 @@
  * limitations under the License.
  */
 
-package org.wicketopia.example.domain.repository.hibernate;
+package org.wicketopia.example.web.page.scaffold;
 
-import org.domdrides.hibernate.repository.HibernateRepository;
-import org.springframework.stereotype.Repository;
-import org.wicketopia.example.domain.entity.Widget;
-import org.wicketopia.example.domain.repository.WidgetRepository;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.wicketopia.example.domain.entity.Person;
+import org.wicketopia.example.web.page.BasePage;
+import org.wicketopia.persistence.PersistenceProvider;
+import org.wicketopia.persistence.component.scaffold.Scaffold;
 
-@Repository("widgetRepository")
-public class HibernateWidgetRepository extends BaseHibernateRepository<Widget, String> implements WidgetRepository
+public class ScaffoldExample extends BasePage
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
+    @SpringBean
+    private PersistenceProvider persistenceProvider;
+
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public HibernateWidgetRepository()
+    public ScaffoldExample()
     {
-        super(Widget.class);
+        get("feedback").setVisible(false);
+        add(new Scaffold<Person>("scaffold", Person.class, persistenceProvider));
     }
 }

@@ -89,7 +89,7 @@ public class Context implements Serializable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class AllContextsPredicate implements ContextPredicate
+    private static final class AllContextsPredicate implements ContextPredicate
     {
         @Override
         public boolean evaluate(Context context)
@@ -98,7 +98,7 @@ public class Context implements Serializable
         }
     }
     
-    private static class ContextNamePredicate implements ContextPredicate
+    private static final class ContextNamePredicate implements ContextPredicate
     {
         private final String[] contextNames;
 

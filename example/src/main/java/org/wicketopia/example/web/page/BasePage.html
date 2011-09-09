@@ -15,7 +15,33 @@
   -->
 
 <html>
+<wicket:head>
+    <title><span wicket:id="titleLabel"/></title>
+    <wicket:link>
+	    <link rel="stylesheet" type="text/css" href="style.css"/>
+    </wicket:link>
+</wicket:head>
+
 <body>
-<wicket:child/>
+<table class="layout" border="0">
+    <tr>
+        <td class="caption"><span wicket:id="captionLabel"/></td>
+    </tr>
+    <tr>
+        <td class="content">
+            <wicket:link>
+                <a class="homeLink" wicket:id="homeLink" href="/">[home]</a>&nbsp;<a wicket:id="login" title="Login as admin user">[login]</a><a wicket:id="logout">[logout]</a>
+            </wicket:link>
+            <div class="childContent">
+                <div wicket:id="feedback"/>
+                <wicket:child/>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="copyright"><span wicket:id="copyrightLabel"/></td>
+    </tr>
+</table>
 </body>
 </html>

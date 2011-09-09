@@ -21,11 +21,11 @@ package org.wicketopia.util;
  */
 public interface Displayable
 {
-    public String getDisplayName();
+    String getDisplayName();
 
-    public void setDisplayName(String displayName);
+    void setDisplayName(String displayName);
 
-    public String getDisplayNameMessageKey();
+    String getDisplayNameMessageKey();
 
-    public void setDisplayNameMessageKey(String displayNameMessageKey);
+    void setDisplayNameMessageKey(String displayNameMessageKey);
 }

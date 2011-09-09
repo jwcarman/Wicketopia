@@ -45,7 +45,7 @@ public class PropertyViewerComponentFactory<T> extends AbstractPropertyComponent
     public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context)
     {
         Wicketopia plugin = Wicketopia.get();
-        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(beanType).getPropertyMetaData(propertyName);
+        PropertyMetaData propertyMetaData = plugin.getBeanMetaData(getBeanType()).getPropertyMetaData(propertyName);
         return plugin.createPropertyViewer(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);
     }
 }

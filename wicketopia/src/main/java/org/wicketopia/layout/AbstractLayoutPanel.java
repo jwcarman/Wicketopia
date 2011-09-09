@@ -39,35 +39,10 @@ public class AbstractLayoutPanel<T> extends Panel
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected final Context context;
-    protected final Class<T> beanType;
-    protected final PropertyComponentFactory<T> componentFactory;
-    protected final List<String> propertyNames;
-
-//----------------------------------------------------------------------------------------------------------------------
-// Static Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    private static List<String> filter(Class<?> beanType, List<String> propertyNames, Context context)
-    {
-        BeanMetaData beanMetaData = Wicketopia.get().getBeanMetaData(beanType);
-        for (Iterator<String> iterator = propertyNames.iterator(); iterator.hasNext();)
-        {
-            String propertyName = iterator.next();
-            PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(propertyName);
-            final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
-            if (!facet.isIgnored() && facet.isVisible(context))
-            {
-                iterator.remove();
-            }
-        }
-        return propertyNames;
-    }
-
-    private static int getOrder(BeanMetaData beanMetaData, String propertyName)
-    {
-        return WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(propertyName)).getOrder();
-    }
+    private final Context context;
+    private final Class<T> beanType;
+    private final PropertyComponentFactory<T> componentFactory;
+    private final List<String> propertyNames;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -96,6 +71,21 @@ public class AbstractLayoutPanel<T> extends Panel
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    protected Class<T> getBeanType()
+    {
+        return beanType;
+    }
+
+    protected PropertyComponentFactory<T> getComponentFactory()
+    {
+        return componentFactory;
+    }
+
+    protected Context getContext()
+    {
+        return context;
+    }
+
     public List<String> getPropertyNames()
     {
         return propertyNames;
@@ -107,11 +97,11 @@ public class AbstractLayoutPanel<T> extends Panel
 
     protected Component createPropertyComponent(String componentId, IModel<T> beanModel, String propertyName)
     {
-        return componentFactory.createPropertyComponent(componentId, beanModel, propertyName, context);
+        return getComponentFactory().createPropertyComponent(componentId, beanModel, propertyName, getContext());
     }
 
     protected Label createPropertyLabel(String componentId, String propertyName)
     {
-        return componentFactory.createPropertyLabel(componentId, propertyName);
+        return getComponentFactory().createPropertyLabel(componentId, propertyName);
     }
 }

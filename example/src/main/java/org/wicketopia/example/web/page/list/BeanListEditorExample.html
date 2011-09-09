@@ -14,14 +14,17 @@
   ~ limitations under the License.
   -->
 
-<!DOCTYPE hibernate-configuration PUBLIC
-        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
-        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<html>
+<body>
+<wicket:extend>
+    <form wicket:id="form">
+        <button wicket:id="submit">Update All</button>
+    <div wicket:id="list" />
+    </form>
 
-<hibernate-configuration>
-    <session-factory>
-        <property name="dialect">org.hibernate.dialect.HSQLDialect</property>
-        <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
-    </session-factory>
-</hibernate-configuration>
+</wicket:extend>
+</body>
+</html>
+
+
+

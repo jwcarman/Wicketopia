@@ -95,7 +95,7 @@ public class ContextualBoolean
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class ContextualCondition
+    private final class ContextualCondition
     {
         private final ContextPredicate predicate;
         private final boolean value;

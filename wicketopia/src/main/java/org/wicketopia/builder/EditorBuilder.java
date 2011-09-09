@@ -27,9 +27,9 @@ public interface EditorBuilder extends ViewerBuilder
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addValidator(IValidator validator);
+    void addValidator(IValidator validator);
 
-    public void enabled(boolean enabled);
+    void enabled(boolean enabled);
 
-    public void required(boolean required);
+    void required(boolean required);
 }

@@ -33,5 +33,5 @@ public interface SecurityProvider extends Serializable
      * @param roles the roles
      * @return true if the current user has one of the specified roles
      */
-    public boolean checkRoles(Set<String> roles);
+    boolean checkRoles(Set<String> roles);
 }

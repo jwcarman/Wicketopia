@@ -66,6 +66,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 
     private static final PackageResourceReference CSS_REFERENCE = new PackageResourceReference(Scaffold.class, "scaffold.css");
     private static final String CONTENT_ID = "content";
+    public static final int DEFAULT_ROWS_PER_PAGE = 25;
     private final Class<T> beanType;
     private final PersistenceProvider persistenceProvider;
     private ScaffoldMode mode = ScaffoldMode.List;
@@ -145,7 +146,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class ActionsColumn extends FragmentColumn<T>
+    private final class ActionsColumn extends FragmentColumn<T>
     {
         private ActionsColumn()
         {
@@ -163,22 +164,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CancelLink extends AjaxLink<Void>
-    {
-        private CancelLink(String id)
-        {
-            super(id);
-        }
-
-        @Override
-        public void onClick(AjaxRequestTarget target)
-        {
-            mode = ScaffoldMode.List;
-            refreshContent(target);
-        }
-    }
-
-    private class ConfirmBehavior extends AbstractBehavior
+    private final class ConfirmBehavior extends AbstractBehavior
     {
         private final String event;
         private final IModel<String> message;
@@ -198,7 +184,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 
         public void onComponentTag(Component component, ComponentTag tag)
         {
-            StringBuilder handler = new StringBuilder(128);
+            StringBuilder handler = new StringBuilder();
             handler.append("if (!confirm('");
             handler.append(message.getObject().replaceAll("'", "\\\\'"));
             handler.append("')) {return false;} ");
@@ -209,11 +195,11 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
                 handler.append(script);
             }
 
-            tag.put(event.toString(), handler.toString());
+            tag.put(event, handler.toString());
         }
     }
 
-    private class CreateFragment extends Fragment
+    private final class CreateFragment extends Fragment
     {
         private CreateFragment()
         {
@@ -247,7 +233,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CreateLink extends AjaxLink<Void>
+    private final class CreateLink extends AjaxLink<Void>
     {
         private CreateLink(String id)
         {
@@ -262,7 +248,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class CreateModel extends LoadableDetachableModel<T>
+    private final class CreateModel extends LoadableDetachableModel<T>
     {
         @Override
         protected T load()
@@ -273,12 +259,12 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             }
             catch (Exception e)
             {
-                throw new WicketRuntimeException("Unable to instantiate " + beanType.getName() + " object (" + e.getMessage() + ").");
+                throw new WicketRuntimeException("Unable to instantiate " + beanType.getName() + " object (" + e.getMessage() + ").", e);
             }
         }
     }
 
-    private class DeleteLink extends AjaxLink<T>
+    private final class DeleteLink extends AjaxLink<T>
     {
         private DeleteLink(String id, IModel<T> tiModel)
         {
@@ -296,12 +282,11 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class EditFragment extends Fragment
+    private final class EditFragment extends Fragment
     {
         private EditFragment()
         {
             super(CONTENT_ID, "edit", Scaffold.this);
-            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new DeleteLink("deleteButton", model));
             add(new ListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
@@ -332,7 +317,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class EditLink extends AjaxLink<T>
+    private final class EditLink extends AjaxLink<T>
     {
         private EditLink(String id, IModel<T> model)
         {
@@ -348,7 +333,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ListFragment extends Fragment
+    private final class ListFragment extends Fragment
     {
         private ListFragment()
         {
@@ -361,11 +346,11 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             final Context context = new Context(Context.LIST);
             final List<IColumn<T>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
             columns.add(new ActionsColumn());
-            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), 25));
+            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
         }
     }
 
-    private class ListLink extends AjaxLink<Void>
+    private final class ListLink extends AjaxLink<Void>
     {
         private ListLink(String id)
         {
@@ -380,12 +365,11 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ViewFragment extends Fragment
+    private final class ViewFragment extends Fragment
     {
         private ViewFragment()
         {
             super(CONTENT_ID, "view", Scaffold.this);
-            WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new EditLink("editButton", model));
             add(new DeleteLink("deleteButton", model));
@@ -397,7 +381,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private class ViewLink extends AjaxLink<T>
+    private final class ViewLink extends AjaxLink<T>
     {
         private ViewLink(String id, IModel<T> tiModel)
         {

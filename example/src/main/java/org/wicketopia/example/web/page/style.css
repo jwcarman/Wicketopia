@@ -17,3 +17,270 @@
 html * {
     margin: 0;
 }
+
+.childContent {
+    margin-top: 20px;
+}
+
+table {
+    border-style: solid;
+}
+
+table {
+    border-style: solid;
+}
+
+.feedbackPanelERROR {
+    color: red;
+}
+
+.feedbackPanelINFO {
+    color: green;
+}
+
+.feedbackPanelWARN {
+    color: yellow;
+}
+
+img {
+    border-width: 0;
+}
+
+a.storyLink {
+    font-size: larger;
+    text-decoration: none;
+}
+
+fieldset {
+    border-color: blue;
+    color: blue;
+}
+
+td.caption {
+    font-size: xx-large;
+    text-align: center;
+    color: white;
+    background-color: #EB5A0A;
+    vertical-align: middle;
+}
+
+td.copyright {
+    font-size: small;
+    background-color: #EB5A0A;
+    font-weight: bold;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+table.layout {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+th.formLabel {
+    font-weight: bold;
+    text-align: left;
+
+}
+
+th.formField {
+    text-align: left;
+    width: 100%;
+}
+
+td.content {
+    vertical-align: top;
+    height: 100%;
+}
+
+table.beanList caption {
+    text-align: left;
+}
+
+table.beanList tr {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+table.beanList {
+    margin-bottom: 10px;
+    border-bottom: 1px solid #0079d6;
+    font-size: 1em;
+    font-family: arial, serif;
+}
+
+table.beanList tr.even {
+    background-color: #ffebcd;
+}
+
+table.beanList tr.odd {
+    background-color: #fff;
+}
+
+table.beanList tr td {
+    padding-left: 8px;
+    padding-right: 30px;
+
+}
+
+.beanList th a:link, th a:visited, th a:hover {
+    color: #333;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+    padding-right: 8px;
+    padding-left: 5px;
+}
+
+
+.beanList th.wicket_orderUp a, .beanList th.wicket_orderDown a {
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.beanList th.wicket_orderUp a {
+    background-image: url(images/sorted_asc.gif);
+}
+
+.beanList th.wicket_orderDown a {
+    background-image: url(images/sorted_desc.gif);
+}
+
+table.beanList tr th {
+    color: black;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 30px;
+    background-color: #c1e4ff;
+    border-bottom: 1px solid #0079d6;
+    border-top: 1px solid #0079d6;
+    border-left: 1px solid #0079d6;
+    border-right: 1px solid #0079d6;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+table.beanList tr th {
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+table.beanList tr th.wicket_orderDown {
+    background-color: #87cbff;
+    background-image: url( 'images/arrow_down.png' );
+}
+
+table.beanList tr th.wicket_orderUp {
+    background-color: #87cbff;
+    background-image: url( 'images/arrow_up.png' );
+}
+
+table.beanList tr th.wicket_orderNone {
+    background-image: url( 'images/arrow_off.png' );
+}
+
+table.beanList tr th a {
+    font-weight: normal;
+}
+
+table.beanList #message {
+    padding-left: 3px;
+}
+
+table.beanList caption {
+    padding-bottom: 2px;
+}
+
+div.tabRowContent {
+    border-color: #DDDDDD;
+    border-style: solid;
+    border-width: 1px;
+    margin: 4px;
+    padding: 4px;
+}
+
+div.tabpanel div.tab-row {
+    float: left;
+    width: 100%;
+    background: #DAE0D2 url( "tabs/bg.gif" ) repeat-x bottom;
+    line-height: normal;
+}
+
+div.tabpanel div.tab-row ul {
+    margin: 0;
+    padding: 10px 10px 0;
+    list-style: none;
+}
+
+div.tabpanel div.tab-row li {
+    float: left;
+    background: url( "tabs/left.gif" ) no-repeat left top;
+    margin: 0;
+    padding: 0 0 0 9px;
+}
+
+div.tabpanel div.tab-row a {
+    display: block;
+    background: url( "tabs/right.gif" ) no-repeat right top;
+    padding: 5px 15px 4px 6px;
+    text-decoration: none;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #eee;
+}
+
+div.tab-panel {
+    clear: left;
+}
+
+div.tabpanel div.tab-row a:hover {
+    color: #fff;
+}
+
+div.tabpanel div.tab-row li.selected {
+    background-image: url( "tabs/left_on.gif" );
+}
+
+div.tabpanel div.tab-row li.selected a {
+    background-image: url( "tabs/right_on.gif" );
+    color: #333;
+    padding-bottom: 5px;
+}
+
+.css-layout {
+    padding: 5px;
+    border: 1px solid #ccc;
+    display: table;
+}
+
+.prop-div {
+    padding: 5px;
+    display: table-row;
+}
+
+.prob-label {
+    font: 11px verdana, arial, helvetica, sans-serif;
+    line-height: 12px;
+    padding: 5px 6px;
+    text-align: left;
+    white-space: nowrap;
+    display: table-cell;
+}
+
+.prop-component {
+    font: 11px verdana, arial, helvetica, sans-serif;
+    line-height: 12px;
+    padding: 5px 6px;
+    text-align: left;
+    display: table-cell;
+}

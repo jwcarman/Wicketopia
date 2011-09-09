@@ -26,5 +26,5 @@ public interface PropertyViewerProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
+    ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
 }

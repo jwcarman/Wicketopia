@@ -38,11 +38,12 @@ public class JodaFormatSupport<T> implements IClusterable
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static final int DEFAULT_PIVOT_YEAR = 2000;
     private final DateTimeTranslator<T> translator;
     private final FormatProvider formatProvider;
 
     private boolean applyTimeZoneDifference = true;
-    private int pivotYear = 2000;
+    private int pivotYear = DEFAULT_PIVOT_YEAR;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors

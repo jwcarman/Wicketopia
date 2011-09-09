@@ -17,6 +17,7 @@
 package org.wicketopia.persistence;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 public interface PersistenceProvider
@@ -25,17 +26,25 @@ public interface PersistenceProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public int getCount(Class<?> beanType);
+    int getCount(Class<?> beanType);
 
-    public Serializable getIdentifier(Object entity);
+    Serializable getIdentifier(Object entity);
 
-    public <T> T getByIdentifier(Class<T> entityType, Serializable identifier);
+    <T> T getByIdentifier(Class<T> entityType, Serializable identifier);
 
-    public <T> T create(T object);
+    <T> T create(T object);
 
-    public <T> void delete(T object);
-    
-    public <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending);
+    <T,C extends Collection<? extends T>> void create(C collection);
 
-    public <T> T update(T object);
+    <T> void delete(T object);
+
+    <T,C extends Collection<? extends T>> void delete(C collection);
+
+    <T> List<T> getAll(Class<T> entityType);
+
+    <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending);
+
+    <T> T update(T object);
+
+    <T,C extends Collection<? extends T>> void update(C collection);
 }
