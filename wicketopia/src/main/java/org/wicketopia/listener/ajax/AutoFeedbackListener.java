@@ -16,9 +16,6 @@
 
 package org.wicketopia.listener.ajax;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -28,6 +25,9 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Add this to your AjaxRequestTarget and your feedback panels will automatically be included
  * in the AJAX response if they have messages.
@@ -36,24 +36,30 @@ import org.apache.wicket.util.visit.IVisitor;
  */
 public class AutoFeedbackListener implements AjaxRequestTarget.IListener
 {
+//----------------------------------------------------------------------------------------------------------------------
+// IListener Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+
+    @Override
+    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response)
+    {
+        // Do nothing!
+    }
+
     @Override
     public void onBeforeRespond(Map<String, Component> map, final AjaxRequestTarget target)
     {
         if (!Session.get().getFeedbackMessages().isEmpty())
         {
-            target.getPage().visitChildren(IFeedback.class, new IVisitor<Component,Void>()
+            target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>()
             {
-				@Override
+                @Override
                 public void component(Component component, IVisit<Void> visit)
                 {
                     if (component.getOutputMarkupId())
                     {
                         if (component instanceof FeedbackPanel && hasMessages((FeedbackPanel) component))
-                        {
-                            target.add(component);
-
-                        }
-                        else
                         {
                             target.add(component);
                         }
@@ -64,15 +70,13 @@ public class AutoFeedbackListener implements AjaxRequestTarget.IListener
         }
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     private boolean hasMessages(FeedbackPanel feedbackPanel)
     {
         List<FeedbackMessage> feedbackMessages = feedbackPanel.getFeedbackMessagesModel().getObject();
-        return feedbackMessages != null && feedbackMessages.isEmpty();
-    }
-
-    @Override
-    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response)
-    {
-        // Do nothing!
+        return feedbackMessages != null && !feedbackMessages.isEmpty();
     }
 }

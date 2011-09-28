@@ -20,10 +20,14 @@ import org.apache.commons.lang.SerializationUtils;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.PropertyMetaData;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
+import org.wicketopia.Wicketopia;
+import org.wicketopia.util.AbstractWicketTestCase;
 import org.wicketopia.util.Person;
 
 import java.util.ArrayList;
@@ -33,11 +37,17 @@ import java.util.List;
 /**
  * @author James Carman
  */
-public class TestWicketopiaFacet
+public class TestWicketopiaFacet extends AbstractWicketTestCase
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+    @BeforeMethod
+    public void installWicketopia()
+    {
+        new Wicketopia().install(tester.getApplication());
+    }
 
     @Test
     public void testGet()
