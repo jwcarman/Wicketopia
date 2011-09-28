@@ -60,7 +60,7 @@ public class BeanListEditorExample extends BasePage
             {
                 persistenceProvider.update(list.getList());
                 info("Persons updated successfully.");
-                target.addComponent(list);
+                target.add(list);
             }
 
 			@Override

@@ -56,7 +56,7 @@ public class CreateEntityForm<T extends Serializable> extends Form<T>
                 CreateEntityForm.this.setModelObject(createEntity(entityType));
                 final WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(entityType));
                 info(DisplayNameModel.getDisplayName(facet, getLocalizer(), CreateEntityForm.this) + " created.");
-                target.addComponent(CreateEntityForm.this);
+                target.add(CreateEntityForm.this);
             }
 
 			@Override

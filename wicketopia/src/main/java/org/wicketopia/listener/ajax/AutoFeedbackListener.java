@@ -50,12 +50,12 @@ public class AutoFeedbackListener implements AjaxRequestTarget.IListener
                     {
                         if (component instanceof FeedbackPanel && hasMessages((FeedbackPanel) component))
                         {
-                            target.addComponent(component);
+                            target.add(component);
 
                         }
                         else
                         {
-                            target.addComponent(component);
+                            target.add(component);
                         }
                     }
                     visit.dontGoDeeper();

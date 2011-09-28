@@ -16,14 +16,12 @@
 
 package org.wicketopia.persistence.component.scaffold;
 
-import java.util.List;
-
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
@@ -40,7 +38,6 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.resource.PackageResourceReference;
-import org.apache.wicket.request.resource.ResourceReference;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
@@ -54,6 +51,8 @@ import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 import org.wicketopia.persistence.component.link.ajax.AjaxUpdateLink;
 import org.wicketopia.persistence.model.LoadableDetachableEntityModel;
 import org.wicketopia.persistence.model.repeater.PersistenceDataProvider;
+
+import java.util.List;
 
 /**
  * @author James Carman
@@ -83,7 +82,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         super(id);
         WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
         displayName = new DisplayNameModel(beanFacet);
-        add(new AttributeModifier("class", true, new Model<String>("scaffold")));
+        add(new AttributeModifier("class", new Model<String>("scaffold")));
         feedback.setOutputMarkupPlaceholderTag(true);
         feedback.setFilter(new ContainerFeedbackMessageFilter(this));
         add(feedback);
@@ -101,7 +100,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         addOrReplace(content);
         if (target != null)
         {
-            target.addComponent(this);
+            target.add(this);
         }
     }
 
@@ -164,7 +163,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class ConfirmBehavior extends AbstractBehavior
+    private final class ConfirmBehavior extends Behavior
     {
         private final String event;
         private final IModel<String> message;
@@ -226,7 +225,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
                 @Override
                 protected void onError(AjaxRequestTarget target, Form<?> form)
                 {
-                    target.addComponent(feedback);
+                    target.add(feedback);
                 }
             });
             add(form);
@@ -311,7 +310,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
                 @Override
                 protected void onError(AjaxRequestTarget target, Form<?> form)
                 {
-                    target.addComponent(feedback);
+                    target.add(feedback);
                 }
             });
         }
