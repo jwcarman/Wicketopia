@@ -35,7 +35,10 @@
         <module>wicketopia</module>
         <module>persistence</module>
         <module>hibernate</module>
+<!--
+Not ready for 1.0 release
         <module>filecfg</module>
+-->
         <module>jpa</module>
         <module>jpa2</module>
         <module>joda</module>
