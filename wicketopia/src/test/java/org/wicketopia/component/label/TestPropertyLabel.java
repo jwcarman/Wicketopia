@@ -19,6 +19,7 @@ package org.wicketopia.component.label;
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -31,7 +32,7 @@ import org.wicketopia.util.Person;
  */
 public class TestPropertyLabel extends AbstractWicketTestCase
 {
-    @BeforeMethod
+    @BeforeClass
     public void installWicketopia()
     {
         Wicketopia.install();

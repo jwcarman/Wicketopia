@@ -19,6 +19,7 @@ package org.wicketopia.util;
 import org.apache.wicket.util.tester.WicketTester;
 import org.jmock.Mockery;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -44,9 +45,15 @@ public abstract class AbstractWicketTestCase
     }
 
     @BeforeMethod
-    public void constructWicketTester()
+    public void initMockery()
     {
         mockery = new Mockery();
+    }
+
+    @BeforeClass
+    public void constructWicketTester()
+    {
+
         tester = new WicketTester();
     }
 }

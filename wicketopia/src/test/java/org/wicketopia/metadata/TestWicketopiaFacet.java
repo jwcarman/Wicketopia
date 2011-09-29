@@ -43,7 +43,7 @@ public class TestWicketopiaFacet extends AbstractWicketTestCase
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    @BeforeMethod
+    @BeforeClass
     public void installWicketopia()
     {
         new Wicketopia().install(tester.getApplication());
