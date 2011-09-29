@@ -24,6 +24,7 @@ import org.metastopheles.PropertyMetaData;
  */
 public abstract class AbstractTextComponentPropertyEditor extends AbstractFormComponentPropertyEditor
 {
+    @SuppressWarnings("unchecked")
     protected AbstractTextComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, AbstractTextComponent formComponent)
     {
         super(id, propertyMetaData, formComponent);

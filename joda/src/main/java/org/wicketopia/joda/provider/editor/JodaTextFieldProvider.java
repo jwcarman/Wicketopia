@@ -36,7 +36,6 @@ public class JodaTextFieldProvider<T> implements PropertyEditorProvider
 
     private JodaFormatSupport<T> formatSupport;
 
-
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------

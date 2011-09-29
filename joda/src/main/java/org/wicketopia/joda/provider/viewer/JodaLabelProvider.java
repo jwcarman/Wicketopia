@@ -56,6 +56,4 @@ public class JodaLabelProvider<T> implements PropertyViewerProvider
         final FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);
         return new JodaLabel<T>(componentId, (IModel<T>) propertyModel, specifiedFormatProvider == null ? formatSupport : formatSupport.withProvider(specifiedFormatProvider));
     }
-
-
 }
