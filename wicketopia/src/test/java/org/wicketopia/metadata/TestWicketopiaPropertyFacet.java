@@ -21,11 +21,7 @@ import org.metastopheles.BeanMetaData;
 import org.metastopheles.BeanMetaDataFactory;
 import org.metastopheles.PropertyMetaData;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
-
 import org.wicketopia.Wicketopia;
 import org.wicketopia.util.AbstractWicketTestCase;
 import org.wicketopia.util.Person;
@@ -34,10 +30,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.testng.Assert.*;
+
 /**
  * @author James Carman
  */
-public class TestWicketopiaFacet extends AbstractWicketTestCase
+public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
