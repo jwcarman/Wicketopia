@@ -16,13 +16,18 @@
 
 package org.wicketopia.layout.view;
 
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
-
 import org.wicketopia.Wicketopia;
+import org.wicketopia.context.Context;
 import org.wicketopia.util.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 import org.wicketopia.util.Gender;
+
+import java.util.Arrays;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author James Carman
@@ -39,7 +44,9 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
         bean.setIntProperty(123);
         bean.setDoubleProperty(456.0);
         bean.setGender(Gender.Male);
-        tester.startPage(new CssBeanViewLayoutTestPage(bean, plugin.createViewerFactory(EditableBean.class)));
+        final IModel<EditableBean> model = new Model<EditableBean>(bean);
+        final Context context = new Context(Context.VIEW);
+        tester.startPage(new CssBeanViewLayoutTestPage(new CssBeanViewLayoutPanel<EditableBean>(CssBeanViewLayoutTestPage.PANEL_ID, EditableBean.class, model, context, plugin.createViewerFactory(EditableBean.class))));
         tester.assertRenderedPage(CssBeanViewLayoutTestPage.class);
         tester.assertLabel("view:prop-div:1:prop-label", "String Property");
         tester.assertModelValue("view:prop-div:1:prop-component", "Hello");
@@ -55,6 +62,27 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     }
 
     @Test
+    public void testCustomCssClass()
+    {
+        Wicketopia plugin = new Wicketopia();
+        plugin.install(tester.getApplication());
+        final EditableBean bean = new EditableBean();
+        bean.setStringProperty("Hello");
+        bean.setIntProperty(123);
+        bean.setDoubleProperty(456.0);
+        bean.setGender(Gender.Male);
+        final IModel<EditableBean> model = new Model<EditableBean>(bean);
+        final Context context = new Context(Context.CREATE);
+        CssBeanViewLayoutPanel<EditableBean> panel = new CssBeanViewLayoutPanel<EditableBean>(CssBeanViewLayoutTestPage.PANEL_ID, EditableBean.class, model, context, plugin.createEditorFactory(EditableBean.class));
+        panel.setCssClass("custom-css");
+        tester.startPage(new CssBeanViewLayoutTestPage(panel));
+        tester.assertRenderedPage(CssBeanViewLayoutTestPage.class);
+        assertEquals(tester.getTagByWicketId("view").getAttribute("class"), "custom-css");
+        tester.assertNoErrorMessage();
+        tester.assertNoInfoMessage();
+    }
+
+    @Test
     public void testWithEditor()
     {
         Wicketopia plugin = new Wicketopia();
@@ -64,7 +92,9 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
         bean.setIntProperty(123);
         bean.setDoubleProperty(456.0);
         bean.setGender(Gender.Male);
-        tester.startPage(new CssBeanViewLayoutTestPage(bean, plugin.createEditorFactory(EditableBean.class)));
+        final IModel<EditableBean> model = new Model<EditableBean>(bean);
+        final Context context = new Context(Context.CREATE);
+        tester.startPage(new CssBeanViewLayoutTestPage(new CssBeanViewLayoutPanel<EditableBean>(CssBeanViewLayoutTestPage.PANEL_ID, EditableBean.class, model, context, plugin.createEditorFactory(EditableBean.class))));
         tester.assertRenderedPage(CssBeanViewLayoutTestPage.class);
         tester.assertLabel("view:prop-div:1:prop-label", "String Property");
         tester.assertModelValue("view:prop-div:1:prop-component:editor", "Hello");
@@ -74,6 +104,52 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
         tester.assertModelValue("view:prop-div:3:prop-component:editor", 456.0);
         tester.assertLabel("view:prop-div:4:prop-label", "Gender");
         tester.assertModelValue("view:prop-div:4:prop-component:ddc", Gender.Male);
+        assertEquals(tester.getTagByWicketId("view").getAttribute("class"), CssBeanViewLayoutPanel.DEFAULT_CSS_CLASS);
+        tester.assertNoErrorMessage();
+        tester.assertNoInfoMessage();
+    }
+
+    @Test
+    public void testWithEnumeratedProperties()
+    {
+        Wicketopia plugin = new Wicketopia();
+        plugin.install(tester.getApplication());
+        final EditableBean bean = new EditableBean();
+        bean.setStringProperty("Hello");
+        bean.setIntProperty(123);
+        bean.setDoubleProperty(456.0);
+        bean.setGender(Gender.Male);
+        final IModel<EditableBean> model = new Model<EditableBean>(bean);
+        final Context context = new Context(Context.CREATE);
+        tester.startPage(new CssBeanViewLayoutTestPage(new CssBeanViewLayoutPanel<EditableBean>(CssBeanViewLayoutTestPage.PANEL_ID, EditableBean.class, model, context, plugin.createEditorFactory(EditableBean.class), "stringProperty", "gender")));
+        tester.assertRenderedPage(CssBeanViewLayoutTestPage.class);
+        tester.assertLabel("view:prop-div:1:prop-label", "String Property");
+        tester.assertModelValue("view:prop-div:1:prop-component:editor", "Hello");
+        tester.assertLabel("view:prop-div:2:prop-label", "Gender");
+        tester.assertModelValue("view:prop-div:2:prop-component:ddc", Gender.Male);
+        assertEquals(tester.getTagByWicketId("view").getAttribute("class"), CssBeanViewLayoutPanel.DEFAULT_CSS_CLASS);
+        tester.assertNoErrorMessage();
+        tester.assertNoInfoMessage();
+    }
+
+    @Test
+    public void testWithEnumeratedPropertiesList()
+    {
+        Wicketopia plugin = new Wicketopia();
+        plugin.install(tester.getApplication());
+        final EditableBean bean = new EditableBean();
+        bean.setStringProperty("Hello");
+        bean.setIntProperty(123);
+        bean.setDoubleProperty(456.0);
+        bean.setGender(Gender.Male);
+        final IModel<EditableBean> model = new Model<EditableBean>(bean);
+        final Context context = new Context(Context.CREATE);
+        tester.startPage(new CssBeanViewLayoutTestPage(new CssBeanViewLayoutPanel<EditableBean>(CssBeanViewLayoutTestPage.PANEL_ID, EditableBean.class, model, context, plugin.createEditorFactory(EditableBean.class), Arrays.asList("stringProperty", "gender"))));
+        tester.assertRenderedPage(CssBeanViewLayoutTestPage.class);
+        tester.assertLabel("view:prop-div:1:prop-label", "String Property");
+        tester.assertModelValue("view:prop-div:1:prop-component:editor", "Hello");
+        tester.assertLabel("view:prop-div:2:prop-label", "Gender");
+        tester.assertModelValue("view:prop-div:2:prop-component:ddc", Gender.Male);
         assertEquals(tester.getTagByWicketId("view").getAttribute("class"), CssBeanViewLayoutPanel.DEFAULT_CSS_CLASS);
         tester.assertNoErrorMessage();
         tester.assertNoInfoMessage();

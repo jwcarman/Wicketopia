@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011 Carman Consulting, Inc.
+ * Copyright (c) 2011. Carman Consulting, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
-package org.wicketopia.layout.view;
+package org.wicketopia.layout.list;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.wicketopia.context.Context;
-import org.wicketopia.factory.PropertyComponentFactory;
+import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
 import org.wicketopia.util.EditableBean;
 
 /**
  * @author James Carman
  */
-public class CssBeanViewLayoutTestPage extends WebPage
+public class BeanListLayoutTestPage extends WebPage
 {
 
     public static final String PANEL_ID = "view";
 
-    public CssBeanViewLayoutTestPage(CssBeanViewLayoutPanel<EditableBean> panel)
+    public BeanListLayoutTestPage(BeanListLayoutPanel<EditableBean> panel)
     {
         add(panel);
     }
