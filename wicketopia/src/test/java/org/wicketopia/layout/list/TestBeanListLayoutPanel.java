@@ -21,13 +21,16 @@ import org.apache.wicket.model.Model;
 import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
+import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
 import org.wicketopia.layout.view.CssBeanViewLayoutTestPage;
 import org.wicketopia.util.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 import org.wicketopia.util.Gender;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
@@ -38,22 +41,32 @@ public class TestBeanListLayoutPanel extends AbstractWicketTestCase
     {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
-        final EditableBean bean = new EditableBean();
-        bean.setStringProperty("Hello");
-        bean.setIntProperty(123);
-        bean.setDoubleProperty(456.0);
-        bean.setGender(Gender.Male);
+        final EditableBean bean1 = new EditableBean();
+        bean1.setStringProperty("Hello");
+        bean1.setIntProperty(123);
+        bean1.setGender(Gender.Male);
+        final EditableBean bean2 = new EditableBean();
+        bean2.setStringProperty("World");
+        bean2.setIntProperty(987);
+        bean2.setGender(Gender.Female);
         final Context context = new Context(Context.VIEW);
-        tester.startPage(new BeanListLayoutTestPage(new BeanListLayoutPanel<EditableBean>(BeanListLayoutTestPage.PANEL_ID, EditableBean.class, Model.ofList(Collections.singletonList(bean)), context, plugin.createViewerFactory(EditableBean.class))));
+        IModel<List<? extends EditableBean>> model = Model.ofList(Arrays.asList(bean1, bean2));
+        PropertyComponentFactory<EditableBean> factory = plugin.createViewerFactory(EditableBean.class);
+
+        tester.startPage(new BeanListLayoutTestPage(new BeanListLayoutPanel<EditableBean>(BeanListLayoutTestPage.PANEL_ID, EditableBean.class, model, context, factory, "stringProperty", "intProperty", "gender")));
+
         tester.assertRenderedPage(BeanListLayoutTestPage.class);
-        /*tester.assertLabel("view:prop-div:1:prop-label", "String Property");
-        tester.assertModelValue("view:prop-div:1:prop-component", "Hello");
-        tester.assertLabel("view:prop-div:2:prop-label", "Int Property");
-        tester.assertModelValue("view:prop-div:2:prop-component", 123);
-        tester.assertLabel("view:prop-div:3:prop-label", "Double Property");
-        tester.assertModelValue("view:prop-div:3:prop-component", 456.0);
-        tester.assertLabel("view:prop-div:4:prop-label", "Gender");
-        tester.assertModelValue("view:prop-div:4:prop-component", Gender.Male);*/
+        // Validate headers...
+        tester.assertLabel("view:headers:1", "String Property");
+        tester.assertLabel("view:headers:2", "Int Property");
+        tester.assertLabel("view:headers:3", "Gender");
+        // Validate rows...
+        tester.assertLabel("view:rows:0:cells:0:component", "Hello");
+        tester.assertLabel("view:rows:0:cells:1:component", "123");
+        tester.assertLabel("view:rows:0:cells:2:component", "Male");
+        tester.assertLabel("view:rows:1:cells:0:component", "World");
+        tester.assertLabel("view:rows:1:cells:1:component", "987");
+        tester.assertLabel("view:rows:1:cells:2:component", "Female");
 
         tester.assertNoErrorMessage();
         tester.assertNoInfoMessage();

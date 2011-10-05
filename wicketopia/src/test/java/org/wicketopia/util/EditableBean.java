@@ -16,7 +16,6 @@
 
 package org.wicketopia.util;
 
-import org.wicketopia.builder.feature.annotation.enabled.Disabled;
 import org.wicketopia.builder.feature.annotation.metadata.Order;
 import org.wicketopia.builder.feature.annotation.required.Required;
 import org.wicketopia.builder.feature.annotation.validator.Length;
@@ -38,10 +37,22 @@ public class EditableBean implements Serializable
     private int intProperty;
     private double doubleProperty;
     private Gender gender;
+    private boolean bool;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+
+    public boolean isBool()
+    {
+        return bool;
+    }
+
+    public void setBool(boolean bool)
+    {
+        this.bool = bool;
+    }
 
     @Order(2)
     @Visible({Context.CREATE, Context.VIEW})
