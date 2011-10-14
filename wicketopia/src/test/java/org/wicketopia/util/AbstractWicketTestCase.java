@@ -32,28 +32,14 @@ public abstract class AbstractWicketTestCase
 //----------------------------------------------------------------------------------------------------------------------
 
     protected WicketTester tester;
-    protected Mockery mockery;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    @AfterMethod
-    public void assertMockeryIsSatisfied()
-    {
-        mockery.assertIsSatisfied();
-    }
-
-    @BeforeMethod
-    public void initMockery()
-    {
-        mockery = new Mockery();
-    }
-
     @BeforeClass
     public void constructWicketTester()
     {
-
         tester = new WicketTester();
     }
 }
