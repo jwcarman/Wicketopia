@@ -16,17 +16,15 @@
 
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -35,7 +33,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.wicketopia.example.domain.value.SessionTracker;
 
+import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -49,6 +49,9 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     @SpringBean
     private AuthenticationManager authenticationManager;
+
+    @Inject
+    private SessionTracker sessionTracker;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -64,6 +67,7 @@ public class BasePage extends WebPage implements IHeaderContributor
         setOutputMarkupId(true);
         add(new Label("titleLabel", getTitleModel()).setRenderBodyOnly(true));
         add(new Label("captionLabel", getCaptionModel()).setRenderBodyOnly(true));
+        add(new Label("pageViews", new PropertyModel<Integer>(sessionTracker, "pageViews")));
         add(new Label("copyrightLabel", resourceModel("page.copyright", new GregorianCalendar().get(
                 Calendar.YEAR))).setEscapeModelStrings(false));
 
@@ -173,5 +177,12 @@ public class BasePage extends WebPage implements IHeaderContributor
         {
             return new StringResourceModel(key, this, null, params, "[" + key + "]");
         }
+    }
+
+    @Override
+    protected void onBeforeRender()
+    {
+        super.onBeforeRender();
+        sessionTracker.incrementPageViews();
     }
 }

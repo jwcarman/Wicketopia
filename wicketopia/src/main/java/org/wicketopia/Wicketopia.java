@@ -130,7 +130,7 @@ public class Wicketopia
     {
         this(findDefaultPlugins());
     }
-
+    
     private static List<WicketopiaPlugin> findDefaultPlugins()
     {
         final List<WicketopiaPlugin> plugins = new LinkedList<WicketopiaPlugin>();
@@ -207,6 +207,11 @@ public class Wicketopia
     public void addMethodMetaDataDecorator(MetaDataDecorator<MethodMetaData> decorator)
     {
         beanMetaDataFactory.getMethodMetaDataDecorators().add(decorator);
+    }
+
+    public void addPlugin(WicketopiaPlugin plugin)
+    {
+        plugins.add(plugin);
     }
 
     public void addPropertyEditorProvider(String typeName, PropertyEditorProvider provider)

@@ -22,6 +22,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.ISpringContextLocator;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.cfg.Configuration;
+import org.jboss.weld.environment.servlet.Listener;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,10 +31,13 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.wicketopia.Wicketopia;
+import org.wicketopia.cdi.CdiPlugin;
 import org.wicketopia.example.web.page.HomePage;
 import org.wicketopia.example.web.page.custom.viewer.ImageBooleanViewer;
 import org.wicketopia.listener.ajax.AutoFeedbackListener;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
+
+import javax.enterprise.inject.spi.BeanManager;
 
 /**
  * Application object for your web application. If you want to run this
@@ -103,10 +107,12 @@ public class WicketApplication extends WebApplication implements
     protected void init()
     {
         super.init();
-        Wicketopia plugin = new Wicketopia();
-        plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
-        plugin.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
-        plugin.install(this);
+        Wicketopia wicketopia = new Wicketopia();
+        wicketopia.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
+        wicketopia.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
+        BeanManager beanManager = (BeanManager)getServletContext().getAttribute(Listener.BEAN_MANAGER_ATTRIBUTE_NAME);
+        wicketopia.addPlugin(new CdiPlugin(beanManager));
+        wicketopia.install(this);
 		getComponentInstantiationListeners().add(
 				new SpringComponentInjector(this, getSpringContext(), true));
 		getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
