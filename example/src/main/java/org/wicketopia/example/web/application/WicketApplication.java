@@ -17,8 +17,10 @@
 package org.wicketopia.example.web.application;
 
 import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.Session;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.mapper.BufferedResponseMapper;
 import org.apache.wicket.spring.ISpringContextLocator;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.cfg.Configuration;
@@ -45,64 +47,77 @@ import javax.enterprise.inject.spi.BeanManager;
  */
 @Component("wicketApplication")
 public class WicketApplication extends WebApplication implements
-		ISpringContextLocator, ApplicationContextAware {
-	// ----------------------------------------------------------------------------------------------------------------------
-	// Fields
-	// ----------------------------------------------------------------------------------------------------------------------
+        ISpringContextLocator, ApplicationContextAware
+{
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
 
-	private static final long serialVersionUID = -6044515824643215562L;
-	private String configurationType = RuntimeConfigurationType.DEVELOPMENT.name();
-	private ApplicationContext applicationContext;
+    // ----------------------------------------------------------------------------------------------------------------------
+    // Fields
+    // ----------------------------------------------------------------------------------------------------------------------
+    private static final long serialVersionUID = -6044515824643215562L;
 
-	@Autowired
-	private LocalSessionFactoryBean sessionFactoryBean;
+    private RuntimeConfigurationType configurationType;
+    private ApplicationContext applicationContext;
 
-	// ----------------------------------------------------------------------------------------------------------------------
-	// Constructors
-	// ----------------------------------------------------------------------------------------------------------------------
+    @Autowired
+    private LocalSessionFactoryBean sessionFactoryBean;
 
-	public WicketApplication() {
-	}
 
-	// ----------------------------------------------------------------------------------------------------------------------
-	// ApplicationContextAware Implementation
-	// ----------------------------------------------------------------------------------------------------------------------
+    public WicketApplication()
+    {
+    }
 
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
-		this.applicationContext = applicationContext;
-	}
+//----------------------------------------------------------------------------------------------------------------------
+// ApplicationContextAware Implementation
+//----------------------------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------------------------
-	// ISpringContextLocator Implementation
-	// ----------------------------------------------------------------------------------------------------------------------
 
-	public ApplicationContext getSpringContext() {
-		return applicationContext;
-	}
+    public void setApplicationContext(ApplicationContext applicationContext)
+            throws BeansException
+    {
+        this.applicationContext = applicationContext;
+    }
 
-	// ----------------------------------------------------------------------------------------------------------------------
-	// Getter/Setter Methods
-	// ----------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------
+// ISpringContextLocator Implementation
+//----------------------------------------------------------------------------------------------------------------------
 
-//	@Override
-//	public String getConfigurationType() {
-//		return configurationType;
-//	}
+    public ApplicationContext getSpringContext()
+    {
+        return applicationContext;
+    }
 
-	@Value("${wicket.configuration}")
-	public void setConfigurationType(String configurationType) {
-		this.configurationType = configurationType;
-	}
+//----------------------------------------------------------------------------------------------------------------------
+// Getter/Setter Methods
+//----------------------------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------------------------
-	// Other Methods
-	// ----------------------------------------------------------------------------------------------------------------------
+    @Override
+    public RuntimeConfigurationType getConfigurationType()
+    {
+        return configurationType;
+    }
 
-	@Override
-	public Class<HomePage> getHomePage() {
-		return HomePage.class;
-	}
+    @Value("${wicket.configuration}")
+    public void setConfigurationType(RuntimeConfigurationType configurationType)
+    {
+        this.configurationType = configurationType;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------------------------------------------------------------
+    // Other Methods
+    // ----------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public Class<HomePage> getHomePage()
+    {
+        return HomePage.class;
+    }
 
     protected void init()
     {
@@ -112,8 +127,15 @@ public class WicketApplication extends WebApplication implements
         wicketopia.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
 
         wicketopia.install(this);
-		getComponentInstantiationListeners().add(
-				new SpringComponentInjector(this, getSpringContext(), true));
-		getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
+        getComponentInstantiationListeners().add(
+                new SpringComponentInjector(this, getSpringContext(), true));
+        getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
+        mount(new BufferedResponseMapper()
+        {
+            protected String getSessionId()
+            {
+                return Session.get().getId();
+            }
+        });
     }
 }

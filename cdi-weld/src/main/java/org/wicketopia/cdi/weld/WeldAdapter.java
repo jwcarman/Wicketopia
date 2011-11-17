@@ -16,15 +16,33 @@
 
 package org.wicketopia.cdi.weld;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.Application;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.cycle.RequestCycle;
+import org.jboss.weld.context.bound.BoundConversationContext;
+import org.jboss.weld.context.http.HttpConversationContext;
 import org.jboss.weld.environment.servlet.Listener;
+import org.jboss.weld.resources.ManagerObjectFactory;
 import org.wicketopia.cdi.spi.CdiFrameworkAdapter;
 
 import javax.enterprise.inject.spi.BeanManager;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 public class WeldAdapter implements CdiFrameworkAdapter
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
+    @Inject
+    HttpConversationContext context;
+
+//----------------------------------------------------------------------------------------------------------------------
+// CdiFrameworkAdapter Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
     @Override
     public BeanManager getBeanManager(WebApplication application)
     {
@@ -34,5 +52,30 @@ public class WeldAdapter implements CdiFrameworkAdapter
     @Override
     public void resumeConversation(String cid)
     {
+        context.associate(getHttpServletRequest());
+        if (StringUtils.isEmpty(cid))
+        {
+            context.activate(null);
+        }
+        else
+        {
+            context.activate(cid);
+        }
+    }
+
+    @Override
+    public void suspendConversation()
+    {
+        context.deactivate();
+        context.dissociate(getHttpServletRequest());
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    private HttpServletRequest getHttpServletRequest()
+    {
+        return (HttpServletRequest)RequestCycle.get().getRequest().getContainerRequest();
     }
 }

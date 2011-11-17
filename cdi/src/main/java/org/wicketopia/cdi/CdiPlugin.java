@@ -42,8 +42,9 @@ public class CdiPlugin implements WicketopiaPlugin
     {
         this.adapter = ServiceLocator.find(CdiFrameworkAdapter.class);
         final BeanManager beanManager = adapter.getBeanManager(wicketopia.getApplication());
+        CdiUtils.inject(adapter, beanManager);
         CdiUtils.inject(wicketopia.getApplication(), beanManager);
-        final CdiRequestCycleListener requestCycleListener = new CdiRequestCycleListener();
+        final CdiRequestCycleListener requestCycleListener = new CdiRequestCycleListener(adapter);
         CdiUtils.inject(requestCycleListener, beanManager);
         wicketopia.getApplication().getRequestCycleListeners().add(requestCycleListener);
         CdiInjector injector = new CdiInjector(beanManager);

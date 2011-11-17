@@ -33,8 +33,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.wicketopia.example.domain.value.SessionTracker;
+import org.wicketopia.example.web.bean.SessionTracker;
 
+import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -52,6 +53,9 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     @Inject
     private SessionTracker sessionTracker;
+
+    @Inject
+    private Conversation conversation;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -75,9 +79,38 @@ public class BasePage extends WebPage implements IHeaderContributor
 
         add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
+        add(new Link("convBegin")
+        {
+            @Override
+            public void onClick()
+            {
+                conversation.begin();
+                setResponsePage(this.getPage().getClass());
+            }
+
+            @Override
+            public boolean isVisible()
+            {
+                return conversation.isTransient();
+            }
+        });
+        add(new Link("convEnd")
+        {
+            @Override
+            public void onClick()
+            {
+                conversation.end();
+                setResponsePage(this.getPage().getClass());
+            }
+
+            @Override
+            public boolean isVisible()
+            {
+                return !conversation.isTransient();
+            }
+        });
         add(new Link("login")
         {
-
             @Override
             public void onClick()
             {
@@ -158,6 +191,13 @@ public class BasePage extends WebPage implements IHeaderContributor
         return resourceModel("page.title");
     }
 
+    @Override
+    protected void onBeforeRender()
+    {
+        super.onBeforeRender();
+        sessionTracker.incrementPageViews();
+    }
+
     /**
      * Creates a resource model which corresponds to this page's <code>key</code> localized
      * resource string.
@@ -177,12 +217,5 @@ public class BasePage extends WebPage implements IHeaderContributor
         {
             return new StringResourceModel(key, this, null, params, "[" + key + "]");
         }
-    }
-
-    @Override
-    protected void onBeforeRender()
-    {
-        super.onBeforeRender();
-        sessionTracker.incrementPageViews();
     }
 }
