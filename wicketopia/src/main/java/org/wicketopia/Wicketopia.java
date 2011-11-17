@@ -51,6 +51,7 @@ import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.model.column.BeanPropertyColumn;
 import org.wicketopia.util.Pluralizer;
+import org.wicketopia.util.ServiceLocator;
 import org.wicketopia.viewer.PropertyViewerProvider;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
 
@@ -65,7 +66,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.Set;
 
 public class Wicketopia
@@ -74,7 +74,7 @@ public class Wicketopia
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Wicketopia.class);
+    private static final Logger logger = LoggerFactory.getLogger(Wicketopia.class);
 
     private static final MetaDataKey<Wicketopia> META_KEY = new WicketopiaPluginKey();
 
@@ -134,7 +134,7 @@ public class Wicketopia
     private static List<WicketopiaPlugin> findDefaultPlugins()
     {
         final List<WicketopiaPlugin> plugins = new LinkedList<WicketopiaPlugin>();
-        for (WicketopiaPlugin wicketopiaPlugin : ServiceLoader.load(WicketopiaPlugin.class))
+        for (WicketopiaPlugin wicketopiaPlugin : ServiceLocator.findAll(WicketopiaPlugin.class))
         {
             plugins.add(wicketopiaPlugin);
         }
@@ -417,7 +417,10 @@ public class Wicketopia
         adDefaultViewerProviders();
         for (WicketopiaPlugin plugin : plugins)
         {
-            LOGGER.debug("Initializing plugin " + plugin + "...");
+            if(logger.isDebugEnabled())
+            {
+                logger.debug("Initializing {} plugin...", plugin.getClass().getName());
+            }
             plugin.initialize(this);
         }
     }

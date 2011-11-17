@@ -69,18 +69,8 @@
         </dependency>
         <dependency>
             <groupId>org.wicketopia</groupId>
-            <artifactId>wicketopia-cdi</artifactId>
+            <artifactId>wicketopia-cdi-weld</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld</groupId>
-            <artifactId>weld-core</artifactId>
-            <version>${weld.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet-core</artifactId>
-            <version>${weld.version}</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>
@@ -331,10 +321,5 @@
     </build>
 
 
-    <repositories>
-        <repository>
-            <id>jboss</id>
-            <url>https://repository.jboss.org/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+
 </project>

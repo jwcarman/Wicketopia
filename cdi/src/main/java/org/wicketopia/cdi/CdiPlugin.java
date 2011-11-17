@@ -18,44 +18,34 @@ package org.wicketopia.cdi;
 
 import org.wicketopia.Wicketopia;
 import org.wicketopia.WicketopiaPlugin;
+import org.wicketopia.cdi.spi.CdiFrameworkAdapter;
+import org.wicketopia.util.ServiceLocator;
 
 import javax.enterprise.inject.spi.BeanManager;
+import java.util.ServiceLoader;
 
 /**
- * The CdiPlugin will automatically inject your application, components, behaviors, and sessions.  Since no
- * consistently-reliable bootstrap mechanism exists to obtain the {@link BeanManager}, this plugin will not
- * automatically register itself and requires
- * {@link Wicketopia#addPlugin(org.wicketopia.WicketopiaPlugin) manual registration}.
+ * The CdiPlugin will automatically inject your application, components, behaviors, and sessions.
  *
  * @since 1.0
  */
 public class CdiPlugin implements WicketopiaPlugin
 {
-//----------------------------------------------------------------------------------------------------------------------
-// Fields
-//----------------------------------------------------------------------------------------------------------------------
-
-    private final BeanManager beanManager;
-
-//----------------------------------------------------------------------------------------------------------------------
-// Constructors
-//----------------------------------------------------------------------------------------------------------------------
-
-    public CdiPlugin(BeanManager beanManager)
-    {
-        this.beanManager = beanManager;
-    }
+    private CdiFrameworkAdapter adapter;
 
 //----------------------------------------------------------------------------------------------------------------------
 // WicketopiaPlugin Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-
     @Override
     public void initialize(Wicketopia wicketopia)
     {
+        this.adapter = ServiceLocator.find(CdiFrameworkAdapter.class);
+        final BeanManager beanManager = adapter.getBeanManager(wicketopia.getApplication());
         CdiUtils.inject(wicketopia.getApplication(), beanManager);
-        wicketopia.getApplication().getRequestCycleListeners().add(new CdiRequestCycleListener());
+        final CdiRequestCycleListener requestCycleListener = new CdiRequestCycleListener();
+        CdiUtils.inject(requestCycleListener, beanManager);
+        wicketopia.getApplication().getRequestCycleListeners().add(requestCycleListener);
         CdiInjector injector = new CdiInjector(beanManager);
         wicketopia.getApplication().getComponentInstantiationListeners().add(injector);
         wicketopia.getApplication().getBehaviorInstantiationListeners().add(injector);

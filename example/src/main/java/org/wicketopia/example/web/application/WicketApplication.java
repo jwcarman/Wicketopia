@@ -110,8 +110,7 @@ public class WicketApplication extends WebApplication implements
         Wicketopia wicketopia = new Wicketopia();
         wicketopia.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
         wicketopia.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
-        BeanManager beanManager = (BeanManager)getServletContext().getAttribute(Listener.BEAN_MANAGER_ATTRIBUTE_NAME);
-        wicketopia.addPlugin(new CdiPlugin(beanManager));
+
         wicketopia.install(this);
 		getComponentInstantiationListeners().add(
 				new SpringComponentInjector(this, getSpringContext(), true));
