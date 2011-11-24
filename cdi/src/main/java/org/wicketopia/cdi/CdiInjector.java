@@ -33,8 +33,6 @@ public class CdiInjector implements IComponentInstantiationListener, IBehaviorIn
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final Logger logger = LoggerFactory.getLogger(CdiInjector.class);
-
     private final BeanManager beanManager;
 
 //----------------------------------------------------------------------------------------------------------------------
