@@ -17,6 +17,7 @@
 package org.wicketopia.cdi.weld;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.Validate;
 import org.apache.wicket.Application;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.cycle.RequestCycle;
@@ -50,17 +51,20 @@ public class WeldAdapter implements CdiFrameworkAdapter
     }
 
     @Override
+    public void beginTransientConversation()
+    {
+        context.activate();
+    }
+
+    @Override
     public void resumeConversation(String cid)
     {
-        context.associate(getHttpServletRequest());
         if (StringUtils.isEmpty(cid))
         {
-            context.activate(null);
+            throw new IllegalArgumentException("Non-transient conversation id '" + cid + "' is invalid.");
         }
-        else
-        {
-            context.activate(cid);
-        }
+        context.associate(getHttpServletRequest());
+        context.activate(cid);
     }
 
     @Override
@@ -76,6 +80,6 @@ public class WeldAdapter implements CdiFrameworkAdapter
 
     private HttpServletRequest getHttpServletRequest()
     {
-        return (HttpServletRequest)RequestCycle.get().getRequest().getContainerRequest();
+        return (HttpServletRequest) RequestCycle.get().getRequest().getContainerRequest();
     }
 }

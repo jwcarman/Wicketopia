@@ -29,5 +29,6 @@ public interface CdiFrameworkAdapter
 
     BeanManager getBeanManager(WebApplication application);
     void resumeConversation(String cid);
+    void beginTransientConversation();
     void suspendConversation();
 }

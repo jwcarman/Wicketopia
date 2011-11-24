@@ -16,7 +16,6 @@
 
 package org.wicketopia.cdi;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.Page;
 import org.apache.wicket.request.IRequestHandler;
@@ -26,6 +25,7 @@ import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.handler.IPageClassRequestHandler;
 import org.apache.wicket.request.handler.IPageRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wicketopia.cdi.spi.CdiFrameworkAdapter;
@@ -70,10 +70,20 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
 // IRequestCycleListener Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
+
+    @Override
+    public void onBeginRequest(RequestCycle cycle)
+    {
+        if (logger.isDebugEnabled())
+        {
+            logger.debug("***** New Request Cycle *****");
+        }
+    }
+
     @Override
     public void onDetach(RequestCycle cycle)
     {
-        if (managingConversationFor(cycle))
+        if (conversationStarted(cycle))
         {
             if (logger.isDebugEnabled())
             {
@@ -95,59 +105,98 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     @Override
     public IRequestHandler onException(RequestCycle cycle, Exception ex)
     {
-        adapter.suspendConversation();
-        activateConversation(cycle, null);
+        //adapter.suspendConversation();
         return null;
     }
 
     @Override
     public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler)
     {
-        if (requiresPropagation(cycle))
+        if (logger.isDebugEnabled())
         {
-            saveConversationToPage(handler);
+            logger.debug("Request handler {} executed.", handler.getClass().getSimpleName());
         }
+        propagateToPageMetaData(handler);
+        propagateToPageParameters(handler);
+
     }
 
     @Override
     public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler)
     {
-        if (managingConversationFor(cycle))
+        if (logger.isDebugEnabled())
+        {
+            logger.debug("Request handler {} resolved.", handler.getClass().getSimpleName());
+        }
+        if (conversationStarted(cycle))
         {
             return;
+        }
+        if (logger.isDebugEnabled())
+        {
+            logger.debug("Checking request parameters for conversation id...");
         }
         String cid = cycle.getRequest().getRequestParameters().getParameterValue(CID_PARAM).toString();
         if (cid == null)
         {
+            if (logger.isDebugEnabled())
+            {
+                logger.debug("Checking page metadata for conversation id...");
+            }
             final Page page = getPage(handler);
             if (page != null)
             {
                 cid = page.getMetaData(CID_KEY);
             }
         }
-        activateConversation(cycle, cid);
+        if (cid == null)
+        {
+            if (logger.isDebugEnabled())
+            {
+                logger.debug("Beginning transient conversation...");
+            }
+            adapter.beginTransientConversation();
+        }
+        else
+        {
+            if (logger.isDebugEnabled())
+            {
+                logger.debug("Resuming non-transient conversation {}...", cid);
+            }
+            adapter.resumeConversation(cid);
+        }
+        cycle.setMetaData(CONVERSATION_STARTED_KEY, true);
     }
 
     @Override
     public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler)
     {
-        if (requiresPropagation(cycle))
+        if (logger.isDebugEnabled())
         {
-            saveConversationToPage(handler);
-            saveConversationToParameters(handler);
+            logger.debug("Request handler {} scheduled.", handler.getClass().getSimpleName());
         }
+        propagateToPageMetaData(handler);
+        propagateToPageParameters(handler);
     }
 
     @Override
     public void onUrlMapped(RequestCycle cycle, IRequestHandler handler, Url url)
     {
-        if (requiresPropagation(cycle))
+        if (requiresPropagation())
         {
             if (logger.isDebugEnabled())
             {
-                logger.debug("Rewriting url {} to append conversation id {}...", url.toAbsoluteString(), conversation.getId());
+                logger.debug("Rewriting url {} to append conversation id {}...", url.toString(), conversation.getId());
             }
             url.setQueryParameter(CID_PARAM, conversation.getId());
+        }
+        else if (url.getQueryParameter(CID_PARAM) != null)
+        {
+            if (logger.isDebugEnabled())
+            {
+                logger.debug("Rewriting url {} to remove conversation id {}...", url.toString(), url.getQueryParameterValue(CID_PARAM));
+            }
+            url.removeQueryParameters(CID_PARAM);
         }
     }
 
@@ -155,27 +204,7 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private void activateConversation(RequestCycle requestCycle, String cid)
-    {
-        if (!managingConversationFor(requestCycle))
-        {
-            if (logger.isDebugEnabled())
-            {
-                if (StringUtils.isEmpty(cid))
-                {
-                    logger.debug("Initiating transient conversation...");
-                }
-                else
-                {
-                    logger.debug("Resuming conversation {}...", cid);
-                }
-            }
-            adapter.resumeConversation(cid);
-            requestCycle.setMetaData(CONVERSATION_STARTED_KEY, true);
-        }
-    }
-
-    private boolean managingConversationFor(RequestCycle requestCycle)
+    private boolean conversationStarted(RequestCycle requestCycle)
     {
         return Boolean.TRUE.equals(requestCycle.getMetaData(CONVERSATION_STARTED_KEY));
     }
@@ -203,34 +232,66 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
         return null;
     }
 
-    private boolean requiresPropagation(RequestCycle cycle)
+    private boolean requiresPropagation()
     {
-        return managingConversationFor(cycle) && !conversation.isTransient();
+        return !conversation.isTransient();
     }
 
-    private void saveConversationToPage(IRequestHandler handler)
+    private void propagateToPageMetaData(IRequestHandler handler)
     {
         Page page = getPage(handler);
         if (page != null)
         {
-            if (logger.isDebugEnabled())
+            if (requiresPropagation())
             {
-                logger.debug("Saving non-transient conversation {} to current page's metadata...", conversation.getId());
+                if (logger.isDebugEnabled())
+                {
+                    logger.debug("Saving non-transient conversation {} to current page's metadata...", conversation.getId());
+                }
+                page.setMetaData(CID_KEY, conversation.getId());
             }
-            page.setMetaData(CID_KEY, conversation.getId());
+            else
+            {
+                final String cid = page.getMetaData(CID_KEY);
+                if (cid != null)
+                {
+                    if (logger.isDebugEnabled())
+                    {
+                        logger.debug("Removing ended conversation {} from current page's metadata...", cid);
+                    }
+                    page.setMetaData(CID_KEY, null);
+                }
+            }
+
         }
     }
 
-    private void saveConversationToParameters(IRequestHandler handler)
+    private void propagateToPageParameters(IRequestHandler handler)
     {
         PageParameters parameters = getPageParameters(handler);
         if (parameters != null)
         {
-            if (logger.isDebugEnabled())
+            if (requiresPropagation())
             {
-                logger.debug("Saving non-transient conversation {} to page parameters...", conversation.getId());
+                if (logger.isDebugEnabled())
+                {
+                    logger.debug("Saving non-transient conversation {} to page parameters...", conversation.getId());
+                }
+                parameters.set(CID_PARAM, conversation.getId());
             }
-            parameters.set(CID_PARAM, conversation.getId());
+            else
+            {
+                final StringValue value = parameters.get(CID_PARAM);
+                if (!value.isNull())
+                {
+                    if (logger.isDebugEnabled())
+                    {
+                        logger.debug("Removing ended conversation {} from page parameters...", value);
+                    }
+                    parameters.remove(CID_PARAM);
+                }
+
+            }
         }
     }
 }

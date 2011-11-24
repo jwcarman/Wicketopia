@@ -16,6 +16,7 @@
 
 package org.wicketopia.example.web.page;
 
+import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.markup.html.IHeaderContributor;
 import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
@@ -85,7 +86,7 @@ public class BasePage extends WebPage implements IHeaderContributor
             public void onClick()
             {
                 conversation.begin();
-                setResponsePage(this.getPage().getClass());
+                //setResponsePage(this.getPage().getClass());
             }
 
             @Override
@@ -99,8 +100,9 @@ public class BasePage extends WebPage implements IHeaderContributor
             @Override
             public void onClick()
             {
+                //throw new WicketRuntimeException("I'm doing this on purpopse!");
                 conversation.end();
-                setResponsePage(this.getPage().getClass());
+                //setResponsePage(this.getPage().getClass());
             }
 
             @Override
