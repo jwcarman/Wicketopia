@@ -33,7 +33,7 @@ import org.wicketopia.cdi.spi.CdiFrameworkAdapter;
 import javax.enterprise.context.Conversation;
 import javax.inject.Inject;
 
-public class CdiRequestCycleListener extends AbstractRequestCycleListener
+public class ConversationPropagationListener extends AbstractRequestCycleListener
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -41,7 +41,7 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
 
     public static final String CID_PARAM = "cid";
 
-    private static final Logger logger = LoggerFactory.getLogger(CdiRequestCycleListener.class);
+    private static final Logger logger = LoggerFactory.getLogger(ConversationPropagationListener.class);
 
     private static final MetaDataKey<Boolean> CONVERSATION_STARTED_KEY = new MetaDataKey<Boolean>()
     {
@@ -61,7 +61,7 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CdiRequestCycleListener(CdiFrameworkAdapter adapter)
+    public ConversationPropagationListener(CdiFrameworkAdapter adapter)
     {
         this.adapter = adapter;
     }
@@ -74,9 +74,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     @Override
     public void onBeginRequest(RequestCycle cycle)
     {
-        if (logger.isDebugEnabled())
+        if (logger.isTraceEnabled())
         {
-            logger.debug("***** New Request Cycle *****");
+            logger.trace("***** New Request Cycle *****");
         }
     }
 
@@ -85,15 +85,15 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     {
         if (conversationStarted(cycle))
         {
-            if (logger.isDebugEnabled())
+            if (logger.isTraceEnabled())
             {
                 if (conversation.isTransient())
                 {
-                    logger.debug("Abandoning transient conversation...");
+                    logger.trace("Abandoning transient conversation...");
                 }
                 else
                 {
-                    logger.debug("Suspending non-transient conversation {}...", conversation.getId());
+                    logger.trace("Suspending non-transient conversation {}...", conversation.getId());
                 }
 
             }
@@ -112,9 +112,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     @Override
     public void onRequestHandlerExecuted(RequestCycle cycle, IRequestHandler handler)
     {
-        if (logger.isDebugEnabled())
+        if (logger.isTraceEnabled())
         {
-            logger.debug("Request handler {} executed.", handler.getClass().getSimpleName());
+            logger.trace("Request handler {} executed.", handler.getClass().getSimpleName());
         }
         propagateToPageMetaData(handler);
         propagateToPageParameters(handler);
@@ -124,24 +124,24 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     @Override
     public void onRequestHandlerResolved(RequestCycle cycle, IRequestHandler handler)
     {
-        if (logger.isDebugEnabled())
+        if (logger.isTraceEnabled())
         {
-            logger.debug("Request handler {} resolved.", handler.getClass().getSimpleName());
+            logger.trace("Request handler {} resolved.", handler.getClass().getSimpleName());
         }
         if (conversationStarted(cycle))
         {
             return;
         }
-        if (logger.isDebugEnabled())
+        if (logger.isTraceEnabled())
         {
-            logger.debug("Checking request parameters for conversation id...");
+            logger.trace("Checking request parameters for conversation id...");
         }
         String cid = cycle.getRequest().getRequestParameters().getParameterValue(CID_PARAM).toString();
         if (cid == null)
         {
-            if (logger.isDebugEnabled())
+            if (logger.isTraceEnabled())
             {
-                logger.debug("Checking page metadata for conversation id...");
+                logger.trace("Checking page metadata for conversation id...");
             }
             final Page page = getPage(handler);
             if (page != null)
@@ -151,17 +151,17 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
         }
         if (cid == null)
         {
-            if (logger.isDebugEnabled())
+            if (logger.isTraceEnabled())
             {
-                logger.debug("Beginning transient conversation...");
+                logger.trace("Beginning transient conversation...");
             }
             adapter.beginTransientConversation();
         }
         else
         {
-            if (logger.isDebugEnabled())
+            if (logger.isTraceEnabled())
             {
-                logger.debug("Resuming non-transient conversation {}...", cid);
+                logger.trace("Resuming non-transient conversation {}...", cid);
             }
             adapter.resumeConversation(cid);
         }
@@ -171,9 +171,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     @Override
     public void onRequestHandlerScheduled(RequestCycle cycle, IRequestHandler handler)
     {
-        if (logger.isDebugEnabled())
+        if (logger.isTraceEnabled())
         {
-            logger.debug("Request handler {} scheduled.", handler.getClass().getSimpleName());
+            logger.trace("Request handler {} scheduled.", handler.getClass().getSimpleName());
         }
         propagateToPageMetaData(handler);
         propagateToPageParameters(handler);
@@ -184,17 +184,17 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
     {
         if (requiresPropagation())
         {
-            if (logger.isDebugEnabled())
+            if (logger.isTraceEnabled())
             {
-                logger.debug("Rewriting url {} to append conversation id {}...", url.toString(), conversation.getId());
+                logger.trace("Rewriting url {} to append conversation id {}...", url.toString(), conversation.getId());
             }
             url.setQueryParameter(CID_PARAM, conversation.getId());
         }
         else if (url.getQueryParameter(CID_PARAM) != null)
         {
-            if (logger.isDebugEnabled())
+            if (logger.isTraceEnabled())
             {
-                logger.debug("Rewriting url {} to remove conversation id {}...", url.toString(), url.getQueryParameterValue(CID_PARAM));
+                logger.trace("Rewriting url {} to remove conversation id {}...", url.toString(), url.getQueryParameterValue(CID_PARAM));
             }
             url.removeQueryParameters(CID_PARAM);
         }
@@ -244,9 +244,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
         {
             if (requiresPropagation())
             {
-                if (logger.isDebugEnabled())
+                if (logger.isTraceEnabled())
                 {
-                    logger.debug("Saving non-transient conversation {} to current page's metadata...", conversation.getId());
+                    logger.trace("Saving non-transient conversation {} to current page's metadata...", conversation.getId());
                 }
                 page.setMetaData(CID_KEY, conversation.getId());
             }
@@ -255,9 +255,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
                 final String cid = page.getMetaData(CID_KEY);
                 if (cid != null)
                 {
-                    if (logger.isDebugEnabled())
+                    if (logger.isTraceEnabled())
                     {
-                        logger.debug("Removing ended conversation {} from current page's metadata...", cid);
+                        logger.trace("Removing ended conversation {} from current page's metadata...", cid);
                     }
                     page.setMetaData(CID_KEY, null);
                 }
@@ -273,9 +273,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
         {
             if (requiresPropagation())
             {
-                if (logger.isDebugEnabled())
+                if (logger.isTraceEnabled())
                 {
-                    logger.debug("Saving non-transient conversation {} to page parameters...", conversation.getId());
+                    logger.trace("Saving non-transient conversation {} to page parameters...", conversation.getId());
                 }
                 parameters.set(CID_PARAM, conversation.getId());
             }
@@ -284,9 +284,9 @@ public class CdiRequestCycleListener extends AbstractRequestCycleListener
                 final StringValue value = parameters.get(CID_PARAM);
                 if (!value.isNull())
                 {
-                    if (logger.isDebugEnabled())
+                    if (logger.isTraceEnabled())
                     {
-                        logger.debug("Removing ended conversation {} from page parameters...", value);
+                        logger.trace("Removing ended conversation {} from page parameters...", value);
                     }
                     parameters.remove(CID_PARAM);
                 }

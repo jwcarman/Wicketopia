@@ -162,7 +162,7 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     public void renderHead(IHeaderResponse header)
     {
-        header.renderCSSReference(new PackageResourceReference(getClass(), "style.css"));
+        header.renderCSSReference(new PackageResourceReference(BasePage.class, "style.css"));
     }
 
 //----------------------------------------------------------------------------------------------------------------------
