@@ -20,17 +20,12 @@ import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.model.table.DefaultSortableCollectionDataProvider;
-import org.wicketopia.model.table.SortableCollectionDataProvider;
-import org.wicketopia.util.AbstractWicketTestCase;
-import org.wicketopia.util.AbstractWicketopiaTestCase;
+import org.wicketopia.testing.AbstractWicketopiaTestCase;
 import org.wicketopia.util.EditableBean;
 
 import java.util.ArrayList;

@@ -37,5 +37,12 @@
             <artifactId>domdrides-core</artifactId>
             <version>1.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.wicketopia</groupId>
+            <artifactId>wicketopia</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

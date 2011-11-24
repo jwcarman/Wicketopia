@@ -24,8 +24,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
-import org.wicketopia.util.AbstractWicketTestCase;
+import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 
 public class TestCheckBoxPropertyEditor extends AbstractWicketTestCase

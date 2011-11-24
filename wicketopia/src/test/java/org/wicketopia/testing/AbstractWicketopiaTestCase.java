@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wicketopia.util;
+package org.wicketopia.testing;
 
 import org.testng.annotations.BeforeClass;
 import org.wicketopia.Wicketopia;

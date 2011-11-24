@@ -23,7 +23,7 @@ import org.metastopheles.PropertyMetaData;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
-import org.wicketopia.util.AbstractWicketTestCase;
+import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.Person;
 
 import java.util.ArrayList;

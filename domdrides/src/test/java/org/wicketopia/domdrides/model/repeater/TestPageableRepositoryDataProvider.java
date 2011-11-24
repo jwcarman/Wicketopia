@@ -16,85 +16,68 @@
 
 package org.wicketopia.domdrides.model.repeater;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertSame;
-import static org.testng.Assert.assertTrue;
-import org.jmock.Mockery;
-import org.jmock.Expectations;
-import org.domdrides.repository.PageableRepository;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.model.IModel;
+import org.domdrides.repository.PageableRepository;
+import org.testng.annotations.Test;
 import org.wicketopia.domdrides.model.LoadableDetachableEntityModel;
 import org.wicketopia.domdrides.util.Person;
+import org.wicketopia.testing.AbstractTestCase;
 
 import java.util.Collections;
+
+import static org.testng.Assert.*;
+import static org.easymock.EasyMock.*;
 
 /**
  * @author James Carman
  */
-public class TestPageableRepositoryDataProvider
+public class TestPageableRepositoryDataProvider extends AbstractTestCase
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void testIterator()
     {
-        final Mockery context = new Mockery();
-        final PageableRepository<Person, String> repo = context.mock(PageableRepository.class);
-        context.checking(new Expectations()
-        {
-            {
-                one(repo).list(0, 10, "first", true);
-                will(returnValue(Collections.<Person>emptyList()));
-                one(repo).list(0, 10, "last", false);
-                will(returnValue(Collections.<Person>emptyList()));
-            }
-        });
+        final PageableRepository<Person, String> repo = createMock(PageableRepository.class);
+        expect(repo.list(0, 10, "first", true)).andReturn(Collections.<Person>emptyList());
+        expect(repo.list(0, 10, "last", false)).andReturn(Collections.<Person>emptyList());
+        replayAll();
         PageableRepositoryDataProvider<Person, String> provider =
                 new PageableRepositoryDataProvider<Person, String>(repo, "first", true);
         provider.iterator(0, 10);
         provider.setSort(new SortParam("last", false));
         provider.iterator(0, 10);
-        context.assertIsSatisfied();
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void testModel()
     {
-        final Mockery context = new Mockery();
-        final PageableRepository<Person, String> repo = context.mock(PageableRepository.class);
+        final PageableRepository<Person, String> repo = createMock(PageableRepository.class);
+        replayAll();
         PageableRepositoryDataProvider<Person, String> provider =
                 new PageableRepositoryDataProvider<Person, String>(repo, "first", true);
         final Person p = new Person();
         IModel<Person> model = provider.model(p);
         assertSame(model.getObject(), p);
         assertTrue(model instanceof LoadableDetachableEntityModel);
-        context.assertIsSatisfied();
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
+    @SuppressWarnings("unchecked")
     public void testSize()
     {
-        final Mockery context = new Mockery();
-        final PageableRepository<Person, String> repo = context.mock(PageableRepository.class);
+        final PageableRepository<Person, String> repo = createMock(PageableRepository.class);
         final int expected = 100;
-        context.checking(new Expectations()
-        {
-            {
-                one(repo).size();
-                will(returnValue(expected));
-            }
-        });
+        expect(repo.size()).andReturn(expected);
+        replayAll();
         PageableRepositoryDataProvider<Person, String> provider =
                 new PageableRepositoryDataProvider<Person, String>(repo, "first");
         int actual = provider.size();
         assertEquals(actual, expected);
-        context.assertIsSatisfied();
     }
 }

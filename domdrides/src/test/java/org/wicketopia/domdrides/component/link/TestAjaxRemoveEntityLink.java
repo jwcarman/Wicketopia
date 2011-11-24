@@ -17,15 +17,15 @@
 package org.wicketopia.domdrides.component.link;
 
 import org.wicketopia.domdrides.component.link.ajax.AjaxRemoveEntityLink;
-import org.wicketopia.domdrides.util.AbstractWicketTestCase;
 import org.wicketopia.domdrides.util.Person;
 import org.testng.annotations.Test;
 import org.domdrides.repository.Repository;
-import org.jmock.Expectations;
 import static org.testng.Assert.*;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.wicketopia.testing.AbstractWicketTestCase;
 
+import static org.easymock.EasyMock.*;
 /**
  * @author James Carman
  */
@@ -45,11 +45,11 @@ public class TestAjaxRemoveEntityLink extends AbstractWicketTestCase
     @SuppressWarnings("unchecked")
     public void testEntityRemovedWhenClicked()
     {
-        final Repository<Person,String> mockRepo = mockery.mock(Repository.class);
+        final Repository<Person,String> mockRepo = createMock(Repository.class);
         final Person person = new Person();
-        mockery.checking(new Expectations() {{
-           one(mockRepo).remove(person);
-        }});
+        mockRepo.remove(person);
+        expectLastCall();
+        replayAll();
         final AjaxRemoveEntityLink<Person,String> link = new AjaxRemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
         {
             private static final long serialVersionUID = 1L;

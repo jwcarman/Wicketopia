@@ -21,7 +21,7 @@ import org.apache.wicket.model.Model;
 import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
-import org.wicketopia.util.AbstractWicketTestCase;
+import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 import org.wicketopia.util.Gender;
 

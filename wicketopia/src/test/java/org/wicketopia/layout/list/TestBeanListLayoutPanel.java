@@ -22,14 +22,11 @@ import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
-import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
-import org.wicketopia.layout.view.CssBeanViewLayoutTestPage;
-import org.wicketopia.util.AbstractWicketTestCase;
+import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 import org.wicketopia.util.Gender;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
