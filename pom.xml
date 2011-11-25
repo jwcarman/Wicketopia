@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -35,10 +36,10 @@
         <module>wicketopia</module>
         <module>persistence</module>
         <module>hibernate</module>
-<!--
-Not ready for 1.0 release
-        <module>filecfg</module>
--->
+        <!--
+        Not ready for 1.0 release
+                <module>filecfg</module>
+        -->
         <module>jpa</module>
         <module>jpa2</module>
         <module>joda</module>
@@ -162,10 +163,9 @@ Not ready for 1.0 release
     </distributionManagement>
 
     <scm>
-        <connection>scm:svn:http://wicketopia.svn.sourceforge.net/svnroot/wicketopia/trunk</connection>
-        <developerConnection>scm:svn:https://wicketopia.svn.sourceforge.net/svnroot/wicketopia/trunk
-        </developerConnection>
-        <url>http://wicketopia.svn.sourceforge.net/viewvc/wicketopia/trunk</url>
+        <url>https://github.com/jwcarman/Wicketopia</url>
+        <connection>scm:git:git:git@github.com:jwcarman/Wicketopia.git</connection>
+        <developerConnection>scm:git:git:git@github.com:jwcarman/Wicketopia.git</developerConnection>
     </scm>
 
     <mailingLists>
