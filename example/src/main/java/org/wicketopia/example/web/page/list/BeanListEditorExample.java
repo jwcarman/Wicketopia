@@ -66,10 +66,11 @@ public class BeanListEditorExample extends BasePage
                 target.add(list);
             }
 
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
-				// TODO Auto-generated method stub: do nothing on form submission with errors?
-			}
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form)
+            {
+                // Do nothing (using auto-feedback).
+            }
         });
 
         form.add(list);
