@@ -19,6 +19,7 @@ package org.wicketopia.joda.provider.viewer;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.joda.component.viewer.JodaLabel;
 import org.wicketopia.joda.util.format.FormatProvider;
 import org.wicketopia.joda.util.format.JodaFormatSupport;
@@ -51,11 +52,9 @@ public class JodaLabelProvider<T> implements PropertyViewerProvider
 
     @Override
     @SuppressWarnings("unchecked")
-    public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+    public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
         final FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);
         return new JodaLabel<T>(componentId, (IModel<T>) propertyModel, specifiedFormatProvider == null ? formatSupport : formatSupport.withProvider(specifiedFormatProvider));
     }
-
-
 }

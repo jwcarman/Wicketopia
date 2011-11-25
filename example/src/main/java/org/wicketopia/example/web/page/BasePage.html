@@ -17,7 +17,9 @@
 <html>
 <wicket:head>
     <title><span wicket:id="titleLabel"/></title>
-    <link wicket:id="stylesheet"/>
+    <wicket:link>
+	    <link rel="stylesheet" type="text/css" href="style.css"/>
+    </wicket:link>
 </wicket:head>
 
 <body>
@@ -28,7 +30,7 @@
     <tr>
         <td class="content">
             <wicket:link>
-                <a class="homeLink" wicket:id="homeLink" href="/">[home]</a>&nbsp;<a wicket:id="login" title="Login as admin user">[login]</a><a wicket:id="logout">[logout]</a>
+                <a class="homeLink" wicket:id="homeLink" href="/">[home]</a>&nbsp;<a wicket:id="login" title="Login as admin user">[login]</a><a wicket:id="logout">[logout]</a>&nbsp;<a wicket:id="convBegin">[begin]</a><a wicket:id="convEnd">[end]</a>
             </wicket:link>
             <div class="childContent">
                 <div wicket:id="feedback"/>
@@ -38,7 +40,7 @@
         </td>
     </tr>
     <tr>
-        <td class="copyright"><span wicket:id="copyrightLabel"/></td>
+        <td class="copyright"><span wicket:id="copyrightLabel"/> (<label wicket:id="pageViews" /> page views)</td>
     </tr>
 </table>
 </body>

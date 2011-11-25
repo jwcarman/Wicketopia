@@ -16,7 +16,7 @@
 
 package org.wicketopia.builder.feature;
 
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.wicketopia.builder.ComponentBuilder;
 
 /**
@@ -28,7 +28,7 @@ public abstract class AbstractBehaviorFeature<B extends ComponentBuilder> implem
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract IBehavior createBehavior();
+    protected abstract Behavior createBehavior();
 
 //----------------------------------------------------------------------------------------------------------------------
 // ComponentBuilderFeature Implementation

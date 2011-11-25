@@ -21,8 +21,9 @@ import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedback;
-import org.apache.wicket.feedback.IFeedbackMessageFilter;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.util.visit.IVisit;
+import org.apache.wicket.util.visit.IVisitor;
 
 import java.util.List;
 import java.util.Map;
@@ -35,42 +36,47 @@ import java.util.Map;
  */
 public class AutoFeedbackListener implements AjaxRequestTarget.IListener
 {
+//----------------------------------------------------------------------------------------------------------------------
+// IListener Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+
+    @Override
+    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response)
+    {
+        // Do nothing!
+    }
+
     @Override
     public void onBeforeRespond(Map<String, Component> map, final AjaxRequestTarget target)
     {
         if (!Session.get().getFeedbackMessages().isEmpty())
         {
-            target.getPage().visitChildren(IFeedback.class, new Component.IVisitor<Component>()
+            target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>()
             {
-                public Object component(Component component)
+                @Override
+                public void component(Component component, IVisit<Void> visit)
                 {
                     if (component.getOutputMarkupId())
                     {
                         if (component instanceof FeedbackPanel && hasMessages((FeedbackPanel) component))
                         {
-                            target.addComponent(component);
-
-                        }
-                        else
-                        {
-                            target.addComponent(component);
+                            target.add(component);
                         }
                     }
-                    return CONTINUE_TRAVERSAL_BUT_DONT_GO_DEEPER;
+                    visit.dontGoDeeper();
                 }
             });
         }
     }
 
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
     private boolean hasMessages(FeedbackPanel feedbackPanel)
     {
         List<FeedbackMessage> feedbackMessages = feedbackPanel.getFeedbackMessagesModel().getObject();
-        return feedbackMessages != null && feedbackMessages.isEmpty();
-    }
-
-    @Override
-    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavascriptResponse response)
-    {
-        // Do nothing!
+        return feedbackMessages != null && !feedbackMessages.isEmpty();
     }
 }

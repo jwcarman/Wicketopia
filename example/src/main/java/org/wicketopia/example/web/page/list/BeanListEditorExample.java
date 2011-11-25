@@ -18,6 +18,8 @@ package org.wicketopia.example.web.page.list;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEventSink;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -28,6 +30,7 @@ import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.persistence.PersistenceProvider;
+import org.wicketopia.persistence.PersistenceUtils;
 import org.wicketopia.persistence.model.list.EntityListModel;
 
 import java.text.Normalizer;
@@ -49,7 +52,9 @@ public class BeanListEditorExample extends BasePage
     {
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         Form form = new Form<Void>("form");
-        final BeanListLayoutPanel<Person> list = new BeanListLayoutPanel<Person>("list", Person.class, new EntityListModel<Person>(Person.class, persistenceProvider), new Context(Context.UPDATE), factory);
+        final Context context = new Context(Context.UPDATE);
+        PersistenceUtils.setProvider(context, persistenceProvider);
+        final BeanListLayoutPanel<Person> list = new BeanListLayoutPanel<Person>("list", Person.class, new EntityListModel<Person>(Person.class, persistenceProvider), context, factory);
         list.setOutputMarkupPlaceholderTag(true);
         form.add(new AjaxSubmitLink("submit")
         {
@@ -58,8 +63,13 @@ public class BeanListEditorExample extends BasePage
             {
                 persistenceProvider.update(list.getList());
                 info("Persons updated successfully.");
-                target.addComponent(list);
+                target.add(list);
             }
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+				// TODO Auto-generated method stub: do nothing on form submission with errors?
+			}
         });
 
         form.add(list);

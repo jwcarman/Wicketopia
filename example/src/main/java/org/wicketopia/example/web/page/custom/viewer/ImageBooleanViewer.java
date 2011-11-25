@@ -17,14 +17,16 @@
 package org.wicketopia.example.web.page.custom.viewer;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.request.resource.PackageResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
 public class ImageBooleanViewer extends Panel implements ViewerBuilder
@@ -61,7 +63,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addBehavior(IBehavior behavior)
+    public void addBehavior(Behavior behavior)
     {
         image.add(behavior);
     }
@@ -96,11 +98,11 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
         {
             if (Boolean.TRUE.equals(inner.getObject()))
             {
-                return new ResourceReference(ImageBooleanViewer.class, "images/green-check-mark.png");
+            	return new PackageResourceReference(ImageBooleanViewer.class, "images/green-check-mark.png");
             }
             else
             {
-                return new ResourceReference(ImageBooleanViewer.class, "images/red-x-mark.png");
+            	return new PackageResourceReference(ImageBooleanViewer.class, "images/red-x-mark.png");
             }
         }
     }
@@ -108,7 +110,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
     private static final class Provider implements PropertyViewerProvider
     {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new ImageBooleanViewer(componentId, propertyModel);
         }

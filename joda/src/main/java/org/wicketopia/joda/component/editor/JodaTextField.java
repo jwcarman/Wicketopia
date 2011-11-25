@@ -54,11 +54,12 @@ public class JodaTextField<T> extends TextField<T>
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public IConverter getConverter(Class<?> type)
+    @SuppressWarnings("unchecked")
+	public <C> IConverter<C> getConverter(Class<C> type)
     {
         if (type.equals(getType()))
         {
-            return new DateTimeFormatSupportConverter<T>(formatSupport);
+            return new DateTimeFormatSupportConverter<C>((JodaFormatSupport<C>)formatSupport);
         }
         return super.getConverter(type);
     }

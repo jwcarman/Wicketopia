@@ -25,8 +25,12 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:/META-INF/beans.xml</param-value>
+        <param-value>classpath*:/META-INF/spring-beans.xml</param-value>
     </context-param>
+
+    <listener>
+        <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
+    </listener>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

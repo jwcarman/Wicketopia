@@ -17,11 +17,12 @@
 package org.wicketopia.viewer.component;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.behavior.IBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
 public class LabelPropertyViewer extends Label implements ViewerBuilder
@@ -55,7 +56,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addBehavior(IBehavior behavior)
+    public void addBehavior(Behavior behavior)
     {
         add(behavior);
     }
@@ -79,7 +80,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
     private static final class Provider implements PropertyViewerProvider
     {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new LabelPropertyViewer(componentId, propertyModel);
         }

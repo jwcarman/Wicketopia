@@ -18,6 +18,7 @@ package org.wicketopia;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
@@ -37,10 +38,10 @@ import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.CheckBoxPropertyEditor;
-import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
 import org.wicketopia.editor.component.property.PasswordFieldPropertyEditor;
 import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
+import org.wicketopia.editor.provider.EnumDropDownChoicePropertyEditorProvider;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.factory.PropertyEditorComponentFactory;
 import org.wicketopia.factory.PropertyViewerComponentFactory;
@@ -50,6 +51,7 @@ import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.model.column.BeanPropertyColumn;
 import org.wicketopia.util.Pluralizer;
+import org.wicketopia.util.ServiceLocator;
 import org.wicketopia.viewer.PropertyViewerProvider;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
 
@@ -64,7 +66,6 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.Set;
 
 public class Wicketopia
@@ -73,7 +74,7 @@ public class Wicketopia
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Wicketopia.class);
+    private static final Logger logger = LoggerFactory.getLogger(Wicketopia.class);
 
     private static final MetaDataKey<Wicketopia> META_KEY = new WicketopiaPluginKey();
 
@@ -129,11 +130,11 @@ public class Wicketopia
     {
         this(findDefaultPlugins());
     }
-
+    
     private static List<WicketopiaPlugin> findDefaultPlugins()
     {
         final List<WicketopiaPlugin> plugins = new LinkedList<WicketopiaPlugin>();
-        for (WicketopiaPlugin wicketopiaPlugin : ServiceLoader.load(WicketopiaPlugin.class))
+        for (WicketopiaPlugin wicketopiaPlugin : ServiceLocator.findAll(WicketopiaPlugin.class))
         {
             plugins.add(wicketopiaPlugin);
         }
@@ -208,6 +209,11 @@ public class Wicketopia
         beanMetaDataFactory.getMethodMetaDataDecorators().add(decorator);
     }
 
+    public void addPlugin(WicketopiaPlugin plugin)
+    {
+        plugins.add(plugin);
+    }
+
     public void addPropertyEditorProvider(String typeName, PropertyEditorProvider provider)
     {
         editorProviders.put(typeName, provider);
@@ -268,7 +274,7 @@ public class Wicketopia
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
         final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetadata);
-        EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
+        EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel, context);
         facet.decorate(builder, context);
         return builder.build();
     }
@@ -276,7 +282,7 @@ public class Wicketopia
     public Component createPropertyViewer(String id, PropertyMetaData propertyMetaData, IModel<?> propertyModel, Context context)
     {
         final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
-        ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
+        ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel, context);
         facet.decorate(builder, context);
         return builder.build();
     }
@@ -288,7 +294,7 @@ public class Wicketopia
 
     public BeanMetaData getBeanMetaData(Class<?> beanClass)
     {
-        if (WebApplication.get().getConfigurationType().equals(WebApplication.DEVELOPMENT))
+        if (WebApplication.get().getConfigurationType().equals(RuntimeConfigurationType.DEVELOPMENT))
         {
             beanMetaDataFactory.clear();
         }
@@ -411,7 +417,10 @@ public class Wicketopia
         adDefaultViewerProviders();
         for (WicketopiaPlugin plugin : plugins)
         {
-            LOGGER.debug("Initializing plugin " + plugin + "...");
+            if(logger.isDebugEnabled())
+            {
+                logger.debug("Initializing {} plugin...", plugin.getClass().getName());
+            }
             plugin.initialize(this);
         }
     }
@@ -420,7 +429,7 @@ public class Wicketopia
     {
         addPropertyEditorProvider(TextFieldPropertyEditor.TYPE_NAME, TextFieldPropertyEditor.getProvider());
         addPropertyEditorProvider(TextAreaPropertyEditor.TYPE_NAME, TextAreaPropertyEditor.getProvider());
-        addPropertyEditorProvider(EnumDropDownChoicePropertyEditor.TYPE_NAME, EnumDropDownChoicePropertyEditor.getProvider());
+        addPropertyEditorProvider(EnumDropDownChoicePropertyEditorProvider.TYPE_NAME, new EnumDropDownChoicePropertyEditorProvider());
         addPropertyEditorProvider(PasswordFieldPropertyEditor.TYPE_NAME, PasswordFieldPropertyEditor.getProvider());
         addPropertyEditorProvider(CheckBoxPropertyEditor.TYPE_NAME, CheckBoxPropertyEditor.getProvider());
     }

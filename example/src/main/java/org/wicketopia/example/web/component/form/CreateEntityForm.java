@@ -18,6 +18,8 @@ package org.wicketopia.example.web.component.form;
 
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.event.Broadcast;
+import org.apache.wicket.event.IEventSink;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -54,8 +56,13 @@ public class CreateEntityForm<T extends Serializable> extends Form<T>
                 CreateEntityForm.this.setModelObject(createEntity(entityType));
                 final WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(entityType));
                 info(DisplayNameModel.getDisplayName(facet, getLocalizer(), CreateEntityForm.this) + " created.");
-                target.addComponent(CreateEntityForm.this);
+                target.add(CreateEntityForm.this);
             }
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+				// TODO Auto-generated method stub: do nothing on form errors?
+			}
         });
     }
 

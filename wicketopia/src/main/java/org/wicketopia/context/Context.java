@@ -40,7 +40,7 @@ public class Context implements Serializable
 
     public static final ContextPredicate ALL_CONTEXTS = new AllContextsPredicate();
 
-    private final Map<MetaDataKey<? extends Serializable>, Object> attributes = new HashMap<MetaDataKey<? extends Serializable>, Object>();
+    private final Map<MetaDataKey<?>, Object> attributes = new HashMap<MetaDataKey<?>, Object>();
     private final String name;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -75,12 +75,12 @@ public class Context implements Serializable
 //----------------------------------------------------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    public <T extends Serializable> T getAttribute(MetaDataKey<T> key)
+    public <T> T getAttribute(MetaDataKey<T> key)
     {
         return (T) attributes.get(key);
     }
 
-    public <T extends Serializable> void setAttribute(MetaDataKey<T> key, T value)
+    public <T> void setAttribute(MetaDataKey<T> key, T value)
     {
         attributes.put(key, value);
     }

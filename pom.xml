@@ -25,7 +25,7 @@
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-w15-SNAPSHOT</version>
     <name>Wicketopia</name>
     <description>A Rapid Application Development (RAD) library for the Apache Wicket framework</description>
     <url>http://www.wicketopia.org</url>
@@ -35,6 +35,10 @@
         <module>wicketopia</module>
         <module>persistence</module>
         <module>hibernate</module>
+<!--
+Not ready for 1.0 release
+        <module>filecfg</module>
+-->
         <module>jpa</module>
         <module>jpa2</module>
         <module>joda</module>
@@ -42,6 +46,8 @@
         <module>security</module>
         <module>spring-security</module>
         <module>shiro</module>
+        <module>cdi</module>
+        <module>cdi-weld</module>
         <module>example</module>
     </modules>
     <licenses>
@@ -59,18 +65,24 @@
     </issueManagement>
 
     <properties>
-        <wicket.version>1.4.17</wicket.version>
+
+        <wicket.version>1.5.3</wicket.version>
         <slf4j.version>1.6.1</slf4j.version>
         <hibernate.version>3.6.0.Final</hibernate.version>
         <domdrides.version>1.2</domdrides.version>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.0.6.RELEASE</spring.version>
         <log4j.version>1.2.14</log4j.version>
-        <jetty.version>6.1.4</jetty.version>
-        <testng.version>5.9</testng.version>
+        <jetty.version>8.0.4.v20111024</jetty.version>
+        <testng.version>6.3.1</testng.version>
         <jmock.version>2.5.0.1</jmock.version>
         <joda.version>1.6.2</joda.version>
+        <easymock.version>3.1</easymock.version>
+        <weld.version>1.1.3.Final</weld.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
     </properties>
 
     <developers>

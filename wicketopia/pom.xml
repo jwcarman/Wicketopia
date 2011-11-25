@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.wicketopia</groupId>
         <artifactId>wicketopia-module-template</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-w15-SNAPSHOT</version>
         <relativePath>../module-template</relativePath>
     </parent>
     <artifactId>wicketopia</artifactId>
@@ -29,7 +29,12 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket</artifactId>
+            <artifactId>wicket-core</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-util</artifactId>
             <version>${wicket.version}</version>
         </dependency>
         <dependency>

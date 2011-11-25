@@ -28,12 +28,11 @@ import org.wicketopia.util.EditableBean;
  */
 public class CssBeanViewLayoutTestPage extends WebPage
 {
-    public CssBeanViewLayoutTestPage(EditableBean bean, PropertyComponentFactory<EditableBean> factory)
+
+    public static final String PANEL_ID = "view";
+
+    public CssBeanViewLayoutTestPage(CssBeanViewLayoutPanel<EditableBean> panel)
     {
-        final IModel<EditableBean> model = new Model<EditableBean>(bean);
-        final Context context = new Context(Context.CREATE);
-        add(new CssBeanViewLayoutPanel<EditableBean>("view", EditableBean.class, model, context, factory));
+        add(panel);
     }
-
-
 }

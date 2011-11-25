@@ -22,6 +22,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 
 /**
@@ -61,7 +62,7 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
     private static final class Provider implements PropertyEditorProvider
     {
         @SuppressWarnings("unchecked")
-        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new PasswordFieldPropertyEditor(componentId, propertyMetadata, new PasswordTextField("editor", (IModel<String>) propertyModel));
         }

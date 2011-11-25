@@ -16,18 +16,18 @@
 
 package org.wicketopia.domdrides.model;
 
-import org.jmock.Mockery;
-import org.jmock.Expectations;
-import org.testng.annotations.Test;
 import org.domdrides.repository.Repository;
+import org.testng.annotations.Test;
 import org.wicketopia.domdrides.util.Person;
+import org.wicketopia.testing.AbstractTestCase;
 
+import static org.easymock.EasyMock.*;
 import static org.testng.Assert.*;
 
 /**
  * @author James Carman
  */
-public class TestLoadableDetachableEntityModel
+public class TestLoadableDetachableEntityModel extends AbstractTestCase
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
@@ -37,28 +37,24 @@ public class TestLoadableDetachableEntityModel
     @SuppressWarnings("unchecked")
     public void testGetObjectWithEntity()
     {
-        final Mockery context = new Mockery();
-        final Repository<Person,String> repo = context.mock(Repository.class);
+        final Repository<Person,String> repo = createMock(Repository.class);
         final Person expected = new Person();
+        replayAll();
         LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, expected);
-        Person actual = model.getObject();
+        final Person actual = model.getObject();
         assertSame(actual, expected);
-        context.assertIsSatisfied();
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testGetObjectWithId()
     {
-        final Mockery context = new Mockery();
-        final Repository<Person,String> repo = context.mock(Repository.class);
+        final Repository<Person,String> repo = createMock(Repository.class);
         final Person expected = new Person();
-        context.checking(new Expectations(){{
-            one(repo).getById("1"); will(returnValue(expected) );
-        }});
-        LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, "1");
+        expect(repo.getById(expected.getId())).andReturn(expected);
+        replayAll();
+        LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, expected.getId());
         Person actual = model.getObject();
         assertSame(actual, expected);
-        context.assertIsSatisfied();
     }
 }

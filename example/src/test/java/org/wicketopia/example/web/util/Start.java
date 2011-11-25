@@ -16,10 +16,12 @@
 
 package org.wicketopia.example.web.util;
 
-import org.mortbay.jetty.Connector;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.bio.SocketConnector;
-import org.mortbay.jetty.webapp.WebAppContext;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.bio.SocketConnector;
+import org.eclipse.jetty.webapp.WebAppContext;
+
+import java.util.concurrent.TimeUnit;
 
 public class Start
 {
@@ -27,44 +29,39 @@ public class Start
 // main() method
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static void main( String[] args ) throws Exception
+    public static void main(String[] args) throws Exception
     {
+        Long timeout = TimeUnit.HOURS.toMillis(1);
+
         Server server = new Server();
         SocketConnector connector = new SocketConnector();
-        // Set some timeout options to make debugging easier.
-        connector.setMaxIdleTime(1000 * 60 * 60);
+
+        connector.setMaxIdleTime(timeout.intValue());
         connector.setSoLingerTime(-1);
         connector.setPort(8080);
-        server.setConnectors(new Connector[] {connector});
+        server.addConnector(connector);
 
         WebAppContext bb = new WebAppContext();
         bb.setServer(server);
         bb.setContextPath("/");
         bb.setWar("src/main/webapp");
 
-        // START JMX SERVER
-        // MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-        // MBeanContainer mBeanContainer = new MBeanContainer(mBeanServer);
-        // server.getContainer().addEventListener(mBeanContainer);
-        // mBeanContainer.start();
-
-        server.addHandler(bb);
+        server.setHandler(bb);
 
         try
         {
             System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
             server.start();
-            while( System.in.available() == 0 )
-            {
-                Thread.sleep(5000);
-            }
+            System.in.read();
+            System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
             server.stop();
             server.join();
         }
-        catch( Exception e )
+        catch (Exception e)
         {
             e.printStackTrace();
-            System.exit(100);
+            System.exit(1);
         }
+
     }
 }

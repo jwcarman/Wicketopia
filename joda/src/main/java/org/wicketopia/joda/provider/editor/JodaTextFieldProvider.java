@@ -19,6 +19,7 @@ package org.wicketopia.joda.provider.editor;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
 import org.wicketopia.joda.component.editor.JodaTextField;
@@ -36,7 +37,6 @@ public class JodaTextFieldProvider<T> implements PropertyEditorProvider
 
     private JodaFormatSupport<T> formatSupport;
 
-
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ public class JodaTextFieldProvider<T> implements PropertyEditorProvider
 
     @Override
     @SuppressWarnings("unchecked")
-    public final EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+    public final EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
         final FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);
         final JodaTextField<T> field = new JodaTextField<T>(TextFieldPropertyEditor.TEXT_FIELD_ID, (IModel<T>) propertyModel, specifiedFormatProvider == null ? formatSupport : formatSupport.withProvider(specifiedFormatProvider), (Class<T>) propertyMetadata.getPropertyDescriptor().getPropertyType());

@@ -16,46 +16,51 @@
 
 package org.wicketopia.example.web.application;
 
-import org.apache.wicket.Page;
-import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.Session;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.spring.ISpringContextLocator;
+import org.apache.wicket.request.IRequestMapper;
+import org.apache.wicket.request.mapper.BufferedResponseMapper;
+import org.apache.wicket.request.mapper.CryptoMapper;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.cfg.Configuration;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.example.web.page.HomePage;
+import org.wicketopia.example.web.page.bean.BeanEditorExample;
+import org.wicketopia.example.web.page.bean.BeanViewerExample;
+import org.wicketopia.example.web.page.custom.CustomBeanEditorExample;
 import org.wicketopia.example.web.page.custom.viewer.ImageBooleanViewer;
+import org.wicketopia.example.web.page.list.BeanListEditorExample;
+import org.wicketopia.example.web.page.list.BeanListViewerExample;
+import org.wicketopia.example.web.page.scaffold.ScaffoldExample;
+import org.wicketopia.example.web.page.table.BeanTableExample;
 import org.wicketopia.listener.ajax.AutoFeedbackListener;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
 /**
- * Application object for your web application. If you want to run this application without deploying, run the Start class.
+ * Application object for your web application. If you want to run this
+ * application without deploying, run the Start class.
  */
 @Component("wicketApplication")
-public class WicketApplication extends WebApplication implements ISpringContextLocator, ApplicationContextAware
+public class WicketApplication extends WebApplication
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = -6044515824643215562L;
-    private String configurationType = DEVELOPMENT;
-    private ApplicationContext applicationContext;
+
+    private RuntimeConfigurationType configurationType;
+
 
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
 
-//----------------------------------------------------------------------------------------------------------------------
-// Constructors
-//----------------------------------------------------------------------------------------------------------------------
 
     public WicketApplication()
     {
@@ -65,32 +70,18 @@ public class WicketApplication extends WebApplication implements ISpringContextL
 // ApplicationContextAware Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void setApplicationContext( ApplicationContext applicationContext ) throws BeansException
-    {
-        this.applicationContext = applicationContext;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// ISpringContextLocator Implementation
-//----------------------------------------------------------------------------------------------------------------------
-
-    public ApplicationContext getSpringContext()
-    {
-        return applicationContext;
-    }
-
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public String getConfigurationType()
+    public RuntimeConfigurationType getConfigurationType()
     {
         return configurationType;
     }
 
     @Value("${wicket.configuration}")
-    public void setConfigurationType( String configurationType )
+    public void setConfigurationType(RuntimeConfigurationType configurationType)
     {
         this.configurationType = configurationType;
     }
@@ -98,6 +89,10 @@ public class WicketApplication extends WebApplication implements ISpringContextL
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
+
+    // ----------------------------------------------------------------------------------------------------------------------
+    // Other Methods
+    // ----------------------------------------------------------------------------------------------------------------------
 
     @Override
     public Class<HomePage> getHomePage()
@@ -108,18 +103,28 @@ public class WicketApplication extends WebApplication implements ISpringContextL
     protected void init()
     {
         super.init();
-        Wicketopia plugin = new Wicketopia();
-        plugin.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
-        plugin.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
-        plugin.install(this);
-        addComponentInstantiationListener(new SpringComponentInjector(this, getSpringContext(), true));
-    }
+        mountPage("/examples/scaffold", ScaffoldExample.class);
+        mountPage("/examples/beanViewer", BeanViewerExample.class);
+        mountPage("/examples/beanEditor", BeanEditorExample.class);
+        mountPage("/examples/beanListViewer", BeanListViewerExample.class);
+        mountPage("/examples/beanListEditor", BeanListEditorExample.class);
+        mountPage("/examples/customBeanEditor", CustomBeanEditorExample.class);
+        mountPage("/examples/beanTable", BeanTableExample.class);
 
-    @Override
-    public AjaxRequestTarget newAjaxRequestTarget(Page page)
-    {
-        AjaxRequestTarget target = super.newAjaxRequestTarget(page);
-        target.addListener(new AutoFeedbackListener());
-        return target;
+        Wicketopia wicketopia = new Wicketopia();
+        wicketopia.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
+        wicketopia.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
+
+        wicketopia.install(this);
+        getComponentInstantiationListeners().add(
+                new SpringComponentInjector(this));
+        getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
+        mount(new BufferedResponseMapper()
+        {
+            protected String getSessionId()
+            {
+                return Session.get().getId();
+            }
+        });
     }
 }

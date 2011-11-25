@@ -19,6 +19,7 @@ package org.wicketopia.viewer.component;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
 /**
@@ -39,7 +40,7 @@ public class MessageFormatPropertyViewer extends LabelPropertyViewer implements 
     private static final class Provider implements PropertyViewerProvider
     {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new LabelPropertyViewer(componentId, propertyModel);
         }

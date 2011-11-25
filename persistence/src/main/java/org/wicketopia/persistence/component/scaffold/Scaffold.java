@@ -18,11 +18,10 @@ package org.wicketopia.persistence.component.scaffold;
 
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Component;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.AbstractBehavior;
+import org.apache.wicket.behavior.Behavior;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
@@ -38,6 +37,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.resource.PackageResourceReference;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
@@ -47,6 +47,7 @@ import org.wicketopia.model.column.FragmentColumn;
 import org.wicketopia.model.label.DisplayNameModel;
 import org.wicketopia.model.label.PluralizedModel;
 import org.wicketopia.persistence.PersistenceProvider;
+import org.wicketopia.persistence.PersistenceUtils;
 import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 import org.wicketopia.persistence.component.link.ajax.AjaxUpdateLink;
 import org.wicketopia.persistence.model.LoadableDetachableEntityModel;
@@ -63,9 +64,9 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final ResourceReference CSS_REFERENCE = new ResourceReference(Scaffold.class, "scaffold.css");
-    private static final String CONTENT_ID = "content";
     public static final int DEFAULT_ROWS_PER_PAGE = 25;
+    private static final PackageResourceReference CSS_REFERENCE = new PackageResourceReference(Scaffold.class, "scaffold.css");
+    private static final String CONTENT_ID = "content";
     private final Class<T> beanType;
     private final PersistenceProvider persistenceProvider;
     private ScaffoldMode mode = ScaffoldMode.List;
@@ -82,7 +83,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         super(id);
         WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
         displayName = new DisplayNameModel(beanFacet);
-        add(new AttributeModifier("class", true, new Model<String>("scaffold")));
+        add(new AttributeModifier("class", new Model<String>("scaffold")));
         feedback.setOutputMarkupPlaceholderTag(true);
         feedback.setFilter(new ContainerFeedbackMessageFilter(this));
         add(feedback);
@@ -90,7 +91,6 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         this.persistenceProvider = persistenceProvider;
         refreshContent(null);
         setOutputMarkupPlaceholderTag(true);
-
     }
 
     private void refreshContent(AjaxRequestTarget target)
@@ -100,7 +100,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         addOrReplace(content);
         if (target != null)
         {
-            target.addComponent(this);
+            target.add(this);
         }
     }
 
@@ -134,6 +134,13 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    private Context createContext(String mode)
+    {
+        final Context context = new Context(mode);
+        PersistenceUtils.setProvider(context, persistenceProvider);
+        return context;
+    }
+
     @Override
     protected void onDetach()
     {
@@ -157,13 +164,13 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         {
             Fragment f = new Fragment(componentId, "actions", Scaffold.this);
             f.add(new ViewLink("viewLink", rowModel));
-            f.add(new EditLink("updateLink", rowModel));
-            f.add(new DeleteLink("deleteLink", rowModel));
+            f.add(new ScaffoldEditLink("updateLink", rowModel));
+            f.add(new ScaffoldDeleteLink("deleteLink", rowModel));
             return f;
         }
     }
 
-    private final class ConfirmBehavior extends AbstractBehavior
+    private final class ConfirmBehavior extends Behavior
     {
         private final String event;
         private final IModel<String> message;
@@ -204,46 +211,40 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         {
             super(CONTENT_ID, "create", Scaffold.this);
             model = new CreateModel();
-            final ListLink listLink = new ListLink("listButton");
+            final ScaffoldListLink listLink = new ScaffoldListLink("listButton");
             add(listLink.add(new Label("nameList", displayName).setRenderBodyOnly(true)));
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             final Form<T> form = new Form<T>("form", model);
             final PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
-            final Context context = new Context(Context.CREATE);
+            final Context context = createContext(Context.CREATE);
             form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));
-            add(new AjaxCreateLink<T>("saveButton", form, persistenceProvider)
-            {
-                @Override
-                protected void afterCreate(T object, AjaxRequestTarget target)
-                {
-                    mode = ScaffoldMode.View;
-                    Scaffold.this.info(displayName.getObject() + " Created");
-                    model = new LoadableDetachableEntityModel<T>(beanType, object, persistenceProvider);
-                    refreshContent(target);
-                }
-
-                @Override
-                protected void onError(AjaxRequestTarget target, Form<?> form)
-                {
-                    target.addComponent(feedback);
-                }
-            });
+            add(new SaveLink(form));
             add(form);
         }
+
+
     }
 
-    private final class CreateLink extends AjaxLink<Void>
+    private class SaveLink extends AjaxCreateLink<T>
     {
-        private CreateLink(String id)
+        public SaveLink(Form<T> form)
         {
-            super(id);
+            super("saveButton", form, persistenceProvider);
         }
 
         @Override
-        public void onClick(AjaxRequestTarget target)
+        protected void afterCreate(T object, AjaxRequestTarget target)
         {
-            mode = ScaffoldMode.Create;
+            Scaffold.this.mode = ScaffoldMode.View;
+            Scaffold.this.info(displayName.getObject() + " Created");
+            model = new LoadableDetachableEntityModel<T>(beanType, object, persistenceProvider);
             refreshContent(target);
+        }
+
+        @Override
+        protected void onError(AjaxRequestTarget target, Form<?> form)
+        {
+            target.add(feedback);
         }
     }
 
@@ -263,9 +264,59 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class DeleteLink extends AjaxLink<T>
+    private final class EditFragment extends Fragment
     {
-        private DeleteLink(String id, IModel<T> tiModel)
+        private EditFragment()
+        {
+            super(CONTENT_ID, "edit", Scaffold.this);
+            add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
+            add(new ScaffoldDeleteLink("deleteButton", model));
+            add(new ScaffoldListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
+            add(new ScaffoldCreateLink("createButton").add(new Label("nameCreate", displayName).setRenderBodyOnly(true)));
+            final Form<T> form = new Form<T>("form", model);
+            final PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
+            final Context context = createContext(Context.UPDATE);
+            form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));
+            add(form);
+            add(new ScaffoldUpdateLink<T>(form));
+        }
+    }
+
+    private final class ListFragment extends Fragment
+    {
+        private ListFragment()
+        {
+            super(CONTENT_ID, "list", Scaffold.this);
+            final ScaffoldCreateLink create = new ScaffoldCreateLink("newEntity");
+            add(create);
+            add(new Label("pluralName", new PluralizedModel(displayName)).setRenderBodyOnly(true));
+            create.add(new Label("displayName", displayName).setRenderBodyOnly(true));
+            final PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
+            final Context context = createContext(Context.LIST);
+            final List<IColumn<T>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
+            columns.add(new ActionsColumn());
+            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
+        }
+    }
+
+    private final class ScaffoldCreateLink extends AjaxLink<Void>
+    {
+        private ScaffoldCreateLink(String id)
+        {
+            super(id);
+        }
+
+        @Override
+        public void onClick(AjaxRequestTarget target)
+        {
+            mode = ScaffoldMode.Create;
+            refreshContent(target);
+        }
+    }
+
+    private final class ScaffoldDeleteLink extends AjaxLink<T>
+    {
+        private ScaffoldDeleteLink(String id, IModel<T> tiModel)
         {
             super(id, tiModel);
             add(new ConfirmBehavior("onclick", new Model<String>("Are you sure?")));
@@ -281,44 +332,9 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class EditFragment extends Fragment
+    private final class ScaffoldEditLink extends AjaxLink<T>
     {
-        private EditFragment()
-        {
-            super(CONTENT_ID, "edit", Scaffold.this);
-            add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
-            add(new DeleteLink("deleteButton", model));
-            add(new ListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
-            add(new CreateLink("createButton").add(new Label("nameCreate", displayName).setRenderBodyOnly(true)));
-
-            final Form<T> form = new Form<T>("form", model);
-            final PropertyComponentFactory<T> editorFactory = Wicketopia.get().createEditorFactory(beanType);
-            final Context context = new Context(Context.UPDATE);
-            form.add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, editorFactory));
-            add(form);
-
-            add(new AjaxUpdateLink<T>("saveButton", form, persistenceProvider)
-            {
-                @Override
-                protected void afterUpdate(T object, AjaxRequestTarget target)
-                {
-                    mode = ScaffoldMode.View;
-                    Scaffold.this.info(displayName.getObject() + " Updated");
-                    refreshContent(target);
-                }
-
-                @Override
-                protected void onError(AjaxRequestTarget target, Form<?> form)
-                {
-                    target.addComponent(feedback);
-                }
-            });
-        }
-    }
-
-    private final class EditLink extends AjaxLink<T>
-    {
-        private EditLink(String id, IModel<T> model)
+        private ScaffoldEditLink(String id, IModel<T> model)
         {
             super(id, model);
         }
@@ -332,26 +348,9 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class ListFragment extends Fragment
+    private final class ScaffoldListLink extends AjaxLink<Void>
     {
-        private ListFragment()
-        {
-            super(CONTENT_ID, "list", Scaffold.this);
-            final CreateLink create = new CreateLink("newEntity");
-            add(create);
-            add(new Label("pluralName", new PluralizedModel(displayName)).setRenderBodyOnly(true));
-            create.add(new Label("displayName", displayName).setRenderBodyOnly(true));
-            final PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
-            final Context context = new Context(Context.LIST);
-            final List<IColumn<T>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
-            columns.add(new ActionsColumn());
-            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
-        }
-    }
-
-    private final class ListLink extends AjaxLink<Void>
-    {
-        private ListLink(String id)
+        private ScaffoldListLink(String id)
         {
             super(id);
         }
@@ -364,18 +363,40 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
+    private class ScaffoldUpdateLink<T> extends AjaxUpdateLink<T>
+    {
+        public ScaffoldUpdateLink(Form<T> form)
+        {
+            super("saveButton", form, persistenceProvider);
+        }
+
+        @Override
+        protected void afterUpdate(T object, AjaxRequestTarget target)
+        {
+            mode = ScaffoldMode.View;
+            Scaffold.this.info(displayName.getObject() + " Updated");
+            refreshContent(target);
+        }
+
+        @Override
+        protected void onError(AjaxRequestTarget target, Form<?> form)
+        {
+            target.add(feedback);
+        }
+    }
+
     private final class ViewFragment extends Fragment
     {
         private ViewFragment()
         {
             super(CONTENT_ID, "view", Scaffold.this);
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
-            add(new EditLink("editButton", model));
-            add(new DeleteLink("deleteButton", model));
-            add(new ListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
-            add(new CreateLink("createButton").add(new Label("nameCreate", displayName).setRenderBodyOnly(true)));
+            add(new ScaffoldEditLink("editButton", model));
+            add(new ScaffoldDeleteLink("deleteButton", model));
+            add(new ScaffoldListLink("listButton").add(new Label("nameList", displayName).setRenderBodyOnly(true)));
+            add(new ScaffoldCreateLink("createButton").add(new Label("nameCreate", displayName).setRenderBodyOnly(true)));
             final PropertyComponentFactory<T> factory = Wicketopia.get().createViewerFactory(beanType);
-            final Context context = new Context(Context.VIEW);
+            final Context context = createContext(Context.VIEW);
             add(new CssBeanViewLayoutPanel<T>("layout", beanType, model, context, factory));
         }
     }
