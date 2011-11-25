@@ -38,10 +38,10 @@ import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.CheckBoxPropertyEditor;
-import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
 import org.wicketopia.editor.component.property.PasswordFieldPropertyEditor;
 import org.wicketopia.editor.component.property.TextAreaPropertyEditor;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
+import org.wicketopia.editor.provider.EnumDropDownChoicePropertyEditorProvider;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.factory.PropertyEditorComponentFactory;
 import org.wicketopia.factory.PropertyViewerComponentFactory;
@@ -274,7 +274,7 @@ public class Wicketopia
     public Component createPropertyEditor(String id, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
         final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetadata);
-        EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel);
+        EditorBuilder builder = getEditorProvider(propertyMetadata).createPropertyEditor(id, propertyMetadata, propertyModel, context);
         facet.decorate(builder, context);
         return builder.build();
     }
@@ -282,7 +282,7 @@ public class Wicketopia
     public Component createPropertyViewer(String id, PropertyMetaData propertyMetaData, IModel<?> propertyModel, Context context)
     {
         final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
-        ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel);
+        ViewerBuilder builder = getViewerProvider(propertyMetaData).createPropertyViewer(id, propertyMetaData, propertyModel, context);
         facet.decorate(builder, context);
         return builder.build();
     }
@@ -429,7 +429,7 @@ public class Wicketopia
     {
         addPropertyEditorProvider(TextFieldPropertyEditor.TYPE_NAME, TextFieldPropertyEditor.getProvider());
         addPropertyEditorProvider(TextAreaPropertyEditor.TYPE_NAME, TextAreaPropertyEditor.getProvider());
-        addPropertyEditorProvider(EnumDropDownChoicePropertyEditor.TYPE_NAME, EnumDropDownChoicePropertyEditor.getProvider());
+        addPropertyEditorProvider(EnumDropDownChoicePropertyEditorProvider.TYPE_NAME, new EnumDropDownChoicePropertyEditorProvider());
         addPropertyEditorProvider(PasswordFieldPropertyEditor.TYPE_NAME, PasswordFieldPropertyEditor.getProvider());
         addPropertyEditorProvider(CheckBoxPropertyEditor.TYPE_NAME, CheckBoxPropertyEditor.getProvider());
     }

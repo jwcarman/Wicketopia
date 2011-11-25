@@ -85,27 +85,32 @@ public class ConversationPropagationListener extends AbstractRequestCycleListene
     {
         if (conversationStarted(cycle))
         {
-            if (logger.isTraceEnabled())
-            {
-                if (conversation.isTransient())
-                {
-                    logger.trace("Abandoning transient conversation...");
-                }
-                else
-                {
-                    logger.trace("Suspending non-transient conversation {}...", conversation.getId());
-                }
-
-            }
-            adapter.suspendConversation();
-            cycle.setMetaData(CONVERSATION_STARTED_KEY, null);
+            suspendCurrentConversation(cycle);
         }
+    }
+
+    private void suspendCurrentConversation(RequestCycle cycle)
+    {
+        if (logger.isTraceEnabled())
+        {
+            if (conversation.isTransient())
+            {
+                logger.trace("Abandoning transient conversation...");
+            }
+            else
+            {
+                logger.trace("Suspending non-transient conversation {}...", conversation.getId());
+            }
+
+        }
+        adapter.suspendConversation();
+        cycle.setMetaData(CONVERSATION_STARTED_KEY, null);
     }
 
     @Override
     public IRequestHandler onException(RequestCycle cycle, Exception ex)
     {
-        //adapter.suspendConversation();
+        suspendCurrentConversation(cycle);
         return null;
     }
 

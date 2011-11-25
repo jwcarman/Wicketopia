@@ -17,9 +17,6 @@
 package org.wicketopia.mapping.viewer;
 
 import org.testng.annotations.Test;
-import org.wicketopia.editor.component.property.EnumDropDownChoicePropertyEditor;
-import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
-import org.wicketopia.mapping.editor.DefaultEditorTypeMapping;
 import org.wicketopia.util.Gender;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
 

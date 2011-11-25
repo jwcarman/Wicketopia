@@ -26,6 +26,7 @@ import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.request.resource.ResourceReference;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
 public class ImageBooleanViewer extends Panel implements ViewerBuilder
@@ -109,7 +110,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
     private static final class Provider implements PropertyViewerProvider
     {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new ImageBooleanViewer(componentId, propertyModel);
         }

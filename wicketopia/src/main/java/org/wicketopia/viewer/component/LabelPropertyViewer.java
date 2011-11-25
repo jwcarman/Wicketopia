@@ -22,6 +22,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.ViewerBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
 public class LabelPropertyViewer extends Label implements ViewerBuilder
@@ -79,7 +80,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
     private static final class Provider implements PropertyViewerProvider
     {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new LabelPropertyViewer(componentId, propertyModel);
         }

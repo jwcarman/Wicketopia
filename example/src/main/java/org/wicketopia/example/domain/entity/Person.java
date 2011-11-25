@@ -20,6 +20,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
+import org.wicketopia.builder.feature.annotation.metadata.EditorType;
 import org.wicketopia.builder.feature.annotation.metadata.Order;
 import org.wicketopia.builder.feature.annotation.metadata.ViewerType;
 import org.wicketopia.builder.feature.annotation.required.Required;
@@ -27,12 +28,14 @@ import org.wicketopia.builder.feature.annotation.validator.Email;
 import org.wicketopia.builder.feature.annotation.validator.Pattern;
 import org.wicketopia.example.domain.value.Gender;
 import org.wicketopia.joda.annotation.DatePattern;
+import org.wicketopia.persistence.PersistencePlugin;
 import org.wicketopia.security.annotation.VisibleForRole;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -63,6 +66,9 @@ public class Person extends BaseEntity
 
     @Type(type = "org.joda.time.contrib.hibernate.PersistentLocalTimeAsString")
     private LocalTime workDayEnd = new LocalTime(FIVE_PM, 0);
+
+    @ManyToOne
+    private Person mother;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -136,6 +142,17 @@ public class Person extends BaseEntity
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    @EditorType(PersistencePlugin.ENTITY_DDC)
+    public Person getMother()
+    {
+        return mother;
+    }
+
+    public void setMother(Person mother)
+    {
+        this.mother = mother;
     }
 
     @DisplayName("SSN")

@@ -24,6 +24,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 
@@ -42,7 +43,8 @@ public class TestCheckBoxPropertyEditor extends AbstractWicketTestCase
         EditableBean bean = new EditableBean();
         final IModel<Boolean> model = new PropertyModel<Boolean>(bean,"bool");
         bean.setBool(true);
-        EditorBuilder propertyEditor = CheckBoxPropertyEditor.getProvider().createPropertyEditor("editor", beanMetaData.getPropertyMetaData("bool"), model);
+        Context context = new Context(Context.CREATE);
+        EditorBuilder propertyEditor = CheckBoxPropertyEditor.getProvider().createPropertyEditor("editor", beanMetaData.getPropertyMetaData("bool"), model, context);
         final EditorTestPage page = new EditorTestPage(propertyEditor.build());
         tester.startPage(page);
         tester.assertModelValue("form:editor:editor", Boolean.TRUE);

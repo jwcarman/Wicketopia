@@ -20,6 +20,7 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 
 /**
@@ -65,7 +66,7 @@ public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor
     private static final class Provider implements PropertyEditorProvider
     {
         @SuppressWarnings("unchecked")
-        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel)
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
         {
             return new CheckBoxPropertyEditor(componentId, propertyMetadata, new CheckBox("editor", (IModel<Boolean>) propertyModel));
         }

@@ -14,48 +14,50 @@
  * limitations under the License.
  */
 
-package org.wicketopia.joda.provider.editor;
+package org.wicketopia.editor.provider;
 
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
-import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
-import org.wicketopia.joda.component.editor.JodaTextField;
-import org.wicketopia.joda.util.format.JodaFormatSupport;
-import org.wicketopia.joda.util.format.FormatProvider;
+import org.wicketopia.editor.component.property.DropDownChoicePropertyEditor;
 
-/**
- * @since 1.0
- */
-public class JodaTextFieldProvider<T> implements PropertyEditorProvider
+import java.util.List;
+
+public abstract class AbstractDropDownChoicePropertyEditorProvider implements PropertyEditorProvider
 {
 //----------------------------------------------------------------------------------------------------------------------
-// Fields
+// Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private JodaFormatSupport<T> formatSupport;
+    protected abstract <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type, Context context);
 
-//----------------------------------------------------------------------------------------------------------------------
-// Constructors
-//----------------------------------------------------------------------------------------------------------------------
-
-    public JodaTextFieldProvider(JodaFormatSupport<T> formatSupport)
-    {
-        this.formatSupport = formatSupport;
-    }
+    protected abstract <T> IChoiceRenderer<T> createRenderer(DropDownChoice<T> ddc, Class<T> type, Context context);
 
 //----------------------------------------------------------------------------------------------------------------------
 // PropertyEditorProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    @SuppressWarnings("unchecked")
     public final EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
     {
-        final FormatProvider specifiedFormatProvider = propertyMetadata.getFacet(FormatProvider.FACET_KEY);
-        final JodaTextField<T> field = new JodaTextField<T>(TextFieldPropertyEditor.TEXT_FIELD_ID, (IModel<T>) propertyModel, specifiedFormatProvider == null ? formatSupport : formatSupport.withProvider(specifiedFormatProvider), (Class<T>) propertyMetadata.getPropertyDescriptor().getPropertyType());
-        return new TextFieldPropertyEditor(componentId, propertyMetadata, field);
+        final DropDownChoice<?> ddc = createDropDownChoice(DropDownChoicePropertyEditor.COMPONENT_ID, propertyMetadata.getPropertyDescriptor().getPropertyType(), propertyModel, context);
+        return new DropDownChoicePropertyEditor(componentId, propertyMetadata, ddc);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    protected <T> DropDownChoice<T> createDropDownChoice(String componentId, Class<T> propertyType, IModel<?> propertyModel, Context context)
+    {
+        final DropDownChoice<T> ddc = new DropDownChoice<T>(componentId, (IModel<T>) propertyModel, createChoicesModel(propertyType, context));
+        ddc.setChoiceRenderer(createRenderer(ddc, propertyType, context));
+        return ddc;
     }
 }

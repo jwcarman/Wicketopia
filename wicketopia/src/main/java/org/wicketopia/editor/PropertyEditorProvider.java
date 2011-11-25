@@ -19,6 +19,7 @@ package org.wicketopia.editor;
 import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
+import org.wicketopia.context.Context;
 
 public interface PropertyEditorProvider
 {
@@ -26,5 +27,5 @@ public interface PropertyEditorProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel);
+    EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context);
 }
