@@ -21,7 +21,7 @@
     <parent>
         <artifactId>wicketopia-parent</artifactId>
         <groupId>org.wicketopia</groupId>
-        <version>1.0-w15-SNAPSHOT</version>
+        <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-example</artifactId>
