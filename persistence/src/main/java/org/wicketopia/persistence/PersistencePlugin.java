@@ -28,6 +28,22 @@ public class PersistencePlugin implements WicketopiaPlugin
 
     public static final String ENTITY_DDC = "entity-ddc";
 
+    private final PersistenceProvider defaultProvider;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
+    public PersistencePlugin()
+    {
+        this(null);
+    }
+
+    public PersistencePlugin(PersistenceProvider defaultProvider)
+    {
+        this.defaultProvider = defaultProvider;
+    }
+
 //----------------------------------------------------------------------------------------------------------------------
 // WicketopiaPlugin Implementation
 //----------------------------------------------------------------------------------------------------------------------
@@ -36,5 +52,14 @@ public class PersistencePlugin implements WicketopiaPlugin
     public void initialize(Wicketopia wicketopia)
     {
         wicketopia.addPropertyEditorProvider(ENTITY_DDC, new EntityDropDownChoicePropertyEditorProvider());
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Getter/Setter Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    public PersistenceProvider getDefaultProvider()
+    {
+        return defaultProvider;
     }
 }

@@ -18,6 +18,7 @@ package org.wicketopia.persistence;
 
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.WicketRuntimeException;
+import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 
 public class PersistenceUtils
@@ -37,9 +38,14 @@ public class PersistenceUtils
     public static PersistenceProvider getProvider(Context context)
     {
         PersistenceProvider provider = context.getAttribute(PERSISTENCE_PROVIDER_KEY);
-        if(provider == null)
+        if (provider == null)
         {
-            throw new WicketRuntimeException("PersistenceProvider not found in context.  Please call PersistenceUtils.setProvider() method.");
+            PersistencePlugin persistencePlugin = Wicketopia.get().getPlugin(PersistencePlugin.class);
+            provider = persistencePlugin.getDefaultProvider();
+        }
+        if (provider == null)
+        {
+            throw new WicketRuntimeException("No PersistenceProvider found!  Either set up a default persistence provider in the PersistencePlugin or use PersistenceUtils.setProvider() to add one to the context.");
         }
         return provider;
     }

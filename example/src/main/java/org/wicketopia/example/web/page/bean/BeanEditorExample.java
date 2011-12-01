@@ -45,7 +45,6 @@ public class BeanEditorExample extends BasePage
         final Form<Person> form = new CreateEntityForm<Person>("form", Person.class);
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         final Context context = new Context(Context.CREATE);
-        PersistenceUtils.setProvider(context, persistenceProvider);
         final IModel<Person> model = form.getModel();
         form.add(new CssBeanViewLayoutPanel<Person>("bean", Person.class, model, context, factory));
         add(form);

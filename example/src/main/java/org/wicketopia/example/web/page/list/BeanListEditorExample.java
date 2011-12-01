@@ -53,7 +53,6 @@ public class BeanListEditorExample extends BasePage
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         Form form = new Form<Void>("form");
         final Context context = new Context(Context.UPDATE);
-        PersistenceUtils.setProvider(context, persistenceProvider);
         final BeanListLayoutPanel<Person> list = new BeanListLayoutPanel<Person>("list", Person.class, new EntityListModel<Person>(Person.class, persistenceProvider), context, factory);
         list.setOutputMarkupPlaceholderTag(true);
         form.add(new AjaxSubmitLink("submit")

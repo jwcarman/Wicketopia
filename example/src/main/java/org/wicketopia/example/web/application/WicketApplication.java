@@ -40,6 +40,8 @@ import org.wicketopia.example.web.page.list.BeanListViewerExample;
 import org.wicketopia.example.web.page.scaffold.ScaffoldExample;
 import org.wicketopia.example.web.page.table.BeanTableExample;
 import org.wicketopia.listener.ajax.AutoFeedbackListener;
+import org.wicketopia.persistence.PersistencePlugin;
+import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
 /**
@@ -61,6 +63,8 @@ public class WicketApplication extends WebApplication
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
 
+    @Autowired
+    private PersistenceProvider persistenceProvider;
 
     public WicketApplication()
     {
@@ -112,6 +116,7 @@ public class WicketApplication extends WebApplication
         mountPage("/examples/beanTable", BeanTableExample.class);
 
         Wicketopia wicketopia = new Wicketopia();
+        wicketopia.addPlugin(new PersistencePlugin(persistenceProvider));
         wicketopia.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
         wicketopia.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
 
