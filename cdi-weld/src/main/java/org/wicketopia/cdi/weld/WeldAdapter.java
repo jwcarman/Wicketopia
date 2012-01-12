@@ -38,7 +38,7 @@ public class WeldAdapter implements CdiFrameworkAdapter
 //----------------------------------------------------------------------------------------------------------------------
 
     @Inject
-    HttpConversationContext context;
+    private HttpConversationContext context;
 
 //----------------------------------------------------------------------------------------------------------------------
 // CdiFrameworkAdapter Implementation
