@@ -40,7 +40,7 @@ public abstract class BaseEntity implements Serializable
         return id;
     }
 
-    private void setId(String id)
+    protected void setId(String id)
     {
         this.id = id;
     }
