@@ -18,7 +18,6 @@ package org.wicketopia.example.web.page.bean;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.example.domain.entity.Person;
@@ -26,16 +25,9 @@ import org.wicketopia.example.web.component.form.CreateEntityForm;
 import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
-import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.PersistenceUtils;
-
-import javax.persistence.PersistenceUtil;
 
 public class BeanEditorExample extends BasePage
 {
-    @SpringBean
-    private PersistenceProvider persistenceProvider;
-    
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
