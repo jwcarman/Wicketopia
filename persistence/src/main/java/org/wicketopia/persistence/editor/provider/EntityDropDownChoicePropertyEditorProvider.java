@@ -51,7 +51,7 @@ public class EntityDropDownChoicePropertyEditorProvider extends AbstractDropDown
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class AllEntitiesModel<T> extends LoadableDetachableModel<List<T>>
+    private static final class AllEntitiesModel<T> extends LoadableDetachableModel<List<T>>
     {
         private final PersistenceProvider persistenceProvider;
         private final Class<T> entityType;
@@ -69,7 +69,7 @@ public class EntityDropDownChoicePropertyEditorProvider extends AbstractDropDown
         }
     }
 
-    private static class EntityChoiceRenderer<T> implements IChoiceRenderer<T>
+    private static final class EntityChoiceRenderer<T> implements IChoiceRenderer<T>
     {
         private final PersistenceProvider persistenceProvider;
 

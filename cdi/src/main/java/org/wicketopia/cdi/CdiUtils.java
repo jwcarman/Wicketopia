@@ -45,6 +45,25 @@ public class CdiUtils
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    static void clearCache()
+    {
+        try
+        {
+            cacheLock.writeLock().lock();
+            injectionTargetCache.clear();
+        }
+        finally
+        {
+            cacheLock.writeLock().unlock();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> Class<T> getBeanType(T object)
+    {
+        return (Class<T>) object.getClass();
+    }
+
     @SuppressWarnings("unchecked")
     private static <T> InjectionTarget<T> getInjectionTarget(T object, BeanManager beanManager)
     {
@@ -83,14 +102,6 @@ public class CdiUtils
             }
         }
         return injectionTarget;
-
-    }
-
-    @SuppressWarnings("unchecked")
-    private static <T> Class<T> getBeanType(T object)
-    {
-        Class<T> beanType = (Class<T>) object.getClass();
-        return beanType;
     }
 
     public static <T> void inject(T object, BeanManager beanManager)
@@ -122,10 +133,19 @@ public class CdiUtils
     }
 
 //----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
+    private CdiUtils()
+    {
+        
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class CacheKey<T>
+    private static final class CacheKey<T>
     {
         private final Class<T> beanClass;
         private final BeanManager beanManager;
@@ -168,19 +188,6 @@ public class CdiUtils
             int result = beanClass.hashCode();
             result = 31 * result + beanManager.hashCode();
             return result;
-        }
-    }
-
-    static void clearCache()
-    {
-        try
-        {
-            cacheLock.writeLock().lock();
-            injectionTargetCache.clear();
-        }
-        finally
-        {
-            cacheLock.writeLock().unlock();
         }
     }
 }
