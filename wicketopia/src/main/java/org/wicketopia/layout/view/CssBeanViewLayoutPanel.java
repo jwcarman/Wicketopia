@@ -61,7 +61,7 @@ public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T>
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected void init()
+    private void init()
     {
         final RepeatingView view = new RepeatingView("prop-div");
         for (String propertyName : getPropertyNames())
