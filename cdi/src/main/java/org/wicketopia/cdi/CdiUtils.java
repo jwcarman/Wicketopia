@@ -29,7 +29,7 @@ import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class CdiUtils
+public final class CdiUtils
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
