@@ -21,7 +21,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 
-public class PersistenceUtils
+public final class PersistenceUtils
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -53,5 +53,14 @@ public class PersistenceUtils
     public static void setProvider(Context context, PersistenceProvider persistenceProvider)
     {
         context.setAttribute(PERSISTENCE_PROVIDER_KEY, persistenceProvider);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
+    private PersistenceUtils()
+    {
+        
     }
 }
