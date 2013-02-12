@@ -17,8 +17,6 @@
 package org.wicketopia.builder.feature.validator;
 
 import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.validator.MaximumValidator;
-import org.apache.wicket.validation.validator.MinimumValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
@@ -71,11 +69,11 @@ public class DoubleRangeFeature extends AbstractValidatorFeature
         }
         else if (max != Double.MAX_VALUE)
         {
-            return new MaximumValidator<Double>(max);
+            return RangeValidator.maximum(max);
         }
         else
         {
-            return new MinimumValidator<Double>(min);
+            return RangeValidator.minimum(min);
         }
     }
 }

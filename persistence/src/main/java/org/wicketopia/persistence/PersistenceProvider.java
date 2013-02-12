@@ -26,7 +26,7 @@ public interface PersistenceProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    int getCount(Class<?> beanType);
+    long getCount(Class<?> beanType);
 
     Serializable getIdentifier(Object entity);
 
@@ -42,7 +42,7 @@ public interface PersistenceProvider
 
     <T> List<T> getAll(Class<T> entityType);
 
-    <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending);
+    <T> List<T> getList(Class<T> entityType, final long first, final long max, final String sortProperty, final boolean ascending);
 
     <T> T update(T object);
 

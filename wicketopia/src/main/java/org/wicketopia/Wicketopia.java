@@ -255,10 +255,10 @@ public class Wicketopia
         return propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
     }
 
-    public <T> List<IColumn<T>> createColumns(Class<T> beanType, PropertyComponentFactory<T> factory, Context context, String... properties)
+    public <T> List<IColumn<T,String>> createColumns(Class<T> beanType, PropertyComponentFactory<T> factory, Context context, String... properties)
     {
         final List<String> visible = getVisibleProperties(beanType, context, properties);
-        final List<IColumn<T>> columns = new ArrayList<IColumn<T>>(visible.size());
+        final List<IColumn<T,String>> columns = new ArrayList<IColumn<T,String>>(visible.size());
         for (String propertyName : visible)
         {
             columns.add(new BeanPropertyColumn<T>(factory, propertyName, context));

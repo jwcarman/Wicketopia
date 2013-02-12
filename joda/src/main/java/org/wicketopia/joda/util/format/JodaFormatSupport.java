@@ -16,11 +16,11 @@
 
 package org.wicketopia.joda.util.format;
 
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.Session;
+import org.apache.wicket.core.request.ClientInfo;
 import org.apache.wicket.protocol.http.request.WebClientInfo;
-import org.apache.wicket.request.ClientInfo;
 import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.string.Strings;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;

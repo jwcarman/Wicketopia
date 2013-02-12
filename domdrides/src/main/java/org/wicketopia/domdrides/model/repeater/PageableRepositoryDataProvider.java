@@ -33,7 +33,7 @@ import java.util.Iterator;
  * @since 1.1
  */
 public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, IdType extends Serializable> extends
-        SortableDataProvider<EntityType>
+        SortableDataProvider<EntityType,String>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -75,9 +75,9 @@ public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, I
 // IDataProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Iterator<? extends EntityType> iterator(int first, int max)
+    public Iterator<? extends EntityType> iterator(long first, long max)
     {
-        return repository.list(first, max, getSort().getProperty(), getSort().isAscending()).iterator();
+        return repository.list((int)first, (int)max, getSort().getProperty(), getSort().isAscending()).iterator();
     }
 
     public IModel<EntityType> model(EntityType entity)
@@ -85,7 +85,7 @@ public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, I
         return new LoadableDetachableEntityModel<EntityType,IdType>(repository, entity);
     }
 
-    public int size()
+    public long size()
     {
         return repository.size();
     }

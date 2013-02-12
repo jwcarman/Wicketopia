@@ -36,7 +36,7 @@ import java.util.List;
  * @param <T> the item type
  * @since 1.0
  */
-public abstract class SortableCollectionDataProvider<T> extends SortableDataProvider<T>
+public abstract class SortableCollectionDataProvider<T> extends SortableDataProvider<T,String>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -87,14 +87,14 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 // IDataProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Iterator<? extends T> iterator(int first, int count)
+    public Iterator<? extends T> iterator(long first, long count)
     {
         final List<T> list = new ArrayList<T>(inner.getObject());
         Collections.sort(list, new SortableDataProviderComparator());
-        return list.subList(first, first + count).iterator();
+        return list.subList((int)first, (int)(first + count)).iterator();
     }
 
-    public int size()
+    public long size()
     {
         return inner.getObject().size();
     }

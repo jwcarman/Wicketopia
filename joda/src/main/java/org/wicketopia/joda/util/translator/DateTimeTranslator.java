@@ -16,7 +16,7 @@
 
 package org.wicketopia.joda.util.translator;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 import org.joda.time.DateTime;
 
 /**

@@ -17,8 +17,8 @@
 package org.wicketopia.listener.ajax;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.feedback.FeedbackCollector;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedback;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -50,19 +50,19 @@ public class AutoFeedbackListener implements AjaxRequestTarget.IListener
     @Override
     public void onBeforeRespond(Map<String, Component> map, final AjaxRequestTarget target)
     {
-        if (!Session.get().getFeedbackMessages().isEmpty())
+        FeedbackCollector collector = new FeedbackCollector(target.getPage());
+        List<FeedbackMessage> messages = collector.collect();
+
+        if (!messages.isEmpty())
         {
             target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>()
             {
                 @Override
                 public void component(Component component, IVisit<Void> visit)
                 {
-                    if (component.getOutputMarkupId())
+                    if (component instanceof FeedbackPanel && hasMessages((FeedbackPanel) component) && component.getOutputMarkupId())
                     {
-                        if (component instanceof FeedbackPanel && hasMessages((FeedbackPanel) component))
-                        {
-                            target.add(component);
-                        }
+                        target.add(component);
                     }
                     visit.dontGoDeeper();
                 }

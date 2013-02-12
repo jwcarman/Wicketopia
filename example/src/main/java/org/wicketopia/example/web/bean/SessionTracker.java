@@ -17,7 +17,6 @@
 package org.wicketopia.example.web.bean;
 
 import javax.enterprise.context.ConversationScoped;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 
 @ConversationScoped

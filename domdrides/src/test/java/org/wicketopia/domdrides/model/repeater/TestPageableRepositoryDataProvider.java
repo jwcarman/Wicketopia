@@ -77,7 +77,7 @@ public class TestPageableRepositoryDataProvider extends AbstractTestCase
         replayAll();
         PageableRepositoryDataProvider<Person, String> provider =
                 new PageableRepositoryDataProvider<Person, String>(repo, "first");
-        int actual = provider.size();
+        long actual = provider.size();
         assertEquals(actual, expected);
     }
 }

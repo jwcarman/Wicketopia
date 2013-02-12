@@ -17,12 +17,10 @@
 package org.wicketopia.factory;
 
 import org.apache.wicket.Component;
-import org.apache.wicket.IClusterable;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.util.io.IClusterable;
 import org.wicketopia.context.Context;
-
-import java.io.Serializable;
 
 public interface PropertyComponentFactory<T> extends IClusterable
 {

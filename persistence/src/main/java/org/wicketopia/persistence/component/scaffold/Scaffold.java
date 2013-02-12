@@ -26,8 +26,9 @@ import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFal
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.feedback.ContainerFeedbackMessageFilter;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.EmptyPanel;
@@ -127,7 +128,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
     @Override
     public void renderHead(IHeaderResponse response)
     {
-        response.renderCSSReference(CSS_REFERENCE);
+        response.render(CssHeaderItem.forReference(CSS_REFERENCE));
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -293,9 +294,9 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             create.add(new Label("displayName", displayName).setRenderBodyOnly(true));
             final PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
             final Context context = createContext(Context.LIST);
-            final List<IColumn<T>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
+            final List<IColumn<T,String>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
             columns.add(new ActionsColumn());
-            add(new AjaxFallbackDefaultDataTable<T>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
+            add(new AjaxFallbackDefaultDataTable<T,String>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
         }
     }
 

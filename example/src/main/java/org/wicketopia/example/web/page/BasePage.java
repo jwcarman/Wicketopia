@@ -16,9 +16,10 @@
 
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.WicketRuntimeException;
+import org.apache.wicket.cdi.ConversationPropagation;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.IHeaderContributor;
-import org.apache.wicket.markup.html.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -86,7 +87,6 @@ public class BasePage extends WebPage implements IHeaderContributor
             public void onClick()
             {
                 conversation.begin();
-                //setResponsePage(this.getPage().getClass());
             }
 
             @Override
@@ -100,9 +100,8 @@ public class BasePage extends WebPage implements IHeaderContributor
             @Override
             public void onClick()
             {
-                //throw new WicketRuntimeException("I'm doing this on purpopse!");
                 conversation.end();
-                //setResponsePage(this.getPage().getClass());
+                setResponsePage(BasePage.this.getPageClass());
             }
 
             @Override
@@ -162,7 +161,7 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     public void renderHead(IHeaderResponse header)
     {
-        header.renderCSSReference(new PackageResourceReference(BasePage.class, "style.css"));
+        header.render(CssHeaderItem.forReference(new PackageResourceReference(BasePage.class, "style.css")));
     }
 
 //----------------------------------------------------------------------------------------------------------------------

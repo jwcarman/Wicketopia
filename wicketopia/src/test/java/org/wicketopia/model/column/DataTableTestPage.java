@@ -23,7 +23,7 @@ public class DataTableTestPage<T> extends WebPage
 {
     public static final String TABLE_ID = "table";
 
-    public DataTableTestPage(DefaultDataTable<T> table)
+    public DataTableTestPage(DefaultDataTable<T,String> table)
     {
         add(table);
     }

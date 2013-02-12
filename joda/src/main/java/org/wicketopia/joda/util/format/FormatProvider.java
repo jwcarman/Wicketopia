@@ -16,7 +16,7 @@
 
 package org.wicketopia.joda.util.format;
 
-import org.apache.wicket.IClusterable;
+import org.apache.wicket.util.io.IClusterable;
 import org.joda.time.format.DateTimeFormatter;
 import org.metastopheles.FacetKey;
 

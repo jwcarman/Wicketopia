@@ -73,7 +73,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider
     }
 
     @Override
-    public int getCount(Class<?> beanType)
+    public long getCount(Class<?> beanType)
     {
         return ((Number) getSession().createCriteria(beanType).setProjection(Projections.rowCount()).uniqueResult()).intValue();
     }
@@ -85,11 +85,11 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> List<T> getList(Class<T> entityType, int first, int max, String sortProperty, boolean ascending)
+    public <T> List<T> getList(Class<T> entityType, long first, long max, String sortProperty, boolean ascending)
     {
         Criteria c = getSession().createCriteria(entityType)
-                .setMaxResults(max)
-                .setFirstResult(first);
+                .setMaxResults((int)max)
+                .setFirstResult((int)first);
         if (sortProperty != null)
         {
             final int ndx = sortProperty.lastIndexOf('.');

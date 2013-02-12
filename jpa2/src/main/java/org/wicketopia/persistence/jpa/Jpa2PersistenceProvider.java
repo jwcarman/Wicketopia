@@ -88,10 +88,10 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
     }
 
     @Override
-    public int getCount(Class<?> entityType)
+    public long getCount(Class<?> entityType)
     {
         List results = entityManager.createQuery("select count(*) from " + entityType.getName()).getResultList();
-        return ((Number) results.get(0)).intValue();
+        return ((Number) results.get(0)).longValue();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
     }
 
     @SuppressWarnings("unchecked")
-    public <T> List<T> getList(Class<T> entityType, final int first, final int max, final String sortProperty, final boolean ascending)
+    public <T> List<T> getList(Class<T> entityType, final long first, final long max, final String sortProperty, final boolean ascending)
     {
         String jpaql = "select x from " + entityType.getName() + " x";
         if (sortProperty != null)
@@ -124,7 +124,7 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
             jpaql = jpaql + " order by x." + sortProperty + (ascending ? " asc" : " desc");
         }
         final Query query = entityManager.createQuery(jpaql);
-        query.setFirstResult(first).setMaxResults(max);
+        query.setFirstResult((int)first).setMaxResults((int)max);
         return query.getResultList();
     }
 }

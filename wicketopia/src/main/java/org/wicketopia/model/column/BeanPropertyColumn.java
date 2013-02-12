@@ -27,7 +27,7 @@ import org.wicketopia.factory.PropertyComponentFactory;
 /**
  * @author James Carman
  */
-public class BeanPropertyColumn<T> implements IColumn<T>
+public class BeanPropertyColumn<T> implements IColumn<T,String>
 {
     private final PropertyComponentFactory<T> factory;
     private final String propertyName;

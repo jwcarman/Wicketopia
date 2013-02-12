@@ -17,14 +17,13 @@
 package org.wicketopia.example.web.application;
 
 import org.apache.wicket.RuntimeConfigurationType;
-import org.apache.wicket.Session;
+import org.apache.wicket.cdi.CdiConfiguration;
+import org.apache.wicket.cdi.ConversationPropagation;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.apache.wicket.request.IRequestMapper;
-import org.apache.wicket.request.mapper.BufferedResponseMapper;
-import org.apache.wicket.request.mapper.CryptoMapper;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.cfg.Configuration;
+import org.jboss.weld.environment.servlet.Listener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
@@ -44,6 +43,8 @@ import org.wicketopia.persistence.PersistencePlugin;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator;
 
+import javax.enterprise.inject.spi.BeanManager;
+
 /**
  * Application object for your web application. If you want to run this
  * application without deploying, run the Start class.
@@ -56,9 +57,6 @@ public class WicketApplication extends WebApplication
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = -6044515824643215562L;
-
-    private RuntimeConfigurationType configurationType;
-
 
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
@@ -78,16 +76,10 @@ public class WicketApplication extends WebApplication
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    @Override
-    public RuntimeConfigurationType getConfigurationType()
-    {
-        return configurationType;
-    }
-
     @Value("${wicket.configuration}")
     public void setConfigurationType(RuntimeConfigurationType configurationType)
     {
-        this.configurationType = configurationType;
+        super.setConfigurationType(configurationType);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -124,12 +116,12 @@ public class WicketApplication extends WebApplication
         getComponentInstantiationListeners().add(
                 new SpringComponentInjector(this));
         getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
-        mount(new BufferedResponseMapper()
-        {
-            protected String getSessionId()
-            {
-                return Session.get().getId();
-            }
-        });
+
+        BeanManager manager = (BeanManager) getServletContext().getAttribute(Listener.BEAN_MANAGER_ATTRIBUTE_NAME);
+
+        new CdiConfiguration(manager)
+                .setPropagation(ConversationPropagation.ALL)
+                .configure(this);
+
     }
 }
