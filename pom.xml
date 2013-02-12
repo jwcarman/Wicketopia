@@ -138,8 +138,7 @@
 
     <distributionManagement>
         <site>
-            <id>sourceforge.net</id>
-            <name>Wicketopia Site</name>
+            <id>sourceforge</id>
             <url>scp://shell.sourceforge.net/home/project-web/wicketopia/htdocs</url>
         </site>
     </distributionManagement>
