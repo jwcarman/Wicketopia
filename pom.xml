@@ -162,8 +162,8 @@
 
     <scm>
         <url>https://github.com/jwcarman/Wicketopia</url>
-        <connection>scm:git:git:git@github.com:jwcarman/Wicketopia.git</connection>
-        <developerConnection>scm:git:git:git@github.com:jwcarman/Wicketopia.git</developerConnection>
+        <connection>scm:git:git@github.com:jwcarman/Wicketopia.git</connection>
+        <developerConnection>scm:git:git@github.com:jwcarman/Wicketopia.git</developerConnection>
     </scm>
 
     <mailingLists>
