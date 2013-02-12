@@ -19,7 +19,7 @@
     <parent>
         <groupId>org.wicketopia</groupId>
         <artifactId>wicketopia-module-template</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>1.1</version>
         <relativePath>../module-template</relativePath>
     </parent>
     <artifactId>wicketopia</artifactId>
