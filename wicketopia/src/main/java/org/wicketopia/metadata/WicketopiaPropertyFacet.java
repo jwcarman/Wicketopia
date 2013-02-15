@@ -27,6 +27,7 @@ import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.util.ContextualBoolean;
 import org.wicketopia.util.Displayable;
+import org.wicketopia.util.Pluralizer;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -99,8 +100,19 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
     WicketopiaPropertyFacet(PropertyMetaData propertyMetaData)
     {
         this.propertyMetaData = propertyMetaData;
-        this.displayNameMessageKey = Wicketopia.get().calculateDisplayNameMessageKey(propertyMetaData);
-        this.displayName = Wicketopia.get().calculateDefaultDisplayName(propertyMetaData);
+        this.displayNameMessageKey = calculateDisplayNameMessageKey(propertyMetaData);
+        this.displayName = calculateDefaultDisplayName(propertyMetaData);
+    }
+
+    private static String calculateDisplayNameMessageKey(PropertyMetaData propertyMetaData)
+    {
+        return propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
+    }
+
+    private static String calculateDefaultDisplayName(PropertyMetaData propertyMetaData)
+    {
+        final String name = propertyMetaData.getPropertyDescriptor().getName();
+        return Pluralizer.splitIntoWords(name);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -118,7 +130,7 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
     }
 
 //----------------------------------------------------------------------------------------------------------------------
-// Getter/Setter Methods
+// Displayable Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     public String getDisplayName()
@@ -126,10 +138,24 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
         return displayName;
     }
 
+    public String getDisplayNameMessageKey()
+    {
+        return displayNameMessageKey;
+    }
+
     public void setDisplayName(String displayName)
     {
         this.displayName = displayName;
     }
+
+    public void setDisplayNameMessageKey(String displayNameMessageKey)
+    {
+        this.displayNameMessageKey = displayNameMessageKey;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Getter/Setter Methods
+//----------------------------------------------------------------------------------------------------------------------
 
     public Set<ComponentBuilderFeature<EditorBuilder>> getEditorFeatures()
     {
@@ -144,16 +170,6 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
     public void setEditorType(String editorType)
     {
         this.editorType = editorType;
-    }
-
-    public String getDisplayNameMessageKey()
-    {
-        return displayNameMessageKey;
-    }
-
-    public void setDisplayNameMessageKey(String displayNameMessageKey)
-    {
-        this.displayNameMessageKey = displayNameMessageKey;
     }
 
     public int getOrder()
@@ -210,6 +226,31 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
         viewerFeatures.add(feature);
     }
 
+    public void decorate(ViewerBuilder builder, Context context)
+    {
+        applyFeatures(viewerFeatures, builder, context);
+        builder.visible(isVisible(context));
+    }
+
+    private <B extends ComponentBuilder> void applyFeatures(Set<? extends ComponentBuilderFeature<B>> features, B builder, Context context)
+    {
+        for (ComponentBuilderFeature<B> feature : features)
+        {
+            if(feature.isActiveFor(context))
+            {
+                feature.activate(builder);
+            }
+        }
+    }
+
+    public void decorate(EditorBuilder builder, Context context)
+    {
+        applyFeatures(editorFeatures, builder, context);
+        builder.visible(isVisible(context));
+        builder.required(isRequired(context));
+        builder.enabled(isEnabled(context));
+    }
+
     public boolean isEnabled(Context context)
     {
         return editable.getValue(context);
@@ -245,16 +286,6 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
         return new SerializedForm(getPropertyMetaData());
     }
 
-    private <B extends ComponentBuilder> void applyFeatures(Set<? extends ComponentBuilderFeature<B>> features, B builder, Context context)
-    {
-        for (ComponentBuilderFeature<B> feature : features)
-        {
-            if(feature.isActiveFor(context))
-            {
-                feature.activate(builder);
-            }
-        }
-    }
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
@@ -272,19 +303,5 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
         {
             return WicketopiaPropertyFacet.get(propertyMetaData);
         }
-    }
-
-    public void decorate(ViewerBuilder builder, Context context)
-    {
-        applyFeatures(viewerFeatures, builder, context);
-        builder.visible(isVisible(context));
-    }
-
-    public void decorate(EditorBuilder builder, Context context)
-    {
-        applyFeatures(editorFeatures, builder, context);
-        builder.visible(isVisible(context));
-        builder.required(isRequired(context));
-        builder.enabled(isEnabled(context));
     }
 }

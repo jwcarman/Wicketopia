@@ -46,6 +46,16 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static String calculateDefaultDisplayName(BeanMetaData beanMetaData)
+    {
+        return Pluralizer.splitIntoWords(beanMetaData.getBeanDescriptor().getBeanClass().getSimpleName());
+    }
+
+    public static String calculateDisplayNameMessageKey(BeanMetaData beanMetaData)
+    {
+        return beanMetaData.getBeanDescriptor().getBeanClass().getName();
+    }
+
     public static WicketopiaBeanFacet get(BeanMetaData beanMetaData)
     {
         synchronized (beanMetaData)
@@ -67,8 +77,33 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
     public WicketopiaBeanFacet(BeanMetaData beanMetaData)
     {
         this.beanMetaData = beanMetaData;
-        this.displayNameMessageKey = Wicketopia.get().calculateDisplayNameMessageKey(beanMetaData);
-        this.displayName = Wicketopia.get().calculateDefaultDisplayName(beanMetaData);
+        this.displayNameMessageKey = calculateDisplayNameMessageKey(beanMetaData);
+        this.displayName = calculateDefaultDisplayName(beanMetaData);
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Displayable Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+
+    public String getDisplayName()
+    {
+        return displayName;
+    }
+
+    public String getDisplayNameMessageKey()
+    {
+        return displayNameMessageKey;
+    }
+
+    public void setDisplayName(String displayName)
+    {
+        this.displayName = displayName;
+    }
+
+    public void setDisplayNameMessageKey(String displayNameMessageKey)
+    {
+        this.displayNameMessageKey = displayNameMessageKey;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -78,26 +113,6 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
     public BeanMetaData getBeanMetaData()
     {
         return beanMetaData;
-    }
-
-    public String getDisplayName()
-    {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName)
-    {
-        this.displayName = displayName;
-    }
-
-    public String getDisplayNameMessageKey()
-    {
-        return displayNameMessageKey;
-    }
-
-    public void setDisplayNameMessageKey(String displayNameMessageKey)
-    {
-        this.displayNameMessageKey = displayNameMessageKey;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -234,27 +234,6 @@ public class Wicketopia
         viewerTypeMapping.addTypeOverride(propertyType, typeName);
     }
 
-    public String calculateDefaultDisplayName(BeanMetaData beanMetaData)
-    {
-        return Pluralizer.splitIntoWords(beanMetaData.getBeanDescriptor().getBeanClass().getSimpleName());
-    }
-
-    public String calculateDefaultDisplayName(PropertyMetaData propertyMetaData)
-    {
-        final String name = propertyMetaData.getPropertyDescriptor().getName();
-        return Pluralizer.splitIntoWords(name);
-    }
-
-    public String calculateDisplayNameMessageKey(BeanMetaData beanMetaData)
-    {
-        return beanMetaData.getBeanDescriptor().getBeanClass().getName();
-    }
-
-    public String calculateDisplayNameMessageKey(PropertyMetaData propertyMetaData)
-    {
-        return propertyMetaData.getBeanMetaData().getBeanDescriptor().getBeanClass().getName() + "." + propertyMetaData.getPropertyDescriptor().getName();
-    }
-
     public <T> List<IColumn<T,String>> createColumns(Class<T> beanType, PropertyComponentFactory<T> factory, Context context, String... properties)
     {
         final List<String> visible = getVisibleProperties(beanType, context, properties);
