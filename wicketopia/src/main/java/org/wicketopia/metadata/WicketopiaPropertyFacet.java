@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Note: this class has a natural ordering that is inconsistent with equals.
  * @since 1.0
  */
 public class WicketopiaPropertyFacet implements Comparable, Serializable, Displayable
