@@ -32,15 +32,15 @@ import java.util.Iterator;
  *
  * @since 1.1
  */
-public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, IdType extends Serializable> extends
-        SortableDataProvider<EntityType,String>
+public class PageableRepositoryDataProvider<E extends Entity<I>, I extends Serializable> extends
+        SortableDataProvider<E,String>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
-    private final PageableRepository<EntityType, IdType> repository;
+    private final PageableRepository<E, I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -52,7 +52,7 @@ public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, I
      * @param repository the repository
      * @param sortProperty the sort property
      */
-    public PageableRepositoryDataProvider(PageableRepository<EntityType, IdType> repository, String sortProperty)
+    public PageableRepositoryDataProvider(PageableRepository<E, I> repository, String sortProperty)
     {
         this.repository = repository;
         setSort(new SortParam(sortProperty, true));
@@ -65,7 +65,7 @@ public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, I
      * @param sortProperty the sort property
      * @param ascending whether or not to sort ascending
      */
-    public PageableRepositoryDataProvider(PageableRepository<EntityType, IdType> repository, String sortProperty, boolean ascending)
+    public PageableRepositoryDataProvider(PageableRepository<E, I> repository, String sortProperty, boolean ascending)
     {
         this.repository = repository;
         setSort(new SortParam(sortProperty, ascending));
@@ -75,14 +75,14 @@ public class PageableRepositoryDataProvider<EntityType extends Entity<IdType>, I
 // IDataProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Iterator<? extends EntityType> iterator(long first, long max)
+    public Iterator<? extends E> iterator(long first, long max)
     {
         return repository.list((int)first, (int)max, getSort().getProperty(), getSort().isAscending()).iterator();
     }
 
-    public IModel<EntityType> model(EntityType entity)
+    public IModel<E> model(E entity)
     {
-        return new LoadableDetachableEntityModel<EntityType,IdType>(repository, entity);
+        return new LoadableDetachableEntityModel<E,I>(repository, entity);
     }
 
     public long size()

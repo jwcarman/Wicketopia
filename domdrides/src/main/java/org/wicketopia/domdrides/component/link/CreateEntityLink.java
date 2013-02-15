@@ -26,19 +26,19 @@ import java.io.Serializable;
 /**
  * @since 1.0
  */
-public abstract class CreateEntityLink<EntityType extends Entity<IdType>, IdType extends Serializable> extends SubmitLink
+public abstract class CreateEntityLink<E extends Entity<I>, I extends Serializable> extends SubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Repository<EntityType, IdType> repository;
+    private final Repository<E, I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected CreateEntityLink(String id, Repository<EntityType, IdType> repository, IModel<EntityType> model)
+    protected CreateEntityLink(String id, Repository<E, I> repository, IModel<E> model)
     {
         super(id);
         setDefaultModel(model);
@@ -49,7 +49,7 @@ public abstract class CreateEntityLink<EntityType extends Entity<IdType>, IdType
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterCreate(EntityType entity);
+    protected abstract void afterCreate(E entity);
 
 //----------------------------------------------------------------------------------------------------------------------
 // IFormSubmittingComponent Implementation
@@ -59,7 +59,7 @@ public abstract class CreateEntityLink<EntityType extends Entity<IdType>, IdType
     @SuppressWarnings("unchecked")
     public void onSubmit()
     {
-        EntityType entity = (EntityType) getDefaultModelObject();
+        E entity = (E) getDefaultModelObject();
         entity = repository.add(entity);
         setDefaultModelObject(entity);
         afterCreate(entity);

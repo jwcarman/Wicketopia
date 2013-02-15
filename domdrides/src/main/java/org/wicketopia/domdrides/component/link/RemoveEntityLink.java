@@ -26,20 +26,20 @@ import java.io.Serializable;
 /**
  * @author James Carman
  */
-public abstract class RemoveEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends Link<EntityType>
+public abstract class RemoveEntityLink<E extends Entity<I>,I extends Serializable> extends Link<E>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
-    private final Repository<EntityType,IdType> repository;
+    private final Repository<E,I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public RemoveEntityLink( String id, Repository<EntityType, IdType> repository, IModel<EntityType> model )
+    public RemoveEntityLink( String id, Repository<E, I> repository, IModel<E> model )
     {
         super(id, model);
         this.repository = repository;
@@ -55,7 +55,7 @@ public abstract class RemoveEntityLink<EntityType extends Entity<IdType>,IdType 
      *
      * @param entity the entity that was removed
      */
-    protected abstract void afterRemove(EntityType entity);
+    protected abstract void afterRemove(E entity);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
@@ -63,7 +63,7 @@ public abstract class RemoveEntityLink<EntityType extends Entity<IdType>,IdType 
 
     public final void onClick()
     {
-        final EntityType entity = getModelObject();
+        final E entity = getModelObject();
         repository.remove(entity);
         afterRemove(entity);
     }

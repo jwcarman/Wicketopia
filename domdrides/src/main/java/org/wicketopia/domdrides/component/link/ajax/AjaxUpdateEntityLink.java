@@ -28,19 +28,19 @@ import java.io.Serializable;
 /**
  * @since 1.0
  */
-public abstract class AjaxUpdateEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends AjaxSubmitLink
+public abstract class AjaxUpdateEntityLink<E extends Entity<I>,I extends Serializable> extends AjaxSubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Repository<EntityType,IdType> repository;
+    private final Repository<E,I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxUpdateEntityLink(String id, Repository<EntityType, IdType> repository, IModel<EntityType> model)
+    public AjaxUpdateEntityLink(String id, Repository<E, I> repository, IModel<E> model)
     {
         super(id);
         setDefaultModel(model);
@@ -51,7 +51,7 @@ public abstract class AjaxUpdateEntityLink<EntityType extends Entity<IdType>,IdT
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterUpdate(EntityType entity, AjaxRequestTarget target);
+    protected abstract void afterUpdate(E entity, AjaxRequestTarget target);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
@@ -61,7 +61,7 @@ public abstract class AjaxUpdateEntityLink<EntityType extends Entity<IdType>,IdT
     @SuppressWarnings("unchecked")
     protected void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
-        EntityType entity = (EntityType)getDefaultModelObject();
+        E entity = (E)getDefaultModelObject();
         entity = repository.update(entity);
         afterUpdate(entity, target);
     }

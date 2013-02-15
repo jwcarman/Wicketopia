@@ -29,19 +29,19 @@ import java.io.Serializable;
 /**
  * @since 1.0
  */
-public abstract class AjaxCreateEntityLink<EntityType extends Entity<IdType>,IdType extends Serializable> extends AjaxSubmitLink
+public abstract class AjaxCreateEntityLink<E extends Entity<I>,I extends Serializable> extends AjaxSubmitLink
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Repository<EntityType,IdType> repository;
+    private final Repository<E,I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxCreateEntityLink(String id, Repository<EntityType, IdType> repository, IModel<EntityType> model)
+    public AjaxCreateEntityLink(String id, Repository<E, I> repository, IModel<E> model)
     {
         super(id);
         setDefaultModel(model);
@@ -52,7 +52,7 @@ public abstract class AjaxCreateEntityLink<EntityType extends Entity<IdType>,IdT
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract void afterCreate(EntityType entity, AjaxRequestTarget target);
+    protected abstract void afterCreate(E entity, AjaxRequestTarget target);
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
@@ -62,7 +62,7 @@ public abstract class AjaxCreateEntityLink<EntityType extends Entity<IdType>,IdT
     @SuppressWarnings("unchecked")
     protected void onSubmit(AjaxRequestTarget target, Form<?> form)
     {
-        EntityType entity = (EntityType)getDefaultModelObject();
+        E entity = (E)getDefaultModelObject();
         entity = repository.add(entity);
         afterCreate(entity, target);
     }
