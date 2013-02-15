@@ -112,7 +112,7 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
         if (o instanceof WicketopiaPropertyFacet)
         {
             WicketopiaPropertyFacet other = (WicketopiaPropertyFacet) o;
-            return new Integer(getOrder()).compareTo(other.getOrder());
+            return Integer.valueOf(getOrder()).compareTo(other.getOrder());
         }
         return 1;
     }
