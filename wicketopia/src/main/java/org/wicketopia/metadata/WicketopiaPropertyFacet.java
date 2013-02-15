@@ -18,7 +18,6 @@ package org.wicketopia.metadata;
 
 import org.metastopheles.FacetKey;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.Wicketopia;
 import org.wicketopia.builder.ComponentBuilder;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.builder.ViewerBuilder;
@@ -30,11 +29,7 @@ import org.wicketopia.util.Displayable;
 import org.wicketopia.util.Pluralizer;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Note: this class has a natural ordering that is inconsistent with equals.

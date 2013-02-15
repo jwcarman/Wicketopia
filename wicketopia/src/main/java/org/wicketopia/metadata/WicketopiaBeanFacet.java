@@ -18,8 +18,6 @@ package org.wicketopia.metadata;
 
 import org.metastopheles.BeanMetaData;
 import org.metastopheles.FacetKey;
-import org.metastopheles.PropertyMetaData;
-import org.wicketopia.Wicketopia;
 import org.wicketopia.util.Displayable;
 import org.wicketopia.util.Pluralizer;
 

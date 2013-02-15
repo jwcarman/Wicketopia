@@ -16,12 +16,12 @@
 
 package org.wicketopia.context;
 
-import org.wicketopia.context.Context;
+import java.io.Serializable;
 
 /**
  * @since 1.0
  */
-public interface ContextPredicate
+public interface ContextPredicate extends Serializable
 {
     boolean evaluate(Context context);
 }

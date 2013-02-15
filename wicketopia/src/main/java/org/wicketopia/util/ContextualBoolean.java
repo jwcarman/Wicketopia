@@ -19,13 +19,14 @@ package org.wicketopia.util;
 import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  *
  */
-public class ContextualBoolean
+public class ContextualBoolean implements Serializable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -95,7 +96,7 @@ public class ContextualBoolean
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final class ContextualCondition
+    private final class ContextualCondition implements Serializable
     {
         private final ContextPredicate predicate;
         private final boolean value;
