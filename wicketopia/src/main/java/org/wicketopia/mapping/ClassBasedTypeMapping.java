@@ -101,9 +101,9 @@ public class ClassBasedTypeMapping implements TypeMapping
 
     public void setTypeOverrides( Map<Class, String> typeOverrides )
     {
-        for( Class propertyType : typeOverrides.keySet() )
+        for (Map.Entry<Class, String> entry : typeOverrides.entrySet())
         {
-            typeMap.put(propertyType.getName(), typeOverrides.get(propertyType));
+            typeMap.put(entry.getKey().getName(), entry.getValue());
         }
     }
 }
