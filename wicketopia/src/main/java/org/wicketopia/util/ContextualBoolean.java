@@ -96,7 +96,7 @@ public class ContextualBoolean implements Serializable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final class ContextualCondition implements Serializable
+    private static final class ContextualCondition implements Serializable
     {
         private final ContextPredicate predicate;
         private final boolean value;

@@ -180,11 +180,6 @@ public class Wicketopia
         this.viewerTypeMapping = viewerTypeMapping;
     }
 
-    /*public BeanMetaDataFactory getBeanMetadataFactory()
-    {
-        return beanMetadataFactory;
-    }*/
-
     public void setBeanMetaDataFactory(BeanMetaDataFactory beanMetaDataFactory)
     {
         this.beanMetaDataFactory = beanMetaDataFactory;
