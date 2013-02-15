@@ -26,7 +26,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 /**
  * @author James Carman
  */
-public class EmailFeature extends AbstractValidatorFeature
+public final class EmailFeature extends AbstractValidatorFeature
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
