@@ -51,6 +51,7 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
     @Override
     public <T> void delete(T object)
     {
+        object = entityManager.merge(object);
         entityManager.remove(object);
     }
 
@@ -90,7 +91,7 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
     @Override
     public long getCount(Class<?> entityType)
     {
-        List results = entityManager.createQuery("select count(*) from " + entityType.getName()).getResultList();
+        List results = entityManager.createQuery("select count(x) from " + entityType.getName() + " x").getResultList();
         return ((Number) results.get(0)).longValue();
     }
 
