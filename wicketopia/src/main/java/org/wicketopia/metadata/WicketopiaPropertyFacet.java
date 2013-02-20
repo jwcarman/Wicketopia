@@ -35,7 +35,7 @@ import java.util.*;
  * Note: this class has a natural ordering that is inconsistent with equals.
  * @since 1.0
  */
-public class WicketopiaPropertyFacet implements Comparable, Serializable, Displayable
+public class WicketopiaPropertyFacet implements Serializable, Displayable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -62,6 +62,11 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
+    public static int compare(WicketopiaPropertyFacet leftFacet, WicketopiaPropertyFacet rightFacet)
+    {
+        return Integer.valueOf(leftFacet.getOrder()).compareTo(rightFacet.getOrder());
+    }
+
     public static WicketopiaPropertyFacet get(PropertyMetaData propertyMetaData)
     {
         synchronized (propertyMetaData)
@@ -78,14 +83,7 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
 
     public static void sort(List<PropertyMetaData> propertyMetaDataList)
     {
-        Collections.sort(propertyMetaDataList, new Comparator<PropertyMetaData>()
-        {
-            @Override
-            public int compare(PropertyMetaData o1, PropertyMetaData o2)
-            {
-                return WicketopiaPropertyFacet.get(o1).compareTo(WicketopiaPropertyFacet.get(o2));
-            }
-        });
+        Collections.sort(propertyMetaDataList, new OrderComparator());
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -108,20 +106,6 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
     {
         final String name = propertyMetaData.getPropertyDescriptor().getName();
         return Pluralizer.splitIntoWords(name);
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Comparable Implementation
-//----------------------------------------------------------------------------------------------------------------------
-
-    public int compareTo(Object o)
-    {
-        if (o instanceof WicketopiaPropertyFacet)
-        {
-            WicketopiaPropertyFacet other = (WicketopiaPropertyFacet) o;
-            return Integer.valueOf(getOrder()).compareTo(other.getOrder());
-        }
-        return 1;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -284,6 +268,17 @@ public class WicketopiaPropertyFacet implements Comparable, Serializable, Displa
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
+
+    private static class OrderComparator implements Comparator<PropertyMetaData>
+    {
+        @Override
+        public int compare(PropertyMetaData left, PropertyMetaData right)
+        {
+            WicketopiaPropertyFacet leftFacet = WicketopiaPropertyFacet.get(left);
+            WicketopiaPropertyFacet rightFacet = WicketopiaPropertyFacet.get(right);
+            return WicketopiaPropertyFacet.compare(leftFacet, rightFacet);
+        }
+    }
 
     private static final class SerializedForm implements Serializable
     {

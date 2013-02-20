@@ -23,11 +23,7 @@ import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.protocol.http.WebApplication;
-import org.metastopheles.BeanMetaData;
-import org.metastopheles.BeanMetaDataFactory;
-import org.metastopheles.MetaDataDecorator;
-import org.metastopheles.MethodMetaData;
-import org.metastopheles.PropertyMetaData;
+import org.metastopheles.*;
 import org.metastopheles.annotation.AnnotationBeanMetaDataFactory;
 import org.scannotation.ClasspathUrlFinder;
 import org.scannotation.WarUrlFinder;
@@ -50,23 +46,13 @@ import org.wicketopia.mapping.editor.DefaultEditorTypeMapping;
 import org.wicketopia.mapping.viewer.DefaultViewerTypeMapping;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.model.column.BeanPropertyColumn;
-import org.wicketopia.util.Pluralizer;
 import org.wicketopia.util.ServiceLocator;
 import org.wicketopia.viewer.PropertyViewerProvider;
 import org.wicketopia.viewer.component.LabelPropertyViewer;
 
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Wicketopia
 {
@@ -130,7 +116,7 @@ public class Wicketopia
     {
         this(findDefaultPlugins());
     }
-    
+
     private static List<WicketopiaPlugin> findDefaultPlugins()
     {
         final List<WicketopiaPlugin> plugins = new LinkedList<WicketopiaPlugin>();
@@ -229,10 +215,10 @@ public class Wicketopia
         viewerTypeMapping.addTypeOverride(propertyType, typeName);
     }
 
-    public <T> List<IColumn<T,String>> createColumns(Class<T> beanType, PropertyComponentFactory<T> factory, Context context, String... properties)
+    public <T> List<IColumn<T, String>> createColumns(Class<T> beanType, PropertyComponentFactory<T> factory, Context context, String... properties)
     {
         final List<String> visible = getVisibleProperties(beanType, context, properties);
-        final List<IColumn<T,String>> columns = new ArrayList<IColumn<T,String>>(visible.size());
+        final List<IColumn<T, String>> columns = new ArrayList<IColumn<T, String>>(visible.size());
         for (String propertyName : visible)
         {
             columns.add(new BeanPropertyColumn<T>(factory, propertyName, context));
@@ -363,9 +349,9 @@ public class Wicketopia
                 @Override
                 public int compare(String o1, String o2)
                 {
-                    WicketopiaPropertyFacet facet1 = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(o1));
-                    WicketopiaPropertyFacet facet2 = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(o2));
-                    return facet1.compareTo(facet2);
+                    WicketopiaPropertyFacet left = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(o1));
+                    WicketopiaPropertyFacet right = WicketopiaPropertyFacet.get(beanMetaData.getPropertyMetaData(o2));
+                    return WicketopiaPropertyFacet.compare(left, right);
                 }
             });
         }
@@ -391,7 +377,7 @@ public class Wicketopia
         adDefaultViewerProviders();
         for (WicketopiaPlugin plugin : plugins)
         {
-            if(logger.isDebugEnabled())
+            if (logger.isDebugEnabled())
             {
                 logger.debug("Initializing {} plugin...", plugin.getClass().getName());
             }
