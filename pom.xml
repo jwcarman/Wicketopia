@@ -31,6 +31,7 @@
     <inceptionYear>2010</inceptionYear>
     <modules>
         <module>module-template</module>
+        <module>annotations</module>
         <module>wicketopia</module>
         <module>persistence</module>
         <module>hibernate</module>

@@ -47,8 +47,8 @@ import org.wicketopia.metadata.WicketopiaBeanFacet;
 import org.wicketopia.model.column.FragmentColumn;
 import org.wicketopia.model.label.DisplayNameModel;
 import org.wicketopia.model.label.PluralizedModel;
+import org.wicketopia.persistence.PersistencePlugin;
 import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.PersistenceUtils;
 import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 import org.wicketopia.persistence.component.link.ajax.AjaxUpdateLink;
 import org.wicketopia.persistence.model.LoadableDetachableEntityModel;
@@ -78,6 +78,11 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
+
+    public Scaffold(String id, Class<T> beanType)
+    {
+        this(id, beanType, PersistencePlugin.get().getPersistenceProvider());
+    }
 
     public Scaffold(String id, Class<T> beanType, PersistenceProvider persistenceProvider)
     {
@@ -138,7 +143,6 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
     private Context createContext(String mode)
     {
         final Context context = new Context(mode);
-        PersistenceUtils.setProvider(context, persistenceProvider);
         return context;
     }
 
@@ -222,31 +226,6 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             add(new SaveLink(form));
             add(form);
         }
-
-
-    }
-
-    private class SaveLink extends AjaxCreateLink<T>
-    {
-        public SaveLink(Form<T> form)
-        {
-            super("saveButton", form, persistenceProvider);
-        }
-
-        @Override
-        protected void afterCreate(T object, AjaxRequestTarget target)
-        {
-            Scaffold.this.mode = ScaffoldMode.View;
-            Scaffold.this.info(displayName.getObject() + " Created");
-            model = new LoadableDetachableEntityModel<T>(beanType, object, persistenceProvider);
-            refreshContent(target);
-        }
-
-        @Override
-        protected void onError(AjaxRequestTarget target, Form<?> form)
-        {
-            target.add(feedback);
-        }
     }
 
     private final class CreateModel extends LoadableDetachableModel<T>
@@ -297,6 +276,29 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             final List<IColumn<T,String>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
             columns.add(new ActionsColumn());
             add(new AjaxFallbackDefaultDataTable<T,String>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
+        }
+    }
+
+    private class SaveLink extends AjaxCreateLink<T>
+    {
+        public SaveLink(Form<T> form)
+        {
+            super("saveButton", form, persistenceProvider);
+        }
+
+        @Override
+        protected void afterCreate(T object, AjaxRequestTarget target)
+        {
+            Scaffold.this.mode = ScaffoldMode.View;
+            Scaffold.this.info(displayName.getObject() + " Created");
+            model = new LoadableDetachableEntityModel<T>(beanType, object, persistenceProvider);
+            refreshContent(target);
+        }
+
+        @Override
+        protected void onError(AjaxRequestTarget target, Form<?> form)
+        {
+            target.add(feedback);
         }
     }
 

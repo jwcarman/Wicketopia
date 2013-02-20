@@ -19,13 +19,13 @@ package org.wicketopia.example.domain.entity;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
-import org.wicketopia.builder.feature.annotation.metadata.DisplayName;
-import org.wicketopia.builder.feature.annotation.metadata.EditorType;
-import org.wicketopia.builder.feature.annotation.metadata.Order;
-import org.wicketopia.builder.feature.annotation.metadata.ViewerType;
-import org.wicketopia.builder.feature.annotation.required.Required;
-import org.wicketopia.builder.feature.annotation.validator.Email;
-import org.wicketopia.builder.feature.annotation.validator.Pattern;
+import org.wicketopia.annotation.metadata.DisplayName;
+import org.wicketopia.annotation.metadata.EditorType;
+import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.annotation.metadata.ViewerType;
+import org.wicketopia.annotation.required.Required;
+import org.wicketopia.annotation.validator.Email;
+import org.wicketopia.annotation.validator.Pattern;
 import org.wicketopia.example.domain.value.Gender;
 import org.wicketopia.joda.annotation.DatePattern;
 import org.wicketopia.persistence.PersistencePlugin;
@@ -34,10 +34,7 @@ import org.wicketopia.security.annotation.VisibleForRole;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.io.Serializable;
-import java.util.UUID;
 
 @Entity
 public class Person extends BaseEntity

@@ -20,7 +20,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
-import org.wicketopia.builder.feature.annotation.validator.Email;
+import org.wicketopia.annotation.validator.Email;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 /**

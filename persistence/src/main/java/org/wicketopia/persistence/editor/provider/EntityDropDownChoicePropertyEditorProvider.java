@@ -22,8 +22,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.provider.AbstractDropDownChoicePropertyEditorProvider;
+import org.wicketopia.persistence.PersistencePlugin;
 import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.PersistenceUtils;
 
 import java.util.List;
 
@@ -36,14 +36,14 @@ public class EntityDropDownChoicePropertyEditorProvider extends AbstractDropDown
     @Override
     protected <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type, Context context)
     {
-        PersistenceProvider provider = PersistenceUtils.getProvider(context);
+        PersistenceProvider provider = PersistencePlugin.get().getPersistenceProvider();
         return new AllEntitiesModel<T>(provider, type);
     }
 
     @Override
     protected <T> IChoiceRenderer<T> createRenderer(DropDownChoice<T> ddc, Class<T> type, Context context)
     {
-        final PersistenceProvider provider = PersistenceUtils.getProvider(context);
+        final PersistenceProvider provider = PersistencePlugin.get().getPersistenceProvider();
         return new EntityChoiceRenderer<T>(provider);
     }
 

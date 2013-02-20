@@ -18,10 +18,7 @@ package org.wicketopia.example.web.page.list;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
-import org.apache.wicket.event.Broadcast;
-import org.apache.wicket.event.IEventSink;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
@@ -30,10 +27,7 @@ import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.persistence.PersistenceProvider;
-import org.wicketopia.persistence.PersistenceUtils;
 import org.wicketopia.persistence.model.list.EntityListModel;
-
-import java.text.Normalizer;
 
 public class BeanListEditorExample extends BasePage
 {

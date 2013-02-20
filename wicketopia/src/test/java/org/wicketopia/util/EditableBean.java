@@ -16,10 +16,11 @@
 
 package org.wicketopia.util;
 
-import org.wicketopia.builder.feature.annotation.metadata.Order;
-import org.wicketopia.builder.feature.annotation.required.Required;
-import org.wicketopia.builder.feature.annotation.validator.Length;
-import org.wicketopia.builder.feature.annotation.visible.Visible;
+
+import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.annotation.required.Required;
+import org.wicketopia.annotation.validator.Length;
+import org.wicketopia.annotation.visible.Visible;
 import org.wicketopia.context.Context;
 
 import java.io.Serializable;

@@ -14,56 +14,99 @@
  * limitations under the License.
  */
 
-package org.wicketopia.persistence;
+package org.wicketopia.context;
 
-import org.wicketopia.Wicketopia;
-import org.wicketopia.WicketopiaPlugin;
-import org.wicketopia.persistence.editor.provider.EntityDropDownChoicePropertyEditorProvider;
+import java.io.Serializable;
 
-public class PersistencePlugin implements WicketopiaPlugin
+/**
+ *
+ */
+public class Context implements Serializable
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static final String ENTITY_DDC = "entity-ddc";
+    public static final String ALL = "***ALL***";
 
-    private final PersistenceProvider persistenceProvider;
+    public static final String CREATE = "CREATE";
+    public static final String UPDATE = "UPDATE";
+    public static final String VIEW = "VIEW";
+    public static final String LIST = "LIST";
+
+
+    public static final ContextPredicate ALL_CONTEXTS = new AllContextsPredicate();
+
+    private final String name;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PersistencePlugin get()
+    public static ContextPredicate whereContextNameIn(String... contextNames)
     {
-        return Wicketopia.get().getPlugin(PersistencePlugin.class);
+        return new ContextNamePredicate(contextNames);
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PersistencePlugin(PersistenceProvider persistenceProvider)
+    public Context(String name)
     {
-        this.persistenceProvider = persistenceProvider;
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// WicketopiaPlugin Implementation
-//----------------------------------------------------------------------------------------------------------------------
-
-    @Override
-    public void initialize(Wicketopia wicketopia)
-    {
-        wicketopia.addPropertyEditorProvider(ENTITY_DDC, new EntityDropDownChoicePropertyEditorProvider());
+        this.name = name;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PersistenceProvider getPersistenceProvider()
+    public String getName()
     {
-        return persistenceProvider;
+        return name;
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Inner Classes
+//----------------------------------------------------------------------------------------------------------------------
+
+    private static final class AllContextsPredicate implements ContextPredicate
+    {
+        @Override
+        public boolean evaluate(Context context)
+        {
+            return true;
+        }
+    }
+    
+    private static final class ContextNamePredicate implements ContextPredicate
+    {
+        private final String[] contextNames;
+
+        private ContextNamePredicate(String... contextNames)
+        {
+            this.contextNames = contextNames;
+        }
+
+        @Override
+        public boolean evaluate(Context context)
+        {
+            if (contextNames == null || contextNames.length == 0)
+            {
+                return true;
+            }
+            else
+            {
+                final String target = context.getName();
+                for (String contextName : contextNames)
+                {
+                    if (ALL.equals(contextName) || target.equals(contextName))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
     }
 }
