@@ -35,7 +35,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
  * @author James Carman
  * @since 1.0
  */
-public class WicketopiaMetaDataDecorators
+public final class WicketopiaMetaDataDecorators
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods

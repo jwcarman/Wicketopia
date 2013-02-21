@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-public class ServiceLocator
+public final class ServiceLocator
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
