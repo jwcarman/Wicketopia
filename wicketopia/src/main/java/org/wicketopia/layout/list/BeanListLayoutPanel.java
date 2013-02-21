@@ -59,7 +59,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
             headers.add(new PropertyLabel(headers.newChildId(), propertyMetaData));
         }
         add(headers);
-        listView = new BeanListView("rows", beanType, model, componentFactory, context);
+        listView = new BeanListView("rows", model, componentFactory, context);
         add(listView);
     }
 
@@ -86,7 +86,7 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
         private final PropertyComponentFactory<T> componentFactory;
         private final Context context;
 
-        private BeanListView(String id, Class<T> beanType, IModel<? extends List<? extends T>> model, PropertyComponentFactory<T> componentFactory, Context context)
+        private BeanListView(String id, IModel<? extends List<? extends T>> model, PropertyComponentFactory<T> componentFactory, Context context)
         {
             super(id, model);
             this.componentFactory = componentFactory;
@@ -108,12 +108,6 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
             };
             cells.setReuseItems(true);
             rowItem.add(cells);
-        }
-
-        @Override
-        protected IModel<T> getListItemModel(IModel<? extends List<T>> model, int index)
-        {
-            return BeanListLayoutPanel.this.getListItemModel(model, index);
         }
     }
 }
