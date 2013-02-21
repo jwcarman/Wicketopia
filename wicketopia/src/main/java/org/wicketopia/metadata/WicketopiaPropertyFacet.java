@@ -269,7 +269,7 @@ public class WicketopiaPropertyFacet implements Serializable, Displayable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class OrderComparator implements Comparator<PropertyMetaData>
+    private static class OrderComparator implements Comparator<PropertyMetaData>, Serializable
     {
         @Override
         public int compare(PropertyMetaData left, PropertyMetaData right)
