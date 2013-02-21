@@ -60,7 +60,7 @@ public class Wicketopia
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final Logger logger = LoggerFactory.getLogger(Wicketopia.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Wicketopia.class);
 
     private static final MetaDataKey<Wicketopia> META_KEY = new WicketopiaPluginKey();
 
@@ -377,9 +377,9 @@ public class Wicketopia
         adDefaultViewerProviders();
         for (WicketopiaPlugin plugin : plugins)
         {
-            if (logger.isDebugEnabled())
+            if (LOGGER.isDebugEnabled())
             {
-                logger.debug("Initializing {} plugin...", plugin.getClass().getName());
+                LOGGER.debug("Initializing {} plugin...", plugin.getClass().getName());
             }
             plugin.initialize(this);
         }
