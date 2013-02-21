@@ -112,4 +112,13 @@ public class WicketopiaMetaDataDecorators
     {
         WicketopiaPropertyFacet.get(propertyMetaData).setVisible(Context.whereContextNameIn(visible.value()), true);
     }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
+
+    private WicketopiaMetaDataDecorators()
+    {
+        
+    }
 }
