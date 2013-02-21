@@ -16,8 +16,6 @@
 
 package org.wicketopia.util;
 
-import java.io.Serializable;
-
 import org.apache.wicket.protocol.http.WebApplication;
 import org.metastopheles.PropertyMetaData;
 import org.testng.Assert;
@@ -28,6 +26,8 @@ import org.wicketopia.context.Context;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.persistence.filecfg.decorator.FileCfgBeanDecorator;
 import org.wicketopia.persistence.filecfg.decorator.FileCfgPropertyDecorator;
+
+import java.io.Serializable;
 
 /**
  * @author Alexandros Karypidis

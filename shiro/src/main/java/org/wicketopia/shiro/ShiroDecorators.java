@@ -18,7 +18,6 @@ package org.wicketopia.shiro;
 
 import org.metastopheles.annotation.ScanMe;
 import org.wicketopia.security.decorator.AbstractSecurityDecorators;
-import org.wicketopia.security.SecurityProvider;
 
 /**
  * @since 1.0

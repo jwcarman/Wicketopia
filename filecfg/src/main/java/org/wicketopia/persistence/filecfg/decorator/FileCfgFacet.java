@@ -1,9 +1,9 @@
 package org.wicketopia.persistence.filecfg.decorator;
 
+import org.metastopheles.FacetKey;
+
 import java.io.Serializable;
 import java.util.Properties;
-
-import org.metastopheles.FacetKey;
 
 public class FileCfgFacet implements Serializable
 {

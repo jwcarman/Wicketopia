@@ -19,7 +19,6 @@ package org.wicketopia.model.label;
 import org.apache.wicket.Component;
 import org.apache.wicket.Localizer;
 import org.apache.wicket.model.ResourceModel;
-import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.util.Displayable;
 
 /**

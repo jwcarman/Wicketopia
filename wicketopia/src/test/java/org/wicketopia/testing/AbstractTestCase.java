@@ -16,11 +16,8 @@
 
 package org.wicketopia.testing;
 
-import org.apache.wicket.util.tester.WicketTester;
 import org.easymock.EasyMockSupport;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 public class AbstractTestCase extends EasyMockSupport

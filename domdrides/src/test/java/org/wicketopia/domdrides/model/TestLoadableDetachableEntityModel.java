@@ -21,8 +21,8 @@ import org.testng.annotations.Test;
 import org.wicketopia.domdrides.util.Person;
 import org.wicketopia.testing.AbstractTestCase;
 
-import static org.easymock.EasyMock.*;
-import static org.testng.Assert.*;
+import static org.easymock.EasyMock.expect;
+import static org.testng.Assert.assertSame;
 
 /**
  * @author James Carman

@@ -21,7 +21,7 @@ import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
 import org.wicketopia.editor.provider.EnumDropDownChoicePropertyEditorProvider;
 import org.wicketopia.util.Gender;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 /**
  * @author James Carman
  */

@@ -24,7 +24,6 @@ import org.wicketopia.joda.component.viewer.JodaLabel;
 import org.wicketopia.joda.util.format.FormatProvider;
 import org.wicketopia.joda.util.format.JodaFormatSupport;
 import org.wicketopia.viewer.PropertyViewerProvider;
-import org.wicketopia.viewer.component.LabelPropertyViewer;
 
 /**
  * @author James Carman

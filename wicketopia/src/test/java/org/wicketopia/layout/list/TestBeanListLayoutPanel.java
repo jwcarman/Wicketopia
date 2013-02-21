@@ -29,8 +29,6 @@ import org.wicketopia.util.Gender;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-
 public class TestBeanListLayoutPanel extends AbstractWicketTestCase
 {
     @Test

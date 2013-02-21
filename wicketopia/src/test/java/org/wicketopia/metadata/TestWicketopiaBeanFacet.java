@@ -25,9 +25,7 @@ import org.wicketopia.Wicketopia;
 import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.Person;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertSame;
+import static org.testng.Assert.*;
 
 public class TestWicketopiaBeanFacet extends AbstractWicketTestCase
 {

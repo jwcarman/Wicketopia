@@ -16,16 +16,16 @@
 
 package org.wicketopia.domdrides.component.link;
 
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.model.Model;
+import org.domdrides.repository.Repository;
+import org.testng.annotations.Test;
 import org.wicketopia.domdrides.component.link.ajax.AjaxRemoveEntityLink;
 import org.wicketopia.domdrides.util.Person;
-import org.testng.annotations.Test;
-import org.domdrides.repository.Repository;
-import static org.testng.Assert.*;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.wicketopia.testing.AbstractWicketTestCase;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.expectLastCall;
+import static org.testng.Assert.assertTrue;
 /**
  * @author James Carman
  */

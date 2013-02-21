@@ -16,17 +16,8 @@
 
 package org.wicketopia.editor.component.property;
 
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.model.IModel;
 import org.metastopheles.PropertyMetaData;
-import org.wicketopia.builder.EditorBuilder;
-import org.wicketopia.context.Context;
-import org.wicketopia.editor.PropertyEditorProvider;
-import org.wicketopia.model.choice.ChoicesModelFactory;
-
-import java.util.List;
 
 public class DropDownChoicePropertyEditor extends AbstractFormComponentPropertyEditor
 {

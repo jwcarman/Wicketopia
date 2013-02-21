@@ -16,10 +16,10 @@
 
 package org.wicketopia.domdrides.component.link;
 
-import org.domdrides.entity.Entity;
-import org.domdrides.repository.Repository;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
+import org.domdrides.entity.Entity;
+import org.domdrides.repository.Repository;
 
 import java.io.Serializable;
 

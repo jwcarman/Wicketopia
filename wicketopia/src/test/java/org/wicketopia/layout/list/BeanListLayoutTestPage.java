@@ -17,7 +17,6 @@
 package org.wicketopia.layout.list;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
 import org.wicketopia.util.EditableBean;
 
 /**

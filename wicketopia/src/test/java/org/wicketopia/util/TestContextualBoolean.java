@@ -18,9 +18,9 @@ package org.wicketopia.util;
 
 import org.testng.annotations.Test;
 import org.wicketopia.context.Context;
-import org.wicketopia.context.ContextPredicate;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class TestContextualBoolean
 {

@@ -22,5 +22,5 @@ import java.util.List;
 
 public interface ChoicesModelFactory
 {
-    public <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type);
+    <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type);
 }

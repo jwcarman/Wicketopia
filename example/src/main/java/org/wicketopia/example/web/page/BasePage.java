@@ -16,7 +16,6 @@
 
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.cdi.ConversationPropagation;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.IHeaderContributor;

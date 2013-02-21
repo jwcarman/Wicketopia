@@ -1,11 +1,11 @@
 package org.wicketopia.persistence.filecfg.decorator;
 
+import org.metastopheles.BeanMetaData;
+import org.metastopheles.MetaDataDecorator;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
-import org.metastopheles.BeanMetaData;
-import org.metastopheles.MetaDataDecorator;
 
 public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData>
 {

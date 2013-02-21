@@ -17,7 +17,6 @@
 package org.wicketopia.component.choice;
 
 import org.apache.wicket.util.tester.FormTester;
-import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.Gender;
@@ -25,6 +24,8 @@ import org.wicketopia.util.Person;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author James Carman

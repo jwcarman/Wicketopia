@@ -16,8 +16,8 @@
 
 package org.wicketopia.domdrides.component.link.ajax;
 
-import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.IModel;
 import org.domdrides.entity.Entity;
 import org.domdrides.repository.Repository;

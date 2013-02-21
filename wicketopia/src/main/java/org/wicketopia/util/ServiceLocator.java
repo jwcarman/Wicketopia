@@ -18,7 +18,6 @@ package org.wicketopia.util;
 
 import org.apache.wicket.WicketRuntimeException;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;

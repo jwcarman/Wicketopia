@@ -18,9 +18,10 @@ package org.wicketopia.model.proxy;
 
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
-import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 import org.wicketopia.util.Person;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * @since 1.0

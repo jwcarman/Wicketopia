@@ -23,8 +23,8 @@ import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
 import org.wicketopia.joda.component.editor.JodaTextField;
-import org.wicketopia.joda.util.format.JodaFormatSupport;
 import org.wicketopia.joda.util.format.FormatProvider;
+import org.wicketopia.joda.util.format.JodaFormatSupport;
 
 /**
  * @since 1.0

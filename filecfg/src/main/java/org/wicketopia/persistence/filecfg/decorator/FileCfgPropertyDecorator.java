@@ -16,14 +16,14 @@
 
 package org.wicketopia.persistence.filecfg.decorator;
 
-import java.util.Map.Entry;
-import java.util.Properties;
-
 import org.metastopheles.MetaDataDecorator;
 import org.metastopheles.PropertyMetaData;
 import org.wicketopia.context.Context;
 import org.wicketopia.context.ContextPredicate;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
+
+import java.util.Map.Entry;
+import java.util.Properties;
 
 public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaData>
 {

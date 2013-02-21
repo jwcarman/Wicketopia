@@ -22,7 +22,6 @@ import org.apache.wicket.model.Model;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * A @{link SortableCollectionDataProvider} which supports @{link Serializable} items.

@@ -20,14 +20,10 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.metastopheles.BeanMetaData;
-import org.metastopheles.PropertyMetaData;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 import org.wicketopia.factory.PropertyComponentFactory;
-import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**

@@ -26,8 +26,8 @@ import org.wicketopia.testing.AbstractTestCase;
 
 import java.util.Collections;
 
+import static org.easymock.EasyMock.expect;
 import static org.testng.Assert.*;
-import static org.easymock.EasyMock.*;
 
 /**
  * @author James Carman

@@ -20,12 +20,14 @@ import org.metastopheles.BeanMetaData;
 import org.metastopheles.BeanMetaDataFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 import org.wicketopia.util.Person;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
 /**
  * @author James Carman

@@ -18,7 +18,9 @@ package org.wicketopia.model.label;
 
 import org.apache.wicket.model.Model;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class TestPluralizedModel
 {

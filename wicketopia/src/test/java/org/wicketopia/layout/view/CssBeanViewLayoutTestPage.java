@@ -17,10 +17,6 @@
 package org.wicketopia.layout.view;
 
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.wicketopia.context.Context;
-import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.util.EditableBean;
 
 /**
