@@ -49,10 +49,10 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
     }
 
     @Override
-    public <T> void delete(T object)
+    public <T> void delete(final T object)
     {
-        object = entityManager.merge(object);
-        entityManager.remove(object);
+        T merged = entityManager.merge(object);
+        entityManager.remove(merged);
     }
 
     @Override
