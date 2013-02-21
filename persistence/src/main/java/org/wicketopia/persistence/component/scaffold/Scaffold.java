@@ -142,8 +142,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 
     private Context createContext(String mode)
     {
-        final Context context = new Context(mode);
-        return context;
+        return new Context(mode);
     }
 
     @Override
