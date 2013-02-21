@@ -76,8 +76,6 @@ public class BasePage extends WebPage implements IHeaderContributor
         add(new Label("copyrightLabel", resourceModel("page.copyright", new GregorianCalendar().get(
                 Calendar.YEAR))).setEscapeModelStrings(false));
 
-//        add(new StyleSheetReference("stylesheet", BasePage.class, "style.css"));
-
         add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
         add(new Link("convBegin")
