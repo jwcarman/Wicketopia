@@ -183,7 +183,7 @@ public class JodaFormatSupport<T> implements IClusterable
         }
         DateTime dt = translator.toDateTime((T) object);
         DateTimeFormatter format = formatProvider.getFormatter();
-        format.withPivotYear(pivotYear).withLocale(locale);
+        format = format.withPivotYear(pivotYear).withLocale(locale);
         if (applyTimeZoneDifference)
         {
             TimeZone zone = getClientTimeZone();
