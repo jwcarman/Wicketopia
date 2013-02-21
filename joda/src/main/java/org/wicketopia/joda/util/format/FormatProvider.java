@@ -29,7 +29,7 @@ public interface FormatProvider extends IClusterable
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static final FacetKey<FormatProvider> FACET_KEY = new FacetKey<FormatProvider>() {};
+    static final FacetKey<FormatProvider> FACET_KEY = new FacetKey<FormatProvider>() {};
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
