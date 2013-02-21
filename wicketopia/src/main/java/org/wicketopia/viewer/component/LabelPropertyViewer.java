@@ -31,7 +31,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
     public static final String TYPE_NAME = "label";
-    private static final PropertyViewerProvider provider = new Provider();
+    private static final PropertyViewerProvider PROVIDER = new Provider();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -39,7 +39,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 
     public static PropertyViewerProvider getProvider()
     {
-        return provider;
+        return PROVIDER;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

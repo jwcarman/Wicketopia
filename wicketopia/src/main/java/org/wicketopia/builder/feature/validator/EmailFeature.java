@@ -34,7 +34,7 @@ public final class EmailFeature extends AbstractValidatorFeature
 
     private static final long serialVersionUID = 1L;
 
-    private static final EmailFeature instance = new EmailFeature();
+    private static final EmailFeature INSTANCE = new EmailFeature();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -48,7 +48,7 @@ public final class EmailFeature extends AbstractValidatorFeature
 
     public static EmailFeature getInstance()
     {
-        return instance;
+        return INSTANCE;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -33,7 +33,7 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
 //----------------------------------------------------------------------------------------------------------------------
 
     public static final String TYPE_NAME = "password";
-    private static final PropertyEditorProvider provider = new Provider();
+    private static final PropertyEditorProvider PROVIDER = new Provider();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -41,7 +41,7 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
 
     public static PropertyEditorProvider getProvider()
     {
-        return provider;
+        return PROVIDER;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

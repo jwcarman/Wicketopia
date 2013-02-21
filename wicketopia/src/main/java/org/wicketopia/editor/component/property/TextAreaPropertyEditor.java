@@ -32,7 +32,7 @@ public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEdit
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
     public static final String TYPE_NAME = "text-area";
-    private static final PropertyEditorProvider provider = new Provider();
+    private static final PropertyEditorProvider PROVIDER = new Provider();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -40,7 +40,7 @@ public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEdit
 
     public static PropertyEditorProvider getProvider()
     {
-        return provider;
+        return PROVIDER;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

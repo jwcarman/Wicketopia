@@ -35,7 +35,7 @@ public abstract class Pluralizer
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final Logger logger = LoggerFactory.getLogger(Pluralizer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Pluralizer.class);
 
     private static List<PluralizationRule> pluralizationRules = Collections.synchronizedList(new ArrayList<PluralizationRule>());
 
@@ -100,17 +100,17 @@ public abstract class Pluralizer
             {
                 pluralForm = applyDefaultRule(term);
 
-                if (logger.isDebugEnabled())
+                if (LOGGER.isDebugEnabled())
                 {
-                    logger.debug("Located pluralization [" + pluralForm + "] for term [" + term + "] using default rules.");
+                    LOGGER.debug("Located pluralization [" + pluralForm + "] for term [" + term + "] using default rules.");
                 }
             }
         }
         else
         {
-            if (logger.isDebugEnabled())
+            if (LOGGER.isDebugEnabled())
             {
-                logger.debug("Located pluralization [" + pluralForm + "] for term [" + term + "] in the cache.");
+                LOGGER.debug("Located pluralization [" + pluralForm + "] for term [" + term + "] in the cache.");
             }
         }
 

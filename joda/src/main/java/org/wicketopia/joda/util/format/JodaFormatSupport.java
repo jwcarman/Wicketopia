@@ -109,7 +109,7 @@ public class JodaFormatSupport<T> implements IClusterable
         {
             throw new IllegalStateException("format must be not null");
         }
-        format.withLocale(locale).withPivotYear(pivotYear);
+        format = format.withLocale(locale).withPivotYear(pivotYear);
         if (applyTimeZoneDifference)
         {
             TimeZone zone = getClientTimeZone();

@@ -31,7 +31,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 
     public static final String TEXT_FIELD_ID = "editor";
     public static final String TYPE_NAME = "text-field";
-    private static final PropertyEditorProvider provider = new Provider();
+    private static final PropertyEditorProvider PROVIDER = new Provider();
 
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
@@ -39,7 +39,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 
     public static PropertyEditorProvider getProvider()
     {
-        return provider;
+        return PROVIDER;
     }
 
 //----------------------------------------------------------------------------------------------------------------------

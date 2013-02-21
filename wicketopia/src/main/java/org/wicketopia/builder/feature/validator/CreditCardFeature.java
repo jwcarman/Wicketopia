@@ -32,7 +32,7 @@ public class CreditCardFeature extends AbstractValidatorFeature
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final CreditCardFeature instance = new CreditCardFeature();
+    private static final CreditCardFeature INSTANCE = new CreditCardFeature();
 
     private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,7 @@ public class CreditCardFeature extends AbstractValidatorFeature
 
     public static CreditCardFeature getInstance()
     {
-        return instance;
+        return INSTANCE;
     }
 
 //----------------------------------------------------------------------------------------------------------------------
