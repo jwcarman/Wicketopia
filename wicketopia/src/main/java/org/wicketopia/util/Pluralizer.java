@@ -143,7 +143,7 @@ public abstract class Pluralizer
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    static interface PluralizationRule
+    interface PluralizationRule
     {
         boolean appliesTo(String term);
 
