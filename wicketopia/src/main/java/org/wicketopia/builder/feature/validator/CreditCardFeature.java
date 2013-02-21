@@ -26,7 +26,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 /**
  * @author James Carman
  */
-public class CreditCardFeature extends AbstractValidatorFeature
+public final class CreditCardFeature extends AbstractValidatorFeature
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
