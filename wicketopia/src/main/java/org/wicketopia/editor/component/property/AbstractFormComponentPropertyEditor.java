@@ -73,6 +73,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
 
     public Component build()
     {
+        formComponent.setOutputMarkupPlaceholderTag(true);
         return this;
     }
 
