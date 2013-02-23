@@ -55,7 +55,7 @@ public class AutoFeedbackListener implements AjaxRequestTarget.IListener
             @Override
             public void component(Component component, IVisit<Void> visit)
             {
-                if (component.getOutputMarkupPlaceholderTag())
+                if (component.getOutputMarkupId())
                 {
                     target.add(component);
                 }
