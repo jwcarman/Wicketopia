@@ -50,24 +50,19 @@ public class AutoFeedbackListener implements AjaxRequestTarget.IListener
     @Override
     public void onBeforeRespond(Map<String, Component> map, final AjaxRequestTarget target)
     {
-        FeedbackCollector collector = new FeedbackCollector(target.getPage());
-        List<FeedbackMessage> messages = collector.collect();
-
-        if (!messages.isEmpty())
+        target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>()
         {
-            target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>()
+            @Override
+            public void component(Component component, IVisit<Void> visit)
             {
-                @Override
-                public void component(Component component, IVisit<Void> visit)
+                if (component.getOutputMarkupPlaceholderTag())
                 {
-                    if (component instanceof FeedbackPanel && hasMessages((FeedbackPanel) component) && component.getOutputMarkupId())
-                    {
-                        target.add(component);
-                    }
-                    visit.dontGoDeeper();
+                    target.add(component);
                 }
-            });
-        }
+                visit.dontGoDeeper();
+            }
+        });
+
     }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -39,8 +39,8 @@ public class TestAutoFeedbackListener extends AbstractWicketTestCase
         tester.assertComponentOnAjaxResponse("feedback");
         tester.clearFeedbackMessages();
         tester.clickLink("noMessageLink");
-        Result result = tester.isComponentOnAjaxResponse(tester.getComponentFromLastRenderedPage("feedback"));
-        assertTrue(result.wasFailed());
+        tester.assertComponentOnAjaxResponse("feedback");
+
 
     }
 }
