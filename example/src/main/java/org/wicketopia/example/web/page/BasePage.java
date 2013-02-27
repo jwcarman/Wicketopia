@@ -27,7 +27,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.PackageResourceReference;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -54,11 +53,49 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     public BasePage()
     {
-        init();
     }
 
-    private void init()
+//----------------------------------------------------------------------------------------------------------------------
+// IHeaderContributor Implementation
+//----------------------------------------------------------------------------------------------------------------------
+
+    public void renderHead(IHeaderResponse header)
     {
+        header.render(CssHeaderItem.forReference(new PackageResourceReference(BasePage.class, "style.css")));
+    }
+
+//----------------------------------------------------------------------------------------------------------------------
+// Other Methods
+//----------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Returns a model which can be used to set the page's caption.  This implementation
+     * merely returns a {@link org.apache.wicket.model.ResourceModel} which corresponds to the "page.caption" localized
+     * string for this page.
+     *
+     * @return a model which can be used to set the page's caption
+     */
+    protected IModel<String> getCaptionModel()
+    {
+        return resourceModel("page.caption");
+    }
+
+    /**
+     * Returns a model which can be used to set the page's title.  This implementation
+     * merely returns a {@link org.apache.wicket.model.ResourceModel} which corresponds to the "page.title" localized
+     * string for this page.
+     *
+     * @return a model which can be used to set the page's title
+     */
+    protected IModel<String> getTitleModel()
+    {
+        return resourceModel("page.title");
+    }
+
+    @Override
+    protected void onInitialize()
+    {
+        super.onInitialize();
         setOutputMarkupId(true);
         add(new Label("titleLabel", getTitleModel()).setRenderBodyOnly(true));
         add(new Label("captionLabel", getCaptionModel()).setRenderBodyOnly(true));
@@ -98,55 +135,6 @@ public class BasePage extends WebPage implements IHeaderContributor
                 return SecurityContextHolder.getContext().getAuthentication() != null;
             }
         });
-    }
-
-    public BasePage(IModel<?> model)
-    {
-        super(model);
-        init();
-    }
-
-    public BasePage(PageParameters parameters)
-    {
-        super(parameters);
-        init();
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// IHeaderContributor Implementation
-//----------------------------------------------------------------------------------------------------------------------
-
-    public void renderHead(IHeaderResponse header)
-    {
-        header.render(CssHeaderItem.forReference(new PackageResourceReference(BasePage.class, "style.css")));
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    /**
-     * Returns a model which can be used to set the page's caption.  This implementation
-     * merely returns a {@link org.apache.wicket.model.ResourceModel} which corresponds to the "page.caption" localized
-     * string for this page.
-     *
-     * @return a model which can be used to set the page's caption
-     */
-    protected IModel<String> getCaptionModel()
-    {
-        return resourceModel("page.caption");
-    }
-
-    /**
-     * Returns a model which can be used to set the page's title.  This implementation
-     * merely returns a {@link org.apache.wicket.model.ResourceModel} which corresponds to the "page.title" localized
-     * string for this page.
-     *
-     * @return a model which can be used to set the page's title
-     */
-    protected IModel<String> getTitleModel()
-    {
-        return resourceModel("page.title");
     }
 
     /**
