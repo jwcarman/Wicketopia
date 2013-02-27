@@ -101,11 +101,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
-            <artifactId>wicket-cdi</artifactId>
-            <version>${wicket.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-extensions</artifactId>
             <version>${wicket.version}</version>
         </dependency>
@@ -210,16 +205,6 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
             <version>1.6.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.seam.conversation</groupId>
-            <artifactId>seam-conversation-weld</artifactId>
-            <version>3.0.0.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.weld.servlet</groupId>
-            <artifactId>weld-servlet</artifactId>
-            <version>1.1.10.Final</version>
         </dependency>
         <dependency>
             <groupId>javax.el</groupId>

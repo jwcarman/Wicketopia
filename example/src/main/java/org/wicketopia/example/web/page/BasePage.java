@@ -34,10 +34,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.wicketopia.example.web.bean.SessionTracker;
 
-import javax.enterprise.context.Conversation;
-import javax.inject.Inject;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -51,12 +48,6 @@ public class BasePage extends WebPage implements IHeaderContributor
 
     @SpringBean
     private AuthenticationManager authenticationManager;
-
-    @Inject
-    private SessionTracker sessionTracker;
-
-    @Inject
-    private Conversation conversation;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
@@ -72,41 +63,11 @@ public class BasePage extends WebPage implements IHeaderContributor
         setOutputMarkupId(true);
         add(new Label("titleLabel", getTitleModel()).setRenderBodyOnly(true));
         add(new Label("captionLabel", getCaptionModel()).setRenderBodyOnly(true));
-        add(new Label("pageViews", new PropertyModel<Integer>(sessionTracker, "pageViews")));
         add(new Label("copyrightLabel", resourceModel("page.copyright", new GregorianCalendar().get(
                 Calendar.YEAR))).setEscapeModelStrings(false));
 
         add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
-        add(new Link("convBegin")
-        {
-            @Override
-            public void onClick()
-            {
-                conversation.begin();
-            }
-
-            @Override
-            public boolean isVisible()
-            {
-                return conversation.isTransient();
-            }
-        });
-        add(new Link("convEnd")
-        {
-            @Override
-            public void onClick()
-            {
-                conversation.end();
-                setResponsePage(BasePage.this.getPageClass());
-            }
-
-            @Override
-            public boolean isVisible()
-            {
-                return !conversation.isTransient();
-            }
-        });
         add(new Link("login")
         {
             @Override
@@ -187,13 +148,6 @@ public class BasePage extends WebPage implements IHeaderContributor
     protected IModel<String> getTitleModel()
     {
         return resourceModel("page.title");
-    }
-
-    @Override
-    protected void onBeforeRender()
-    {
-        super.onBeforeRender();
-        sessionTracker.incrementPageViews();
     }
 
     /**
