@@ -17,6 +17,7 @@
 package org.wicketopia.model.table;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.extensions.markup.html.repeater.util.SortParam;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -28,10 +29,11 @@ import java.util.*;
 /**
  * Adapts a collection model to be a {@link SortableDataProvider}.  Properties which need to support sorting should
  * be {@link Comparable}.
+ *
  * @param <T> the item type
  * @since 1.0
  */
-public abstract class SortableCollectionDataProvider<T> extends SortableDataProvider<T,String>
+public abstract class SortableCollectionDataProvider<T> extends SortableDataProvider<T, String>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
@@ -46,6 +48,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 
     /**
      * Creates a data provider which wraps the provided collection model (no default sorting).
+     *
      * @param inner the collection model
      */
     public SortableCollectionDataProvider(IModel<? extends Collection<T>> inner)
@@ -56,9 +59,10 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
     /**
      * Creates a data provider which wraps the provided collection model.  Items will be sorted by #{propertyName} using
      * #{sortOrder}.
+     *
      * @param propertyName the sort property
-     * @param sortOrder the sort order
-     * @param inner the collection model
+     * @param sortOrder    the sort order
+     * @param inner        the collection model
      */
     public SortableCollectionDataProvider(String propertyName, SortOrder sortOrder, IModel<? extends Collection<? extends T>> inner)
     {
@@ -70,8 +74,8 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
      * Creates a data provider which wraps the provided collection using {@link Model#of(java.util.Collection)}.
      *
      * @param propertyName the sort property
-     * @param sortOrder the sort order
-     * @param items the collection
+     * @param sortOrder    the sort order
+     * @param items        the collection
      */
     public SortableCollectionDataProvider(String propertyName, SortOrder sortOrder, Collection<T> items)
     {
@@ -85,8 +89,8 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
     public Iterator<? extends T> iterator(long first, long count)
     {
         final List<T> list = new ArrayList<T>(inner.getObject());
-        Collections.sort(list, new SortableDataProviderComparator());
-        return list.subList((int)first, (int)(first + count)).iterator();
+        Collections.sort(list, new SortableDataProviderComparator<T>(getSort()));
+        return list.subList((int) first, (int) (first + count)).iterator();
     }
 
     public long size()
@@ -109,12 +113,19 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private class SortableDataProviderComparator implements Comparator<T>, Serializable
+    private static class SortableDataProviderComparator<T> implements Comparator<T>, Serializable
     {
+        private final SortParam<String> sortParam;
+
+        private SortableDataProviderComparator(SortParam<String> sortParam)
+        {
+            this.sortParam = sortParam;
+        }
+
         @SuppressWarnings("unchecked")
         public int compare(final T o1, final T o2)
         {
-            final String property = getSort().getProperty();
+            final String property = sortParam.getProperty();
             if (property == null || NO_ORDER.equals(property))
             {
                 return -1;
@@ -133,14 +144,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
             {
                 return -1;
             }
-            int result = value1.compareTo(value2);
-
-            if (!getSort().isAscending())
-            {
-                result = -result;
-            }
-
-            return result;
+            return sortParam.isAscending() ? value1.compareTo(value2) : value2.compareTo(value1);
         }
     }
 }
