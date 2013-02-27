@@ -113,7 +113,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static class SortableDataProviderComparator<T> implements Comparator<T>, Serializable
+    private static final class SortableDataProviderComparator<T> implements Comparator<T>, Serializable
     {
         private final SortParam<String> sortParam;
 
