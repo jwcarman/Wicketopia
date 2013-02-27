@@ -78,21 +78,20 @@ public class Wicketopia
 
     private static URL[] findClasspathUrls()
     {
-        final Set<URL> urls = new HashSet<URL>();
+        final UrlList urls = new UrlList();
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         if (cl instanceof URLClassLoader)
         {
-            urls.addAll(Arrays.asList(((URLClassLoader) cl).getURLs()));
+            urls.addAll(((URLClassLoader) cl).getURLs());
         }
         WebApplication webApplication = WebApplication.get();
         if (webApplication != null)
         {
-            urls.add(WarUrlFinder.findWebInfClassesPath(webApplication.getServletContext()));
-            urls.addAll(Arrays.asList(WarUrlFinder.findWebInfLibClasspaths(webApplication.getServletContext())));
+            urls.addUrl(WarUrlFinder.findWebInfClassesPath(webApplication.getServletContext()));
+            urls.addAll(WarUrlFinder.findWebInfLibClasspaths(webApplication.getServletContext()));
         }
-        urls.addAll(Arrays.asList(ClasspathUrlFinder.findClassPaths()));
-        urls.remove(null);
-        return urls.toArray(new URL[urls.size()]);
+        urls.addAll(ClasspathUrlFinder.findClassPaths());
+        return urls.toArray();
     }
 
     public static Wicketopia get()
@@ -402,6 +401,37 @@ public class Wicketopia
 //----------------------------------------------------------------------------------------------------------------------
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
+
+    private static class UrlList
+    {
+        private final List<URL> urls = new LinkedList<URL>();
+        private final Set<String> urlStrings = new HashSet<String>();
+
+        public void addUrl(URL url)
+        {
+            if (url != null)
+            {
+                String urlString = url.toString();
+                if (urlStrings.add(url.toString()))
+                {
+                    urls.add(url);
+                }
+            }
+        }
+
+        public void addAll(URL[] urls)
+        {
+            for (URL url : urls)
+            {
+                addUrl(url);
+            }
+        }
+
+        public URL[] toArray()
+        {
+            return urls.toArray(new URL[urls.size()]);
+        }
+    }
 
     private static final class WicketopiaPluginKey extends MetaDataKey<Wicketopia>
     {
