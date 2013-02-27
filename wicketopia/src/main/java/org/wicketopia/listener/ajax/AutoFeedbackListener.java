@@ -18,13 +18,10 @@ package org.wicketopia.listener.ajax;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.feedback.IFeedback;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.util.visit.IVisit;
 import org.apache.wicket.util.visit.IVisitor;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -62,15 +59,5 @@ public class AutoFeedbackListener implements AjaxRequestTarget.IListener
             }
         });
 
-    }
-
-//----------------------------------------------------------------------------------------------------------------------
-// Other Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    private boolean hasMessages(FeedbackPanel feedbackPanel)
-    {
-        List<FeedbackMessage> feedbackMessages = feedbackPanel.getFeedbackMessagesModel().getObject();
-        return feedbackMessages != null && !feedbackMessages.isEmpty();
     }
 }
