@@ -411,7 +411,6 @@ public class Wicketopia
         {
             if (url != null)
             {
-                String urlString = url.toString();
                 if (urlStrings.add(url.toString()))
                 {
                     urls.add(url);
