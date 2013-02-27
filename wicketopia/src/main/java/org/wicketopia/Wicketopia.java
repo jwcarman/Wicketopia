@@ -409,12 +409,9 @@ public class Wicketopia
 
         public void addUrl(URL url)
         {
-            if (url != null)
+            if (url != null && urlStrings.add(url.toString()))
             {
-                if (urlStrings.add(url.toString()))
-                {
-                    urls.add(url);
-                }
+                urls.add(url);
             }
         }
 
