@@ -16,10 +16,6 @@
 
 package org.wicketopia.example.web.page;
 
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.wicketopia.persistence.PersistenceProvider;
-
 /**
  * Homepage
  */
@@ -30,12 +26,6 @@ public class HomePage extends BasePage
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
-
-    @SpringBean
-    private PersistenceProvider persistenceProvider;
-
-    @SpringBean
-    private AuthenticationManager authenticationManager;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
