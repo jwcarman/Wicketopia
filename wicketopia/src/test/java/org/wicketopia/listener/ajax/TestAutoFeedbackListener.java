@@ -16,12 +16,9 @@
 
 package org.wicketopia.listener.ajax;
 
-import org.apache.wicket.util.tester.Result;
 import org.apache.wicket.util.tester.WicketTester;
 import org.testng.annotations.Test;
 import org.wicketopia.testing.AbstractWicketTestCase;
-
-import static org.testng.Assert.assertTrue;
 
 
 /**
