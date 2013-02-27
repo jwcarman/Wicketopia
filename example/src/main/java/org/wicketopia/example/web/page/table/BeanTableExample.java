@@ -31,15 +31,24 @@ import java.util.List;
 
 public class BeanTableExample extends BasePage
 {
+//----------------------------------------------------------------------------------------------------------------------
+// Fields
+//----------------------------------------------------------------------------------------------------------------------
+
+    public static final int ROWS_PER_PAGE = 25;
     @SpringBean
     private PersistenceProvider persistenceProvider;
+
+//----------------------------------------------------------------------------------------------------------------------
+// Constructors
+//----------------------------------------------------------------------------------------------------------------------
 
     public BeanTableExample()
     {
         final PersistenceDataProvider<Person> dataProvider = new PersistenceDataProvider<Person>(Person.class, persistenceProvider);
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
         final Context context = new Context(Context.LIST);
-        final List<IColumn<Person,String>> columns = Wicketopia.get().createColumns(Person.class, factory, context);
-        add(new AjaxFallbackDefaultDataTable<Person,String>("table", columns, dataProvider, 25));
+        final List<IColumn<Person, String>> columns = Wicketopia.get().createColumns(Person.class, factory, context);
+        add(new AjaxFallbackDefaultDataTable<Person, String>("table", columns, dataProvider, ROWS_PER_PAGE));
     }
 }
