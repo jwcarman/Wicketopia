@@ -16,6 +16,7 @@
 
 package org.wicketopia;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.Component;
 import org.apache.wicket.MetaDataKey;
 import org.apache.wicket.RuntimeConfigurationType;
@@ -79,11 +80,8 @@ public class Wicketopia
     private static URL[] findClasspathUrls()
     {
         final UrlList urls = new UrlList();
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        if (cl instanceof URLClassLoader)
-        {
-            urls.addAll(((URLClassLoader) cl).getURLs());
-        }
+        urls.addClassLoader(Wicketopia.class.getClassLoader());
+        urls.addClassLoader(Thread.currentThread().getContextClassLoader());
         WebApplication webApplication = WebApplication.get();
         if (webApplication != null)
         {
@@ -91,6 +89,7 @@ public class Wicketopia
             urls.addAll(WarUrlFinder.findWebInfLibClasspaths(webApplication.getServletContext()));
         }
         urls.addAll(ClasspathUrlFinder.findClassPaths());
+        LOGGER.debug("Scanning classpath URLs\n{}", urls);
         return urls.toArray();
     }
 
@@ -407,6 +406,18 @@ public class Wicketopia
         private final List<URL> urls = new LinkedList<URL>();
         private final Set<String> urlStrings = new HashSet<String>();
 
+        public void addClassLoader(ClassLoader classLoader)
+        {
+            if(classLoader instanceof URLClassLoader)
+            {
+                addAll(((URLClassLoader)classLoader).getURLs());
+            }
+            else
+            {
+                LOGGER.warn("ClassLoader {} is not a URLClassLoader!", classLoader);
+            }
+        }
+
         public void addUrl(URL url)
         {
             if (url != null && urlStrings.add(url.toString()))
@@ -426,6 +437,11 @@ public class Wicketopia
         public URL[] toArray()
         {
             return urls.toArray(new URL[urls.size()]);
+        }
+
+        public String toString()
+        {
+            return StringUtils.join(urls, "\n");
         }
     }
 
