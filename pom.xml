@@ -24,7 +24,7 @@
     <groupId>org.wicketopia</groupId>
     <artifactId>wicketopia-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
     <name>Wicketopia</name>
     <description>A Rapid Application Development (RAD) library for the Apache Wicket framework</description>
     <url>http://www.wicketopia.org</url>
@@ -148,7 +148,7 @@
         <url>https://github.com/jwcarman/Wicketopia</url>
         <connection>scm:git:git@github.com:jwcarman/Wicketopia.git</connection>
         <developerConnection>scm:git:git@github.com:jwcarman/Wicketopia.git</developerConnection>
-      <tag>wicketopia-parent-1.3</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <mailingLists>
