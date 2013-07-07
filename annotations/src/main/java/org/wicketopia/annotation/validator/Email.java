@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
  * @author James Carman
  */
 @Retention( RetentionPolicy.RUNTIME )
-@Target( ElementType.METHOD )
+@Target({ElementType.METHOD, ElementType.FIELD})
 public @interface Email
 {
 }

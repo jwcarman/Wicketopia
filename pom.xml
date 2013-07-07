@@ -46,6 +46,7 @@
         <module>security</module>
         <module>spring-security</module>
         <module>shiro</module>
+        <module>validation</module>
         <module>example</module>
     </modules>
     <licenses>
