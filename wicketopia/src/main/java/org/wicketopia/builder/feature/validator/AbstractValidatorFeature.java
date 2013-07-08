@@ -37,6 +37,7 @@ public abstract class AbstractValidatorFeature extends NonContextualFeature<Edit
 
     public final void activate(EditorBuilder editor)
     {
+
         final IValidator<?> validator = createValidator();
         if (validator != null)
         {
