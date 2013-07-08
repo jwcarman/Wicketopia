@@ -23,7 +23,7 @@ import org.wicketopia.builder.feature.NonContextualFeature;
 /**
  * @since 1.0
  */
-abstract class AbstractValidatorFeature extends NonContextualFeature<EditorBuilder>
+public abstract class AbstractValidatorFeature extends NonContextualFeature<EditorBuilder>
 {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
