@@ -27,8 +27,7 @@ import java.util.Queue;
 /**
  * @since 1.0
  */
-public class ClassBasedTypeMapping implements TypeMapping
-{
+public class ClassBasedTypeMapping implements TypeMapping {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -40,13 +39,11 @@ public class ClassBasedTypeMapping implements TypeMapping
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ClassBasedTypeMapping()
-    {
+    public ClassBasedTypeMapping() {
         this.defaultType = null;
     }
 
-    public ClassBasedTypeMapping(String defaultType)
-    {
+    public ClassBasedTypeMapping(String defaultType) {
         this.defaultType = defaultType;
     }
 
@@ -55,21 +52,17 @@ public class ClassBasedTypeMapping implements TypeMapping
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public String getTypeName(PropertyMetaData propertyMetaData)
-    {
+    public String getTypeName(PropertyMetaData propertyMetaData) {
         Class<?> propertyType = propertyMetaData.getPropertyDescriptor().getPropertyType();
         return getTypeName(propertyType);
     }
 
-    public String getTypeName(Class<?> propertyType)
-    {
+    public String getTypeName(Class<?> propertyType) {
         final Queue<Class<?>> typeQueue = createTypeQueue(propertyType);
-        while (!typeQueue.isEmpty())
-        {
+        while (!typeQueue.isEmpty()) {
             Class<?> type = typeQueue.remove();
             final String editorType = typeMap.get(type.getName());
-            if (editorType != null)
-            {
+            if (editorType != null) {
                 return editorType;
             }
         }
@@ -79,18 +72,15 @@ public class ClassBasedTypeMapping implements TypeMapping
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addTypeOverride( Class<?> propertyType, String type )
-    {
+    public void addTypeOverride(Class<?> propertyType, String type) {
         typeMap.put(propertyType.getName(), type);
     }
 
     @SuppressWarnings("unchecked")
-    private Queue<Class<?>> createTypeQueue(final Class<?> originalType)
-    {
+    private Queue<Class<?>> createTypeQueue(final Class<?> originalType) {
         Queue<Class<?>> queue = new LinkedList<Class<?>>();
         Class currentType = originalType;
-        do
-        {
+        do {
             queue.add(currentType);
             currentType = currentType.getSuperclass();
         }
@@ -99,10 +89,8 @@ public class ClassBasedTypeMapping implements TypeMapping
         return queue;
     }
 
-    public void setTypeOverrides( Map<Class, String> typeOverrides )
-    {
-        for (Map.Entry<Class, String> entry : typeOverrides.entrySet())
-        {
+    public void setTypeOverrides(Map<Class, String> typeOverrides) {
+        for (Map.Entry<Class, String> entry : typeOverrides.entrySet()) {
             typeMap.put(entry.getKey().getName(), entry.getValue());
         }
     }

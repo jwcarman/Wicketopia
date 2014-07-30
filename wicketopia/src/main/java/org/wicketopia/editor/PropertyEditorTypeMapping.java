@@ -23,8 +23,7 @@ import org.metastopheles.PropertyMetaData;
  *
  * @since 1.0
  */
-public interface PropertyEditorTypeMapping
-{
+public interface PropertyEditorTypeMapping {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------

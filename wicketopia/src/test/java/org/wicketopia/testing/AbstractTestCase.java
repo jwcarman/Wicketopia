@@ -20,19 +20,16 @@ import org.easymock.EasyMockSupport;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class AbstractTestCase extends EasyMockSupport
-{
+public class AbstractTestCase extends EasyMockSupport {
 
     @BeforeMethod
-    public final void resetAllMocks()
-    {
+    public final void resetAllMocks() {
         resetAll();
         controls.clear();
     }
 
     @AfterMethod
-    public final void verifyAllMocks()
-    {
+    public final void verifyAllMocks() {
         verifyAll();
     }
 }

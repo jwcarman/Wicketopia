@@ -25,8 +25,7 @@ import org.wicketopia.joda.annotation.DatePattern;
 /**
  * @since 1.0
  */
-public class PatternFormatProvider implements FormatProvider
-{
+public class PatternFormatProvider implements FormatProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,8 +37,7 @@ public class PatternFormatProvider implements FormatProvider
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, DatePattern datePattern)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, DatePattern datePattern) {
         propertyMetaData.setFacet(FACET_KEY, new PatternFormatProvider(datePattern.value()));
     }
 
@@ -47,8 +45,7 @@ public class PatternFormatProvider implements FormatProvider
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PatternFormatProvider(String datePattern)
-    {
+    public PatternFormatProvider(String datePattern) {
         this.datePattern = datePattern;
     }
 
@@ -57,8 +54,7 @@ public class PatternFormatProvider implements FormatProvider
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public DateTimeFormatter getFormatter()
-    {
+    public DateTimeFormatter getFormatter() {
         return DateTimeFormat.forPattern(datePattern);
     }
 }

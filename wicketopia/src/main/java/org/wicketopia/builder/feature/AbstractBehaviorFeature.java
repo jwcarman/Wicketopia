@@ -22,8 +22,7 @@ import org.wicketopia.builder.ComponentBuilder;
 /**
  * @since 1.0
  */
-public abstract class AbstractBehaviorFeature<B extends ComponentBuilder> implements ComponentBuilderFeature<B>
-{
+public abstract class AbstractBehaviorFeature<B extends ComponentBuilder> implements ComponentBuilderFeature<B> {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -35,8 +34,7 @@ public abstract class AbstractBehaviorFeature<B extends ComponentBuilder> implem
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void activate(B builder)
-    {
+    public void activate(B builder) {
         builder.addBehavior(createBehavior());
     }
 }

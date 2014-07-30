@@ -20,8 +20,7 @@ import org.wicketopia.Wicketopia;
 import org.wicketopia.WicketopiaPlugin;
 import org.wicketopia.persistence.editor.provider.EntityDropDownChoicePropertyEditorProvider;
 
-public class PersistencePlugin implements WicketopiaPlugin
-{
+public class PersistencePlugin implements WicketopiaPlugin {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,8 +33,7 @@ public class PersistencePlugin implements WicketopiaPlugin
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PersistencePlugin get()
-    {
+    public static PersistencePlugin get() {
         return Wicketopia.get().getPlugin(PersistencePlugin.class);
     }
 
@@ -43,8 +41,7 @@ public class PersistencePlugin implements WicketopiaPlugin
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PersistencePlugin(PersistenceProvider persistenceProvider)
-    {
+    public PersistencePlugin(PersistenceProvider persistenceProvider) {
         this.persistenceProvider = persistenceProvider;
     }
 
@@ -53,8 +50,7 @@ public class PersistencePlugin implements WicketopiaPlugin
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void initialize(Wicketopia wicketopia)
-    {
+    public void initialize(Wicketopia wicketopia) {
         wicketopia.addPropertyEditorProvider(ENTITY_DDC, new EntityDropDownChoicePropertyEditorProvider());
     }
 
@@ -62,8 +58,7 @@ public class PersistencePlugin implements WicketopiaPlugin
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PersistenceProvider getPersistenceProvider()
-    {
+    public PersistenceProvider getPersistenceProvider() {
         return persistenceProvider;
     }
 }

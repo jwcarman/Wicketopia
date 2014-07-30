@@ -26,23 +26,22 @@ import java.io.Serializable;
 
 /**
  * An ajax-enabled link that removes an entity.
+ *
  * @since 1.0
  */
-public abstract class AjaxRemoveEntityLink<E extends Entity<I>,I extends Serializable> extends AjaxLink<E>
-{
+public abstract class AjaxRemoveEntityLink<E extends Entity<I>, I extends Serializable> extends AjaxLink<E> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
-    private final Repository<E,I> repository;
+    private final Repository<E, I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxRemoveEntityLink( String id, Repository<E, I> repository, IModel<E> model )
-    {
+    public AjaxRemoveEntityLink(String id, Repository<E, I> repository, IModel<E> model) {
         super(id, model);
         this.repository = repository;
     }
@@ -56,7 +55,7 @@ public abstract class AjaxRemoveEntityLink<E extends Entity<I>,I extends Seriali
      * perhaps).  Typically this would be used to update whatever component(s) displayed this link in the first place
      * (such as a table or list).
      *
-     * @param entity the entity that was removed
+     * @param entity            the entity that was removed
      * @param ajaxRequestTarget the ajax request target
      */
     protected abstract void afterRemove(E entity, AjaxRequestTarget ajaxRequestTarget);
@@ -65,8 +64,7 @@ public abstract class AjaxRemoveEntityLink<E extends Entity<I>,I extends Seriali
 // IAjaxLink Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public final void onClick( AjaxRequestTarget ajaxRequestTarget )
-    {
+    public final void onClick(AjaxRequestTarget ajaxRequestTarget) {
         final E entity = getModelObject();
         repository.remove(entity);
         afterRemove(entity, ajaxRequestTarget);

@@ -22,13 +22,11 @@ import org.wicketopia.util.EditableBean;
 /**
  * @author James Carman
  */
-public class BeanListLayoutTestPage extends WebPage
-{
+public class BeanListLayoutTestPage extends WebPage {
 
     public static final String PANEL_ID = "view";
 
-    public BeanListLayoutTestPage(BeanListLayoutPanel<EditableBean> panel)
-    {
+    public BeanListLayoutTestPage(BeanListLayoutPanel<EditableBean> panel) {
         add(panel);
     }
 }

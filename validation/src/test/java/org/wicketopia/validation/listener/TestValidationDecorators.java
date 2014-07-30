@@ -7,6 +7,5 @@ package org.wicketopia.validation.listener;
  * Time: 3:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TestValidationDecorators
-{
+public class TestValidationDecorators {
 }

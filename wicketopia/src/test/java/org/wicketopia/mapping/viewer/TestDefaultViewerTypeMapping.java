@@ -25,11 +25,9 @@ import static org.testng.Assert.assertEquals;
 /**
  * @author James Carman
  */
-public class TestDefaultViewerTypeMapping
-{
+public class TestDefaultViewerTypeMapping {
     @Test
-    public void testDefaultMappings()
-    {
+    public void testDefaultMappings() {
         final DefaultViewerTypeMapping mapping = new DefaultViewerTypeMapping();
         assertEquals(mapping.getTypeName(String.class), LabelPropertyViewer.TYPE_NAME);
         assertEquals(mapping.getTypeName(Gender.class), LabelPropertyViewer.TYPE_NAME);

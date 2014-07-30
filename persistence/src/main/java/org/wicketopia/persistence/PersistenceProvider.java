@@ -20,8 +20,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-public interface PersistenceProvider
-{
+public interface PersistenceProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,11 +33,11 @@ public interface PersistenceProvider
 
     <T> T create(T object);
 
-    <T,C extends Collection<? extends T>> void create(C collection);
+    <T, C extends Collection<? extends T>> void create(C collection);
 
     <T> void delete(T object);
 
-    <T,C extends Collection<? extends T>> void delete(C collection);
+    <T, C extends Collection<? extends T>> void delete(C collection);
 
     <T> List<T> getAll(Class<T> entityType);
 
@@ -46,5 +45,5 @@ public interface PersistenceProvider
 
     <T> T update(T object);
 
-    <T,C extends Collection<? extends T>> void update(C collection);
+    <T, C extends Collection<? extends T>> void update(C collection);
 }

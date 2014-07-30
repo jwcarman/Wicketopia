@@ -27,33 +27,30 @@ import static org.testng.Assert.assertSame;
 /**
  * @author James Carman
  */
-public class TestLoadableDetachableEntityModel extends AbstractTestCase
-{
+public class TestLoadableDetachableEntityModel extends AbstractTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetObjectWithEntity()
-    {
-        final Repository<Person,String> repo = createMock(Repository.class);
+    public void testGetObjectWithEntity() {
+        final Repository<Person, String> repo = createMock(Repository.class);
         final Person expected = new Person();
         replayAll();
-        LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, expected);
+        LoadableDetachableEntityModel<Person, String> model = new LoadableDetachableEntityModel<Person, String>(repo, expected);
         final Person actual = model.getObject();
         assertSame(actual, expected);
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testGetObjectWithId()
-    {
-        final Repository<Person,String> repo = createMock(Repository.class);
+    public void testGetObjectWithId() {
+        final Repository<Person, String> repo = createMock(Repository.class);
         final Person expected = new Person();
         expect(repo.getById(expected.getId())).andReturn(expected);
         replayAll();
-        LoadableDetachableEntityModel<Person,String> model = new LoadableDetachableEntityModel<Person,String>(repo, expected.getId());
+        LoadableDetachableEntityModel<Person, String> model = new LoadableDetachableEntityModel<Person, String>(repo, expected.getId());
         Person actual = model.getObject();
         assertSame(actual, expected);
     }

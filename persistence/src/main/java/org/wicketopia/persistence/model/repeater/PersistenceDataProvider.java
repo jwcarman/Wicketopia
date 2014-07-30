@@ -27,8 +27,7 @@ import java.util.Iterator;
 /**
  * @author James Carman
  */
-public class PersistenceDataProvider<T> extends SortableDataProvider<T,String>
-{
+public class PersistenceDataProvider<T> extends SortableDataProvider<T, String> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -40,8 +39,7 @@ public class PersistenceDataProvider<T> extends SortableDataProvider<T,String>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PersistenceDataProvider(Class<T> beanType, PersistenceProvider persistenceProvider)
-    {
+    public PersistenceDataProvider(Class<T> beanType, PersistenceProvider persistenceProvider) {
         this.beanType = beanType;
         this.persistenceProvider = persistenceProvider;
     }
@@ -51,19 +49,16 @@ public class PersistenceDataProvider<T> extends SortableDataProvider<T,String>
 // IDataProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Iterator<? extends T> iterator(long first, long max)
-    {
+    public Iterator<? extends T> iterator(long first, long max) {
         final SortParam<String> sort = getSort();
         return persistenceProvider.getList(beanType, first, max, sort == null ? null : sort.getProperty(), sort == null || sort.isAscending()).iterator();
     }
 
-    public IModel<T> model(T entity)
-    {
+    public IModel<T> model(T entity) {
         return new LoadableDetachableEntityModel<T>(beanType, entity, persistenceProvider);
     }
 
-    public long size()
-    {
+    public long size() {
         return persistenceProvider.getCount(beanType);
     }
 }

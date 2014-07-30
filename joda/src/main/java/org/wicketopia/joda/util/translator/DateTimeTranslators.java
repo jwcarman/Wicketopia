@@ -26,39 +26,32 @@ import java.util.Date;
 /**
  * @since 1.0
  */
-public final class DateTimeTranslators
-{
+public final class DateTimeTranslators {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static DateTimeTranslator<Date> javaDateTranslator()
-    {
+    public static DateTimeTranslator<Date> javaDateTranslator() {
         return new JavaDateTranslator();
     }
 
-    public static DateTimeTranslator<java.sql.Date> jdbcDateTranslator()
-    {
+    public static DateTimeTranslator<java.sql.Date> jdbcDateTranslator() {
         return new JdbcDateTranslator();
     }
 
-    public static DateTimeTranslator<Timestamp> jdbcTimestampTranslator()
-    {
+    public static DateTimeTranslator<Timestamp> jdbcTimestampTranslator() {
         return new JdbcTimestampTranslator();
     }
 
-    public static DateTimeTranslator<LocalDate> localDateTranslator()
-    {
+    public static DateTimeTranslator<LocalDate> localDateTranslator() {
         return new LocalDateTranslator();
     }
 
-    public static DateTimeTranslator<LocalTime> localTimeTranslator()
-    {
+    public static DateTimeTranslator<LocalTime> localTimeTranslator() {
         return new LocalTimeTranslator();
     }
 
-    public static DateTimeTranslator<DateTime> noOpTranslator()
-    {
+    public static DateTimeTranslator<DateTime> noOpTranslator() {
         return new NoOpTranslator();
     }
 
@@ -66,8 +59,7 @@ public final class DateTimeTranslators
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private DateTimeTranslators()
-    {
+    private DateTimeTranslators() {
         // Avoid instantiation.
     }
 
@@ -75,92 +67,74 @@ public final class DateTimeTranslators
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class JavaDateTranslator implements DateTimeTranslator<Date>
-    {
+    private static final class JavaDateTranslator implements DateTimeTranslator<Date> {
         @Override
-        public Date fromDateTime(DateTime dateTime)
-        {
+        public Date fromDateTime(DateTime dateTime) {
             return dateTime.toDate();
         }
 
         @Override
-        public DateTime toDateTime(Date object)
-        {
+        public DateTime toDateTime(Date object) {
             return new DateTime(object.getTime());
         }
     }
 
-    private static final class JdbcDateTranslator implements DateTimeTranslator<java.sql.Date>
-    {
+    private static final class JdbcDateTranslator implements DateTimeTranslator<java.sql.Date> {
         @Override
-        public java.sql.Date fromDateTime(DateTime dateTime)
-        {
+        public java.sql.Date fromDateTime(DateTime dateTime) {
             return new java.sql.Date(dateTime.toDate().getTime());
         }
 
         @Override
-        public DateTime toDateTime(java.sql.Date object)
-        {
+        public DateTime toDateTime(java.sql.Date object) {
             return new DateTime(object.getTime());
         }
     }
 
-    private static final class JdbcTimestampTranslator implements DateTimeTranslator<Timestamp>
-    {
+    private static final class JdbcTimestampTranslator implements DateTimeTranslator<Timestamp> {
         @Override
-        public Timestamp fromDateTime(DateTime dateTime)
-        {
+        public Timestamp fromDateTime(DateTime dateTime) {
             return new Timestamp(dateTime.toDate().getTime());
         }
 
         @Override
-        public DateTime toDateTime(Timestamp object)
-        {
+        public DateTime toDateTime(Timestamp object) {
             return new DateTime(object.getTime());
         }
     }
 
-    private static final class LocalDateTranslator implements DateTimeTranslator<LocalDate>
-    {
+    private static final class LocalDateTranslator implements DateTimeTranslator<LocalDate> {
         @Override
-        public LocalDate fromDateTime(DateTime date)
-        {
+        public LocalDate fromDateTime(DateTime date) {
             return date.toLocalDate();
         }
 
         @Override
-        public DateTime toDateTime(LocalDate object)
-        {
+        public DateTime toDateTime(LocalDate object) {
             return object.toDateTimeAtStartOfDay();
         }
     }
 
-    private static final class LocalTimeTranslator implements DateTimeTranslator<LocalTime>
-    {
+    private static final class LocalTimeTranslator implements DateTimeTranslator<LocalTime> {
         @Override
-        public LocalTime fromDateTime(DateTime date)
-        {
+        public LocalTime fromDateTime(DateTime date) {
             return date.toLocalTime();
         }
 
         @Override
-        public DateTime toDateTime(LocalTime object)
-        {
+        public DateTime toDateTime(LocalTime object) {
             return object.toDateTimeToday();
         }
     }
 
-    private static final class NoOpTranslator implements DateTimeTranslator<DateTime>
-    {
+    private static final class NoOpTranslator implements DateTimeTranslator<DateTime> {
         @Override
-        public DateTime fromDateTime(DateTime dateTime)
-        {
+        public DateTime fromDateTime(DateTime dateTime) {
             return dateTime;
         }
 
         @Override
-        public DateTime toDateTime(DateTime object)
-        {
+        public DateTime toDateTime(DateTime object) {
             return object;
         }
     }

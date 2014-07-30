@@ -37,8 +37,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Person extends BaseEntity
-{
+public class Person extends BaseEntity {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -71,8 +70,7 @@ public class Person extends BaseEntity
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static Person createDummy()
-    {
+    public static Person createDummy() {
         Person dummy = new Person();
         dummy.setFirstName("Dummy");
         dummy.setLastName("Person");
@@ -86,69 +84,57 @@ public class Person extends BaseEntity
 //----------------------------------------------------------------------------------------------------------------------
 
     @DatePattern("MM/dd/yyyy")
-    public LocalDate getDob()
-    {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(LocalDate dob)
-    {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
     @Email
     @Order(3)
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email)
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
     @Order(1)
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName)
-    {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public Gender getGender()
-    {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender)
-    {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
     @Required
     @Order(2)
-    public String getLastName()
-    {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName)
-    {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
     @EditorType(PersistencePlugin.ENTITY_DDC)
-    public Person getMother()
-    {
+    public Person getMother() {
         return mother;
     }
 
-    public void setMother(Person mother)
-    {
+    public void setMother(Person mother) {
         this.mother = mother;
     }
 
@@ -156,45 +142,37 @@ public class Person extends BaseEntity
     @Order(4)
     @Pattern("^\\d{3}[- ]?\\d{2}[- ]?\\d{4}$")
     @VisibleForRole("ROLE_ADMIN")
-    public String getSsn()
-    {
+    public String getSsn() {
         return ssn;
     }
 
-    public void setSsn(String ssn)
-    {
+    public void setSsn(String ssn) {
         this.ssn = ssn;
     }
 
     //@DatePattern("hh:mm a")
-    public LocalTime getWorkDayBegin()
-    {
+    public LocalTime getWorkDayBegin() {
         return workDayBegin;
     }
 
-    public void setWorkDayBegin(LocalTime workDayBegin)
-    {
+    public void setWorkDayBegin(LocalTime workDayBegin) {
         this.workDayBegin = workDayBegin;
     }
 
-    public LocalTime getWorkDayEnd()
-    {
+    public LocalTime getWorkDayEnd() {
         return workDayEnd;
     }
 
-    public void setWorkDayEnd(LocalTime workDayEnd)
-    {
+    public void setWorkDayEnd(LocalTime workDayEnd) {
         this.workDayEnd = workDayEnd;
     }
 
     @ViewerType("image-boolean")
-    public boolean isSmoker()
-    {
+    public boolean isSmoker() {
         return smoker;
     }
 
-    public void setSmoker(boolean smoker)
-    {
+    public void setSmoker(boolean smoker) {
         this.smoker = smoker;
     }
 
@@ -202,8 +180,7 @@ public class Person extends BaseEntity
 // Canonical Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public String toString()
-    {
+    public String toString() {
         return firstName + " " + lastName;
     }
 }

@@ -29,8 +29,7 @@ import org.wicketopia.model.label.DisplayNameModel;
 /**
  * @since 1.0
  */
-public abstract class AbstractFormComponentPropertyEditor extends Panel implements EditorBuilder
-{
+public abstract class AbstractFormComponentPropertyEditor extends Panel implements EditorBuilder {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -41,8 +40,7 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractFormComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, FormComponent<?> formComponent)
-    {
+    protected AbstractFormComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, FormComponent<?> formComponent) {
         super(id);
         this.formComponent = formComponent;
         formComponent.setLabel(new DisplayNameModel(WicketopiaPropertyFacet.get(propertyMetaData)));
@@ -53,45 +51,38 @@ public abstract class AbstractFormComponentPropertyEditor extends Panel implemen
 // EditorBuilder Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void addBehavior(Behavior behavior)
-    {
+    public void addBehavior(Behavior behavior) {
         formComponent.add(behavior);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public void addValidator(IValidator validator)
-    {
+    public void addValidator(IValidator validator) {
         formComponent.add(validator);
     }
 
     @Override
-    public void enabled(boolean enabled)
-    {
+    public void enabled(boolean enabled) {
         formComponent.setEnabled(enabled);
     }
 
-    public Component build()
-    {
+    public Component build() {
         formComponent.setOutputMarkupPlaceholderTag(true);
         return this;
     }
 
     @Override
-    public void required(boolean required)
-    {
+    public void required(boolean required) {
         formComponent.setRequired(required);
     }
 
     @Override
-    public void visible(boolean visible)
-    {
+    public void visible(boolean visible) {
         formComponent.setVisible(visible);
     }
 
     @Override
-    public boolean isVisible()
-    {
+    public boolean isVisible() {
         return formComponent.isVisible();
     }
 }

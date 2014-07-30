@@ -24,11 +24,9 @@ import org.wicketopia.testing.AbstractWicketTestCase;
 /**
  * @since 1.0
  */
-public class TestAutoFeedbackListener extends AbstractWicketTestCase
-{
+public class TestAutoFeedbackListener extends AbstractWicketTestCase {
     @Test
-    public void testWithMessages()
-    {
+    public void testWithMessages() {
         WicketTester tester = new WicketTester();
         tester.getApplication().getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
         tester.startPage(new AutoFeedbackTestPage());

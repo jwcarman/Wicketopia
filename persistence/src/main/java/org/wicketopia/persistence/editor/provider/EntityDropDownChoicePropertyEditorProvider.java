@@ -27,22 +27,19 @@ import org.wicketopia.persistence.PersistenceProvider;
 
 import java.util.List;
 
-public class EntityDropDownChoicePropertyEditorProvider extends AbstractDropDownChoicePropertyEditorProvider
-{
+public class EntityDropDownChoicePropertyEditorProvider extends AbstractDropDownChoicePropertyEditorProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type, Context context)
-    {
+    protected <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type, Context context) {
         PersistenceProvider provider = PersistencePlugin.get().getPersistenceProvider();
         return new AllEntitiesModel<T>(provider, type);
     }
 
     @Override
-    protected <T> IChoiceRenderer<T> createRenderer(DropDownChoice<T> ddc, Class<T> type, Context context)
-    {
+    protected <T> IChoiceRenderer<T> createRenderer(DropDownChoice<T> ddc, Class<T> type, Context context) {
         final PersistenceProvider provider = PersistencePlugin.get().getPersistenceProvider();
         return new EntityChoiceRenderer<T>(provider);
     }
@@ -51,42 +48,35 @@ public class EntityDropDownChoicePropertyEditorProvider extends AbstractDropDown
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class AllEntitiesModel<T> extends LoadableDetachableModel<List<T>>
-    {
+    private static final class AllEntitiesModel<T> extends LoadableDetachableModel<List<T>> {
         private final PersistenceProvider persistenceProvider;
         private final Class<T> entityType;
 
-        private AllEntitiesModel(PersistenceProvider persistenceProvider, Class<T> entityType)
-        {
+        private AllEntitiesModel(PersistenceProvider persistenceProvider, Class<T> entityType) {
             this.persistenceProvider = persistenceProvider;
             this.entityType = entityType;
         }
 
         @Override
-        protected List<T> load()
-        {
+        protected List<T> load() {
             return persistenceProvider.getAll(entityType);
         }
     }
 
-    private static final class EntityChoiceRenderer<T> implements IChoiceRenderer<T>
-    {
+    private static final class EntityChoiceRenderer<T> implements IChoiceRenderer<T> {
         private final PersistenceProvider persistenceProvider;
 
-        private EntityChoiceRenderer(PersistenceProvider persistenceProvider)
-        {
+        private EntityChoiceRenderer(PersistenceProvider persistenceProvider) {
             this.persistenceProvider = persistenceProvider;
         }
 
         @Override
-        public Object getDisplayValue(T object)
-        {
+        public Object getDisplayValue(T object) {
             return String.valueOf(object);
         }
 
         @Override
-        public String getIdValue(T object, int index)
-        {
+        public String getIdValue(T object, int index) {
             return String.valueOf(persistenceProvider.getIdentifier(object));
         }
     }

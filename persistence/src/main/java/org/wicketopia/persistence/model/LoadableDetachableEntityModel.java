@@ -24,8 +24,7 @@ import java.io.Serializable;
 /**
  * @author James Carman
  */
-public class LoadableDetachableEntityModel<T> extends LoadableDetachableModel<T>
-{
+public class LoadableDetachableEntityModel<T> extends LoadableDetachableModel<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,17 +37,15 @@ public class LoadableDetachableEntityModel<T> extends LoadableDetachableModel<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public LoadableDetachableEntityModel(Class<T> entityType, Serializable identifier, PersistenceProvider persistenceProvider)
-    {
+    public LoadableDetachableEntityModel(Class<T> entityType, Serializable identifier, PersistenceProvider persistenceProvider) {
         this.entityType = entityType;
         this.identifier = identifier;
         this.persistenceProvider = persistenceProvider;
     }
 
-    public LoadableDetachableEntityModel(Class<T> entityType, T entity, PersistenceProvider persistenceProvider)
-    {
+    public LoadableDetachableEntityModel(Class<T> entityType, T entity, PersistenceProvider persistenceProvider) {
         super(entity);
-        this.identifier  = persistenceProvider.getIdentifier(entity);
+        this.identifier = persistenceProvider.getIdentifier(entity);
         this.entityType = entityType;
         this.persistenceProvider = persistenceProvider;
     }
@@ -58,8 +55,7 @@ public class LoadableDetachableEntityModel<T> extends LoadableDetachableModel<T>
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected T load()
-    {
+    protected T load() {
         return persistenceProvider.getByIdentifier(entityType, identifier);
     }
 }

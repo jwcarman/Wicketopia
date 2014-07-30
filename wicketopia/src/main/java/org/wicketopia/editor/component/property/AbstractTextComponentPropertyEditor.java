@@ -22,16 +22,13 @@ import org.metastopheles.PropertyMetaData;
 /**
  * @since 1.0
  */
-public abstract class AbstractTextComponentPropertyEditor extends AbstractFormComponentPropertyEditor
-{
+public abstract class AbstractTextComponentPropertyEditor extends AbstractFormComponentPropertyEditor {
     @SuppressWarnings("unchecked")
-    protected AbstractTextComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, AbstractTextComponent formComponent)
-    {
+    protected AbstractTextComponentPropertyEditor(String id, PropertyMetaData propertyMetaData, AbstractTextComponent formComponent) {
         super(id, propertyMetaData, formComponent);
         Class<?> propertyType = propertyMetaData.getPropertyDescriptor().getPropertyType();
         formComponent.setType(propertyType);
-        if(propertyType.isPrimitive())
-        {
+        if (propertyType.isPrimitive()) {
             formComponent.setRequired(true);
         }
     }

@@ -21,8 +21,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
-{
+public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -33,8 +32,7 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AjaxUpdateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
-    {
+    protected AjaxUpdateLink(String id, Form<T> form, PersistenceProvider persistenceProvider) {
         super(id, form);
         this.persistenceProvider = persistenceProvider;
     }
@@ -51,9 +49,8 @@ public abstract class AjaxUpdateLink<T> extends AjaxSubmitLink
 
     @Override
     @SuppressWarnings("unchecked")
-    protected final void onSubmit(AjaxRequestTarget target, Form<?> form)
-    {
-        T object = (T)form.getModelObject();
+    protected final void onSubmit(AjaxRequestTarget target, Form<?> form) {
+        T object = (T) form.getModelObject();
         object = persistenceProvider.update(object);
         afterUpdate(object, target);
     }

@@ -27,8 +27,7 @@ import org.wicketopia.model.label.DisplayNameModel;
  * @see org.wicketopia.model.label.DisplayNameModel the model used by this component
  * @since 1.0
  */
-public class PropertyLabel extends Label
-{
+public class PropertyLabel extends Label {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,8 +38,7 @@ public class PropertyLabel extends Label
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyLabel( String id, PropertyMetaData propertyMetadata )
-    {
+    public PropertyLabel(String id, PropertyMetaData propertyMetadata) {
         super(id, new DisplayNameModel(WicketopiaPropertyFacet.get(propertyMetadata)));
     }
 }

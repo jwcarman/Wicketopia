@@ -27,8 +27,7 @@ import org.wicketopia.editor.component.property.DropDownChoicePropertyEditor;
 
 import java.util.List;
 
-public abstract class AbstractDropDownChoicePropertyEditorProvider implements PropertyEditorProvider
-{
+public abstract class AbstractDropDownChoicePropertyEditorProvider implements PropertyEditorProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,8 +41,7 @@ public abstract class AbstractDropDownChoicePropertyEditorProvider implements Pr
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public final EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-    {
+    public final EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
         final DropDownChoice<?> ddc = createDropDownChoice(DropDownChoicePropertyEditor.COMPONENT_ID, propertyMetadata.getPropertyDescriptor().getPropertyType(), propertyModel, context);
         return new DropDownChoicePropertyEditor(componentId, propertyMetadata, ddc);
     }
@@ -53,8 +51,7 @@ public abstract class AbstractDropDownChoicePropertyEditorProvider implements Pr
 //----------------------------------------------------------------------------------------------------------------------
 
     @SuppressWarnings("unchecked")
-    protected <T> DropDownChoice<T> createDropDownChoice(String componentId, Class<T> propertyType, IModel<?> propertyModel, Context context)
-    {
+    protected <T> DropDownChoice<T> createDropDownChoice(String componentId, Class<T> propertyType, IModel<?> propertyModel, Context context) {
         final DropDownChoice<T> ddc = new DropDownChoice<T>(componentId, (IModel<T>) propertyModel, createChoicesModel(propertyType, context));
         ddc.setChoiceRenderer(createRenderer(ddc, propertyType, context));
         return ddc;

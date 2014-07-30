@@ -26,14 +26,12 @@ import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
 
-public class BeanEditorExample extends BasePage
-{
+public class BeanEditorExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanEditorExample()
-    {
+    public BeanEditorExample() {
         final Form<Person> form = new CreateEntityForm<Person>("form", Person.class);
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         final Context context = new Context(Context.CREATE);

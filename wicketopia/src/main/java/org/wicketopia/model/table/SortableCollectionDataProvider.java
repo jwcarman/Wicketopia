@@ -24,7 +24,12 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Adapts a collection model to be a {@link SortableDataProvider}.  Properties which need to support sorting should
@@ -33,8 +38,7 @@ import java.util.*;
  * @param <T> the item type
  * @since 1.0
  */
-public abstract class SortableCollectionDataProvider<T> extends SortableDataProvider<T, String>
-{
+public abstract class SortableCollectionDataProvider<T> extends SortableDataProvider<T, String> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -51,8 +55,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
      *
      * @param inner the collection model
      */
-    public SortableCollectionDataProvider(IModel<? extends Collection<T>> inner)
-    {
+    public SortableCollectionDataProvider(IModel<? extends Collection<T>> inner) {
         this(NO_ORDER, SortOrder.NONE, inner);
     }
 
@@ -64,8 +67,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
      * @param sortOrder    the sort order
      * @param inner        the collection model
      */
-    public SortableCollectionDataProvider(String propertyName, SortOrder sortOrder, IModel<? extends Collection<? extends T>> inner)
-    {
+    public SortableCollectionDataProvider(String propertyName, SortOrder sortOrder, IModel<? extends Collection<? extends T>> inner) {
         this.inner = inner;
         setSort(propertyName, sortOrder);
     }
@@ -77,8 +79,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
      * @param sortOrder    the sort order
      * @param items        the collection
      */
-    public SortableCollectionDataProvider(String propertyName, SortOrder sortOrder, Collection<T> items)
-    {
+    public SortableCollectionDataProvider(String propertyName, SortOrder sortOrder, Collection<T> items) {
         this(propertyName, sortOrder, Model.of(items));
     }
 
@@ -86,15 +87,13 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 // IDataProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Iterator<? extends T> iterator(long first, long count)
-    {
+    public Iterator<? extends T> iterator(long first, long count) {
         final List<T> list = new ArrayList<T>(inner.getObject());
         Collections.sort(list, new SortableDataProviderComparator<T>(getSort()));
         return list.subList((int) first, (int) (first + count)).iterator();
     }
 
-    public long size()
-    {
+    public long size() {
         return inner.getObject().size();
     }
 
@@ -103,8 +102,7 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void detach()
-    {
+    public void detach() {
         super.detach();
         inner.detach();
     }
@@ -113,21 +111,17 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class SortableDataProviderComparator<T> implements Comparator<T>, Serializable
-    {
+    private static final class SortableDataProviderComparator<T> implements Comparator<T>, Serializable {
         private final SortParam<String> sortParam;
 
-        private SortableDataProviderComparator(SortParam<String> sortParam)
-        {
+        private SortableDataProviderComparator(SortParam<String> sortParam) {
             this.sortParam = sortParam;
         }
 
         @SuppressWarnings("unchecked")
-        public int compare(final T o1, final T o2)
-        {
+        public int compare(final T o1, final T o2) {
             final String property = sortParam.getProperty();
-            if (property == null || NO_ORDER.equals(property))
-            {
+            if (property == null || NO_ORDER.equals(property)) {
                 return -1;
             }
             PropertyModel<Comparable> model1 = new
@@ -136,12 +130,10 @@ public abstract class SortableCollectionDataProvider<T> extends SortableDataProv
                     PropertyModel<Comparable>(o2, property);
             Comparable value1 = model1.getObject();
             Comparable value2 = model2.getObject();
-            if (value1 == null)
-            {
+            if (value1 == null) {
                 return 1;
             }
-            if (value2 == null)
-            {
+            if (value2 == null) {
                 return -1;
             }
             return sortParam.isAscending() ? value1.compareTo(value2) : value2.compareTo(value1);

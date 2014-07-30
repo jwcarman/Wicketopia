@@ -26,8 +26,7 @@ import org.wicketopia.editor.PropertyEditorProvider;
 /**
  * @since 1.0
  */
-public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor
-{
+public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,8 +38,7 @@ public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyEditorProvider getProvider()
-    {
+    public static PropertyEditorProvider getProvider() {
         return PROVIDER;
     }
 
@@ -48,14 +46,12 @@ public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CheckBoxPropertyEditor(String id, PropertyMetaData propertyMetaData, CheckBox checkBox)
-    {
+    public CheckBoxPropertyEditor(String id, PropertyMetaData propertyMetaData, CheckBox checkBox) {
         super(id, propertyMetaData, checkBox);
     }
 
     @Override
-    public void required(boolean required)
-    {
+    public void required(boolean required) {
         // Do nothing.  CheckBoxes are always supplied anyway.
     }
 
@@ -63,11 +59,9 @@ public class CheckBoxPropertyEditor extends AbstractFormComponentPropertyEditor
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class Provider implements PropertyEditorProvider
-    {
+    private static final class Provider implements PropertyEditorProvider {
         @SuppressWarnings("unchecked")
-        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-        {
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
             return new CheckBoxPropertyEditor(componentId, propertyMetadata, new CheckBox("editor", (IModel<Boolean>) propertyModel));
         }
     }

@@ -26,8 +26,7 @@ import org.wicketopia.editor.PropertyEditorProvider;
 /**
  * @since 1.0
  */
-public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEditor
-{
+public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEditor {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,8 +38,7 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyEditorProvider getProvider()
-    {
+    public static PropertyEditorProvider getProvider() {
         return PROVIDER;
     }
 
@@ -48,8 +46,7 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PasswordFieldPropertyEditor(String id, PropertyMetaData propertyMetaData, PasswordTextField field)
-    {
+    public PasswordFieldPropertyEditor(String id, PropertyMetaData propertyMetaData, PasswordTextField field) {
         super(id, propertyMetaData, field);
     }
 
@@ -57,11 +54,9 @@ public class PasswordFieldPropertyEditor extends AbstractTextComponentPropertyEd
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class Provider implements PropertyEditorProvider
-    {
+    private static final class Provider implements PropertyEditorProvider {
         @SuppressWarnings("unchecked")
-        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-        {
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
             return new PasswordFieldPropertyEditor(componentId, propertyMetadata, new PasswordTextField("editor", (IModel<String>) propertyModel));
         }
     }

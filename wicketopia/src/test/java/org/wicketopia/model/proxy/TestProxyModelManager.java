@@ -26,15 +26,13 @@ import static org.testng.Assert.assertEquals;
 /**
  * @since 1.0
  */
-public class TestProxyModelManager
-{
+public class TestProxyModelManager {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void testCommit()
-    {
+    public void testCommit() {
         final ProxyModelManager mgr = new ProxyModelManager();
         final Person p = new Person();
         p.setFirst("OldFirst");

@@ -19,8 +19,7 @@ package org.wicketopia.util;
 /**
  * @since 1.0
  */
-public interface Displayable
-{
+public interface Displayable {
     String getDisplayName();
 
     void setDisplayName(String displayName);

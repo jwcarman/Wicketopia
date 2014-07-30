@@ -26,8 +26,7 @@ import org.wicketopia.factory.PropertyComponentFactory;
 
 import java.util.List;
 
-public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T>
-{
+public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,20 +38,17 @@ public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CssBeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory)
-    {
+    public CssBeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory) {
         super(id, beanType, beanModel, context, componentFactory);
         init();
     }
 
-    public CssBeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames)
-    {
+    public CssBeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames) {
         super(id, beanType, beanModel, context, componentFactory, propertyNames);
         init();
     }
 
-    public CssBeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
-    {
+    public CssBeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames) {
         super(id, beanType, beanModel, context, componentFactory, propertyNames);
         init();
     }
@@ -61,17 +57,13 @@ public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T>
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private void init()
-    {
+    private void init() {
         final RepeatingView view = new RepeatingView("prop-div");
-        for (String propertyName : getPropertyNames())
-        {
+        for (String propertyName : getPropertyNames()) {
             final Component editor = createPropertyComponent("prop-component", propertyName);
-            final WebMarkupContainer div = new WebMarkupContainer(view.newChildId())
-            {
+            final WebMarkupContainer div = new WebMarkupContainer(view.newChildId()) {
                 @Override
-                public boolean isVisible()
-                {
+                public boolean isVisible() {
                     return editor.isVisible();
                 }
             };
@@ -83,13 +75,11 @@ public class CssBeanViewLayoutPanel<T> extends BeanViewLayoutPanel<T>
     }
 
     @Override
-    protected void onComponentTag(ComponentTag tag)
-    {
+    protected void onComponentTag(ComponentTag tag) {
         tag.getAttributes().put("class", cssClass);
     }
 
-    public CssBeanViewLayoutPanel<T> setCssClass(String cssClass)
-    {
+    public CssBeanViewLayoutPanel<T> setCssClass(String cssClass) {
         this.cssClass = cssClass;
         return this;
     }

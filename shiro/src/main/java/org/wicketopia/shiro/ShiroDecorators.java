@@ -23,14 +23,12 @@ import org.wicketopia.security.decorator.AbstractSecurityDecorators;
  * @since 1.0
  */
 @ScanMe
-public class ShiroDecorators extends AbstractSecurityDecorators
-{
+public class ShiroDecorators extends AbstractSecurityDecorators {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ShiroDecorators()
-    {
+    public ShiroDecorators() {
         super(new ShiroSecurityProvider());
     }
 }

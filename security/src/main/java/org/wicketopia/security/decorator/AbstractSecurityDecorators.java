@@ -20,14 +20,18 @@ import org.metastopheles.PropertyMetaData;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import org.wicketopia.security.SecurityProvider;
-import org.wicketopia.security.annotation.*;
+import org.wicketopia.security.annotation.DisabledForRole;
+import org.wicketopia.security.annotation.EnabledForRole;
+import org.wicketopia.security.annotation.HiddenForRole;
+import org.wicketopia.security.annotation.OptionalForRole;
+import org.wicketopia.security.annotation.RequiredForRole;
+import org.wicketopia.security.annotation.VisibleForRole;
 import org.wicketopia.security.predicate.RequiredRolesPredicate;
 
 /**
  * @since 1.0
  */
-public abstract class AbstractSecurityDecorators
-{
+public abstract class AbstractSecurityDecorators {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,8 +42,7 @@ public abstract class AbstractSecurityDecorators
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractSecurityDecorators(SecurityProvider securityProvider)
-    {
+    protected AbstractSecurityDecorators(SecurityProvider securityProvider) {
         this.securityProvider = securityProvider;
     }
 
@@ -48,38 +51,32 @@ public abstract class AbstractSecurityDecorators
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public  void onDisabledForRole(PropertyMetaData propertyMetaData, DisabledForRole annot)
-    {
+    public void onDisabledForRole(PropertyMetaData propertyMetaData, DisabledForRole annot) {
         WicketopiaPropertyFacet.get(propertyMetaData).setEnabled(new RequiredRolesPredicate(securityProvider, annot.value()), false);
     }
 
     @PropertyDecorator
-    public  void onEnabledForRole(PropertyMetaData propertyMetaData, EnabledForRole annot)
-    {
+    public void onEnabledForRole(PropertyMetaData propertyMetaData, EnabledForRole annot) {
         WicketopiaPropertyFacet.get(propertyMetaData).setEnabled(new RequiredRolesPredicate(securityProvider, annot.value()), true);
     }
 
     @PropertyDecorator
-    public  void onHiddenForRole(PropertyMetaData propertyMetaData, HiddenForRole annot)
-    {
+    public void onHiddenForRole(PropertyMetaData propertyMetaData, HiddenForRole annot) {
         WicketopiaPropertyFacet.get(propertyMetaData).setVisible(new RequiredRolesPredicate(securityProvider, annot.value()), false);
     }
-    
+
     @PropertyDecorator
-    public  void onOptionalForRole(PropertyMetaData propertyMetaData, OptionalForRole annot)
-    {
+    public void onOptionalForRole(PropertyMetaData propertyMetaData, OptionalForRole annot) {
         WicketopiaPropertyFacet.get(propertyMetaData).setRequired(new RequiredRolesPredicate(securityProvider, annot.value()), false);
     }
 
     @PropertyDecorator
-    public  void onRequiredForRole(PropertyMetaData propertyMetaData, RequiredForRole annot)
-    {
+    public void onRequiredForRole(PropertyMetaData propertyMetaData, RequiredForRole annot) {
         WicketopiaPropertyFacet.get(propertyMetaData).setRequired(new RequiredRolesPredicate(securityProvider, annot.value()), true);
     }
 
     @PropertyDecorator
-    public  void onVisibleForRole(PropertyMetaData propertyMetaData, VisibleForRole annot)
-    {
+    public void onVisibleForRole(PropertyMetaData propertyMetaData, VisibleForRole annot) {
         WicketopiaPropertyFacet.get(propertyMetaData).setVisible(new RequiredRolesPredicate(securityProvider, annot.value()), true);
     }
 }

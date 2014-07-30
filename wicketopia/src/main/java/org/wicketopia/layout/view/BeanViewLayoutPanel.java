@@ -24,8 +24,7 @@ import org.wicketopia.layout.AbstractLayoutPanel;
 
 import java.util.List;
 
-public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T>
-{
+public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -36,20 +35,17 @@ public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory)
-    {
+    public BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory) {
         super(id, beanType, context, componentFactory);
         this.beanModel = beanModel;
     }
 
-    protected BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> tPropertyComponentFactory, List<String> propertyNames)
-    {
+    protected BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> tPropertyComponentFactory, List<String> propertyNames) {
         super(id, beanType, context, tPropertyComponentFactory, propertyNames);
         this.beanModel = beanModel;
     }
 
-    public BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
-    {
+    public BeanViewLayoutPanel(String id, Class<T> beanType, IModel<T> beanModel, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames) {
         super(id, beanType, context, componentFactory, propertyNames);
         this.beanModel = beanModel;
     }
@@ -58,20 +54,17 @@ public abstract class BeanViewLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected Component createPropertyComponent(String componentId, String propertyName)
-    {
+    protected Component createPropertyComponent(String componentId, String propertyName) {
         return createPropertyComponent(componentId, getBeanModel(), propertyName);
     }
 
     @Override
-    protected void onDetach()
-    {
+    protected void onDetach() {
         super.onDetach();
         getBeanModel().detach();
     }
 
-    protected IModel<T> getBeanModel()
-    {
+    protected IModel<T> getBeanModel() {
         return beanModel;
     }
 }

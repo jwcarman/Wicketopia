@@ -25,8 +25,7 @@ import org.apache.wicket.model.IModel;
 /**
  * @since 1.0
  */
-public abstract class FragmentColumn<T> extends AbstractColumn<T,String>
-{
+public abstract class FragmentColumn<T> extends AbstractColumn<T, String> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -37,13 +36,11 @@ public abstract class FragmentColumn<T> extends AbstractColumn<T,String>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected FragmentColumn( IModel<String> displayModel )
-    {
+    protected FragmentColumn(IModel<String> displayModel) {
         super(displayModel);
     }
 
-    protected FragmentColumn( IModel<String> displayModel, String sortProperty )
-    {
+    protected FragmentColumn(IModel<String> displayModel, String sortProperty) {
         super(displayModel, sortProperty);
     }
 
@@ -51,14 +48,13 @@ public abstract class FragmentColumn<T> extends AbstractColumn<T,String>
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected abstract Fragment createFragment( String componentId, IModel<T> model );
+    protected abstract Fragment createFragment(String componentId, IModel<T> model);
 
 //----------------------------------------------------------------------------------------------------------------------
 // ICellPopulator Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void populateItem( Item<ICellPopulator<T>> item, String componentId, IModel<T> itemModel )
-    {
+    public void populateItem(Item<ICellPopulator<T>> item, String componentId, IModel<T> itemModel) {
         item.add(createFragment(componentId, itemModel));
     }
 }

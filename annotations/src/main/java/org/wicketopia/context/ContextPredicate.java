@@ -21,7 +21,6 @@ import java.io.Serializable;
 /**
  * @since 1.0
  */
-public interface ContextPredicate extends Serializable
-{
+public interface ContextPredicate extends Serializable {
     boolean evaluate(Context context);
 }

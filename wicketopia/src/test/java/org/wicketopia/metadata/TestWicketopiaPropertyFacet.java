@@ -35,21 +35,18 @@ import static org.testng.Assert.*;
 /**
  * @author James Carman
  */
-public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
-{
+public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @BeforeClass
-    public void installWicketopia()
-    {
+    public void installWicketopia() {
         new Wicketopia().install(tester.getApplication());
     }
 
     @Test
-    public void testGet()
-    {
+    public void testGet() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
@@ -57,8 +54,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testDefaultLabelText()
-    {
+    public void testDefaultLabelText() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("multiWordProperty"));
@@ -68,8 +64,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testLabelTextMessageKey()
-    {
+    public void testLabelTextMessageKey() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
@@ -79,8 +74,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testIgnored()
-    {
+    public void testIgnored() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
@@ -90,8 +84,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testViewerType()
-    {
+    public void testViewerType() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
@@ -101,8 +94,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testEditorType()
-    {
+    public void testEditorType() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));
@@ -112,8 +104,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testSortPropertyMetaData()
-    {
+    public void testSortPropertyMetaData() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         PropertyMetaData first = metaData.getPropertyMetaData("first");
@@ -136,8 +127,7 @@ public class TestWicketopiaPropertyFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testSerialization()
-    {
+    public void testSerialization() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaPropertyFacet first = WicketopiaPropertyFacet.get(metaData.getPropertyMetaData("first"));

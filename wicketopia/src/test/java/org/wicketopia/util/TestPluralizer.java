@@ -20,17 +20,14 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
-public class TestPluralizer
-{
+public class TestPluralizer {
     @Test
-    public void testCommonWords()
-    {
+    public void testCommonWords() {
         assertPlural("Person", "Persons");
         assertPlural("Party", "Parties");
     }
 
-    private void assertPlural(String singular, String plural)
-    {
+    private void assertPlural(String singular, String plural) {
         assertEquals(Pluralizer.pluralize(singular), plural);
     }
 

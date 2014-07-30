@@ -21,8 +21,7 @@ import org.domdrides.entity.UuidEntity;
 /**
  * @version 1.0
  */
-public class Person extends UuidEntity
-{
+public class Person extends UuidEntity {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -37,43 +36,35 @@ public class Person extends UuidEntity
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public String getFirst()
-    {
+    public String getFirst() {
         return first;
     }
 
-    public void setFirst( String first )
-    {
+    public void setFirst(String first) {
         this.first = first;
     }
 
-    public Gender getGender()
-    {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender( Gender gender )
-    {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public String getLast()
-    {
+    public String getLast() {
         return last;
     }
 
-    public void setLast( String last )
-    {
+    public void setLast(String last) {
         this.last = last;
     }
 
-    public String getMultiWordProperty()
-    {
+    public String getMultiWordProperty() {
         return multiWordProperty;
     }
 
-    public void setMultiWordProperty( String multiWordProperty )
-    {
+    public void setMultiWordProperty(String multiWordProperty) {
         this.multiWordProperty = multiWordProperty;
     }
 }

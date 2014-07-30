@@ -25,14 +25,12 @@ import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 import org.wicketopia.layout.view.CssBeanViewLayoutPanel;
 
-public class BeanViewerExample extends BasePage
-{
+public class BeanViewerExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanViewerExample()
-    {
+    public BeanViewerExample() {
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
         final IModel<Person> model = new Model<Person>(Person.createDummy());
         final Context context = new Context(Context.VIEW);

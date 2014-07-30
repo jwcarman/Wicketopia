@@ -28,20 +28,17 @@ import org.wicketopia.context.Context;
 import org.wicketopia.testing.AbstractWicketTestCase;
 import org.wicketopia.util.EditableBean;
 
-public class TestCheckBoxPropertyEditor extends AbstractWicketTestCase
-{
+public class TestCheckBoxPropertyEditor extends AbstractWicketTestCase {
     @BeforeClass
-    public void installWicketopia()
-    {
+    public void installWicketopia() {
         Wicketopia.install();
     }
 
     @Test
-    public void testBinding()
-    {
+    public void testBinding() {
         BeanMetaData beanMetaData = Wicketopia.get().getBeanMetaData(EditableBean.class);
         EditableBean bean = new EditableBean();
-        final IModel<Boolean> model = new PropertyModel<Boolean>(bean,"bool");
+        final IModel<Boolean> model = new PropertyModel<Boolean>(bean, "bool");
         bean.setBool(true);
         Context context = new Context(Context.CREATE);
         EditorBuilder propertyEditor = CheckBoxPropertyEditor.getProvider().createPropertyEditor("editor", beanMetaData.getPropertyMetaData("bool"), model, context);

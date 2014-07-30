@@ -26,9 +26,8 @@ import org.wicketopia.editor.PropertyEditorProvider;
 /**
  * @since 1.0
  */
-public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEditor
-{
-//----------------------------------------------------------------------------------------------------------------------
+public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEditor {
+    //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
     public static final String TYPE_NAME = "text-area";
@@ -38,8 +37,7 @@ public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEdit
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyEditorProvider getProvider()
-    {
+    public static PropertyEditorProvider getProvider() {
         return PROVIDER;
     }
 
@@ -47,8 +45,7 @@ public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEdit
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public TextAreaPropertyEditor(String id, PropertyMetaData propertyMetaData, TextArea formComponent)
-    {
+    public TextAreaPropertyEditor(String id, PropertyMetaData propertyMetaData, TextArea formComponent) {
         super(id, propertyMetaData, formComponent);
     }
 
@@ -56,11 +53,9 @@ public class TextAreaPropertyEditor<T> extends AbstractTextComponentPropertyEdit
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class Provider implements PropertyEditorProvider
-    {
+    private static final class Provider implements PropertyEditorProvider {
         @SuppressWarnings("unchecked")
-        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-        {
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
             return new TextAreaPropertyEditor(componentId, propertyMetadata, new TextArea("editor", propertyModel));
         }
     }

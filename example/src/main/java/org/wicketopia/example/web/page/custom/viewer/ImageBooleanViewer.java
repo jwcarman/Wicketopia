@@ -29,8 +29,7 @@ import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
-public class ImageBooleanViewer extends Panel implements ViewerBuilder
-{
+public class ImageBooleanViewer extends Panel implements ViewerBuilder {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,8 +41,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyViewerProvider getProvider()
-    {
+    public static PropertyViewerProvider getProvider() {
         return provider;
     }
 
@@ -51,8 +49,7 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ImageBooleanViewer(String id, IModel<?> model)
-    {
+    public ImageBooleanViewer(String id, IModel<?> model) {
         super(id);
         image = new Image("image", new ImageResourceModel(model));
         add(image);
@@ -63,20 +60,17 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addBehavior(Behavior behavior)
-    {
+    public void addBehavior(Behavior behavior) {
         image.add(behavior);
     }
 
     @Override
-    public Component build()
-    {
+    public Component build() {
         return this;
     }
 
     @Override
-    public void visible(boolean viewable)
-    {
+    public void visible(boolean viewable) {
         image.setVisible(viewable);
     }
 
@@ -84,34 +78,26 @@ public class ImageBooleanViewer extends Panel implements ViewerBuilder
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class ImageResourceModel extends LoadableDetachableModel<ResourceReference>
-    {
+    private static final class ImageResourceModel extends LoadableDetachableModel<ResourceReference> {
         private final IModel<?> inner;
 
-        private ImageResourceModel(IModel<?> inner)
-        {
+        private ImageResourceModel(IModel<?> inner) {
             this.inner = inner;
         }
 
         @Override
-        protected ResourceReference load()
-        {
-            if (Boolean.TRUE.equals(inner.getObject()))
-            {
-            	return new PackageResourceReference(ImageBooleanViewer.class, "images/green-check-mark.png");
-            }
-            else
-            {
-            	return new PackageResourceReference(ImageBooleanViewer.class, "images/red-x-mark.png");
+        protected ResourceReference load() {
+            if (Boolean.TRUE.equals(inner.getObject())) {
+                return new PackageResourceReference(ImageBooleanViewer.class, "images/green-check-mark.png");
+            } else {
+                return new PackageResourceReference(ImageBooleanViewer.class, "images/red-x-mark.png");
             }
         }
     }
 
-    private static final class Provider implements PropertyViewerProvider
-    {
+    private static final class Provider implements PropertyViewerProvider {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-        {
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
             return new ImageBooleanViewer(componentId, propertyModel);
         }
     }

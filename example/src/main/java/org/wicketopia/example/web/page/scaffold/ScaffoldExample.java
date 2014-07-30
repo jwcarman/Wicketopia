@@ -22,8 +22,7 @@ import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.component.scaffold.Scaffold;
 
-public class ScaffoldExample extends BasePage
-{
+public class ScaffoldExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -35,8 +34,7 @@ public class ScaffoldExample extends BasePage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ScaffoldExample()
-    {
+    public ScaffoldExample() {
         add(new Scaffold<Person>("scaffold", Person.class, persistenceProvider));
     }
 }

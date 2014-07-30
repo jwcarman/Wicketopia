@@ -22,8 +22,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable
-{
+public abstract class BaseEntity implements Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -35,13 +34,11 @@ public abstract class BaseEntity implements Serializable
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public final String getId()
-    {
+    public final String getId() {
         return id;
     }
 
-    protected void setId(String id)
-    {
+    protected void setId(String id) {
         this.id = id;
     }
 
@@ -50,21 +47,17 @@ public abstract class BaseEntity implements Serializable
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
-        if (!(o instanceof BaseEntity))
-        {
+        if (!(o instanceof BaseEntity)) {
             return false;
         }
 
         BaseEntity that = (BaseEntity) o;
 
-        if (!id.equals(that.id))
-        {
+        if (!id.equals(that.id)) {
             return false;
         }
 
@@ -72,8 +65,7 @@ public abstract class BaseEntity implements Serializable
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return id.hashCode();
     }
 }

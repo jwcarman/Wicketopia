@@ -140,7 +140,6 @@ table.beanList tr td {
     padding-left: 5px;
 }
 
-
 .beanList th.wicket_orderUp a, .beanList th.wicket_orderDown a {
     background-position: right;
     background-repeat: no-repeat;
@@ -177,16 +176,16 @@ table.beanList tr th {
 
 table.beanList tr th.wicket_orderDown {
     background-color: #87cbff;
-    background-image: url( 'images/arrow_down.png' );
+    background-image: url('images/arrow_down.png');
 }
 
 table.beanList tr th.wicket_orderUp {
     background-color: #87cbff;
-    background-image: url( 'images/arrow_up.png' );
+    background-image: url('images/arrow_up.png');
 }
 
 table.beanList tr th.wicket_orderNone {
-    background-image: url( 'images/arrow_off.png' );
+    background-image: url('images/arrow_off.png');
 }
 
 table.beanList tr th a {
@@ -212,7 +211,7 @@ div.tabRowContent {
 div.tabpanel div.tab-row {
     float: left;
     width: 100%;
-    background: #DAE0D2 url( "tabs/bg.gif" ) repeat-x bottom;
+    background: #DAE0D2 url("tabs/bg.gif") repeat-x bottom;
     line-height: normal;
 }
 
@@ -224,14 +223,14 @@ div.tabpanel div.tab-row ul {
 
 div.tabpanel div.tab-row li {
     float: left;
-    background: url( "tabs/left.gif" ) no-repeat left top;
+    background: url("tabs/left.gif") no-repeat left top;
     margin: 0;
     padding: 0 0 0 9px;
 }
 
 div.tabpanel div.tab-row a {
     display: block;
-    background: url( "tabs/right.gif" ) no-repeat right top;
+    background: url("tabs/right.gif") no-repeat right top;
     padding: 5px 15px 4px 6px;
     text-decoration: none;
     font-weight: bold;
@@ -248,11 +247,11 @@ div.tabpanel div.tab-row a:hover {
 }
 
 div.tabpanel div.tab-row li.selected {
-    background-image: url( "tabs/left_on.gif" );
+    background-image: url("tabs/left_on.gif");
 }
 
 div.tabpanel div.tab-row li.selected a {
-    background-image: url( "tabs/right_on.gif" );
+    background-image: url("tabs/right_on.gif");
     color: #333;
     padding-bottom: 5px;
 }

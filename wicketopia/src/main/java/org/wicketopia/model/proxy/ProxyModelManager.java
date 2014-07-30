@@ -26,8 +26,7 @@ import java.util.List;
 /**
  * @since 1.0
  */
-public class ProxyModelManager implements Serializable
-{
+public class ProxyModelManager implements Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,16 +38,13 @@ public class ProxyModelManager implements Serializable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void commit()
-    {
-        for( ProxyModel<?> proxyModel : proxyModels )
-        {
+    public void commit() {
+        for (ProxyModel<?> proxyModel : proxyModels) {
             proxyModel.commit();
         }
     }
 
-    public <T extends Serializable> IModel<T> proxy( IModel<T> actual )
-    {
+    public <T extends Serializable> IModel<T> proxy(IModel<T> actual) {
         final ProxyModel<T> model = new ProxyModel<T>(actual);
         proxyModels.add(model);
         return model;
@@ -58,19 +54,16 @@ public class ProxyModelManager implements Serializable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class ProxyModel<T extends Serializable> extends Model<T>
-    {
+    private static final class ProxyModel<T extends Serializable> extends Model<T> {
         private final IModel<T> destination;
         private static final long serialVersionUID = 1L;
 
-        private ProxyModel( IModel<T> destination )
-        {
+        private ProxyModel(IModel<T> destination) {
             this.destination = destination;
             setObject(destination.getObject());
         }
 
-        public void commit()
-        {
+        public void commit() {
             destination.setObject(getObject());
         }
     }

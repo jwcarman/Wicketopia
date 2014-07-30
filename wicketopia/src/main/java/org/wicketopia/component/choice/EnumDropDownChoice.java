@@ -31,8 +31,7 @@ import java.util.List;
  * @see org.wicketopia.renderer.EnumChoiceRenderer
  * @since 1.0
  */
-public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
-{
+public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -50,8 +49,7 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
      * @param id        the id of the component
      * @param enumClass the enum class
      */
-    public EnumDropDownChoice( String id, Class<T> enumClass )
-    {
+    public EnumDropDownChoice(String id, Class<T> enumClass) {
         super(id, new ArrayList<T>(Arrays.asList(enumClass.getEnumConstants())));
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }
@@ -62,8 +60,7 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
      * @param id      the id of the component
      * @param choices the choices
      */
-    public EnumDropDownChoice( String id, T... choices )
-    {
+    public EnumDropDownChoice(String id, T... choices) {
         super(id, Arrays.asList(choices));
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }
@@ -75,8 +72,7 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
      * @param model   the model
      * @param choices the choices
      */
-    public EnumDropDownChoice( String id, IModel<T> model, T... choices )
-    {
+    public EnumDropDownChoice(String id, IModel<T> model, T... choices) {
         super(id, model, Arrays.asList(choices));
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }
@@ -88,8 +84,7 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
      * @param model   the model
      * @param choices the choices
      */
-    public EnumDropDownChoice( String id, IModel<T> model, List<? extends T> choices )
-    {
+    public EnumDropDownChoice(String id, IModel<T> model, List<? extends T> choices) {
         super(id, model, choices);
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }
@@ -102,8 +97,7 @@ public class EnumDropDownChoice<T extends Enum> extends DropDownChoice<T>
      * @param model     the model
      * @param enumClass the enum class
      */
-    public EnumDropDownChoice( String id, IModel<T> model, Class<T> enumClass )
-    {
+    public EnumDropDownChoice(String id, IModel<T> model, Class<T> enumClass) {
         super(id, model, Arrays.asList(enumClass.getEnumConstants()));
         setChoiceRenderer(new EnumChoiceRenderer<T>(this));
     }

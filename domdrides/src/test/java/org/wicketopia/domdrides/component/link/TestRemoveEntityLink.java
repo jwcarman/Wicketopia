@@ -28,8 +28,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * @author James Carman
  */
-public class TestRemoveEntityLink extends AbstractWicketTestCase
-{
+public class TestRemoveEntityLink extends AbstractWicketTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,26 +41,23 @@ public class TestRemoveEntityLink extends AbstractWicketTestCase
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntityRemovedWhenClicked()
-    {
-        final Repository<Person,String> mockRepo = createMock(Repository.class);
+    public void testEntityRemovedWhenClicked() {
+        final Repository<Person, String> mockRepo = createMock(Repository.class);
         final Person person = new Person();
         mockRepo.remove(person);
         expectLastCall();
         replayAll();
-        final RemoveEntityLink<Person,String> link = new RemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
-        {
+        final RemoveEntityLink<Person, String> link = new RemoveEntityLink<Person, String>("link", mockRepo, new Model<Person>(person)) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void afterRemove( Person entity )
-            {
+            protected void afterRemove(Person entity) {
                 afterRemoveCalled = true;
             }
         };
         RemovePersonPage page = new RemovePersonPage(link);
         tester.startPage(page);
         tester.clickLink("link");
-        assertTrue(afterRemoveCalled);        
+        assertTrue(afterRemoveCalled);
     }
 }

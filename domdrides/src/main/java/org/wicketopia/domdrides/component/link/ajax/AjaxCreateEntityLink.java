@@ -28,20 +28,18 @@ import java.io.Serializable;
 /**
  * @since 1.0
  */
-public abstract class AjaxCreateEntityLink<E extends Entity<I>,I extends Serializable> extends AjaxSubmitLink
-{
+public abstract class AjaxCreateEntityLink<E extends Entity<I>, I extends Serializable> extends AjaxSubmitLink {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final Repository<E,I> repository;
+    private final Repository<E, I> repository;
 
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxCreateEntityLink(String id, Repository<E, I> repository, IModel<E> model)
-    {
+    public AjaxCreateEntityLink(String id, Repository<E, I> repository, IModel<E> model) {
         super(id);
         setDefaultModel(model);
         this.repository = repository;
@@ -59,9 +57,8 @@ public abstract class AjaxCreateEntityLink<E extends Entity<I>,I extends Seriali
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-    {
-        E entity = (E)getDefaultModelObject();
+    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+        E entity = (E) getDefaultModelObject();
         entity = repository.add(entity);
         afterCreate(entity, target);
     }

@@ -26,11 +26,11 @@ import org.wicketopia.testing.AbstractWicketTestCase;
 
 import static org.easymock.EasyMock.expectLastCall;
 import static org.testng.Assert.assertTrue;
+
 /**
  * @author James Carman
  */
-public class TestAjaxRemoveEntityLink extends AbstractWicketTestCase
-{
+public class TestAjaxRemoveEntityLink extends AbstractWicketTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -43,20 +43,17 @@ public class TestAjaxRemoveEntityLink extends AbstractWicketTestCase
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testEntityRemovedWhenClicked()
-    {
-        final Repository<Person,String> mockRepo = createMock(Repository.class);
+    public void testEntityRemovedWhenClicked() {
+        final Repository<Person, String> mockRepo = createMock(Repository.class);
         final Person person = new Person();
         mockRepo.remove(person);
         expectLastCall();
         replayAll();
-        final AjaxRemoveEntityLink<Person,String> link = new AjaxRemoveEntityLink<Person,String>("link", mockRepo, new Model<Person>(person))
-        {
+        final AjaxRemoveEntityLink<Person, String> link = new AjaxRemoveEntityLink<Person, String>("link", mockRepo, new Model<Person>(person)) {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void afterRemove( Person entity, AjaxRequestTarget ajaxRequestTarget )
-            {
+            protected void afterRemove(Person entity, AjaxRequestTarget ajaxRequestTarget) {
                 afterRemoveCalled = true;
             }
         };

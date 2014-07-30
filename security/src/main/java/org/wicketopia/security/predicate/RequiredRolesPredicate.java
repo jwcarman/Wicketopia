@@ -27,8 +27,7 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public class RequiredRolesPredicate implements ContextPredicate
-{
+public class RequiredRolesPredicate implements ContextPredicate {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -40,8 +39,7 @@ public class RequiredRolesPredicate implements ContextPredicate
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public RequiredRolesPredicate(SecurityProvider securityProvider, String... roles)
-    {
+    public RequiredRolesPredicate(SecurityProvider securityProvider, String... roles) {
         this.roles = new HashSet<String>(Arrays.asList(roles));
         this.securityProvider = securityProvider;
     }
@@ -51,8 +49,7 @@ public class RequiredRolesPredicate implements ContextPredicate
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public boolean evaluate(Context context)
-    {
+    public boolean evaluate(Context context) {
         return securityProvider.checkRoles(roles);
     }
 }

@@ -25,22 +25,17 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public class ShiroSecurityProvider implements SecurityProvider
-{
+public class ShiroSecurityProvider implements SecurityProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // SecurityProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public boolean checkRoles(Set<String> roles)
-    {
+    public boolean checkRoles(Set<String> roles) {
         Subject subject = SecurityUtils.getSubject();
-        if(subject != null)
-        {
-            for (String role : roles)
-            {
-                if(subject.hasRole(role))
-                {
+        if (subject != null) {
+            for (String role : roles) {
+                if (subject.hasRole(role)) {
                     return true;
                 }
             }

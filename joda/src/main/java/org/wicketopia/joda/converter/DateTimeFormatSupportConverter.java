@@ -24,8 +24,7 @@ import java.util.Locale;
 /**
  * @since 1.0
  */
-public class DateTimeFormatSupportConverter<T> implements IConverter<T>
-{
+public class DateTimeFormatSupportConverter<T> implements IConverter<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -36,8 +35,7 @@ public class DateTimeFormatSupportConverter<T> implements IConverter<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DateTimeFormatSupportConverter(JodaFormatSupport<T> formatSupport)
-    {
+    public DateTimeFormatSupportConverter(JodaFormatSupport<T> formatSupport) {
         this.formatSupport = formatSupport;
     }
 
@@ -46,14 +44,12 @@ public class DateTimeFormatSupportConverter<T> implements IConverter<T>
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public T convertToObject(String value, Locale locale)
-    {
+    public T convertToObject(String value, Locale locale) {
         return formatSupport.convertToObject(value, locale);
     }
 
     @Override
-    public String convertToString(T value, Locale locale)
-    {
+    public String convertToString(T value, Locale locale) {
         return formatSupport.convertToString(value, locale);
     }
 }

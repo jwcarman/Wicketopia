@@ -20,8 +20,7 @@ import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.model.IModel;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class UpdateLink<T> extends SubmitLink
-{
+public abstract class UpdateLink<T> extends SubmitLink {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -32,8 +31,7 @@ public abstract class UpdateLink<T> extends SubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public UpdateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
-    {
+    public UpdateLink(String id, IModel<T> model, PersistenceProvider persistenceProvider) {
         super(id, model);
         this.persistenceProvider = persistenceProvider;
     }
@@ -49,8 +47,7 @@ public abstract class UpdateLink<T> extends SubmitLink
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public final void onSubmit()
-    {
+    public final void onSubmit() {
         T object = (T) getDefaultModelObject();
         object = persistenceProvider.update(object);
         afterUpdate(object);

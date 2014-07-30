@@ -23,14 +23,12 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 import java.util.concurrent.TimeUnit;
 
-public class Start
-{
+public class Start {
 //----------------------------------------------------------------------------------------------------------------------
 // main() method
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static void main(String[] args) throws Exception
-    {
+    public static void main(String[] args) throws Exception {
         Long timeout = TimeUnit.HOURS.toMillis(1);
 
         Server server = new Server();
@@ -48,8 +46,7 @@ public class Start
 
         server.setHandler(bb);
 
-        try
-        {
+        try {
             System.out.println(">>> STARTING EMBEDDED JETTY SERVER, PRESS ANY KEY TO STOP");
             server.start();
             System.in.read();
@@ -57,8 +54,7 @@ public class Start
             server.stop();
             server.join();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
         }

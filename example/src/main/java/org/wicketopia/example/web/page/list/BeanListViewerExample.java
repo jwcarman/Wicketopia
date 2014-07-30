@@ -26,8 +26,7 @@ import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.model.list.EntityListModel;
 
-public class BeanListViewerExample extends BasePage
-{
+public class BeanListViewerExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -39,8 +38,7 @@ public class BeanListViewerExample extends BasePage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanListViewerExample()
-    {
+    public BeanListViewerExample() {
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
         final Context context = new Context(Context.LIST);
         final EntityListModel<Person> listModel = new EntityListModel<Person>(Person.class, persistenceProvider);

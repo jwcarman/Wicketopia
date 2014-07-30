@@ -36,8 +36,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class BasePage extends WebPage implements IHeaderContributor
-{
+public class BasePage extends WebPage implements IHeaderContributor {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -51,16 +50,14 @@ public class BasePage extends WebPage implements IHeaderContributor
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BasePage()
-    {
+    public BasePage() {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
 // IHeaderContributor Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void renderHead(IHeaderResponse header)
-    {
+    public void renderHead(IHeaderResponse header) {
         header.render(CssHeaderItem.forReference(new PackageResourceReference(BasePage.class, "style.css")));
     }
 
@@ -75,8 +72,7 @@ public class BasePage extends WebPage implements IHeaderContributor
      *
      * @return a model which can be used to set the page's caption
      */
-    protected IModel<String> getCaptionModel()
-    {
+    protected IModel<String> getCaptionModel() {
         return resourceModel("page.caption");
     }
 
@@ -87,14 +83,12 @@ public class BasePage extends WebPage implements IHeaderContributor
      *
      * @return a model which can be used to set the page's title
      */
-    protected IModel<String> getTitleModel()
-    {
+    protected IModel<String> getTitleModel() {
         return resourceModel("page.title");
     }
 
     @Override
-    protected void onInitialize()
-    {
+    protected void onInitialize() {
         super.onInitialize();
         setOutputMarkupId(true);
         add(new Label("titleLabel", getTitleModel()).setRenderBodyOnly(true));
@@ -104,34 +98,28 @@ public class BasePage extends WebPage implements IHeaderContributor
 
         add(new FeedbackPanel("feedback").setOutputMarkupPlaceholderTag(true));
         add(new BookmarkablePageLink<Void>("homeLink", HomePage.class));
-        add(new Link("login")
-        {
+        add(new Link("login") {
             @Override
-            public void onClick()
-            {
+            public void onClick() {
                 final UsernamePasswordAuthenticationToken tok = new UsernamePasswordAuthenticationToken("admin", "admin");
                 SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(tok));
                 setResponsePage(BasePage.this.getClass());
             }
 
             @Override
-            public boolean isVisible()
-            {
+            public boolean isVisible() {
                 return SecurityContextHolder.getContext().getAuthentication() == null;
             }
         });
-        add(new Link("logout")
-        {
+        add(new Link("logout") {
             @Override
-            public void onClick()
-            {
+            public void onClick() {
                 SecurityContextHolder.clearContext();
                 setResponsePage(BasePage.this.getClass());
             }
 
             @Override
-            public boolean isVisible()
-            {
+            public boolean isVisible() {
                 return SecurityContextHolder.getContext().getAuthentication() != null;
             }
         });
@@ -144,16 +132,12 @@ public class BasePage extends WebPage implements IHeaderContributor
      * @param key    the resource string's key
      * @param params the optional parameters
      * @return a resource model which corresponds to this page's <code>key</code> localized
-     *         resource string
+     * resource string
      */
-    protected IModel<String> resourceModel(String key, Object... params)
-    {
-        if (params == null || params.length == 0)
-        {
+    protected IModel<String> resourceModel(String key, Object... params) {
+        if (params == null || params.length == 0) {
             return new ResourceModel(key, "[" + key + "]");
-        }
-        else
-        {
+        } else {
             return new StringResourceModel(key, this, null, params, "[" + key + "]");
         }
     }

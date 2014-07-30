@@ -24,8 +24,7 @@ import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 import org.wicketopia.editor.component.property.DropDownChoicePropertyEditor;
 
-public class EnumDropDownChoicePropertyEditorProvider implements PropertyEditorProvider
-{
+public class EnumDropDownChoicePropertyEditorProvider implements PropertyEditorProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,11 +37,9 @@ public class EnumDropDownChoicePropertyEditorProvider implements PropertyEditorP
 
     @Override
     @SuppressWarnings("unchecked")
-    public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-    {
+    public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
         final Class<?> propertyType = propertyMetadata.getPropertyDescriptor().getPropertyType();
-        if (!propertyType.isEnum())
-        {
+        if (!propertyType.isEnum()) {
             throw new IllegalArgumentException("Property '" + propertyMetadata.getPropertyDescriptor().getName() + "' is not an enum.");
         }
         return new DropDownChoicePropertyEditor(componentId, propertyMetadata, new EnumDropDownChoice(DropDownChoicePropertyEditor.COMPONENT_ID, propertyModel, propertyType));

@@ -20,7 +20,6 @@ import org.apache.wicket.model.IModel;
 
 import java.util.List;
 
-public interface ChoicesModelFactory
-{
+public interface ChoicesModelFactory {
     <T> IModel<? extends List<? extends T>> createChoicesModel(Class<T> type);
 }

@@ -31,8 +31,7 @@ import java.util.List;
 /**
  * @author James Carman
  */
-public class HibernatePersistenceProvider implements PersistenceProvider
-{
+public class HibernatePersistenceProvider implements PersistenceProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -46,62 +45,51 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 
 
     @Override
-    public <T> T create(T object)
-    {
+    public <T> T create(T object) {
         getSession().save(object);
         return object;
     }
 
     @Override
-    public <T> void delete(T object)
-    {
+    public <T> void delete(T object) {
         getSession().delete(object);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> List<T> getAll(Class<T> entityType)
-    {
+    public <T> List<T> getAll(Class<T> entityType) {
         return getSession().createCriteria(entityType).list();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T getByIdentifier(Class<T> beanType, Serializable identifier)
-    {
+    public <T> T getByIdentifier(Class<T> beanType, Serializable identifier) {
         return (T) getSession().get(beanType, identifier);
     }
 
     @Override
-    public long getCount(Class<?> beanType)
-    {
+    public long getCount(Class<?> beanType) {
         return ((Number) getSession().createCriteria(beanType).setProjection(Projections.rowCount()).uniqueResult()).intValue();
     }
 
-    public Serializable getIdentifier(Object entity)
-    {
+    public Serializable getIdentifier(Object entity) {
         return getSession().getIdentifier(entity);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> List<T> getList(Class<T> entityType, long first, long max, String sortProperty, boolean ascending)
-    {
+    public <T> List<T> getList(Class<T> entityType, long first, long max, String sortProperty, boolean ascending) {
         Criteria c = getSession().createCriteria(entityType)
-                .setMaxResults((int)max)
-                .setFirstResult((int)first);
-        if (sortProperty != null)
-        {
+                .setMaxResults((int) max)
+                .setFirstResult((int) first);
+        if (sortProperty != null) {
             final int ndx = sortProperty.lastIndexOf('.');
-            if (ndx != -1)
-            {
+            if (ndx != -1) {
                 final String associationPath = sortProperty.substring(0, ndx);
                 final String propertyName = sortProperty.substring(ndx + 1);
                 c = c.createAlias(associationPath, ASSOCIATION_ALIAS)
                         .addOrder(ascending ? Order.asc(ASSOCIATION_ALIAS + "." + propertyName) : Order.desc(ASSOCIATION_ALIAS + "." + propertyName));
-            }
-            else
-            {
+            } else {
                 c = c.addOrder(ascending ? Order.asc(sortProperty) : Order.desc(sortProperty));
             }
         }
@@ -109,35 +97,28 @@ public class HibernatePersistenceProvider implements PersistenceProvider
     }
 
     @Override
-    public <T> T update(T object)
-    {
+    public <T> T update(T object) {
         getSession().update(object);
         return object;
     }
 
     @Override
-    public <T, C extends Collection<? extends T>> void create(C collection)
-    {
-        for (T entity : collection)
-        {
+    public <T, C extends Collection<? extends T>> void create(C collection) {
+        for (T entity : collection) {
             getSession().save(entity);
         }
     }
 
     @Override
-    public <T, C extends Collection<? extends T>> void delete(C collection)
-    {
-        for (T entity : collection)
-        {
+    public <T, C extends Collection<? extends T>> void delete(C collection) {
+        for (T entity : collection) {
             getSession().delete(entity);
         }
     }
 
     @Override
-    public <T, C extends Collection<? extends T>> void update(C collection)
-    {
-        for (T entity : collection)
-        {
+    public <T, C extends Collection<? extends T>> void update(C collection) {
+        for (T entity : collection) {
             getSession().update(entity);
         }
     }
@@ -146,13 +127,11 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public SessionFactory getSessionFactory()
-    {
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
 
-    public void setSessionFactory(SessionFactory sessionFactory)
-    {
+    public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -160,8 +139,7 @@ public class HibernatePersistenceProvider implements PersistenceProvider
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected Session getSession()
-    {
+    protected Session getSession() {
         return sessionFactory.getCurrentSession();
     }
 }

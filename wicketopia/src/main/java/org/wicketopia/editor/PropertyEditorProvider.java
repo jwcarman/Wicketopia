@@ -21,8 +21,7 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.context.Context;
 
-public interface PropertyEditorProvider
-{
+public interface PropertyEditorProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------

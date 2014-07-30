@@ -27,17 +27,14 @@ import org.wicketopia.util.Person;
 
 import static org.testng.Assert.*;
 
-public class TestWicketopiaBeanFacet extends AbstractWicketTestCase
-{
+public class TestWicketopiaBeanFacet extends AbstractWicketTestCase {
     @BeforeClass
-    public void installWicketopia()
-    {
+    public void installWicketopia() {
         new Wicketopia().install(tester.getApplication());
     }
 
     @Test
-    public void testGet()
-    {
+    public void testGet() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(metaData);
@@ -46,8 +43,7 @@ public class TestWicketopiaBeanFacet extends AbstractWicketTestCase
 
 
     @Test
-    public void testDefaultDisplayName()
-    {
+    public void testDefaultDisplayName() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(metaData);
@@ -57,8 +53,7 @@ public class TestWicketopiaBeanFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testDefaultDisplayNameMessageKey()
-    {
+    public void testDefaultDisplayNameMessageKey() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(metaData);
@@ -68,8 +63,7 @@ public class TestWicketopiaBeanFacet extends AbstractWicketTestCase
     }
 
     @Test
-    public void testSerialization()
-    {
+    public void testSerialization() {
         final BeanMetaDataFactory factory = new BeanMetaDataFactory();
         final BeanMetaData metaData = factory.getBeanMetaData(Person.class);
         WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(metaData);

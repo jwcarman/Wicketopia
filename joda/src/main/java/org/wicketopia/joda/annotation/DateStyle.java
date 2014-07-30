@@ -24,10 +24,9 @@ import java.lang.annotation.Target;
 /**
  * @since 1.0
  */
-@Retention( RetentionPolicy.RUNTIME )
-@Target( ElementType.METHOD )
-public @interface DateStyle
-{
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface DateStyle {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------

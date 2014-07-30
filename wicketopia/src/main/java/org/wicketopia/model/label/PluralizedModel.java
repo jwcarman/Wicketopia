@@ -23,8 +23,7 @@ import org.wicketopia.util.Pluralizer;
 /**
  * @since 1.0
  */
-public class PluralizedModel extends AbstractReadOnlyModel<String>
-{
+public class PluralizedModel extends AbstractReadOnlyModel<String> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -35,8 +34,7 @@ public class PluralizedModel extends AbstractReadOnlyModel<String>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PluralizedModel(IModel<String> singular)
-    {
+    public PluralizedModel(IModel<String> singular) {
         this.singular = singular;
     }
 
@@ -45,8 +43,7 @@ public class PluralizedModel extends AbstractReadOnlyModel<String>
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void detach()
-    {
+    public void detach() {
         singular.detach();
     }
 
@@ -56,8 +53,7 @@ public class PluralizedModel extends AbstractReadOnlyModel<String>
 
 
     @Override
-    public String getObject()
-    {
+    public String getObject() {
         return Pluralizer.pluralize(singular.getObject());
     }
 }

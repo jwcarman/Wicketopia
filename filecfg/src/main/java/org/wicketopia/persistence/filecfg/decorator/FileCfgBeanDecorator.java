@@ -7,8 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData>
-{
+public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData> {
 
     // ----------------------------------------------------------------------------------------------------------------------
     // Fields
@@ -28,8 +27,7 @@ public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData>
     // Constructors
     // ----------------------------------------------------------------------------------------------------------------------
 
-    public FileCfgBeanDecorator()
-    {
+    public FileCfgBeanDecorator() {
     }
 
     // ----------------------------------------------------------------------------------------------------------------------
@@ -37,18 +35,15 @@ public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData>
     // ----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void decorate(BeanMetaData metaData)
-    {
+    public void decorate(BeanMetaData metaData) {
         InputStream resourceStream = getConfigurationStream(metaData);
-        if (resourceStream != null)
-        {
+        if (resourceStream != null) {
             Properties properties = new Properties();
-            try
-            {
+            try {
                 properties.load(resourceStream);
                 metaData.setFacet(FileCfgFacet.FACET_KEY, new FileCfgFacet(properties));
-            } catch (IOException e)
-            {
+            }
+            catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -59,8 +54,7 @@ public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData>
     // Other Methods
     // ----------------------------------------------------------------------------------------------------------------------
 
-    private InputStream getConfigurationStream(BeanMetaData metaData)
-    {
+    private InputStream getConfigurationStream(BeanMetaData metaData) {
         Class<?> beanClass = metaData.getBeanDescriptor().getBeanClass();
         String resourceName = metaData.getBeanDescriptor().getName();
         return beanClass.getResourceAsStream(resourceName + WICKETOPIA_CFG_EXTENSION);

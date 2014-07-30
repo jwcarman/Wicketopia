@@ -26,8 +26,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 /**
  * @author James Carman
  */
-public final class EmailFeature extends AbstractValidatorFeature
-{
+public final class EmailFeature extends AbstractValidatorFeature {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -41,13 +40,11 @@ public final class EmailFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, Email email)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, Email email) {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(EmailFeature.getInstance());
     }
 
-    public static EmailFeature getInstance()
-    {
+    public static EmailFeature getInstance() {
         return INSTANCE;
     }
 
@@ -55,8 +52,7 @@ public final class EmailFeature extends AbstractValidatorFeature
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private EmailFeature()
-    {
+    private EmailFeature() {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -64,8 +60,7 @@ public final class EmailFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator()
-    {
+    protected IValidator<?> createValidator() {
         return EmailAddressValidator.getInstance();
     }
 }

@@ -26,8 +26,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 /**
  * @author James Carman
  */
-public final class CreditCardFeature extends AbstractValidatorFeature
-{
+public final class CreditCardFeature extends AbstractValidatorFeature {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -41,13 +40,11 @@ public final class CreditCardFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, CreditCard creditCard)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, CreditCard creditCard) {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(CreditCardFeature.getInstance());
     }
 
-    public static CreditCardFeature getInstance()
-    {
+    public static CreditCardFeature getInstance() {
         return INSTANCE;
     }
 
@@ -55,8 +52,7 @@ public final class CreditCardFeature extends AbstractValidatorFeature
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private CreditCardFeature()
-    {
+    private CreditCardFeature() {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -64,8 +60,7 @@ public final class CreditCardFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator()
-    {
+    protected IValidator<?> createValidator() {
         return new CreditCardValidator();
     }
 }

@@ -26,8 +26,7 @@ import java.util.List;
 /**
  *
  */
-public class ContextualBoolean implements Serializable
-{
+public class ContextualBoolean implements Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -40,8 +39,7 @@ public class ContextualBoolean implements Serializable
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public ContextualBoolean(boolean defaultValue)
-    {
+    public ContextualBoolean(boolean defaultValue) {
         this.defaultValue = defaultValue;
         this.aggregator = defaultValue ? ContextualBoolean.Aggregator.AND : ContextualBoolean.Aggregator.OR;
     }
@@ -50,43 +48,34 @@ public class ContextualBoolean implements Serializable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public boolean getValue(Context context)
-    {
-        if (conditions.isEmpty())
-        {
+    public boolean getValue(Context context) {
+        if (conditions.isEmpty()) {
             return defaultValue;
         }
         boolean aggregate = defaultValue;
-        for (ContextualCondition condition : conditions)
-        {
-            aggregate = aggregator.aggregate(aggregate, condition.predicate.evaluate(context)? condition.value : !condition.value);
+        for (ContextualCondition condition : conditions) {
+            aggregate = aggregator.aggregate(aggregate, condition.predicate.evaluate(context) ? condition.value : !condition.value);
         }
         return aggregate;
     }
 
-    public void setValue(ContextPredicate predicate, boolean value)
-    {
+    public void setValue(ContextPredicate predicate, boolean value) {
         conditions.add(new ContextualCondition(predicate, value));
     }
 
-    public static enum Aggregator
-    {
-        OR
-                {
-                    @Override
-                    public boolean aggregate(boolean left, boolean right)
-                    {
-                        return left || right;
-                    }
-                },
-        AND
-                {
-                    @Override
-                    public boolean aggregate(boolean left, boolean right)
-                    {
-                        return left && right;
-                    }
-                };
+    public static enum Aggregator {
+        OR {
+            @Override
+            public boolean aggregate(boolean left, boolean right) {
+                return left || right;
+            }
+        },
+        AND {
+            @Override
+            public boolean aggregate(boolean left, boolean right) {
+                return left && right;
+            }
+        };
 
         public abstract boolean aggregate(boolean left, boolean right);
 
@@ -96,13 +85,11 @@ public class ContextualBoolean implements Serializable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class ContextualCondition implements Serializable
-    {
+    private static final class ContextualCondition implements Serializable {
         private final ContextPredicate predicate;
         private final boolean value;
 
-        private ContextualCondition(ContextPredicate predicate, boolean value)
-        {
+        private ContextualCondition(ContextPredicate predicate, boolean value) {
             this.predicate = predicate;
             this.value = value;
         }

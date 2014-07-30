@@ -26,7 +26,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface OptionalForRole
-{
+public @interface OptionalForRole {
     String[] value();
 }

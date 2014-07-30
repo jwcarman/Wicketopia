@@ -29,24 +29,20 @@ import java.util.Collection;
  * @param <T> the item type
  * @since 1.0
  */
-public class DefaultSortableCollectionDataProvider<T extends Serializable> extends SortableCollectionDataProvider<T>
-{
+public class DefaultSortableCollectionDataProvider<T extends Serializable> extends SortableCollectionDataProvider<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DefaultSortableCollectionDataProvider(IModel<? extends Collection<T>> inner)
-    {
+    public DefaultSortableCollectionDataProvider(IModel<? extends Collection<T>> inner) {
         super(inner);
     }
 
-    public DefaultSortableCollectionDataProvider(String propertyName, SortOrder sortOrder, IModel<? extends Collection<? extends T>> inner)
-    {
+    public DefaultSortableCollectionDataProvider(String propertyName, SortOrder sortOrder, IModel<? extends Collection<? extends T>> inner) {
         super(propertyName, sortOrder, inner);
     }
 
-    public DefaultSortableCollectionDataProvider(String propertyName, SortOrder sortOrder, Collection<T> items)
-    {
+    public DefaultSortableCollectionDataProvider(String propertyName, SortOrder sortOrder, Collection<T> items) {
         super(propertyName, sortOrder, items);
     }
 
@@ -56,12 +52,12 @@ public class DefaultSortableCollectionDataProvider<T extends Serializable> exten
 
     /**
      * Returns a @{link Model} object.
+     *
      * @param object the item
      * @return a @{link Model} object
      */
     @Override
-    public IModel<T> model(T object)
-    {
+    public IModel<T> model(T object) {
         return new Model<T>(object);
     }
 }

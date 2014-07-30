@@ -22,8 +22,7 @@ import org.apache.wicket.markup.html.link.AbstractLink;
 /**
  * @author James Carman
  */
-public class RemovePersonPage extends WebPage
-{
+public class RemovePersonPage extends WebPage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,8 +33,7 @@ public class RemovePersonPage extends WebPage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public RemovePersonPage( AbstractLink link )
-    {
+    public RemovePersonPage(AbstractLink link) {
         add(link);
     }
 }

@@ -22,8 +22,8 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.io.IClusterable;
 import org.wicketopia.context.Context;
 
-public interface PropertyComponentFactory<T> extends IClusterable
-{
+public interface PropertyComponentFactory<T> extends IClusterable {
     Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context);
+
     Label createPropertyLabel(String id, String propertyName);
 }

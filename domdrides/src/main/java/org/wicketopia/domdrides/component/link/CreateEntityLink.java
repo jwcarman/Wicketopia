@@ -26,8 +26,7 @@ import java.io.Serializable;
 /**
  * @since 1.0
  */
-public abstract class CreateEntityLink<E extends Entity<I>, I extends Serializable> extends SubmitLink
-{
+public abstract class CreateEntityLink<E extends Entity<I>, I extends Serializable> extends SubmitLink {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,8 +37,7 @@ public abstract class CreateEntityLink<E extends Entity<I>, I extends Serializab
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected CreateEntityLink(String id, Repository<E, I> repository, IModel<E> model)
-    {
+    protected CreateEntityLink(String id, Repository<E, I> repository, IModel<E> model) {
         super(id);
         setDefaultModel(model);
         this.repository = repository;
@@ -57,8 +55,7 @@ public abstract class CreateEntityLink<E extends Entity<I>, I extends Serializab
 
     @Override
     @SuppressWarnings("unchecked")
-    public void onSubmit()
-    {
+    public void onSubmit() {
         E entity = (E) getDefaultModelObject();
         entity = repository.add(entity);
         setDefaultModelObject(entity);

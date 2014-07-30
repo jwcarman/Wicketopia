@@ -29,8 +29,7 @@ import org.wicketopia.layout.list.BeanListLayoutPanel;
 import org.wicketopia.persistence.PersistenceProvider;
 import org.wicketopia.persistence.model.list.EntityListModel;
 
-public class BeanListEditorExample extends BasePage
-{
+public class BeanListEditorExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,26 +41,22 @@ public class BeanListEditorExample extends BasePage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanListEditorExample()
-    {
+    public BeanListEditorExample() {
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
         Form form = new Form<Void>("form");
         final Context context = new Context(Context.UPDATE);
         final BeanListLayoutPanel<Person> list = new BeanListLayoutPanel<Person>("list", Person.class, new EntityListModel<Person>(Person.class, persistenceProvider), context, factory);
         list.setOutputMarkupPlaceholderTag(true);
-        form.add(new AjaxSubmitLink("submit")
-        {
+        form.add(new AjaxSubmitLink("submit") {
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-            {
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 persistenceProvider.update(list.getList());
                 info("Persons updated successfully.");
                 target.add(list);
             }
 
             @Override
-            protected void onError(AjaxRequestTarget target, Form<?> form)
-            {
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
                 // Do nothing (using auto-feedback).
             }
         });

@@ -29,8 +29,7 @@ import org.wicketopia.persistence.component.link.ajax.AjaxCreateLink;
 
 import java.io.Serializable;
 
-public class CreateEntityForm<T extends Serializable> extends Form<T>
-{
+public class CreateEntityForm<T extends Serializable> extends Form<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,40 +41,33 @@ public class CreateEntityForm<T extends Serializable> extends Form<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CreateEntityForm(String id, final Class<T> entityType)
-    {
+    public CreateEntityForm(String id, final Class<T> entityType) {
         super(id);
         setModel(new Model<T>(createEntity(entityType)));
-        add(new AjaxCreateLink<T>("submit", this, persistenceProvider)
-        {
+        add(new AjaxCreateLink<T>("submit", this, persistenceProvider) {
             @Override
-            protected void afterCreate(final T object, AjaxRequestTarget target)
-            {
+            protected void afterCreate(final T object, AjaxRequestTarget target) {
                 CreateEntityForm.this.setModelObject(createEntity(entityType));
                 final WicketopiaBeanFacet facet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(entityType));
                 info(DisplayNameModel.getDisplayName(facet, getLocalizer(), CreateEntityForm.this) + " created.");
                 target.add(CreateEntityForm.this);
             }
 
-			@Override
-			protected void onError(AjaxRequestTarget target, Form<?> form) {
-				// TODO Auto-generated method stub: do nothing on form errors?
-			}
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                // TODO Auto-generated method stub: do nothing on form errors?
+            }
         });
     }
 
-    private static <T> T createEntity(Class<T> entityType)
-    {
-        try
-        {
+    private static <T> T createEntity(Class<T> entityType) {
+        try {
             return entityType.newInstance();
         }
-        catch (InstantiationException e)
-        {
+        catch (InstantiationException e) {
             throw new WicketRuntimeException("Unable to instantate a " + entityType.getSimpleName() + " object.", e);
         }
-        catch (IllegalAccessException e)
-        {
+        catch (IllegalAccessException e) {
             throw new WicketRuntimeException("Unable to instantate a " + entityType.getSimpleName() + " object.", e);
         }
     }

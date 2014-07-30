@@ -24,11 +24,11 @@ import java.io.Serializable;
 /**
  * @author James Carman
  */
-public interface ComponentBuilderFeature<B extends ComponentBuilder> extends Serializable
-{
-//----------------------------------------------------------------------------------------------------------------------
+public interface ComponentBuilderFeature<B extends ComponentBuilder> extends Serializable {
+    //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
     boolean isActiveFor(Context context);
+
     void activate(B builder);
 }

@@ -23,8 +23,7 @@ import org.wicketopia.builder.EditorBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.editor.PropertyEditorProvider;
 
-public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
-{
+public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -37,8 +36,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyEditorProvider getProvider()
-    {
+    public static PropertyEditorProvider getProvider() {
         return PROVIDER;
     }
 
@@ -46,8 +44,7 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public TextFieldPropertyEditor(String id, PropertyMetaData propertyMetaData, TextField<?> textField)
-    {
+    public TextFieldPropertyEditor(String id, PropertyMetaData propertyMetaData, TextField<?> textField) {
         super(id, propertyMetaData, textField);
     }
 
@@ -55,11 +52,9 @@ public class TextFieldPropertyEditor extends AbstractTextComponentPropertyEditor
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class Provider implements PropertyEditorProvider
-    {
+    private static final class Provider implements PropertyEditorProvider {
         @SuppressWarnings("unchecked")
-        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-        {
+        public EditorBuilder createPropertyEditor(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
             return new TextFieldPropertyEditor(componentId, propertyMetadata, new TextField(TEXT_FIELD_ID, propertyModel));
         }
     }

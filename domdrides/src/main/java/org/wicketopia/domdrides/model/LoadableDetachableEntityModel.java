@@ -28,14 +28,13 @@ import java.io.Serializable;
  * @since 1.1
  */
 public class LoadableDetachableEntityModel<E extends Entity<I>, I extends Serializable> extends
-        LoadableDetachableModel<E>
-{
+        LoadableDetachableModel<E> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
     private static final long serialVersionUID = 1L;
-    private final Repository<E,I> repository;
+    private final Repository<E, I> repository;
     private final I id;
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -44,23 +43,23 @@ public class LoadableDetachableEntityModel<E extends Entity<I>, I extends Serial
 
     /**
      * Creates a model that lazily loads an entity by id from the specified repository.
+     *
      * @param repository the repository
-     * @param id the id
+     * @param id         the id
      */
-    public LoadableDetachableEntityModel(Repository<E, I> repository, I id)
-    {
+    public LoadableDetachableEntityModel(Repository<E, I> repository, I id) {
         this.repository = repository;
         this.id = id;
     }
 
     /**
      * Creates a model pre-loaded with the specified entity.
+     *
      * @param repository the repository
-     * @param entity the entity
+     * @param entity     the entity
      */
-    public LoadableDetachableEntityModel(Repository<E,I> repository, E entity)
-    {
-       super(entity);
+    public LoadableDetachableEntityModel(Repository<E, I> repository, E entity) {
+        super(entity);
         this.repository = repository;
         this.id = entity.getId();
     }
@@ -74,8 +73,7 @@ public class LoadableDetachableEntityModel<E extends Entity<I>, I extends Serial
      *
      * @return the entity
      */
-    protected E load()
-    {
+    protected E load() {
         return repository.getById(id);
     }
 }

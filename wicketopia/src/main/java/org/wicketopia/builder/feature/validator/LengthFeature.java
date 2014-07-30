@@ -26,8 +26,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 /**
  * @author James Carman
  */
-public class LengthFeature extends AbstractValidatorFeature
-{
+public class LengthFeature extends AbstractValidatorFeature {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -41,8 +40,7 @@ public class LengthFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, Length length)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, Length length) {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new LengthFeature(length.min(), length.max()));
     }
 
@@ -50,8 +48,7 @@ public class LengthFeature extends AbstractValidatorFeature
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public LengthFeature(int min, int max)
-    {
+    public LengthFeature(int min, int max) {
         this.min = min;
         this.max = max;
     }
@@ -61,25 +58,16 @@ public class LengthFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator()
-    {
-        if (max != Integer.MAX_VALUE && min != Integer.MIN_VALUE)
-        {
-            if (max == min)
-            {
+    protected IValidator<?> createValidator() {
+        if (max != Integer.MAX_VALUE && min != Integer.MIN_VALUE) {
+            if (max == min) {
                 return StringValidator.exactLength(min);
-            }
-            else
-            {
+            } else {
                 return StringValidator.lengthBetween(min, max);
             }
-        }
-        else if (max != Integer.MAX_VALUE)
-        {
+        } else if (max != Integer.MAX_VALUE) {
             return StringValidator.maximumLength(max);
-        }
-        else
-        {
+        } else {
             return StringValidator.minimumLength(min);
         }
     }

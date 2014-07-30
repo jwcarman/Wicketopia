@@ -24,14 +24,14 @@ import java.lang.annotation.Target;
 /**
  * @author James Carman
  */
-@Retention( RetentionPolicy.RUNTIME )
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface Length
-{
+public @interface Length {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     int max() default Integer.MAX_VALUE;
+
     int min() default Integer.MIN_VALUE;
 }

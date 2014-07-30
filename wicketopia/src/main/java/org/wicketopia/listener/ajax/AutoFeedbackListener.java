@@ -30,29 +30,23 @@ import java.util.Map;
  *
  * @since 1.0
  */
-public class AutoFeedbackListener implements AjaxRequestTarget.IListener
-{
+public class AutoFeedbackListener implements AjaxRequestTarget.IListener {
 //----------------------------------------------------------------------------------------------------------------------
 // IListener Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
 
     @Override
-    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response)
-    {
+    public void onAfterRespond(Map<String, Component> map, AjaxRequestTarget.IJavaScriptResponse response) {
         // Do nothing!
     }
 
     @Override
-    public void onBeforeRespond(Map<String, Component> map, final AjaxRequestTarget target)
-    {
-        target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>()
-        {
+    public void onBeforeRespond(Map<String, Component> map, final AjaxRequestTarget target) {
+        target.getPage().visitChildren(IFeedback.class, new IVisitor<Component, Void>() {
             @Override
-            public void component(Component component, IVisit<Void> visit)
-            {
-                if (component.getOutputMarkupId())
-                {
+            public void component(Component component, IVisit<Void> visit) {
+                if (component.getOutputMarkupId()) {
                     target.add(component);
                 }
                 visit.dontGoDeeper();

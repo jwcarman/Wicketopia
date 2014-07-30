@@ -19,7 +19,6 @@ package org.wicketopia.example.domain.value;
 /**
  * @since 1.0
  */
-public enum Gender
-{
+public enum Gender {
     Male, Female
 }

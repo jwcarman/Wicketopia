@@ -22,19 +22,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-public final class ServiceLocator
-{
+public final class ServiceLocator {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static <T> T find(Class<T> type)
-    {
+    public static <T> T find(Class<T> type) {
         List<T> services = findAll(type);
-        switch (services.size())
-        {
+        switch (services.size()) {
             case 0:
-                throw new WicketRuntimeException("There are no services of type " + type.getName()+ " registered.");
+                throw new WicketRuntimeException("There are no services of type " + type.getName() + " registered.");
             case 1:
                 return services.get(0);
             default:
@@ -42,12 +39,10 @@ public final class ServiceLocator
         }
     }
 
-    public static <T> List<T> findAll(Class<T> type)
-    {
+    public static <T> List<T> findAll(Class<T> type) {
         ServiceLoader<T> serviceLoader = ServiceLoader.load(type);
         final List<T> services = new LinkedList<T>();
-        for (T t : serviceLoader)
-        {
+        for (T t : serviceLoader) {
             services.add(t);
         }
         return services;
@@ -57,8 +52,7 @@ public final class ServiceLocator
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private ServiceLocator()
-    {
-        
+    private ServiceLocator() {
+
     }
 }

@@ -27,8 +27,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
  * @author James Carman
  * @since 1.0
  */
-public class LongRangeFeature extends AbstractValidatorFeature
-{
+public class LongRangeFeature extends AbstractValidatorFeature {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,8 +41,7 @@ public class LongRangeFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, LongRange longRange)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, LongRange longRange) {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new LongRangeFeature(longRange.min(), longRange.max()));
     }
 
@@ -51,8 +49,7 @@ public class LongRangeFeature extends AbstractValidatorFeature
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public LongRangeFeature(long min, long max)
-    {
+    public LongRangeFeature(long min, long max) {
         this.min = min;
         this.max = max;
     }
@@ -62,18 +59,12 @@ public class LongRangeFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator()
-    {
-        if (max != Long.MAX_VALUE && min != Long.MIN_VALUE)
-        {
+    protected IValidator<?> createValidator() {
+        if (max != Long.MAX_VALUE && min != Long.MIN_VALUE) {
             return new RangeValidator<Long>(min, max);
-        }
-        else if (max != Long.MAX_VALUE)
-        {
+        } else if (max != Long.MAX_VALUE) {
             return RangeValidator.maximum(max);
-        }
-        else
-        {
+        } else {
             return RangeValidator.minimum(min);
         }
     }

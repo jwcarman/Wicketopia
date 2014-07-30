@@ -22,18 +22,17 @@ import org.wicketopia.editor.provider.EnumDropDownChoicePropertyEditorProvider;
 import org.wicketopia.util.Gender;
 
 import static org.testng.Assert.assertEquals;
+
 /**
  * @author James Carman
  */
-public class TestDefaultEditorTypeMapping
-{
+public class TestDefaultEditorTypeMapping {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void testDefaultMappings()
-    {
+    public void testDefaultMappings() {
         final DefaultEditorTypeMapping mapping = new DefaultEditorTypeMapping();
         assertEquals(mapping.getTypeName(String.class), TextFieldPropertyEditor.TYPE_NAME);
         assertEquals(mapping.getTypeName(Gender.class), EnumDropDownChoicePropertyEditorProvider.TYPE_NAME);

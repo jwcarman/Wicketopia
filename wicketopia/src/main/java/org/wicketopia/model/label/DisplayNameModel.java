@@ -24,8 +24,7 @@ import org.wicketopia.util.Displayable;
 /**
  * @since 1.0
  */
-public class DisplayNameModel extends ResourceModel
-{
+public class DisplayNameModel extends ResourceModel {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -36,8 +35,7 @@ public class DisplayNameModel extends ResourceModel
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static String getDisplayName(Displayable displayable, Localizer localizer, Component component)
-    {
+    public static String getDisplayName(Displayable displayable, Localizer localizer, Component component) {
         return localizer.getString(displayable.getDisplayNameMessageKey(), component, displayable.getDisplayName());
     }
 
@@ -45,8 +43,7 @@ public class DisplayNameModel extends ResourceModel
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DisplayNameModel(Displayable displayable)
-    {
+    public DisplayNameModel(Displayable displayable) {
         super(displayable.getDisplayNameMessageKey(), displayable.getDisplayName());
     }
 }

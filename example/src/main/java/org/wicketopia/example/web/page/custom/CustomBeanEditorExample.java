@@ -25,14 +25,12 @@ import org.wicketopia.example.web.component.form.CreateEntityForm;
 import org.wicketopia.example.web.page.BasePage;
 import org.wicketopia.factory.PropertyComponentFactory;
 
-public class CustomBeanEditorExample extends BasePage
-{
+public class CustomBeanEditorExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public CustomBeanEditorExample()
-    {
+    public CustomBeanEditorExample() {
         final Form<Person> form = new CreateEntityForm<Person>("form", Person.class);
         final IModel<Person> model = form.getModel();
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createEditorFactory(Person.class);
@@ -43,8 +41,7 @@ public class CustomBeanEditorExample extends BasePage
         add(form);
     }
 
-    private void addLabelAndEditor(Form<Person> form, PropertyComponentFactory<Person> factory, IModel<Person> model, String propertyName, Context context)
-    {
+    private void addLabelAndEditor(Form<Person> form, PropertyComponentFactory<Person> factory, IModel<Person> model, String propertyName, Context context) {
         form.add(factory.createPropertyLabel(propertyName + "Label", propertyName));
         form.add(factory.createPropertyComponent(propertyName, model, propertyName, context));
     }

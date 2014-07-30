@@ -21,8 +21,7 @@ import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.model.IModel;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
-{
+public abstract class AjaxDeleteLink<T> extends AjaxLink<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -33,8 +32,7 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AjaxDeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider)
-    {
+    public AjaxDeleteLink(String id, IModel<T> model, PersistenceProvider persistenceProvider) {
         super(id, model);
         this.persistenceProvider = persistenceProvider;
     }
@@ -50,8 +48,7 @@ public abstract class AjaxDeleteLink<T> extends AjaxLink<T>
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public final void onClick(AjaxRequestTarget target)
-    {
+    public final void onClick(AjaxRequestTarget target) {
         final T object = getModelObject();
         persistenceProvider.delete(object);
         afterDelete(object, target);

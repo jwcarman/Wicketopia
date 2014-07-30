@@ -21,8 +21,7 @@ import org.wicketopia.persistence.PersistenceProvider;
 
 import java.util.List;
 
-public class EntityListModel<T> extends LoadableDetachableModel<List<? extends T>>
-{
+public class EntityListModel<T> extends LoadableDetachableModel<List<? extends T>> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,8 +33,7 @@ public class EntityListModel<T> extends LoadableDetachableModel<List<? extends T
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public EntityListModel(Class<T> entityType, PersistenceProvider persistenceProvider)
-    {
+    public EntityListModel(Class<T> entityType, PersistenceProvider persistenceProvider) {
         this.entityType = entityType;
         this.persistenceProvider = persistenceProvider;
     }
@@ -45,8 +43,7 @@ public class EntityListModel<T> extends LoadableDetachableModel<List<? extends T
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected List<? extends T> load()
-    {
+    protected List<? extends T> load() {
         return persistenceProvider.getAll(entityType);
     }
 }

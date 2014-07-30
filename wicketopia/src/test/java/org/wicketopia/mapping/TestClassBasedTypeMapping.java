@@ -26,14 +26,12 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
+import static org.testng.Assert.*;
 
 /**
  * @author James Carman
  */
-public class TestClassBasedTypeMapping
-{
+public class TestClassBasedTypeMapping {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -46,16 +44,14 @@ public class TestClassBasedTypeMapping
 //----------------------------------------------------------------------------------------------------------------------
 
     @BeforeMethod
-    protected void setUp() throws Exception
-    {
+    protected void setUp() throws Exception {
         typeMapping = new ClassBasedTypeMapping();
         BeanMetaDataFactory metaDataFactory = new BeanMetaDataFactory();
         metaData = metaDataFactory.getBeanMetaData(Person.class);
     }
 
     @Test
-    public void testAddOverride()
-    {
+    public void testAddOverride() {
         typeMapping.addTypeOverride(Integer.class, "integer_override");
         assertEquals(typeMapping.getTypeName(metaData.getPropertyMetaData("ssn")), "integer_override");
     }
@@ -87,28 +83,24 @@ public class TestClassBasedTypeMapping
     }
 */
     @Test
-    public void testInterfaceMatch()
-    {
+    public void testInterfaceMatch() {
         typeMapping.addTypeOverride(Serializable.class, "serial");
         assertEquals("serial", typeMapping.getTypeName(metaData.getPropertyMetaData("first")));
     }
 
     @Test
-    public void testNoMatchNoDefault()
-    {
+    public void testNoMatchNoDefault() {
         assertNull(typeMapping.getTypeName(metaData.getPropertyMetaData("first")));
     }
 
     @Test
-    public void testNoMatchWithDefault()
-    {
+    public void testNoMatchWithDefault() {
         ClassBasedTypeMapping impl = new ClassBasedTypeMapping("default");
         assertEquals(impl.getTypeName(metaData.getPropertyMetaData("first")), "default");
     }
 
     @Test
-    public void testSetOverrides()
-    {
+    public void testSetOverrides() {
         ClassBasedTypeMapping impl = new ClassBasedTypeMapping();
         final Map<Class, String> overrides = new HashMap<Class, String>();
         overrides.put(Integer.class, "integer_override");
@@ -117,8 +109,7 @@ public class TestClassBasedTypeMapping
     }
 
     @Test
-    public void testSuperclassMatch()
-    {
+    public void testSuperclassMatch() {
         ClassBasedTypeMapping impl = new ClassBasedTypeMapping();
         impl.addTypeOverride(Number.class, "num");
         assertEquals(impl.getTypeName(metaData.getPropertyMetaData("ssn")), "num");

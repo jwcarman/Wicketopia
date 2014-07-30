@@ -21,8 +21,7 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.component.label.PropertyLabel;
 
-public abstract class AbstractPropertyComponentFactory<T> implements PropertyComponentFactory<T> 
-{
+public abstract class AbstractPropertyComponentFactory<T> implements PropertyComponentFactory<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -33,8 +32,7 @@ public abstract class AbstractPropertyComponentFactory<T> implements PropertyCom
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractPropertyComponentFactory(Class<T> beanType)
-    {
+    protected AbstractPropertyComponentFactory(Class<T> beanType) {
         this.beanType = beanType;
     }
 
@@ -42,15 +40,13 @@ public abstract class AbstractPropertyComponentFactory<T> implements PropertyCom
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Label createPropertyLabel(String id, String propertyName)
-    {
+    public Label createPropertyLabel(String id, String propertyName) {
         Wicketopia plugin = Wicketopia.get();
         PropertyMetaData propertyMetaData = plugin.getBeanMetaData(getBeanType()).getPropertyMetaData(propertyName);
         return new PropertyLabel(id, propertyMetaData);
     }
 
-    protected Class<T> getBeanType()
-    {
+    protected Class<T> getBeanType() {
         return beanType;
     }
 }

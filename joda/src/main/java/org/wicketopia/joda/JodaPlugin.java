@@ -33,8 +33,7 @@ import java.util.Date;
 /**
  * @since 1.0
  */
-public class JodaPlugin implements WicketopiaPlugin
-{
+public class JodaPlugin implements WicketopiaPlugin {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -51,8 +50,7 @@ public class JodaPlugin implements WicketopiaPlugin
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void initialize(Wicketopia wicketopia)
-    {
+    public void initialize(Wicketopia wicketopia) {
         registerType(wicketopia, DATE_TIME_TYPE, DateTime.class, DateTimeTranslators.noOpTranslator(), "SS");
         registerType(wicketopia, LOCAL_DATE_TYPE, LocalDate.class, DateTimeTranslators.localDateTranslator(), "S-");
         registerType(wicketopia, LOCAL_TIME_TYPE, LocalTime.class, DateTimeTranslators.localTimeTranslator(), "-S");
@@ -65,8 +63,7 @@ public class JodaPlugin implements WicketopiaPlugin
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public <T> void registerType(Wicketopia wicketopia, String typeName, Class<T> propertyType, DateTimeTranslator<T> translator, String style)
-    {
+    public <T> void registerType(Wicketopia wicketopia, String typeName, Class<T> propertyType, DateTimeTranslator<T> translator, String style) {
         final JodaFormatSupport<T> formatSupport = new JodaFormatSupport<T>(translator, style);
         wicketopia.addViewerTypeOverride(propertyType, typeName);
         wicketopia.addPropertyViewerProvider(typeName, new JodaLabelProvider<T>(formatSupport));

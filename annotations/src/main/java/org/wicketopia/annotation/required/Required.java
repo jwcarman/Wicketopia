@@ -26,9 +26,8 @@ import java.lang.annotation.Target;
 /**
  * @since 1.0
  */
-@Retention( RetentionPolicy.RUNTIME )
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface Required
-{
+public @interface Required {
     String[] value() default Context.ALL;
 }

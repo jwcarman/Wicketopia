@@ -25,14 +25,12 @@ import org.wicketopia.viewer.component.LabelPropertyViewer;
 /**
  * @author James Carman
  */
-public class JodaLabel<T> extends LabelPropertyViewer
-{
+public class JodaLabel<T> extends LabelPropertyViewer {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public JodaLabel(String id, IModel<T> model, JodaFormatSupport<T> formatSupport)
-    {
+    public JodaLabel(String id, IModel<T> model, JodaFormatSupport<T> formatSupport) {
         super(id, new Model<String>(""));
         setDefaultModel(new JodaLabelModel<T>(formatSupport, model));
     }
@@ -41,26 +39,22 @@ public class JodaLabel<T> extends LabelPropertyViewer
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final class JodaLabelModel<T> extends AbstractReadOnlyModel<String>
-    {
+    private final class JodaLabelModel<T> extends AbstractReadOnlyModel<String> {
         private final IModel<T> inner;
         private final JodaFormatSupport<T> formatSupport;
 
-        private JodaLabelModel(JodaFormatSupport<T> formatSupport, IModel<T> inner)
-        {
+        private JodaLabelModel(JodaFormatSupport<T> formatSupport, IModel<T> inner) {
             this.formatSupport = formatSupport;
             this.inner = inner;
         }
 
         @Override
-        public String getObject()
-        {
+        public String getObject() {
             return formatSupport.convertToString(inner.getObject(), getLocale());
         }
 
         @Override
-        public void detach()
-        {
+        public void detach() {
             super.detach();
             inner.detach();
         }

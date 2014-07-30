@@ -26,14 +26,12 @@ import java.io.Serializable;
 /**
  * @author James Carman
  */
-public class WicketopiaBeanFacet implements Serializable, Displayable
-{
+public class WicketopiaBeanFacet implements Serializable, Displayable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final FacetKey<WicketopiaBeanFacet> FACET_KEY = new FacetKey<WicketopiaBeanFacet>()
-    {
+    private static final FacetKey<WicketopiaBeanFacet> FACET_KEY = new FacetKey<WicketopiaBeanFacet>() {
     };
 
     private final BeanMetaData beanMetaData;
@@ -44,23 +42,18 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static String calculateDefaultDisplayName(BeanMetaData beanMetaData)
-    {
+    public static String calculateDefaultDisplayName(BeanMetaData beanMetaData) {
         return Pluralizer.splitIntoWords(beanMetaData.getBeanDescriptor().getBeanClass().getSimpleName());
     }
 
-    public static String calculateDisplayNameMessageKey(BeanMetaData beanMetaData)
-    {
+    public static String calculateDisplayNameMessageKey(BeanMetaData beanMetaData) {
         return beanMetaData.getBeanDescriptor().getBeanClass().getName();
     }
 
-    public static WicketopiaBeanFacet get(BeanMetaData beanMetaData)
-    {
-        synchronized (beanMetaData)
-        {
+    public static WicketopiaBeanFacet get(BeanMetaData beanMetaData) {
+        synchronized (beanMetaData) {
             WicketopiaBeanFacet meta = beanMetaData.getFacet(FACET_KEY);
-            if (meta == null)
-            {
+            if (meta == null) {
                 meta = new WicketopiaBeanFacet(beanMetaData);
                 beanMetaData.setFacet(FACET_KEY, meta);
             }
@@ -72,8 +65,7 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public WicketopiaBeanFacet(BeanMetaData beanMetaData)
-    {
+    public WicketopiaBeanFacet(BeanMetaData beanMetaData) {
         this.beanMetaData = beanMetaData;
         this.displayNameMessageKey = calculateDisplayNameMessageKey(beanMetaData);
         this.displayName = calculateDefaultDisplayName(beanMetaData);
@@ -84,23 +76,19 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 //----------------------------------------------------------------------------------------------------------------------
 
 
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return displayName;
     }
 
-    public String getDisplayNameMessageKey()
-    {
+    public String getDisplayNameMessageKey() {
         return displayNameMessageKey;
     }
 
-    public void setDisplayName(String displayName)
-    {
+    public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
 
-    public void setDisplayNameMessageKey(String displayNameMessageKey)
-    {
+    public void setDisplayNameMessageKey(String displayNameMessageKey) {
         this.displayNameMessageKey = displayNameMessageKey;
     }
 
@@ -108,8 +96,7 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanMetaData getBeanMetaData()
-    {
+    public BeanMetaData getBeanMetaData() {
         return beanMetaData;
     }
 
@@ -117,8 +104,7 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private Object writeReplace()
-    {
+    private Object writeReplace() {
         return new SerializedForm(getBeanMetaData());
     }
 
@@ -126,17 +112,14 @@ public class WicketopiaBeanFacet implements Serializable, Displayable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class SerializedForm implements Serializable
-    {
+    private static final class SerializedForm implements Serializable {
         private final BeanMetaData beanMetaData;
 
-        private SerializedForm(BeanMetaData beanMetaData)
-        {
+        private SerializedForm(BeanMetaData beanMetaData) {
             this.beanMetaData = beanMetaData;
         }
 
-        private Object readResolve()
-        {
+        private Object readResolve() {
             return WicketopiaBeanFacet.get(beanMetaData);
         }
     }

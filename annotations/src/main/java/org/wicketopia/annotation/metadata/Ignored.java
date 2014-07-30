@@ -29,6 +29,5 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface Ignored
-{
+public @interface Ignored {
 }

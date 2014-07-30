@@ -23,8 +23,7 @@ import org.wicketopia.builder.feature.NonContextualFeature;
 /**
  * @since 1.0
  */
-public abstract class AbstractValidatorFeature extends NonContextualFeature<EditorBuilder>
-{
+public abstract class AbstractValidatorFeature extends NonContextualFeature<EditorBuilder> {
 //----------------------------------------------------------------------------------------------------------------------
 // Abstract Methods
 //----------------------------------------------------------------------------------------------------------------------
@@ -35,12 +34,10 @@ public abstract class AbstractValidatorFeature extends NonContextualFeature<Edit
 // ComponentBuilderFeature Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public final void activate(EditorBuilder editor)
-    {
+    public final void activate(EditorBuilder editor) {
 
         final IValidator<?> validator = createValidator();
-        if (validator != null)
-        {
+        if (validator != null) {
             editor.addValidator(validator);
         }
     }

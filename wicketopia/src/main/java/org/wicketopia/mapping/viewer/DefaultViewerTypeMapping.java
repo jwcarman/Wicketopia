@@ -22,10 +22,8 @@ import org.wicketopia.viewer.component.LabelPropertyViewer;
 /**
  * @since 1.0
  */
-public class DefaultViewerTypeMapping extends ClassBasedTypeMapping
-{
-    public DefaultViewerTypeMapping()
-    {
+public class DefaultViewerTypeMapping extends ClassBasedTypeMapping {
+    public DefaultViewerTypeMapping() {
         super(LabelPropertyViewer.TYPE_NAME);
     }
 }

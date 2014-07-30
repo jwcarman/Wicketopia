@@ -23,8 +23,7 @@ import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.annotation.validator.Pattern;
 import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
-public class PatternFeature extends AbstractValidatorFeature
-{
+public class PatternFeature extends AbstractValidatorFeature {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -36,8 +35,7 @@ public class PatternFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, Pattern pattern)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, Pattern pattern) {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new PatternFeature(pattern.value()));
     }
 
@@ -45,8 +43,7 @@ public class PatternFeature extends AbstractValidatorFeature
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PatternFeature(String pattern)
-    {
+    public PatternFeature(String pattern) {
         this.pattern = pattern;
     }
 
@@ -55,8 +52,7 @@ public class PatternFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator()
-    {
+    protected IValidator<?> createValidator() {
         return new PatternValidator(pattern);
     }
 }

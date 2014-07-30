@@ -288,7 +288,6 @@
     padding: 0;
 }
 
-
 .scaffold li.feedbackPanelERROR {
     margin: 10px 0 5px 0;
     padding: 5px 0 5px 0;
@@ -298,5 +297,5 @@
 }
 
 .scaffold li.feedbackPanelERROR span {
-    vertical-align:middle;
+    vertical-align: middle;
 }

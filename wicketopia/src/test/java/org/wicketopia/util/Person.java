@@ -21,8 +21,7 @@ import java.io.Serializable;
 /**
  * @author James Carman
  */
-public class Person implements Serializable
-{
+public class Person implements Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,53 +37,43 @@ public class Person implements Serializable
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public String getFirst()
-    {
+    public String getFirst() {
         return first;
     }
 
-    public void setFirst( String first )
-    {
+    public void setFirst(String first) {
         this.first = first;
     }
 
-    public Gender getGender()
-    {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender( Gender gender )
-    {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public String getLast()
-    {
+    public String getLast() {
         return last;
     }
 
-    public void setLast( String last )
-    {
+    public void setLast(String last) {
         this.last = last;
     }
 
-    public String getMultiWordProperty()
-    {
+    public String getMultiWordProperty() {
         return multiWordProperty;
     }
 
-    public void setMultiWordProperty( String multiWordProperty )
-    {
+    public void setMultiWordProperty(String multiWordProperty) {
         this.multiWordProperty = multiWordProperty;
     }
 
-    public Integer getSsn()
-    {
+    public Integer getSsn() {
         return ssn;
     }
 
-    public void setSsn(Integer ssn)
-    {
+    public void setSsn(Integer ssn) {
         this.ssn = ssn;
     }
 }

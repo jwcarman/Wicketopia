@@ -20,7 +20,11 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +33,7 @@ import java.util.regex.Pattern;
  *
  * @since 1.0
  */
-public abstract class Pluralizer
-{
+public abstract class Pluralizer {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -45,8 +48,7 @@ public abstract class Pluralizer
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    static
-    {
+    static {
         // register default rules
         // y -> ies
         registerPluralizationRule(new RegexPluralizationRule("([^aeiouy])y$", "ies", 1));
@@ -61,8 +63,7 @@ public abstract class Pluralizer
     /**
      * Applies default English pluralization rules adding &quot;s&quot; to the end of the term.
      */
-    private static String applyDefaultRule(String term)
-    {
+    private static String applyDefaultRule(String term) {
         return term + "s";
     }
 
@@ -71,12 +72,9 @@ public abstract class Pluralizer
      * set of configured {@link PluralizationRule PluralizationRules}. Returns <code>null</code>
      * if no rule can be found.
      */
-    private static PluralizationRule lookupPluralizationRule(String term)
-    {
-        for (PluralizationRule rule : pluralizationRules)
-        {
-            if (rule.appliesTo(term))
-            {
+    private static PluralizationRule lookupPluralizationRule(String term) {
+        for (PluralizationRule rule : pluralizationRules) {
+            if (rule.appliesTo(term)) {
                 return rule;
             }
         }
@@ -84,32 +82,23 @@ public abstract class Pluralizer
         return null;
     }
 
-    public static String pluralize(String term)
-    {
+    public static String pluralize(String term) {
         String pluralForm = pluralizationCache.get(term);
 
-        if (pluralForm == null)
-        {
+        if (pluralForm == null) {
             PluralizationRule rule = lookupPluralizationRule(term);
 
-            if (rule != null)
-            {
+            if (rule != null) {
                 pluralForm = rule.apply(term);
-            }
-            else
-            {
+            } else {
                 pluralForm = applyDefaultRule(term);
 
-                if (LOGGER.isDebugEnabled())
-                {
+                if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("Located pluralization [" + pluralForm + "] for term [" + term + "] using default rules.");
                 }
             }
-        }
-        else
-        {
-            if (LOGGER.isDebugEnabled())
-            {
+        } else {
+            if (LOGGER.isDebugEnabled()) {
                 LOGGER.debug("Located pluralization [" + pluralForm + "] for term [" + term + "] in the cache.");
             }
         }
@@ -117,22 +106,18 @@ public abstract class Pluralizer
         return pluralForm;
     }
 
-    public static void registerPluralizationRule(PluralizationRule rule)
-    {
+    public static void registerPluralizationRule(PluralizationRule rule) {
         pluralizationRules.add(rule);
     }
 
-    public static String splitIntoWords(String name)
-    {
+    public static String splitIntoWords(String name) {
         String[] words = StringUtils.splitByCharacterTypeCamelCase(name);
         words[0] = StringUtils.capitalize(words[0]);
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < words.length; i++)
-        {
+        for (int i = 0; i < words.length; i++) {
             String word = words[i];
             sb.append(word);
-            if (i != words.length - 1)
-            {
+            if (i != words.length - 1) {
                 sb.append(" ");
             }
         }
@@ -143,49 +128,40 @@ public abstract class Pluralizer
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    interface PluralizationRule
-    {
+    interface PluralizationRule {
         boolean appliesTo(String term);
 
         String apply(String term);
     }
 
-    private static final class RegexPluralizationRule implements PluralizationRule
-    {
+    private static final class RegexPluralizationRule implements PluralizationRule {
         private Pattern pattern;
 
         private String replacement;
 
         private int includeGroup = -1;
 
-        public RegexPluralizationRule(String pattern, String replacement)
-        {
+        public RegexPluralizationRule(String pattern, String replacement) {
             this(pattern, replacement, -1);
         }
 
-        public RegexPluralizationRule(String pattern, String replacement, int includeGroup)
-        {
+        public RegexPluralizationRule(String pattern, String replacement, int includeGroup) {
             this.pattern = Pattern.compile(pattern);
             this.replacement = replacement;
             this.includeGroup = includeGroup;
         }
 
-        public boolean appliesTo(String term)
-        {
+        public boolean appliesTo(String term) {
             return pattern.matcher(term).find();
         }
 
-        public String apply(String term)
-        {
+        public String apply(String term) {
             Matcher m = pattern.matcher(term);
-            if (m.find())
-            {
+            if (m.find()) {
                 String replace = (this.includeGroup > -1) ? m.group(this.includeGroup) : "";
                 replace += this.replacement;
                 return m.replaceFirst(replace);
-            }
-            else
-            {
+            } else {
                 return term;
             }
         }

@@ -27,46 +27,39 @@ import org.wicketopia.factory.PropertyComponentFactory;
 /**
  * @author James Carman
  */
-public class BeanPropertyColumn<T> implements IColumn<T,String>
-{
+public class BeanPropertyColumn<T> implements IColumn<T, String> {
     private final PropertyComponentFactory<T> factory;
     private final String propertyName;
     private final Context context;
 
-    public BeanPropertyColumn(PropertyComponentFactory<T> factory, String propertyName, Context context)
-    {
+    public BeanPropertyColumn(PropertyComponentFactory<T> factory, String propertyName, Context context) {
         this.factory = factory;
         this.propertyName = propertyName;
         this.context = context;
     }
 
     @Override
-    public String getSortProperty()
-    {
+    public String getSortProperty() {
         return propertyName;
     }
 
     @Override
-    public boolean isSortable()
-    {
+    public boolean isSortable() {
         return true;
     }
 
     @Override
-    public void detach()
-    {
+    public void detach() {
 
     }
 
     @Override
-    public Component getHeader(String componentId)
-    {
+    public Component getHeader(String componentId) {
         return factory.createPropertyLabel(componentId, propertyName);
     }
 
     @Override
-    public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel)
-    {
+    public void populateItem(Item<ICellPopulator<T>> cellItem, String componentId, IModel<T> rowModel) {
         cellItem.add(factory.createPropertyComponent(componentId, rowModel, propertyName, context));
     }
 }

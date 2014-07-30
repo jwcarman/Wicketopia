@@ -7,19 +7,16 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 import javax.validation.constraints.NotNull;
 
-public class BeanValidationPropertyDecorator implements MetaDataDecorator<PropertyMetaData>
-{
+public class BeanValidationPropertyDecorator implements MetaDataDecorator<PropertyMetaData> {
 //----------------------------------------------------------------------------------------------------------------------
 // MetaDataDecorator Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void decorate(PropertyMetaData propertyMetaData)
-    {
+    public void decorate(PropertyMetaData propertyMetaData) {
         final WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         facet.addEditorFeature(new BeanValidationFeature());
-        if(facet.getPropertyMetaData().getAnnotation(NotNull.class) != null)
-        {
+        if (facet.getPropertyMetaData().getAnnotation(NotNull.class) != null) {
             facet.setRequired(Context.ALL_CONTEXTS, true);
         }
     }

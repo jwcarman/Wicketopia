@@ -22,8 +22,7 @@ import org.metastopheles.PropertyMetaData;
 /**
  * @author James Carman
  */
-public class PropertyLabelTestPage extends WebPage
-{
+public class PropertyLabelTestPage extends WebPage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -34,8 +33,7 @@ public class PropertyLabelTestPage extends WebPage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyLabelTestPage( PropertyMetaData propertyMetadata )
-    {
+    public PropertyLabelTestPage(PropertyMetaData propertyMetadata) {
         add(new PropertyLabel("label", propertyMetadata));
     }
 }

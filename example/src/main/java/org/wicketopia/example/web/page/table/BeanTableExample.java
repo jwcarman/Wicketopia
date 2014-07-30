@@ -29,8 +29,7 @@ import org.wicketopia.persistence.model.repeater.PersistenceDataProvider;
 
 import java.util.List;
 
-public class BeanTableExample extends BasePage
-{
+public class BeanTableExample extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -43,8 +42,7 @@ public class BeanTableExample extends BasePage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanTableExample()
-    {
+    public BeanTableExample() {
         final PersistenceDataProvider<Person> dataProvider = new PersistenceDataProvider<Person>(Person.class, persistenceProvider);
         final PropertyComponentFactory<Person> factory = Wicketopia.get().createViewerFactory(Person.class);
         final Context context = new Context(Context.LIST);

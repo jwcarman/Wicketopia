@@ -32,11 +32,9 @@ import static org.testng.Assert.assertEquals;
 /**
  * @author James Carman
  */
-public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
-{
+public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase {
     @Test
-    public void testWithViewer()
-    {
+    public void testWithViewer() {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();
@@ -62,8 +60,7 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     }
 
     @Test
-    public void testCustomCssClass()
-    {
+    public void testCustomCssClass() {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();
@@ -83,8 +80,7 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     }
 
     @Test
-    public void testWithEditor()
-    {
+    public void testWithEditor() {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();
@@ -110,8 +106,7 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     }
 
     @Test
-    public void testWithEnumeratedProperties()
-    {
+    public void testWithEnumeratedProperties() {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();
@@ -133,8 +128,7 @@ public class TestCssBeanViewLayoutPanel extends AbstractWicketTestCase
     }
 
     @Test
-    public void testWithEnumeratedPropertiesList()
-    {
+    public void testWithEnumeratedPropertiesList() {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
         final EditableBean bean = new EditableBean();

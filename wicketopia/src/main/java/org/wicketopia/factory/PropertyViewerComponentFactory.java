@@ -26,14 +26,12 @@ import org.wicketopia.context.Context;
 /**
  * @since 1.0
  */
-public class PropertyViewerComponentFactory<T> extends AbstractPropertyComponentFactory<T>
-{
+public class PropertyViewerComponentFactory<T> extends AbstractPropertyComponentFactory<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyViewerComponentFactory(Class<T> beanType)
-    {
+    public PropertyViewerComponentFactory(Class<T> beanType) {
         super(beanType);
     }
 
@@ -42,8 +40,7 @@ public class PropertyViewerComponentFactory<T> extends AbstractPropertyComponent
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context)
-    {
+    public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context) {
         Wicketopia plugin = Wicketopia.get();
         PropertyMetaData propertyMetaData = plugin.getBeanMetaData(getBeanType()).getPropertyMetaData(propertyName);
         return plugin.createPropertyViewer(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);

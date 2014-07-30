@@ -23,14 +23,12 @@ import org.metastopheles.PropertyMetaData;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.context.Context;
 
-public class PropertyEditorComponentFactory<T> extends AbstractPropertyComponentFactory<T>
-{
+public class PropertyEditorComponentFactory<T> extends AbstractPropertyComponentFactory<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public PropertyEditorComponentFactory(Class<T> beanType)
-    {
+    public PropertyEditorComponentFactory(Class<T> beanType) {
         super(beanType);
     }
 
@@ -38,8 +36,7 @@ public class PropertyEditorComponentFactory<T> extends AbstractPropertyComponent
 // PropertyComponentFactory Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context)
-    {
+    public Component createPropertyComponent(String id, IModel<T> beanModel, String propertyName, Context context) {
         Wicketopia plugin = Wicketopia.get();
         PropertyMetaData propertyMetaData = plugin.getBeanMetaData(getBeanType()).getPropertyMetaData(propertyName);
         return plugin.createPropertyEditor(id, propertyMetaData, new PropertyModel(beanModel, propertyName), context);

@@ -32,16 +32,14 @@ import static org.testng.Assert.*;
 /**
  * @author James Carman
  */
-public class TestPageableRepositoryDataProvider extends AbstractTestCase
-{
+public class TestPageableRepositoryDataProvider extends AbstractTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testIterator()
-    {
+    public void testIterator() {
         final PageableRepository<Person, String> repo = createMock(PageableRepository.class);
         expect(repo.list(0, 10, "first", true)).andReturn(Collections.<Person>emptyList());
         expect(repo.list(0, 10, "last", false)).andReturn(Collections.<Person>emptyList());
@@ -55,8 +53,7 @@ public class TestPageableRepositoryDataProvider extends AbstractTestCase
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testModel()
-    {
+    public void testModel() {
         final PageableRepository<Person, String> repo = createMock(PageableRepository.class);
         replayAll();
         PageableRepositoryDataProvider<Person, String> provider =
@@ -69,8 +66,7 @@ public class TestPageableRepositoryDataProvider extends AbstractTestCase
 
     @Test
     @SuppressWarnings("unchecked")
-    public void testSize()
-    {
+    public void testSize() {
         final PageableRepository<Person, String> repo = createMock(PageableRepository.class);
         final int expected = 100;
         expect(repo.size()).andReturn(expected);

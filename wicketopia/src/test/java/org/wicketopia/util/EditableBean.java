@@ -28,8 +28,7 @@ import java.io.Serializable;
 /**
  * @author James Carman
  */
-public class EditableBean implements Serializable
-{
+public class EditableBean implements Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -45,61 +44,51 @@ public class EditableBean implements Serializable
 //----------------------------------------------------------------------------------------------------------------------
 
 
-    public boolean isBool()
-    {
+    public boolean isBool() {
         return bool;
     }
 
-    public void setBool(boolean bool)
-    {
+    public void setBool(boolean bool) {
         this.bool = bool;
     }
 
     @Order(2)
     @Visible({Context.CREATE, Context.VIEW})
-    public double getDoubleProperty()
-    {
+    public double getDoubleProperty() {
         return doubleProperty;
     }
 
-    public void setDoubleProperty(double doubleProperty)
-    {
+    public void setDoubleProperty(double doubleProperty) {
         this.doubleProperty = doubleProperty;
     }
 
     @Order(3)
-    public Gender getGender()
-    {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender)
-    {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
     @Order(1)
     //@Disabled(Context.CREATE)
-    public int getIntProperty()
-    {
+    public int getIntProperty() {
         return intProperty;
     }
 
-    public void setIntProperty(int intProperty)
-    {
+    public void setIntProperty(int intProperty) {
         this.intProperty = intProperty;
     }
 
     @Order(0)
     @Length(min = 5)
     @Required(Context.CREATE)
-    public String getStringProperty()
-    {
+    public String getStringProperty() {
         return stringProperty;
     }
 
-    public void setStringProperty(String stringProperty)
-    {
+    public void setStringProperty(String stringProperty) {
         this.stringProperty = stringProperty;
     }
 }

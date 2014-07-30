@@ -21,8 +21,7 @@ import org.apache.wicket.validation.IValidator;
 /**
  * @since 1.0
  */
-public interface EditorBuilder extends ViewerBuilder
-{
+public interface EditorBuilder extends ViewerBuilder {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------

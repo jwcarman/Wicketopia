@@ -25,8 +25,7 @@ import org.wicketopia.joda.util.format.JodaFormatSupport;
 /**
  * @since 1.0
  */
-public class JodaTextField<T> extends TextField<T>
-{
+public class JodaTextField<T> extends TextField<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -37,14 +36,12 @@ public class JodaTextField<T> extends TextField<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public JodaTextField(String id, JodaFormatSupport<T> formatSupport, Class<T> type)
-    {
+    public JodaTextField(String id, JodaFormatSupport<T> formatSupport, Class<T> type) {
         super(id, type);
         this.formatSupport = formatSupport;
     }
 
-    public JodaTextField(String id, IModel<T> model, JodaFormatSupport<T> formatSupport, Class<T> type)
-    {
+    public JodaTextField(String id, IModel<T> model, JodaFormatSupport<T> formatSupport, Class<T> type) {
         super(id, model, type);
         this.formatSupport = formatSupport;
     }
@@ -55,11 +52,9 @@ public class JodaTextField<T> extends TextField<T>
 
     @Override
     @SuppressWarnings("unchecked")
-	public <C> IConverter<C> getConverter(Class<C> type)
-    {
-        if (type.equals(getType()))
-        {
-            return new DateTimeFormatSupportConverter<C>((JodaFormatSupport<C>)formatSupport);
+    public <C> IConverter<C> getConverter(Class<C> type) {
+        if (type.equals(getType())) {
+            return new DateTimeFormatSupportConverter<C>((JodaFormatSupport<C>) formatSupport);
         }
         return super.getConverter(type);
     }

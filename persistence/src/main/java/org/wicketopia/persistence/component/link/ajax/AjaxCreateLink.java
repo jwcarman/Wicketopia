@@ -21,8 +21,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
 import org.wicketopia.persistence.PersistenceProvider;
 
-public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
-{
+public abstract class AjaxCreateLink<T> extends AjaxSubmitLink {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -33,8 +32,7 @@ public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AjaxCreateLink(String id, Form<T> form, PersistenceProvider persistenceProvider)
-    {
+    protected AjaxCreateLink(String id, Form<T> form, PersistenceProvider persistenceProvider) {
         super(id, form);
         this.persistenceProvider = persistenceProvider;
     }
@@ -50,9 +48,8 @@ public abstract class AjaxCreateLink<T> extends AjaxSubmitLink
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected void onSubmit(AjaxRequestTarget target, Form<?> form)
-    {
-        T object = (T)form.getModelObject();
+    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+        T object = (T) form.getModelObject();
         object = persistenceProvider.create(object);
         afterCreate(object, target);
     }

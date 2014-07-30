@@ -23,13 +23,13 @@ import org.metastopheles.FacetKey;
 /**
  * @since 1.0
  */
-public interface FormatProvider extends IClusterable
-{
+public interface FormatProvider extends IClusterable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
 
-    FacetKey<FormatProvider> FACET_KEY = new FacetKey<FormatProvider>() {};
+    FacetKey<FormatProvider> FACET_KEY = new FacetKey<FormatProvider>() {
+    };
 
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods

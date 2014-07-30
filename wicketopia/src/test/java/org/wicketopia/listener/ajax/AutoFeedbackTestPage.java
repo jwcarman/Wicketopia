@@ -24,29 +24,23 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 /**
  * @since 1.0
  */
-public class AutoFeedbackTestPage extends WebPage
-{
+public class AutoFeedbackTestPage extends WebPage {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public AutoFeedbackTestPage()
-    {
+    public AutoFeedbackTestPage() {
         final FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
         add(feedbackPanel.setOutputMarkupPlaceholderTag(true));
-        add(new AjaxLink<Void>("messageLink")
-        {
+        add(new AjaxLink<Void>("messageLink") {
             @Override
-            public void onClick(AjaxRequestTarget target)
-            {
+            public void onClick(AjaxRequestTarget target) {
                 info("You clicked me!");
             }
         });
-        add(new AjaxLink<Void>("noMessageLink")
-        {
+        add(new AjaxLink<Void>("noMessageLink") {
             @Override
-            public void onClick(AjaxRequestTarget target)
-            {
+            public void onClick(AjaxRequestTarget target) {
                 // Do nothing
             }
         });

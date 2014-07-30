@@ -19,8 +19,7 @@ package org.wicketopia.editor.component.property;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.metastopheles.PropertyMetaData;
 
-public class DropDownChoicePropertyEditor extends AbstractFormComponentPropertyEditor
-{
+public class DropDownChoicePropertyEditor extends AbstractFormComponentPropertyEditor {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -31,8 +30,7 @@ public class DropDownChoicePropertyEditor extends AbstractFormComponentPropertyE
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DropDownChoicePropertyEditor(String id, PropertyMetaData propertyMetaData, DropDownChoice<?> formComponent)
-    {
+    public DropDownChoicePropertyEditor(String id, PropertyMetaData propertyMetaData, DropDownChoice<?> formComponent) {
         super(id, propertyMetaData, formComponent);
     }
 }

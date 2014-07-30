@@ -21,8 +21,8 @@ import org.metastopheles.PropertyMetaData;
 /**
  * @since 1.0
  */
-public interface TypeMapping
-{
+public interface TypeMapping {
     String getTypeName(PropertyMetaData propertyMetaData);
-    void addTypeOverride( Class<?> propertyType, String type );
+
+    void addTypeOverride(Class<?> propertyType, String type);
 }

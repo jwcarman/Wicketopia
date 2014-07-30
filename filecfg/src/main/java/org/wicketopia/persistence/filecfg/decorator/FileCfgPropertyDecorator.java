@@ -25,11 +25,9 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 import java.util.Map.Entry;
 import java.util.Properties;
 
-public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaData>
-{
+public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaData> {
 
-    private static enum META_DATA_TYPE
-    {
+    private static enum META_DATA_TYPE {
         IGNORED_PROPERTY, VISIBLE_PROPERTY, HIDDEN_PROPERTY, ENABLED_PROPERTY, DISABLED_PROPERTY, ORDER_PROPERTY
     }
 
@@ -37,40 +35,32 @@ public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaD
     // Constructors
     // ----------------------------------------------------------------------------------------------------------------------
 
-    public FileCfgPropertyDecorator()
-    {
+    public FileCfgPropertyDecorator() {
     }
 
     // ----------------------------------------------------------------------------------------------------------------------
     // MetaDataDecorator Implementation
     // ----------------------------------------------------------------------------------------------------------------------
 
-    public void decorate(PropertyMetaData propertyMetaData)
-    {
+    public void decorate(PropertyMetaData propertyMetaData) {
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         Properties properties = propertyMetaData.getBeanMetaData().getFacet(FileCfgFacet.FACET_KEY).getProperties();
-        if (properties != null)
-        {
-            for (Entry<Object, Object> e : properties.entrySet())
-            {
-                if (propertyMetaData.getPropertyDescriptor().getName().equals(e.getKey().toString()))
-                {
+        if (properties != null) {
+            for (Entry<Object, Object> e : properties.entrySet()) {
+                if (propertyMetaData.getPropertyDescriptor().getName().equals(e.getKey().toString())) {
                     configureProperty(facet, e.getKey().toString(), e.getValue().toString());
                 }
             }
         }
     }
 
-    private void configureProperty(WicketopiaPropertyFacet facet, String property, String value)
-    {
+    private void configureProperty(WicketopiaPropertyFacet facet, String property, String value) {
         String[] items = value.split(",");
-        for (String item : items)
-        {
+        for (String item : items) {
             item = item.trim(); // strip white-space
 
             ContextPredicate predicate;
-            switch (decodeItem(item))
-            {
+            switch (decodeItem(item)) {
                 case IGNORED_PROPERTY:
                     facet.setIgnored(true);
                     break;
@@ -92,17 +82,13 @@ public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaD
                     break;
                 case ORDER_PROPERTY:
                     String[] ord = item.split(FileCfgBeanDecorator.ORDER_QUAL);
-                    if (ord.length != 2)
-                    {
-                    }
-                    else
-                    {
-                        try
-                        {
+                    if (ord.length != 2) {
+                    } else {
+                        try {
                             int order = Integer.parseInt(ord[1]);
                             facet.setOrder(order);
-                        } catch (NumberFormatException nfe)
-                        {
+                        }
+                        catch (NumberFormatException nfe) {
                         }
                     }
                     break;
@@ -111,34 +97,31 @@ public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaD
         }
     }
 
-    private ContextPredicate getContextPredicate(String item)
-    {
+    private ContextPredicate getContextPredicate(String item) {
         int predicateOffset = item.lastIndexOf('/');
-        if (predicateOffset > 0)
-        {
+        if (predicateOffset > 0) {
             String predicate = item.substring(predicateOffset + 1);
-            if (predicate.length() > 0)
-            {
+            if (predicate.length() > 0) {
                 return Context.whereContextNameIn(predicate);
             }
         }
         return Context.ALL_CONTEXTS;
     }
 
-    private META_DATA_TYPE decodeItem(String item)
-    {
-        if (item.equals(FileCfgBeanDecorator.IGNORED))
+    private META_DATA_TYPE decodeItem(String item) {
+        if (item.equals(FileCfgBeanDecorator.IGNORED)) {
             return META_DATA_TYPE.IGNORED_PROPERTY;
-        else if (item.startsWith(FileCfgBeanDecorator.ENABLED))
+        } else if (item.startsWith(FileCfgBeanDecorator.ENABLED)) {
             return META_DATA_TYPE.ENABLED_PROPERTY;
-        else if (item.startsWith(FileCfgBeanDecorator.DISABLED))
+        } else if (item.startsWith(FileCfgBeanDecorator.DISABLED)) {
             return META_DATA_TYPE.DISABLED_PROPERTY;
-        else if (item.startsWith(FileCfgBeanDecorator.VISIBLE))
+        } else if (item.startsWith(FileCfgBeanDecorator.VISIBLE)) {
             return META_DATA_TYPE.VISIBLE_PROPERTY;
-        else if (item.startsWith(FileCfgBeanDecorator.HIDDEN))
+        } else if (item.startsWith(FileCfgBeanDecorator.HIDDEN)) {
             return META_DATA_TYPE.HIDDEN_PROPERTY;
-        else if (item.startsWith(FileCfgBeanDecorator.ORDER))
+        } else if (item.startsWith(FileCfgBeanDecorator.ORDER)) {
             return META_DATA_TYPE.ORDER_PROPERTY;
+        }
 
         throw new IllegalArgumentException("Invalid property specification: " + item);
     }

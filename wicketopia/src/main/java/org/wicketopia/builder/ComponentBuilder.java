@@ -22,9 +22,10 @@ import org.apache.wicket.behavior.Behavior;
 /**
  * @author James Carman
  */
-public interface ComponentBuilder
-{
+public interface ComponentBuilder {
     void addBehavior(Behavior behavior);
+
     void visible(boolean viewable);
+
     Component build();
 }

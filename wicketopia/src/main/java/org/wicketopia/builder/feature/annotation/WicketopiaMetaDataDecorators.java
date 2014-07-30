@@ -22,7 +22,11 @@ import org.metastopheles.annotation.BeanDecorator;
 import org.metastopheles.annotation.PropertyDecorator;
 import org.wicketopia.annotation.enabled.Disabled;
 import org.wicketopia.annotation.enabled.Enabled;
-import org.wicketopia.annotation.metadata.*;
+import org.wicketopia.annotation.metadata.DisplayName;
+import org.wicketopia.annotation.metadata.EditorType;
+import org.wicketopia.annotation.metadata.Ignored;
+import org.wicketopia.annotation.metadata.Order;
+import org.wicketopia.annotation.metadata.ViewerType;
 import org.wicketopia.annotation.required.Optional;
 import org.wicketopia.annotation.required.Required;
 import org.wicketopia.annotation.visible.Hidden;
@@ -35,81 +39,68 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
  * @author James Carman
  * @since 1.0
  */
-public final class WicketopiaMetaDataDecorators
-{
+public final class WicketopiaMetaDataDecorators {
 //----------------------------------------------------------------------------------------------------------------------
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void onDisabled(PropertyMetaData propertyMetaData, Disabled disabled)
-    {
+    public static void onDisabled(PropertyMetaData propertyMetaData, Disabled disabled) {
         WicketopiaPropertyFacet.get(propertyMetaData).setEnabled(Context.whereContextNameIn(disabled.value()), false);
     }
 
     @PropertyDecorator
-    public static void onDisplayName(PropertyMetaData propertyMetaData, DisplayName displayName)
-    {
+    public static void onDisplayName(PropertyMetaData propertyMetaData, DisplayName displayName) {
         WicketopiaPropertyFacet.get(propertyMetaData).setDisplayName(displayName.value());
     }
 
     @BeanDecorator
-    public static void onDisplayName(BeanMetaData beanMetaData, DisplayName displayName)
-    {
+    public static void onDisplayName(BeanMetaData beanMetaData, DisplayName displayName) {
         WicketopiaBeanFacet.get(beanMetaData).setDisplayName(displayName.value());
     }
 
     @PropertyDecorator
-    public static void onEditorType(PropertyMetaData propertyMetaData, EditorType editorType)
-    {
+    public static void onEditorType(PropertyMetaData propertyMetaData, EditorType editorType) {
         WicketopiaPropertyFacet.get(propertyMetaData).setEditorType(editorType.value());
     }
 
     @PropertyDecorator
-    public static void onEnabled(PropertyMetaData propertyMetaData, Enabled enabled)
-    {
+    public static void onEnabled(PropertyMetaData propertyMetaData, Enabled enabled) {
         WicketopiaPropertyFacet.get(propertyMetaData).setEnabled(Context.whereContextNameIn(enabled.value()), true);
     }
 
     @PropertyDecorator
-    public static void onHidden(PropertyMetaData propertyMetaData, Hidden hidden)
-    {
+    public static void onHidden(PropertyMetaData propertyMetaData, Hidden hidden) {
         WicketopiaPropertyFacet.get(propertyMetaData).setVisible(Context.whereContextNameIn(hidden.value()), false);
     }
 
     @PropertyDecorator
-    public static void onIgnored(PropertyMetaData propertyMetaData, Ignored ignored)
-    {
+    public static void onIgnored(PropertyMetaData propertyMetaData, Ignored ignored) {
         WicketopiaPropertyFacet.get(propertyMetaData).setIgnored(true);
     }
 
     @PropertyDecorator
-    public static void onOptional(PropertyMetaData propertyMetaData, Optional optional)
-    {
+    public static void onOptional(PropertyMetaData propertyMetaData, Optional optional) {
         WicketopiaPropertyFacet.get(propertyMetaData).setRequired(Context.whereContextNameIn(optional.value()), false);
     }
 
     @PropertyDecorator
-    public static void onOrder(PropertyMetaData propertyMetaData, Order order)
-    {
+    public static void onOrder(PropertyMetaData propertyMetaData, Order order) {
         WicketopiaPropertyFacet.get(propertyMetaData).setOrder(order.value());
     }
 
     @PropertyDecorator
-    public static void onRequired(PropertyMetaData propertyMetaData, Required required)
-    {
+    public static void onRequired(PropertyMetaData propertyMetaData, Required required) {
         WicketopiaPropertyFacet.get(propertyMetaData).setRequired(Context.whereContextNameIn(required.value()), true);
     }
 
     @PropertyDecorator
-    public static void onViewerType(PropertyMetaData propertyMetaData, ViewerType viewerType)
-    {
+    public static void onViewerType(PropertyMetaData propertyMetaData, ViewerType viewerType) {
         WicketopiaPropertyFacet.get(propertyMetaData).setViewerType(viewerType.value());
     }
 
     @PropertyDecorator
-    public static void onVisible(PropertyMetaData propertyMetaData, Visible visible)
-    {
+    public static void onVisible(PropertyMetaData propertyMetaData, Visible visible) {
         WicketopiaPropertyFacet.get(propertyMetaData).setVisible(Context.whereContextNameIn(visible.value()), true);
     }
 
@@ -117,8 +108,7 @@ public final class WicketopiaMetaDataDecorators
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    private WicketopiaMetaDataDecorators()
-    {
-        
+    private WicketopiaMetaDataDecorators() {
+
     }
 }

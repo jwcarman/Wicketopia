@@ -28,8 +28,7 @@ import java.util.List;
 /**
  * @author James Carman
  */
-public class Jpa2PersistenceProvider implements PersistenceProvider
-{
+public class Jpa2PersistenceProvider implements PersistenceProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -42,90 +41,75 @@ public class Jpa2PersistenceProvider implements PersistenceProvider
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public <T> T create(T object)
-    {
+    public <T> T create(T object) {
         entityManager.persist(object);
         return object;
     }
 
     @Override
-    public <T> void delete(final T object)
-    {
+    public <T> void delete(final T object) {
         T merged = entityManager.merge(object);
         entityManager.remove(merged);
     }
 
     @Override
-    public <T> T update(T object)
-    {
+    public <T> T update(T object) {
         return entityManager.merge(object);
     }
 
     @Override
-    public <T, C extends Collection<? extends T>> void create(C collection)
-    {
-        for (T entity : collection)
-        {
+    public <T, C extends Collection<? extends T>> void create(C collection) {
+        for (T entity : collection) {
             entityManager.persist(entity);
         }
     }
 
     @Override
-    public <T, C extends Collection<? extends T>> void delete(C collection)
-    {
-        for (T entity : collection)
-        {
+    public <T, C extends Collection<? extends T>> void delete(C collection) {
+        for (T entity : collection) {
             entityManager.remove(entity);
         }
     }
 
     @Override
-    public <T, C extends Collection<? extends T>> void update(C collection)
-    {
-        for (T entity : collection)
-        {
+    public <T, C extends Collection<? extends T>> void update(C collection) {
+        for (T entity : collection) {
             entityManager.merge(entity);
         }
     }
 
     @Override
-    public long getCount(Class<?> entityType)
-    {
+    public long getCount(Class<?> entityType) {
         List results = entityManager.createQuery("select count(x) from " + entityType.getName() + " x").getResultList();
         return ((Number) results.get(0)).longValue();
     }
 
     @Override
-    public Serializable getIdentifier(Object entity)
-    {
-    	return (Serializable) entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity);
+    public Serializable getIdentifier(Object entity) {
+        return (Serializable) entityManager.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(entity);
     }
 
     @Override
-    public <T> T getByIdentifier(Class<T> entityType, Serializable identifier)
-    {
+    public <T> T getByIdentifier(Class<T> entityType, Serializable identifier) {
         return entityManager.find(entityType, identifier);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> List<T> getAll(Class<T> entityType)
-    {
+    public <T> List<T> getAll(Class<T> entityType) {
         String jpaql = "select x from " + entityType.getName() + " x";
         final Query query = entityManager.createQuery(jpaql);
         return query.getResultList();
     }
 
     @SuppressWarnings("unchecked")
-    public <T> List<T> getList(Class<T> entityType, final long first, final long max, final String sortProperty, final boolean ascending)
-    {
+    public <T> List<T> getList(Class<T> entityType, final long first, final long max, final String sortProperty, final boolean ascending) {
         String jpaql = "select x from " + entityType.getName() + " x";
-        if (sortProperty != null)
-        {
+        if (sortProperty != null) {
             jpaql = jpaql + " order by x." + sortProperty + (ascending ? " asc" : " desc");
         }
         final Query query = entityManager.createQuery(jpaql);
-        query.setFirstResult((int)first).setMaxResults((int)max);
+        query.setFirstResult((int) first).setMaxResults((int) max);
         return query.getResultList();
     }
 }

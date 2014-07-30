@@ -21,8 +21,7 @@ import java.io.Serializable;
 /**
  *
  */
-public class Context implements Serializable
-{
+public class Context implements Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -43,8 +42,7 @@ public class Context implements Serializable
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static ContextPredicate whereContextNameIn(String... contextNames)
-    {
+    public static ContextPredicate whereContextNameIn(String... contextNames) {
         return new ContextNamePredicate(contextNames);
     }
 
@@ -52,8 +50,7 @@ public class Context implements Serializable
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Context(String name)
-    {
+    public Context(String name) {
         this.name = name;
     }
 
@@ -61,8 +58,7 @@ public class Context implements Serializable
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -70,38 +66,28 @@ public class Context implements Serializable
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class AllContextsPredicate implements ContextPredicate
-    {
+    private static final class AllContextsPredicate implements ContextPredicate {
         @Override
-        public boolean evaluate(Context context)
-        {
+        public boolean evaluate(Context context) {
             return true;
         }
     }
-    
-    private static final class ContextNamePredicate implements ContextPredicate
-    {
+
+    private static final class ContextNamePredicate implements ContextPredicate {
         private final String[] contextNames;
 
-        private ContextNamePredicate(String... contextNames)
-        {
+        private ContextNamePredicate(String... contextNames) {
             this.contextNames = contextNames;
         }
 
         @Override
-        public boolean evaluate(Context context)
-        {
-            if (contextNames == null || contextNames.length == 0)
-            {
+        public boolean evaluate(Context context) {
+            if (contextNames == null || contextNames.length == 0) {
                 return true;
-            }
-            else
-            {
+            } else {
                 final String target = context.getName();
-                for (String contextName : contextNames)
-                {
-                    if (ALL.equals(contextName) || target.equals(contextName))
-                    {
+                for (String contextName : contextNames) {
+                    if (ALL.equals(contextName) || target.equals(contextName)) {
                         return true;
                     }
                 }

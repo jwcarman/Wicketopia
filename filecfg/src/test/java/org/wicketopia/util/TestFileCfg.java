@@ -32,11 +32,9 @@ import java.io.Serializable;
 /**
  * @author Alexandros Karypidis
  */
-public class TestFileCfg extends AbstractWicketTestCase
-{
+public class TestFileCfg extends AbstractWicketTestCase {
 
-    public static class Entity implements Serializable
-    {
+    public static class Entity implements Serializable {
         private static final long serialVersionUID = 1L;
         private String hiddenField;
         private String disabledField;
@@ -45,63 +43,51 @@ public class TestFileCfg extends AbstractWicketTestCase
         private String field2;
         private String field3;
 
-        public String getHiddenField()
-        {
+        public String getHiddenField() {
             return hiddenField;
         }
 
-        public void setHiddenField(String hiddenField)
-        {
+        public void setHiddenField(String hiddenField) {
             this.hiddenField = hiddenField;
         }
 
-        public String getDisabledField()
-        {
+        public String getDisabledField() {
             return disabledField;
         }
 
-        public void setDisabledField(String disabledField)
-        {
+        public void setDisabledField(String disabledField) {
             this.disabledField = disabledField;
         }
 
-        public String getIgnoredField()
-        {
+        public String getIgnoredField() {
             return ignoredField;
         }
 
-        public void setIgnoredField(String ignoredField)
-        {
+        public void setIgnoredField(String ignoredField) {
             this.ignoredField = ignoredField;
         }
 
-        public String getField1()
-        {
+        public String getField1() {
             return field1;
         }
 
-        public void setField1(String field1)
-        {
+        public void setField1(String field1) {
             this.field1 = field1;
         }
 
-        public String getField2()
-        {
+        public String getField2() {
             return field2;
         }
 
-        public void setField2(String field2)
-        {
+        public void setField2(String field2) {
             this.field2 = field2;
         }
 
-        public String getField3()
-        {
+        public String getField3() {
             return field3;
         }
 
-        public void setField3(String field3)
-        {
+        public void setField3(String field3) {
             this.field3 = field3;
         }
 
@@ -114,8 +100,7 @@ public class TestFileCfg extends AbstractWicketTestCase
     private Wicketopia wicketopiaPlugin;
 
     @BeforeMethod
-    public void installWicketopia()
-    {
+    public void installWicketopia() {
         wicketopiaPlugin = new Wicketopia();
         wicketopiaPlugin.addBeanMetaDataDecorator(new FileCfgBeanDecorator());
         wicketopiaPlugin.addPropertyMetaDataDecorator(new FileCfgPropertyDecorator());
@@ -127,8 +112,7 @@ public class TestFileCfg extends AbstractWicketTestCase
     // ----------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void testVisibility()
-    {
+    public void testVisibility() {
         PropertyMetaData hiddenMetadata = wicketopiaPlugin.getBeanMetaData(Entity.class).getPropertyMetaData("hiddenField");
         WicketopiaPropertyFacet facetHidden = WicketopiaPropertyFacet.get(hiddenMetadata);
         Assert.assertFalse(facetHidden.isVisible(createContext));
@@ -142,8 +126,7 @@ public class TestFileCfg extends AbstractWicketTestCase
     }
 
     @Test
-    public void testAbility()
-    {
+    public void testAbility() {
         PropertyMetaData hiddenMetadata = wicketopiaPlugin.getBeanMetaData(Entity.class).getPropertyMetaData("hiddenField");
         WicketopiaPropertyFacet facetHidden = WicketopiaPropertyFacet.get(hiddenMetadata);
         Assert.assertFalse(facetHidden.isEnabled(listContext));
@@ -155,16 +138,14 @@ public class TestFileCfg extends AbstractWicketTestCase
     }
 
     @Test
-    public void testIgnorability()
-    {
+    public void testIgnorability() {
         PropertyMetaData ignoredMetadata = wicketopiaPlugin.getBeanMetaData(Entity.class).getPropertyMetaData("ignoredField");
         WicketopiaPropertyFacet facetIgnored = WicketopiaPropertyFacet.get(ignoredMetadata);
         Assert.assertTrue(facetIgnored.isIgnored());
     }
 
     @Test
-    public void testOrder()
-    {
+    public void testOrder() {
         PropertyMetaData field1Metadata = wicketopiaPlugin.getBeanMetaData(Entity.class).getPropertyMetaData("field1");
         WicketopiaPropertyFacet facetField1 = WicketopiaPropertyFacet.get(field1Metadata);
         Assert.assertEquals(facetField1.getOrder(), 3);

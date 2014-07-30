@@ -22,8 +22,7 @@ import org.testng.annotations.BeforeClass;
 /**
  * @author James Carman
  */
-public abstract class AbstractWicketTestCase extends AbstractTestCase
-{
+public abstract class AbstractWicketTestCase extends AbstractTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -35,8 +34,7 @@ public abstract class AbstractWicketTestCase extends AbstractTestCase
 //----------------------------------------------------------------------------------------------------------------------
 
     @BeforeClass
-    public final void createWicketTester()
-    {
+    public final void createWicketTester() {
         tester = new WicketTester();
     }
 }

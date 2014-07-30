@@ -22,12 +22,12 @@ import org.joda.time.DateTime;
 /**
  * @since 1.0
  */
-public interface DateTimeTranslator<T> extends IClusterable
-{
+public interface DateTimeTranslator<T> extends IClusterable {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     T fromDateTime(DateTime dateTime);
+
     DateTime toDateTime(T object);
 }

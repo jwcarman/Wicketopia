@@ -23,14 +23,12 @@ import org.wicketopia.security.decorator.AbstractSecurityDecorators;
  * @since 1.0
  */
 @ScanMe
-public class SpringSecurityDecorators extends AbstractSecurityDecorators
-{
+public class SpringSecurityDecorators extends AbstractSecurityDecorators {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public SpringSecurityDecorators()
-    {
+    public SpringSecurityDecorators() {
         super(new SpringSecurityProvider());
     }
 }

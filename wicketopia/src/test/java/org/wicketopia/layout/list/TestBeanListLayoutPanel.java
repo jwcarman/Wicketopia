@@ -29,11 +29,9 @@ import org.wicketopia.util.Gender;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestBeanListLayoutPanel extends AbstractWicketTestCase
-{
+public class TestBeanListLayoutPanel extends AbstractWicketTestCase {
     @Test
-    public void testWithViewer()
-    {
+    public void testWithViewer() {
         Wicketopia plugin = new Wicketopia();
         plugin.install(tester.getApplication());
         final EditableBean bean1 = new EditableBean();

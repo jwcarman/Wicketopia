@@ -25,9 +25,8 @@ import org.wicketopia.builder.ViewerBuilder;
 import org.wicketopia.context.Context;
 import org.wicketopia.viewer.PropertyViewerProvider;
 
-public class LabelPropertyViewer extends Label implements ViewerBuilder
-{
-//----------------------------------------------------------------------------------------------------------------------
+public class LabelPropertyViewer extends Label implements ViewerBuilder {
+    //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
     public static final String TYPE_NAME = "label";
@@ -37,8 +36,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 // Static Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public static PropertyViewerProvider getProvider()
-    {
+    public static PropertyViewerProvider getProvider() {
         return PROVIDER;
     }
 
@@ -46,8 +44,7 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public LabelPropertyViewer(String id, IModel<?> model)
-    {
+    public LabelPropertyViewer(String id, IModel<?> model) {
         super(id, model);
     }
 
@@ -56,20 +53,17 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void addBehavior(Behavior behavior)
-    {
+    public void addBehavior(Behavior behavior) {
         add(behavior);
     }
 
     @Override
-    public Component build()
-    {
+    public Component build() {
         return this;
     }
 
     @Override
-    public void visible(boolean viewable)
-    {
+    public void visible(boolean viewable) {
         setVisible(viewable);
     }
 
@@ -77,11 +71,9 @@ public class LabelPropertyViewer extends Label implements ViewerBuilder
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private static final class Provider implements PropertyViewerProvider
-    {
+    private static final class Provider implements PropertyViewerProvider {
         @Override
-        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context)
-        {
+        public ViewerBuilder createPropertyViewer(String componentId, PropertyMetaData propertyMetadata, IModel<?> propertyModel, Context context) {
             return new LabelPropertyViewer(componentId, propertyModel);
         }
     }

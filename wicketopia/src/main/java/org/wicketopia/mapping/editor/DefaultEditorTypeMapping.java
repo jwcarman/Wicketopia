@@ -21,14 +21,12 @@ import org.wicketopia.editor.component.property.TextFieldPropertyEditor;
 import org.wicketopia.editor.provider.EnumDropDownChoicePropertyEditorProvider;
 import org.wicketopia.mapping.ClassBasedTypeMapping;
 
-public class DefaultEditorTypeMapping extends ClassBasedTypeMapping
-{
+public class DefaultEditorTypeMapping extends ClassBasedTypeMapping {
 //----------------------------------------------------------------------------------------------------------------------
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DefaultEditorTypeMapping()
-    {
+    public DefaultEditorTypeMapping() {
         super(TextFieldPropertyEditor.TYPE_NAME);
         addTypeOverride(Enum.class, EnumDropDownChoicePropertyEditorProvider.TYPE_NAME);
         addTypeOverride(Boolean.TYPE, CheckBoxPropertyEditor.TYPE_NAME);

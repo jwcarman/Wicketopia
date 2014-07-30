@@ -26,27 +26,22 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public class SpringSecurityProvider implements SecurityProvider
-{
+public class SpringSecurityProvider implements SecurityProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // SecurityProvider Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public boolean checkRoles(Set<String> roles)
-    {
+    public boolean checkRoles(Set<String> roles) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         if (securityContext == null ||
                 securityContext.getAuthentication() == null ||
-                securityContext.getAuthentication().getAuthorities() == null)
-        {
+                securityContext.getAuthentication().getAuthorities() == null) {
             return false;
         }
 
-        for (GrantedAuthority authority : securityContext.getAuthentication().getAuthorities())
-        {
-            if(roles.contains(authority.getAuthority()))
-            {
+        for (GrantedAuthority authority : securityContext.getAuthentication().getAuthorities()) {
+            if (roles.contains(authority.getAuthority())) {
                 return true;
             }
         }

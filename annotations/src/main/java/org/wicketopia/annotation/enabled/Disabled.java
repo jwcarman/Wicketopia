@@ -28,7 +28,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface Disabled
-{
+public @interface Disabled {
     String[] value() default Context.ALL;
 }

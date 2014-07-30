@@ -27,8 +27,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
  * @author James Carman
  * @version 1.0
  */
-public class DoubleRangeFeature extends AbstractValidatorFeature
-{
+public class DoubleRangeFeature extends AbstractValidatorFeature {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -41,8 +40,7 @@ public class DoubleRangeFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, DoubleRange doubleRange)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, DoubleRange doubleRange) {
         WicketopiaPropertyFacet.get(propertyMetaData).addEditorFeature(new DoubleRangeFeature(doubleRange.min(), doubleRange.max()));
     }
 
@@ -50,8 +48,7 @@ public class DoubleRangeFeature extends AbstractValidatorFeature
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public DoubleRangeFeature(double min, double max)
-    {
+    public DoubleRangeFeature(double min, double max) {
         this.min = min;
         this.max = max;
     }
@@ -61,18 +58,12 @@ public class DoubleRangeFeature extends AbstractValidatorFeature
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    protected IValidator<?> createValidator()
-    {
-        if (max != Double.MAX_VALUE && min != Double.MIN_VALUE)
-        {
+    protected IValidator<?> createValidator() {
+        if (max != Double.MAX_VALUE && min != Double.MIN_VALUE) {
             return new RangeValidator<Double>(min, max);
-        }
-        else if (max != Double.MAX_VALUE)
-        {
+        } else if (max != Double.MAX_VALUE) {
             return RangeValidator.maximum(max);
-        }
-        else
-        {
+        } else {
             return RangeValidator.minimum(min);
         }
     }

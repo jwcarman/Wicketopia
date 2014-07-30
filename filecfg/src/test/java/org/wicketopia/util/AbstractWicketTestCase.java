@@ -24,8 +24,7 @@ import org.testng.annotations.BeforeMethod;
 /**
  * @author James Carman
  */
-public abstract class AbstractWicketTestCase
-{
+public abstract class AbstractWicketTestCase {
     // ----------------------------------------------------------------------------------------------------------------------
     // Fields
     // ----------------------------------------------------------------------------------------------------------------------
@@ -38,14 +37,12 @@ public abstract class AbstractWicketTestCase
     // ----------------------------------------------------------------------------------------------------------------------
 
     @AfterMethod
-    public void assertMockeryIsSatisfied()
-    {
+    public void assertMockeryIsSatisfied() {
         mockery.assertIsSatisfied();
     }
 
     @BeforeMethod
-    public void constructWicketTester()
-    {
+    public void constructWicketTester() {
         mockery = new Mockery();
         tester = new WicketTester();
     }

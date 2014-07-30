@@ -45,8 +45,7 @@ import org.wicketopia.persistence.hibernate.decorator.HibernatePropertyDecorator
  * application without deploying, run the Start class.
  */
 @Component("wicketApplication")
-public class WicketApplication extends WebApplication
-{
+public class WicketApplication extends WebApplication {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -59,8 +58,7 @@ public class WicketApplication extends WebApplication
     @Autowired
     private PersistenceProvider persistenceProvider;
 
-    public WicketApplication()
-    {
+    public WicketApplication() {
     }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -72,8 +70,7 @@ public class WicketApplication extends WebApplication
 //----------------------------------------------------------------------------------------------------------------------
 
     @Value("${wicket.configuration}")
-    public void setConfigurationType(RuntimeConfigurationType configurationType)
-    {
+    public void setConfigurationType(RuntimeConfigurationType configurationType) {
         super.setConfigurationType(configurationType);
     }
 
@@ -86,13 +83,11 @@ public class WicketApplication extends WebApplication
     // ----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public Class<HomePage> getHomePage()
-    {
+    public Class<HomePage> getHomePage() {
         return HomePage.class;
     }
 
-    protected void init()
-    {
+    protected void init() {
         super.init();
         mountPage("/examples/scaffold", ScaffoldExample.class);
         mountPage("/examples/beanViewer", BeanViewerExample.class);

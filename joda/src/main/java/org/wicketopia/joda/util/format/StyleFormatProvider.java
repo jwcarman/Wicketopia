@@ -25,8 +25,7 @@ import org.wicketopia.joda.annotation.DateStyle;
 /**
  * @since 1.0
  */
-public class StyleFormatProvider implements FormatProvider
-{
+public class StyleFormatProvider implements FormatProvider {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -38,8 +37,7 @@ public class StyleFormatProvider implements FormatProvider
 //----------------------------------------------------------------------------------------------------------------------
 
     @PropertyDecorator
-    public static void decorate(PropertyMetaData propertyMetaData, DateStyle dateStyle)
-    {
+    public static void decorate(PropertyMetaData propertyMetaData, DateStyle dateStyle) {
         propertyMetaData.setFacet(FACET_KEY, new StyleFormatProvider(dateStyle.value()));
     }
 
@@ -47,8 +45,7 @@ public class StyleFormatProvider implements FormatProvider
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public StyleFormatProvider(String style)
-    {
+    public StyleFormatProvider(String style) {
         this.style = style;
     }
 
@@ -57,8 +54,7 @@ public class StyleFormatProvider implements FormatProvider
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public DateTimeFormatter getFormatter()
-    {
+    public DateTimeFormatter getFormatter() {
         return DateTimeFormat.forStyle(style);
     }
 }

@@ -30,15 +30,13 @@ import static org.testng.Assert.assertEquals;
 /**
  * @author James Carman
  */
-public class TestEnumDropDownChoice extends AbstractWicketTestCase
-{
+public class TestEnumDropDownChoice extends AbstractWicketTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void testModelBinding()
-    {
+    public void testModelBinding() {
         final Person p = new Person();
         final EnumDropDownChoiceTestPage page = new EnumDropDownChoiceTestPage(p);
         tester.startPage(page);
@@ -49,8 +47,7 @@ public class TestEnumDropDownChoice extends AbstractWicketTestCase
     }
 
     @Test
-    public void testModelContentsWithEnumClassParameter()
-    {
+    public void testModelContentsWithEnumClassParameter() {
         EnumDropDownChoice<Gender> genderChoice = new EnumDropDownChoice<Gender>("gender", Gender.class);
         List<? extends Gender> choices = genderChoice.getChoices();
         assertEquals(choices, Arrays.asList(Gender.class.getEnumConstants()));
@@ -61,14 +58,13 @@ public class TestEnumDropDownChoice extends AbstractWicketTestCase
     }
 
     @Test
-    @SuppressWarnings( "unchecked" )
-    public void testRendering()
-    {
+    @SuppressWarnings("unchecked")
+    public void testRendering() {
         final EnumDropDownChoiceTestPage page = new EnumDropDownChoiceTestPage(new Person());
         tester.startPage(page);
         tester.assertRenderedPage(EnumDropDownChoiceTestPage.class);
         EnumDropDownChoice<Gender> choice =
-                ( EnumDropDownChoice<Gender> ) tester.getComponentFromLastRenderedPage("form:gender");
+                (EnumDropDownChoice<Gender>) tester.getComponentFromLastRenderedPage("form:gender");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Female), "Female");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Male), "Male");
         assertEquals(choice.getChoiceRenderer().getDisplayValue(Gender.Unknown), "It's Pat!");

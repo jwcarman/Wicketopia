@@ -29,8 +29,7 @@ import java.util.List;
 /**
  * @since 1.0
  */
-public class AbstractLayoutPanel<T> extends Panel
-{
+public class AbstractLayoutPanel<T> extends Panel {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -44,13 +43,11 @@ public class AbstractLayoutPanel<T> extends Panel
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory)
-    {
+    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory) {
         this(id, beanType, context, componentFactory, Wicketopia.get().getVisibleProperties(beanType, context));
     }
 
-    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames)
-    {
+    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, List<String> propertyNames) {
         super(id);
         this.context = context;
         this.beanType = beanType;
@@ -58,8 +55,7 @@ public class AbstractLayoutPanel<T> extends Panel
         this.propertyNames = propertyNames;
     }
 
-    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
-    {
+    protected AbstractLayoutPanel(String id, Class<T> beanType, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames) {
         this(id, beanType, context, componentFactory, Wicketopia.get().getVisibleProperties(beanType, context, propertyNames));
     }
 
@@ -67,23 +63,19 @@ public class AbstractLayoutPanel<T> extends Panel
 // Getter/Setter Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected Class<T> getBeanType()
-    {
+    protected Class<T> getBeanType() {
         return beanType;
     }
 
-    protected PropertyComponentFactory<T> getComponentFactory()
-    {
+    protected PropertyComponentFactory<T> getComponentFactory() {
         return componentFactory;
     }
 
-    protected Context getContext()
-    {
+    protected Context getContext() {
         return context;
     }
 
-    public List<String> getPropertyNames()
-    {
+    public List<String> getPropertyNames() {
         return propertyNames;
     }
 
@@ -91,13 +83,11 @@ public class AbstractLayoutPanel<T> extends Panel
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected Component createPropertyComponent(String componentId, IModel<T> beanModel, String propertyName)
-    {
+    protected Component createPropertyComponent(String componentId, IModel<T> beanModel, String propertyName) {
         return getComponentFactory().createPropertyComponent(componentId, beanModel, propertyName, getContext());
     }
 
-    protected Label createPropertyLabel(String componentId, String propertyName)
-    {
+    protected Label createPropertyLabel(String componentId, String propertyName) {
         return getComponentFactory().createPropertyLabel(componentId, propertyName);
     }
 }

@@ -25,8 +25,7 @@ import org.wicketopia.util.Person;
 /**
  * @since 1.0
  */
-public class EnumDropDownChoiceTestPage extends WebPage
-{
+public class EnumDropDownChoiceTestPage extends WebPage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -37,8 +36,7 @@ public class EnumDropDownChoiceTestPage extends WebPage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public EnumDropDownChoiceTestPage(Person p)
-    {
+    public EnumDropDownChoiceTestPage(Person p) {
         Form<Person> form = new Form<Person>("form", new CompoundPropertyModel<Person>(p));
         form.add(new EnumDropDownChoice<Gender>("gender", Gender.class));
         add(form);

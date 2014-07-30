@@ -29,8 +29,7 @@ import org.wicketopia.metadata.WicketopiaPropertyFacet;
 
 import java.util.Iterator;
 
-public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMetaData>
-{
+public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMetaData> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -43,8 +42,7 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public HibernatePropertyDecorator(IModel<Configuration> configuration)
-    {
+    public HibernatePropertyDecorator(IModel<Configuration> configuration) {
         this.configuration = configuration;
     }
 
@@ -52,33 +50,23 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 // MetaDataDecorator Implementation
 //----------------------------------------------------------------------------------------------------------------------
 
-    public void decorate(PropertyMetaData propertyMetaData)
-    {
+    public void decorate(PropertyMetaData propertyMetaData) {
         WicketopiaPropertyFacet facet = WicketopiaPropertyFacet.get(propertyMetaData);
         final PersistentClass classMapping = findClassMapping(propertyMetaData.getBeanMetaData());
-        if(classMapping != null)
-        {
+        if (classMapping != null) {
             final Property property = classMapping.getProperty(propertyMetaData.getPropertyDescriptor().getName());
 
-            if(property == null)
-            {
-               return;
-            }
-            else if(!(property.getValue() instanceof SimpleValue))
-            {
+            if (property == null) {
+                return;
+            } else if (!(property.getValue() instanceof SimpleValue)) {
                 facet.setIgnored(true);
-            }
-            else if(ignoreIdentifiers && property.equals(classMapping.getIdentifierProperty()))
-            {
+            } else if (ignoreIdentifiers && property.equals(classMapping.getIdentifierProperty())) {
                 facet.setIgnored(true);
-            }
-            else if(property.equals(classMapping.getVersion()))
-            {
+            } else if (property.equals(classMapping.getVersion())) {
                 facet.setIgnored(true);
             }
 
-            if(!property.isOptional())
-            {
+            if (!property.isOptional()) {
                 facet.setRequired(Context.ALL_CONTEXTS, true);
             }
         }
@@ -88,21 +76,17 @@ public class HibernatePropertyDecorator implements MetaDataDecorator<PropertyMet
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private PersistentClass findClassMapping(BeanMetaData beanMetaData)
-    {
-        for(Iterator i = configuration.getObject().getClassMappings(); i.hasNext(); )
-        {
-            PersistentClass classMapping = (PersistentClass)i.next();
-            if(classMapping.getMappedClass().equals(beanMetaData.getBeanDescriptor().getBeanClass()))
-            {
+    private PersistentClass findClassMapping(BeanMetaData beanMetaData) {
+        for (Iterator i = configuration.getObject().getClassMappings(); i.hasNext(); ) {
+            PersistentClass classMapping = (PersistentClass) i.next();
+            if (classMapping.getMappedClass().equals(beanMetaData.getBeanDescriptor().getBeanClass())) {
                 return classMapping;
             }
         }
         return null;
     }
 
-    public HibernatePropertyDecorator ignoreIdentifiers(boolean flag)
-    {
+    public HibernatePropertyDecorator ignoreIdentifiers(boolean flag) {
         this.ignoreIdentifiers = flag;
         return this;
     }

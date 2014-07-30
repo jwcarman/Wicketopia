@@ -59,8 +59,7 @@ import java.util.List;
 /**
  * @author James Carman
  */
-public class Scaffold<T> extends Panel implements IHeaderContributor
-{
+public class Scaffold<T> extends Panel implements IHeaderContributor {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -79,13 +78,11 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public Scaffold(String id, Class<T> beanType)
-    {
+    public Scaffold(String id, Class<T> beanType) {
         this(id, beanType, PersistencePlugin.get().getPersistenceProvider());
     }
 
-    public Scaffold(String id, Class<T> beanType, PersistenceProvider persistenceProvider)
-    {
+    public Scaffold(String id, Class<T> beanType, PersistenceProvider persistenceProvider) {
         super(id);
         WicketopiaBeanFacet beanFacet = WicketopiaBeanFacet.get(Wicketopia.get().getBeanMetaData(beanType));
         displayName = new DisplayNameModel(beanFacet);
@@ -99,21 +96,17 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         setOutputMarkupPlaceholderTag(true);
     }
 
-    private void refreshContent(AjaxRequestTarget target)
-    {
+    private void refreshContent(AjaxRequestTarget target) {
         final Component content = createContent();
         content.setOutputMarkupPlaceholderTag(true);
         addOrReplace(content);
-        if (target != null)
-        {
+        if (target != null) {
             target.add(this);
         }
     }
 
-    private Component createContent()
-    {
-        switch (mode)
-        {
+    private Component createContent() {
+        switch (mode) {
             case List:
                 return new ListFragment();
             case View:
@@ -131,8 +124,7 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 //----------------------------------------------------------------------------------------------------------------------
 
     @Override
-    public void renderHead(IHeaderResponse response)
-    {
+    public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forReference(CSS_REFERENCE));
     }
 
@@ -140,14 +132,12 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    private Context createContext(String mode)
-    {
+    private Context createContext(String mode) {
         return new Context(mode);
     }
 
     @Override
-    protected void onDetach()
-    {
+    protected void onDetach() {
         super.onDetach();
         displayName.detach();
     }
@@ -156,16 +146,13 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final class ActionsColumn extends FragmentColumn<T>
-    {
-        private ActionsColumn()
-        {
+    private final class ActionsColumn extends FragmentColumn<T> {
+        private ActionsColumn() {
             super(new Model<String>("Actions"));
         }
 
         @Override
-        protected Fragment createFragment(String componentId, IModel<T> rowModel)
-        {
+        protected Fragment createFragment(String componentId, IModel<T> rowModel) {
             Fragment f = new Fragment(componentId, "actions", Scaffold.this);
             f.add(new ViewLink("viewLink", rowModel));
             f.add(new ScaffoldEditLink("updateLink", rowModel));
@@ -174,34 +161,29 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class ConfirmBehavior extends Behavior
-    {
+    private final class ConfirmBehavior extends Behavior {
         private final String event;
         private final IModel<String> message;
 
-        private ConfirmBehavior(String event, IModel<String> message)
-        {
+        private ConfirmBehavior(String event, IModel<String> message) {
             this.event = event;
             this.message = message;
         }
 
         @Override
-        public void detach(Component component)
-        {
+        public void detach(Component component) {
             super.detach(component);
             message.detach();
         }
 
-        public void onComponentTag(Component component, ComponentTag tag)
-        {
+        public void onComponentTag(Component component, ComponentTag tag) {
             StringBuilder handler = new StringBuilder();
             handler.append("if (!confirm('");
             handler.append(message.getObject().replaceAll("'", "\\\\'"));
             handler.append("')) {return false;} ");
 
             String script = tag.getAttributes().getString(event);
-            if (script != null)
-            {
+            if (script != null) {
                 handler.append(script);
             }
 
@@ -209,10 +191,8 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class CreateFragment extends Fragment
-    {
-        private CreateFragment()
-        {
+    private final class CreateFragment extends Fragment {
+        private CreateFragment() {
             super(CONTENT_ID, "create", Scaffold.this);
             model = new CreateModel();
             final ScaffoldListLink listLink = new ScaffoldListLink("listButton");
@@ -227,26 +207,20 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class CreateModel extends LoadableDetachableModel<T>
-    {
+    private final class CreateModel extends LoadableDetachableModel<T> {
         @Override
-        protected T load()
-        {
-            try
-            {
+        protected T load() {
+            try {
                 return beanType.newInstance();
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 throw new WicketRuntimeException("Unable to instantiate " + beanType.getName() + " object (" + e.getMessage() + ").", e);
             }
         }
     }
 
-    private final class EditFragment extends Fragment
-    {
-        private EditFragment()
-        {
+    private final class EditFragment extends Fragment {
+        private EditFragment() {
             super(CONTENT_ID, "edit", Scaffold.this);
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new ScaffoldDeleteLink("deleteButton", model));
@@ -261,10 +235,8 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class ListFragment extends Fragment
-    {
-        private ListFragment()
-        {
+    private final class ListFragment extends Fragment {
+        private ListFragment() {
             super(CONTENT_ID, "list", Scaffold.this);
             final ScaffoldCreateLink create = new ScaffoldCreateLink("newEntity");
             add(create);
@@ -272,22 +244,19 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
             create.add(new Label("displayName", displayName).setRenderBodyOnly(true));
             final PropertyComponentFactory<T> viewerFactory = Wicketopia.get().createViewerFactory(beanType);
             final Context context = createContext(Context.LIST);
-            final List<IColumn<T,String>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
+            final List<IColumn<T, String>> columns = Wicketopia.get().createColumns(beanType, viewerFactory, context);
             columns.add(new ActionsColumn());
-            add(new AjaxFallbackDefaultDataTable<T,String>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
+            add(new AjaxFallbackDefaultDataTable<T, String>("table", columns, new PersistenceDataProvider<T>(beanType, persistenceProvider), DEFAULT_ROWS_PER_PAGE));
         }
     }
 
-    private class SaveLink extends AjaxCreateLink<T>
-    {
-        public SaveLink(Form<T> form)
-        {
+    private class SaveLink extends AjaxCreateLink<T> {
+        public SaveLink(Form<T> form) {
             super("saveButton", form, persistenceProvider);
         }
 
         @Override
-        protected void afterCreate(T object, AjaxRequestTarget target)
-        {
+        protected void afterCreate(T object, AjaxRequestTarget target) {
             Scaffold.this.mode = ScaffoldMode.View;
             Scaffold.this.info(displayName.getObject() + " Created");
             model = new LoadableDetachableEntityModel<T>(beanType, object, persistenceProvider);
@@ -295,38 +264,31 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
 
         @Override
-        protected void onError(AjaxRequestTarget target, Form<?> form)
-        {
+        protected void onError(AjaxRequestTarget target, Form<?> form) {
             target.add(feedback);
         }
     }
 
-    private final class ScaffoldCreateLink extends AjaxLink<Void>
-    {
-        private ScaffoldCreateLink(String id)
-        {
+    private final class ScaffoldCreateLink extends AjaxLink<Void> {
+        private ScaffoldCreateLink(String id) {
             super(id);
         }
 
         @Override
-        public void onClick(AjaxRequestTarget target)
-        {
+        public void onClick(AjaxRequestTarget target) {
             mode = ScaffoldMode.Create;
             refreshContent(target);
         }
     }
 
-    private final class ScaffoldDeleteLink extends AjaxLink<T>
-    {
-        private ScaffoldDeleteLink(String id, IModel<T> tiModel)
-        {
+    private final class ScaffoldDeleteLink extends AjaxLink<T> {
+        private ScaffoldDeleteLink(String id, IModel<T> tiModel) {
             super(id, tiModel);
             add(new ConfirmBehavior("onclick", new Model<String>("Are you sure?")));
         }
 
         @Override
-        public void onClick(AjaxRequestTarget target)
-        {
+        public void onClick(AjaxRequestTarget target) {
             persistenceProvider.delete(getModelObject());
             Scaffold.this.info(displayName.getObject() + " Deleted");
             mode = ScaffoldMode.List;
@@ -334,63 +296,51 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class ScaffoldEditLink extends AjaxLink<T>
-    {
-        private ScaffoldEditLink(String id, IModel<T> model)
-        {
+    private final class ScaffoldEditLink extends AjaxLink<T> {
+        private ScaffoldEditLink(String id, IModel<T> model) {
             super(id, model);
         }
 
         @Override
-        public void onClick(AjaxRequestTarget target)
-        {
+        public void onClick(AjaxRequestTarget target) {
             model = getModel();
             mode = ScaffoldMode.Update;
             refreshContent(target);
         }
     }
 
-    private final class ScaffoldListLink extends AjaxLink<Void>
-    {
-        private ScaffoldListLink(String id)
-        {
+    private final class ScaffoldListLink extends AjaxLink<Void> {
+        private ScaffoldListLink(String id) {
             super(id);
         }
 
         @Override
-        public void onClick(AjaxRequestTarget target)
-        {
+        public void onClick(AjaxRequestTarget target) {
             mode = ScaffoldMode.List;
             refreshContent(target);
         }
     }
 
-    private class ScaffoldUpdateLink<T> extends AjaxUpdateLink<T>
-    {
-        public ScaffoldUpdateLink(Form<T> form)
-        {
+    private class ScaffoldUpdateLink<T> extends AjaxUpdateLink<T> {
+        public ScaffoldUpdateLink(Form<T> form) {
             super("saveButton", form, persistenceProvider);
         }
 
         @Override
-        protected void afterUpdate(T object, AjaxRequestTarget target)
-        {
+        protected void afterUpdate(T object, AjaxRequestTarget target) {
             mode = ScaffoldMode.View;
             Scaffold.this.info(displayName.getObject() + " Updated");
             refreshContent(target);
         }
 
         @Override
-        protected void onError(AjaxRequestTarget target, Form<?> form)
-        {
+        protected void onError(AjaxRequestTarget target, Form<?> form) {
             target.add(feedback);
         }
     }
 
-    private final class ViewFragment extends Fragment
-    {
-        private ViewFragment()
-        {
+    private final class ViewFragment extends Fragment {
+        private ViewFragment() {
             super(CONTENT_ID, "view", Scaffold.this);
             add(new Label("nameCaption", displayName).setRenderBodyOnly(true));
             add(new ScaffoldEditLink("editButton", model));
@@ -403,16 +353,13 @@ public class Scaffold<T> extends Panel implements IHeaderContributor
         }
     }
 
-    private final class ViewLink extends AjaxLink<T>
-    {
-        private ViewLink(String id, IModel<T> tiModel)
-        {
+    private final class ViewLink extends AjaxLink<T> {
+        private ViewLink(String id, IModel<T> tiModel) {
             super(id, tiModel);
         }
 
         @Override
-        public void onClick(AjaxRequestTarget target)
-        {
+        public void onClick(AjaxRequestTarget target) {
             model = getModel();
             mode = ScaffoldMode.View;
             refreshContent(target);

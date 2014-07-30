@@ -19,12 +19,10 @@ package org.wicketopia.model.column;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.markup.html.WebPage;
 
-public class DataTableTestPage<T> extends WebPage
-{
+public class DataTableTestPage<T> extends WebPage {
     public static final String TABLE_ID = "table";
 
-    public DataTableTestPage(DefaultDataTable<T,String> table)
-    {
+    public DataTableTestPage(DefaultDataTable<T, String> table) {
         add(table);
     }
 }

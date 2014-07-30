@@ -19,14 +19,11 @@ package org.wicketopia.util;
 import org.testng.annotations.Test;
 import org.wicketopia.context.Context;
 
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.*;
 
-public class TestContextualBoolean
-{
+public class TestContextualBoolean {
     @Test
-    public void testWithFalseDefaultValue()
-    {
+    public void testWithFalseDefaultValue() {
         final ContextualBoolean cb = new ContextualBoolean(false);
         final Context context = new Context(Context.CREATE);
         assertFalse(cb.getValue(context));
@@ -37,8 +34,7 @@ public class TestContextualBoolean
     }
 
     @Test
-    public void testWithTrueDefaultValue()
-    {
+    public void testWithTrueDefaultValue() {
         final ContextualBoolean cb = new ContextualBoolean(true);
         final Context context = new Context(Context.CREATE);
         assertTrue(cb.getValue(context));

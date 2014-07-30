@@ -28,17 +28,14 @@ import org.wicketopia.util.Person;
 /**
  * @author James Carman
  */
-public class TestPropertyLabel extends AbstractWicketTestCase
-{
+public class TestPropertyLabel extends AbstractWicketTestCase {
     @BeforeClass
-    public void installWicketopia()
-    {
+    public void installWicketopia() {
         Wicketopia.install();
     }
 
     @Test
-    public void testWithMessageKey()
-    {
+    public void testWithMessageKey() {
 
         final BeanMetaDataFactory factory = new AnnotationBeanMetaDataFactory();
         final BeanMetaData beanMetaData = factory.getBeanMetaData(Person.class);
@@ -49,8 +46,7 @@ public class TestPropertyLabel extends AbstractWicketTestCase
     }
 
     @Test
-    public void testWithoutMessageKey()
-    {
+    public void testWithoutMessageKey() {
         final BeanMetaDataFactory factory = new AnnotationBeanMetaDataFactory();
         final BeanMetaData beanMetaData = factory.getBeanMetaData(Person.class);
         final PropertyLabelTestPage page = new PropertyLabelTestPage(beanMetaData.getPropertyMetaData("first"));
@@ -59,8 +55,7 @@ public class TestPropertyLabel extends AbstractWicketTestCase
     }
 
     @Test
-    public void testWithoutMessageKeyMultiWord()
-    {
+    public void testWithoutMessageKeyMultiWord() {
         final BeanMetaDataFactory factory = new AnnotationBeanMetaDataFactory();
         final BeanMetaData beanMetaData = factory.getBeanMetaData(Person.class);
         final PropertyLabelTestPage page =

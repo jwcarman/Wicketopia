@@ -19,20 +19,17 @@ package org.wicketopia.testing;
 import org.testng.annotations.BeforeClass;
 import org.wicketopia.Wicketopia;
 
-public class AbstractWicketopiaTestCase extends AbstractWicketTestCase
-{
+public class AbstractWicketopiaTestCase extends AbstractWicketTestCase {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    protected Wicketopia createWicketopia()
-    {
+    protected Wicketopia createWicketopia() {
         return new Wicketopia();
     }
 
     @BeforeClass
-    protected void installWicketopia()
-    {
+    protected void installWicketopia() {
         createWicketopia().install(tester.getApplication());
     }
 }

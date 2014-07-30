@@ -20,20 +20,17 @@ import org.apache.wicket.Component;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.Form;
 
-public class EditorTestPage extends WebPage
-{
+public class EditorTestPage extends WebPage {
     public static final String EDITOR_ID = "editor";
     private final Form form;
 
-    public EditorTestPage(Component editor)
-    {
+    public EditorTestPage(Component editor) {
         form = new Form("form");
         form.add(editor);
         add(form);
     }
 
-    public Form getForm()
-    {
+    public Form getForm() {
         return form;
     }
 }

@@ -22,14 +22,14 @@ import java.util.Set;
 /**
  * @since 1.0
  */
-public interface SecurityProvider extends Serializable
-{
+public interface SecurityProvider extends Serializable {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
     /**
      * Checks to see if the user has one of the specified roles.
+     *
      * @param roles the roles
      * @return true if the current user has one of the specified roles
      */

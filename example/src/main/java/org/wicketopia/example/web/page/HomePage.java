@@ -19,8 +19,7 @@ package org.wicketopia.example.web.page;
 /**
  * Homepage
  */
-public class HomePage extends BasePage
-{
+public class HomePage extends BasePage {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -31,7 +30,6 @@ public class HomePage extends BasePage
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public HomePage()
-    {
+    public HomePage() {
     }
 }

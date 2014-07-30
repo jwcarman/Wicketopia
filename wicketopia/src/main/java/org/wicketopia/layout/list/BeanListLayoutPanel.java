@@ -32,8 +32,7 @@ import org.wicketopia.layout.AbstractLayoutPanel;
 
 import java.util.List;
 
-public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
-{
+public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T> {
 //----------------------------------------------------------------------------------------------------------------------
 // Fields
 //----------------------------------------------------------------------------------------------------------------------
@@ -44,16 +43,13 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Constructors
 //----------------------------------------------------------------------------------------------------------------------
 
-    public BeanListLayoutPanel(String id, Class<T> beanType, IModel<? extends List<? extends T>> model, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames)
-    {
+    public BeanListLayoutPanel(String id, Class<T> beanType, IModel<? extends List<? extends T>> model, Context context, PropertyComponentFactory<T> componentFactory, String... propertyNames) {
         super(id, beanType, context, componentFactory, propertyNames);
         BeanMetaData beanMetaData = Wicketopia.get().getBeanMetaData(beanType);
         final RepeatingView headers = new RepeatingView("headers");
-        for (String property : getPropertyNames())
-        {
+        for (String property : getPropertyNames()) {
             PropertyMetaData propertyMetaData = beanMetaData.getPropertyMetaData(property);
-            if(propertyMetaData == null)
-            {
+            if (propertyMetaData == null) {
                 throw new WicketRuntimeException("Property \"" + property + "\" not found for bean type " + beanType.getName() + ".");
             }
             headers.add(new PropertyLabel(headers.newChildId(), propertyMetaData));
@@ -67,13 +63,11 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
 
-    public List<? extends T> getList()
-    {
+    public List<? extends T> getList() {
         return listView.getList();
     }
 
-    protected IModel<T> getListItemModel(IModel<? extends List<? extends T>> model, int index)
-    {
+    protected IModel<T> getListItemModel(IModel<? extends List<? extends T>> model, int index) {
         return new ListItemModel<T>(listView, index);
     }
 
@@ -81,13 +75,11 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
 // Inner Classes
 //----------------------------------------------------------------------------------------------------------------------
 
-    private final class BeanListView extends ListView<T>
-    {
+    private final class BeanListView extends ListView<T> {
         private final PropertyComponentFactory<T> componentFactory;
         private final Context context;
 
-        private BeanListView(String id, IModel<? extends List<? extends T>> model, PropertyComponentFactory<T> componentFactory, Context context)
-        {
+        private BeanListView(String id, IModel<? extends List<? extends T>> model, PropertyComponentFactory<T> componentFactory, Context context) {
             super(id, model);
             this.componentFactory = componentFactory;
             this.context = context;
@@ -95,14 +87,11 @@ public class BeanListLayoutPanel<T> extends AbstractLayoutPanel<T>
         }
 
         @Override
-        protected void populateItem(ListItem<T> rowItem)
-        {
+        protected void populateItem(ListItem<T> rowItem) {
             final IModel<T> beanModel = rowItem.getModel();
-            ListView<String> cells = new ListView<String>("cells", getPropertyNames())
-            {
+            ListView<String> cells = new ListView<String>("cells", getPropertyNames()) {
                 @Override
-                protected void populateItem(ListItem<String> cellItem)
-                {
+                protected void populateItem(ListItem<String> cellItem) {
                     cellItem.add(componentFactory.createPropertyComponent("component", beanModel, cellItem.getModelObject(), context));
                 }
             };

@@ -31,20 +31,18 @@ import org.wicketopia.util.EditableBean;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestBeanPropertyColumn extends AbstractWicketopiaTestCase
-{
+public class TestBeanPropertyColumn extends AbstractWicketopiaTestCase {
     @Test
-    public void testRendering()
-    {
+    public void testRendering() {
         List<EditableBean> beans = new ArrayList<EditableBean>();
         final EditableBean bean1 = new EditableBean();
         beans.add(bean1);
-        final SortableDataProvider<EditableBean,String> dataProvider = new DefaultSortableCollectionDataProvider<EditableBean>("gender", SortOrder.ASCENDING, beans);
-        final List<IColumn<EditableBean,String>> columns = new ArrayList<IColumn<EditableBean,String>>();
+        final SortableDataProvider<EditableBean, String> dataProvider = new DefaultSortableCollectionDataProvider<EditableBean>("gender", SortOrder.ASCENDING, beans);
+        final List<IColumn<EditableBean, String>> columns = new ArrayList<IColumn<EditableBean, String>>();
         PropertyComponentFactory<EditableBean> factory = Wicketopia.get().createViewerFactory(EditableBean.class);
         final Context context = new Context(Context.LIST);
         columns.add(new BeanPropertyColumn<EditableBean>(factory, "gender", context));
-        final DefaultDataTable<EditableBean,String> table = new DefaultDataTable<EditableBean,String>(DataTableTestPage.TABLE_ID, columns, dataProvider, Integer.MAX_VALUE);
+        final DefaultDataTable<EditableBean, String> table = new DefaultDataTable<EditableBean, String>(DataTableTestPage.TABLE_ID, columns, dataProvider, Integer.MAX_VALUE);
         tester.startPage(new DataTableTestPage<EditableBean>(table));
         tester.assertNoErrorMessage();
     }

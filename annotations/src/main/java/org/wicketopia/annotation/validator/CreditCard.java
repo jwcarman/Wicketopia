@@ -24,8 +24,7 @@ import java.lang.annotation.Target;
 /**
  * @author James Carman
  */
-@Retention( RetentionPolicy.RUNTIME )
+@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface CreditCard
-{
+public @interface CreditCard {
 }
