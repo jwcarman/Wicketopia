@@ -63,11 +63,9 @@ public class CreateEntityForm<T extends Serializable> extends Form<T> {
     private static <T> T createEntity(Class<T> entityType) {
         try {
             return entityType.newInstance();
-        }
-        catch (InstantiationException e) {
+        } catch (InstantiationException e) {
             throw new WicketRuntimeException("Unable to instantate a " + entityType.getSimpleName() + " object.", e);
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             throw new WicketRuntimeException("Unable to instantate a " + entityType.getSimpleName() + " object.", e);
         }
     }

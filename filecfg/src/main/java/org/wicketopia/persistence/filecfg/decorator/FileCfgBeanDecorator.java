@@ -42,8 +42,7 @@ public class FileCfgBeanDecorator implements MetaDataDecorator<BeanMetaData> {
             try {
                 properties.load(resourceStream);
                 metaData.setFacet(FileCfgFacet.FACET_KEY, new FileCfgFacet(properties));
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }

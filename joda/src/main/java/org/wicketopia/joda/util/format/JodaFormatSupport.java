@@ -115,8 +115,7 @@ public class JodaFormatSupport<T> implements IClusterable {
                     throw new ConversionException(new ParseException("unable to parse date " +
                             value, ~result));
                 }
-            }
-            catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 throw new ConversionException(e);
             }
             // apply the server time zone to the parsed value
@@ -126,8 +125,7 @@ public class JodaFormatSupport<T> implements IClusterable {
             try {
                 DateTime date = format.parseDateTime(value);
                 return date == null ? null : translator.fromDateTime(date);
-            }
-            catch (RuntimeException e) {
+            } catch (RuntimeException e) {
                 throw new ConversionException(e);
             }
         }

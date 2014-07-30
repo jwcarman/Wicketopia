@@ -53,8 +53,7 @@ public class Start {
             System.out.println(">>> STOPPING EMBEDDED JETTY SERVER");
             server.stop();
             server.join();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
         }

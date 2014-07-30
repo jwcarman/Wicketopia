@@ -87,8 +87,7 @@ public class FileCfgPropertyDecorator implements MetaDataDecorator<PropertyMetaD
                         try {
                             int order = Integer.parseInt(ord[1]);
                             facet.setOrder(order);
-                        }
-                        catch (NumberFormatException nfe) {
+                        } catch (NumberFormatException nfe) {
                         }
                     }
                     break;
