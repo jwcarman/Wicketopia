@@ -50,7 +50,7 @@ public class BeanPropertyColumn<T> implements IColumn<T, String> {
 
     @Override
     public void detach() {
-
+        // Nothing to detach!
     }
 
     @Override

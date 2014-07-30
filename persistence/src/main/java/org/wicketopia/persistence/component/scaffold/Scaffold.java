@@ -115,8 +115,9 @@ public class Scaffold<T> extends Panel implements IHeaderContributor {
                 return new EditFragment();
             case Create:
                 return new CreateFragment();
+            default:
+                return new EmptyPanel(CONTENT_ID);
         }
-        return new EmptyPanel(CONTENT_ID);
     }
 
 //----------------------------------------------------------------------------------------------------------------------

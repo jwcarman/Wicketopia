@@ -41,7 +41,7 @@ public class DeleteLink<T> extends Link<T> {
 //----------------------------------------------------------------------------------------------------------------------
 
     protected void afterDelete(T object) {
-
+        // Do nothing by default.
     }
 
     @Override
