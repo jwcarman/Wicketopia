@@ -17,13 +17,17 @@
 package org.wicketopia.example.web.application;
 
 import org.apache.wicket.RuntimeConfigurationType;
+import org.apache.wicket.injection.Injector;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.stereotype.Component;
 import org.wicketopia.Wicketopia;
 import org.wicketopia.example.web.page.HomePage;
@@ -55,7 +59,7 @@ public class WicketApplication extends WebApplication {
     @Autowired
     private LocalSessionFactoryBean sessionFactoryBean;
 
-    @Autowired
+    @SpringBean
     private PersistenceProvider persistenceProvider;
 
     public WicketApplication() {
@@ -89,6 +93,7 @@ public class WicketApplication extends WebApplication {
 
     protected void init() {
         super.init();
+
         mountPage("/examples/scaffold", ScaffoldExample.class);
         mountPage("/examples/beanViewer", BeanViewerExample.class);
         mountPage("/examples/beanEditor", BeanEditorExample.class);
@@ -97,14 +102,17 @@ public class WicketApplication extends WebApplication {
         mountPage("/examples/customBeanEditor", CustomBeanEditorExample.class);
         mountPage("/examples/beanTable", BeanTableExample.class);
 
+        getComponentInstantiationListeners().add(
+                new SpringComponentInjector(this));
+
+        Injector.get().inject(this);
+
         Wicketopia wicketopia = new Wicketopia();
         wicketopia.addPlugin(new PersistencePlugin(persistenceProvider));
         wicketopia.addPropertyMetaDataDecorator(new HibernatePropertyDecorator(new PropertyModel<Configuration>(sessionFactoryBean, "configuration")));
         wicketopia.addPropertyViewerProvider("image-boolean", ImageBooleanViewer.getProvider());
 
         wicketopia.install(this);
-        getComponentInstantiationListeners().add(
-                new SpringComponentInjector(this));
         getAjaxRequestTargetListeners().add(new AutoFeedbackListener());
     }
 }
